@@ -1422,36 +1422,94 @@ main {
 }
 
 .fixed-contact {
-  width: min(720px, calc(100% - 24px));
-  padding: 10px;
-  border-radius: 22px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(5, 38, 111, 0.12);
-  box-shadow: 0 18px 44px rgba(5, 38, 111, 0.18);
-  backdrop-filter: blur(16px);
+  width: min(760px, calc(100% - 8px));
+  min-width: 0;
+  padding: clamp(4px, 1.25vw, 10px);
+  border-radius: clamp(14px, 4vw, 22px);
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1.3vw, 10px);
+  background: linear-gradient(90deg, #075be7 0%, #004fd4 46%, #0639be 100%);
+  border: 3px solid var(--white);
+  box-shadow: 0 16px 42px rgba(5, 38, 111, 0.32), inset 0 0 0 2px rgba(255, 255, 255, 0.28);
   position: fixed;
   left: 50%;
-  bottom: 14px;
+  bottom: 8px;
   z-index: 80;
   transform: translateX(-50%);
 }
 
+.fixed-contact-message {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: clamp(45px, 14.5vw, 105px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(4px, 1.7vw, 18px);
+  overflow: hidden;
+}
+
+.fixed-contact-badge {
+  width: clamp(45px, 14.5vw, 105px);
+  height: clamp(45px, 14.5vw, 105px);
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 9px rgba(0, 22, 95, 0.34));
+}
+
+.fixed-contact-message p {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--white);
+  font-weight: 950;
+  line-height: 1.08;
+  text-shadow: 0 3px 8px rgba(0, 24, 97, 0.38);
+}
+
+.fixed-contact-message p span,
+.fixed-contact-message p strong {
+  display: block;
+  white-space: nowrap;
+}
+
+.fixed-contact-message p span {
+  font-size: clamp(16px, 4.8vw, 42px);
+}
+
+.fixed-contact-message p strong {
+  color: #fff100;
+  font-size: clamp(19px, 5.72vw, 50px);
+}
+
+.fixed-contact-actions {
+  flex: 0 0 clamp(142px, 38.5vw, 360px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(4px, 1.25vw, 8px);
+}
+
 .fixed-contact-button {
-  min-height: 58px;
-  padding: 13px 18px;
-  border-radius: 16px;
+  min-width: 0;
+  min-height: clamp(52px, 15.5vw, 100px);
+  padding: clamp(4px, 1.1vw, 12px) 3px clamp(5px, 1.3vw, 12px);
+  border-radius: clamp(10px, 3.2vw, 18px);
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 2px;
   color: var(--white);
-  font-size: 17px;
+  font-size: clamp(11px, 3.2vw, 15px);
   line-height: 1.2;
   letter-spacing: 0;
-  box-shadow: 0 12px 26px rgba(5, 38, 111, 0.16);
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 18px rgba(0, 21, 91, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.fixed-contact-button > span:last-child {
+  font-weight: 950;
+  white-space: nowrap;
 }
 
 .contact-icon {
@@ -1468,9 +1526,23 @@ main {
   height: 18px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2;
+  stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.fixed-contact .contact-icon {
+  width: clamp(25px, 7.6vw, 52px);
+  height: clamp(24px, 7.2vw, 52px);
+  color: var(--white);
+  background: transparent;
+}
+
+.fixed-contact .contact-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 5px rgba(0, 23, 90, 0.32));
 }
 
 .contact-icon-mail {
@@ -1486,12 +1558,24 @@ main {
   letter-spacing: 0;
 }
 
+.fixed-contact .contact-icon-line {
+  background: transparent;
+  width: clamp(28px, 8.5vw, 58px);
+  height: clamp(28px, 8.5vw, 58px);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.fixed-contact-phone {
+  background: linear-gradient(180deg, #0964f2 0%, #0047cb 100%);
+}
+
 .fixed-contact-mail {
-  background: var(--navy);
+  background: linear-gradient(180deg, #0964f2 0%, #0047cb 100%);
 }
 
 .fixed-contact-line {
-  background: #06c755;
+  background: linear-gradient(180deg, #12d957 0%, #02a834 100%);
 }
 
 .modal {
@@ -2379,6 +2463,43 @@ main {
 }
 
 @media (max-width: 760px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .fixed-contact {
+    width: min(382px, calc(100vw - 8px));
+    max-width: calc(100vw - 8px);
+    left: 4px;
+    transform: none;
+    overflow: hidden;
+  }
+
+  .fixed-contact-message {
+    grid-template-columns: 50px minmax(0, 1fr);
+    gap: 5px;
+  }
+
+  .fixed-contact-badge {
+    width: 50px;
+    height: 50px;
+  }
+
+  .fixed-contact-message p span {
+    font-size: 18px;
+  }
+
+  .fixed-contact-message p strong {
+    font-size: 22px;
+  }
+
+  .fixed-contact-actions {
+    flex-basis: 142px;
+    gap: 4px;
+  }
+
   .inner,
   .header-inner,
   .hero-stage,
