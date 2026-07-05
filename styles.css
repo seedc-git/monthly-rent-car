@@ -1422,94 +1422,30 @@ main {
 }
 
 .fixed-contact {
-  width: min(760px, calc(100% - 8px));
-  min-width: 0;
-  padding: clamp(4px, 1.25vw, 10px);
-  border-radius: clamp(14px, 4vw, 22px);
-  display: flex;
-  align-items: center;
-  gap: clamp(4px, 1.3vw, 10px);
-  background: linear-gradient(90deg, #075be7 0%, #004fd4 46%, #0639be 100%);
-  border: 3px solid var(--white);
-  box-shadow: 0 16px 42px rgba(5, 38, 111, 0.32), inset 0 0 0 2px rgba(255, 255, 255, 0.28);
   position: fixed;
-  left: 50%;
-  bottom: 8px;
+  inset-inline: 0;
+  bottom: 0;
   z-index: 80;
-  transform: translateX(-50%);
+  padding: 0 max(6px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
+  background: linear-gradient(90deg, #075be7 0%, #004fd4 46%, #0639be 100%);
 }
 
-.fixed-contact-message {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: grid;
-  grid-template-columns: clamp(45px, 14.5vw, 105px) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(4px, 1.7vw, 18px);
+.fixed-contact-frame {
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+  aspect-ratio: 2048 / 304;
+  border-radius: clamp(12px, 3vw, 22px);
+  box-shadow: 0 14px 30px rgba(5, 38, 111, 0.22);
   overflow: hidden;
+  position: relative;
 }
 
-.fixed-contact-badge {
-  width: clamp(45px, 14.5vw, 105px);
-  height: clamp(45px, 14.5vw, 105px);
+.fixed-contact-image {
+  width: 100%;
+  height: 100%;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 5px 9px rgba(0, 22, 95, 0.34));
-}
-
-.fixed-contact-message p {
-  margin: 0;
-  min-width: 0;
-  overflow: hidden;
-  color: var(--white);
-  font-weight: 950;
-  line-height: 1.08;
-  text-shadow: 0 3px 8px rgba(0, 24, 97, 0.38);
-}
-
-.fixed-contact-message p span,
-.fixed-contact-message p strong {
-  display: block;
-  white-space: nowrap;
-}
-
-.fixed-contact-message p span {
-  font-size: clamp(16px, 4.8vw, 42px);
-}
-
-.fixed-contact-message p strong {
-  color: #fff100;
-  font-size: clamp(19px, 5.72vw, 50px);
-}
-
-.fixed-contact-actions {
-  flex: 0 0 clamp(142px, 38.5vw, 360px);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(4px, 1.25vw, 8px);
-}
-
-.fixed-contact-button {
-  min-width: 0;
-  min-height: clamp(52px, 15.5vw, 100px);
-  padding: clamp(4px, 1.1vw, 12px) 3px clamp(5px, 1.3vw, 12px);
-  border-radius: clamp(10px, 3.2vw, 18px);
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  color: var(--white);
-  font-size: clamp(11px, 3.2vw, 15px);
-  line-height: 1.2;
-  letter-spacing: 0;
-  border: 2px solid rgba(255, 255, 255, 0.92);
-  box-shadow: 0 8px 18px rgba(0, 21, 91, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-}
-
-.fixed-contact-button > span:last-child {
-  font-weight: 950;
-  white-space: nowrap;
 }
 
 .contact-icon {
@@ -1531,20 +1467,6 @@ main {
   stroke-linejoin: round;
 }
 
-.fixed-contact .contact-icon {
-  width: clamp(25px, 7.6vw, 52px);
-  height: clamp(24px, 7.2vw, 52px);
-  color: var(--white);
-  background: transparent;
-}
-
-.fixed-contact .contact-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 5px rgba(0, 23, 90, 0.32));
-}
-
 .contact-icon-mail {
   color: var(--navy);
   background: var(--white);
@@ -1558,24 +1480,32 @@ main {
   letter-spacing: 0;
 }
 
-.fixed-contact .contact-icon-line {
-  background: transparent;
-  width: clamp(28px, 8.5vw, 58px);
-  height: clamp(28px, 8.5vw, 58px);
-  border-radius: 0;
-  box-shadow: none;
+.fixed-contact-hotspot {
+  position: absolute;
+  top: 11%;
+  bottom: 11%;
+  border-radius: 12px;
+  color: transparent;
+}
+
+.fixed-contact-hotspot:focus-visible {
+  outline: 3px solid #fff100;
+  outline-offset: -4px;
 }
 
 .fixed-contact-phone {
-  background: linear-gradient(180deg, #0964f2 0%, #0047cb 100%);
-}
-
-.fixed-contact-mail {
-  background: linear-gradient(180deg, #0964f2 0%, #0047cb 100%);
+  left: 53.6%;
+  width: 13.6%;
 }
 
 .fixed-contact-line {
-  background: linear-gradient(180deg, #12d957 0%, #02a834 100%);
+  left: 69.1%;
+  width: 13.2%;
+}
+
+.fixed-contact-mail {
+  left: 84.4%;
+  width: 13.0%;
 }
 
 .modal {
@@ -2469,35 +2399,8 @@ main {
     overflow-x: clip;
   }
 
-  .fixed-contact {
-    width: min(382px, calc(100vw - 8px));
-    max-width: calc(100vw - 8px);
-    left: 4px;
-    transform: none;
-    overflow: hidden;
-  }
-
-  .fixed-contact-message {
-    grid-template-columns: 50px minmax(0, 1fr);
-    gap: 5px;
-  }
-
-  .fixed-contact-badge {
-    width: 50px;
-    height: 50px;
-  }
-
-  .fixed-contact-message p span {
-    font-size: 18px;
-  }
-
-  .fixed-contact-message p strong {
-    font-size: 22px;
-  }
-
-  .fixed-contact-actions {
-    flex-basis: 142px;
-    gap: 4px;
+  body::after {
+    content: none;
   }
 
   .inner,
