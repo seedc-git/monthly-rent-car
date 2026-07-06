@@ -1426,7 +1426,7 @@ main {
   inset-inline: 0;
   bottom: 0;
   z-index: 80;
-  --fixed-contact-browser-gutter: clamp(74px, 18vw, 96px);
+  --fixed-contact-browser-gutter: clamp(86px, 20vw, 108px);
   padding: 0 max(6px, env(safe-area-inset-right)) calc(var(--fixed-contact-browser-gutter) + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
   background: rgba(22, 22, 22, 0.78);
   -webkit-backdrop-filter: blur(8px);
@@ -2403,7 +2403,7 @@ main {
   }
 
   body {
-    padding-bottom: calc(168px + env(safe-area-inset-bottom));
+    padding-bottom: calc(184px + env(safe-area-inset-bottom));
   }
 
   body::after {
