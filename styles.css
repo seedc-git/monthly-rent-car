@@ -1426,7 +1426,8 @@ main {
   inset-inline: 0;
   bottom: 0;
   z-index: 80;
-  padding: 0 max(6px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
+  --fixed-contact-browser-gutter: clamp(74px, 18vw, 96px);
+  padding: 0 max(6px, env(safe-area-inset-right)) calc(var(--fixed-contact-browser-gutter) + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
   background: rgba(22, 22, 22, 0.78);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -2399,6 +2400,10 @@ main {
   body {
     max-width: 100%;
     overflow-x: clip;
+  }
+
+  body {
+    padding-bottom: calc(168px + env(safe-area-inset-bottom));
   }
 
   body::after {
