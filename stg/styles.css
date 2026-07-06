@@ -1441,21 +1441,81 @@ main {
 }
 
 .fixed-contact-frame {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(4px, 1.5vw, 7px);
   width: 100%;
+  height: clamp(58px, 16vw, 66px);
   max-width: 430px;
   margin-inline: auto;
-  aspect-ratio: 2048 / 304;
-  border-radius: clamp(12px, 3vw, 22px);
-  box-shadow: 0 14px 30px rgba(5, 38, 111, 0.22);
-  overflow: hidden;
-  position: relative;
+  padding: 4px clamp(6px, 2.2vw, 9px);
+  background: #0550dd;
 }
 
-.fixed-contact-image {
-  width: 100%;
+.fixed-contact-lead {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1.5vw, 7px);
+  min-width: 0;
+}
+
+.fixed-contact-badge {
+  width: clamp(34px, 10.5vw, 40px);
+  height: auto;
+  flex: 0 0 auto;
+}
+
+.fixed-contact-copy {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(10px, 3.05vw, 12px);
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.fixed-contact-em {
+  color: #fdf802;
+  font-size: clamp(14px, 4vw, 16px);
+  font-weight: 900;
+}
+
+.fixed-contact-actions {
+  display: flex;
+  gap: clamp(3px, 1.5vw, 6px);
+  flex: 0 0 auto;
+}
+
+.fixed-contact-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: clamp(44px, 13.8vw, 54px);
   height: 100%;
-  display: block;
+  min-height: 0;
+  padding: 3px 0;
+  border: 2px solid #fff;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-decoration: none;
+  text-align: center;
+}
+
+.fixed-contact-btn img {
+  width: clamp(18px, 5.4vw, 21px);
+  height: clamp(18px, 5.4vw, 21px);
   object-fit: contain;
+}
+
+.fixed-contact-btn-line {
+  background: #06c755;
+  border-color: #06c755;
 }
 
 .contact-icon {
@@ -1488,34 +1548,6 @@ main {
   font-size: 8px;
   font-weight: 950;
   letter-spacing: 0;
-}
-
-.fixed-contact-hotspot {
-  position: absolute;
-  top: 11%;
-  bottom: 11%;
-  border-radius: 12px;
-  color: transparent;
-}
-
-.fixed-contact-hotspot:focus-visible {
-  outline: 3px solid #fff100;
-  outline-offset: -4px;
-}
-
-.fixed-contact-phone {
-  left: 53.6%;
-  width: 13.6%;
-}
-
-.fixed-contact-line {
-  left: 69.1%;
-  width: 13.2%;
-}
-
-.fixed-contact-mail {
-  left: 84.4%;
-  width: 13.0%;
 }
 
 .modal {
