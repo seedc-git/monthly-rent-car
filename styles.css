@@ -1426,7 +1426,7 @@ main {
   inset-inline: 0;
   bottom: 0;
   z-index: 80;
-  padding: 0 max(6px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
+  padding: 6px max(6px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
   background: rgba(0, 0, 0, 0.74);
 }
 
