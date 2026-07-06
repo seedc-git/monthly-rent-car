@@ -26,9 +26,7 @@ body {
   margin: 0;
   padding-bottom: 102px;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 8% 18%, rgba(117, 204, 246, 0.22), transparent 28%),
-    linear-gradient(180deg, #f7fcff 0%, var(--paper) 48%, #ffffff 100%);
+  background: #252525;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Yu Gothic",
     YuGothic, Meiryo, sans-serif;
   line-height: 1.75;
@@ -168,6 +166,9 @@ ol {
 
 main {
   padding-top: 82px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(117, 204, 246, 0.22), transparent 28%),
+    linear-gradient(180deg, #f7fcff 0%, var(--paper) 48%, #ffffff 100%);
 }
 
 .line-page {
