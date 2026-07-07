@@ -129,6 +129,61 @@ ol {
   object-position: left center;
 }
 
+.brand-shop-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.brand-shop-header img {
+  width: 224px;
+  height: 58px;
+}
+
+.shop-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 6px 18px 7px;
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  color: var(--navy);
+  background: var(--white);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.shop-label::after {
+  content: "";
+  position: absolute;
+  left: 22%;
+  right: 18%;
+  bottom: -2px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--orange);
+}
+
+.shop-tokorozawa .header-inner {
+  justify-content: space-between;
+}
+
+.shop-tokorozawa .brand-shop-header {
+  max-width: calc(100% - 92px);
+}
+
+.shop-tokorozawa .menu-toggle {
+  display: inline-flex !important;
+  flex: 0 0 auto;
+  min-width: 76px;
+  padding-inline: 14px;
+}
+
 .header-nav {
   margin-left: auto;
   display: flex;
@@ -1955,11 +2010,27 @@ main {
     height: 52px;
   }
 
+  .brand-shop-header {
+    max-width: calc(100% - 96px);
+    gap: 8px;
+  }
+
+  .brand-shop-header img {
+    width: clamp(120px, 34vw, 148px);
+    height: 46px;
+  }
+
+  .shop-label {
+    padding: 5px 12px 6px;
+    font-size: 16px;
+  }
+
   .header-nav {
     display: none;
   }
 
   .menu-toggle {
+    flex: 0 0 auto;
     min-width: 84px;
     height: 46px;
     border: 0;
@@ -2358,6 +2429,21 @@ main {
     height: 52px;
   }
 
+  .brand-shop-header {
+    max-width: calc(100% - 96px);
+    gap: 8px;
+  }
+
+  .brand-shop-header img {
+    width: clamp(120px, 34vw, 148px);
+    height: 46px;
+  }
+
+  .shop-label {
+    padding: 5px 12px 6px;
+    font-size: 16px;
+  }
+
   .header-nav.is-open {
     top: 68px;
   }
@@ -2603,6 +2689,21 @@ main {
 @media (max-width: 390px) {
   .brand img {
     width: 168px;
+  }
+
+  .brand-shop-header {
+    max-width: calc(100% - 90px);
+    gap: 7px;
+  }
+
+  .brand-shop-header img {
+    width: 112px;
+    height: 44px;
+  }
+
+  .shop-label {
+    padding: 5px 9px 6px;
+    font-size: 14px;
   }
 
   .hero h1 {
