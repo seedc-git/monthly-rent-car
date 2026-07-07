@@ -1960,7 +1960,7 @@ main {
   }
 
   .menu-toggle {
-    min-width: 116px;
+    min-width: 84px;
     height: 46px;
     border: 0;
     border-radius: 999px;
@@ -1969,47 +1969,11 @@ main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 9px;
     color: var(--white);
     background: var(--navy);
     font-size: 14px;
     font-weight: 900;
     line-height: 1;
-  }
-
-  .menu-icon {
-    width: 20px;
-    height: 14px;
-    position: relative;
-    display: block;
-  }
-
-  .menu-icon span {
-    width: 20px;
-    height: 2px;
-    border-radius: 999px;
-    background: currentColor;
-    position: absolute;
-    left: 0;
-    transition: transform 0.2s, top 0.2s;
-  }
-
-  .menu-icon span:first-child {
-    top: 2px;
-  }
-
-  .menu-icon span:last-child {
-    top: 10px;
-  }
-
-  .menu-toggle.is-open .menu-icon span:first-child {
-    top: 6px;
-    transform: rotate(45deg);
-  }
-
-  .menu-toggle.is-open .menu-icon span:last-child {
-    top: 6px;
-    transform: rotate(-45deg);
   }
 
   .header-nav.is-open {
@@ -2262,7 +2226,7 @@ main {
   }
 
   .menu-toggle {
-    min-width: 116px;
+    min-width: 84px;
     height: 46px;
     border: 0;
     border-radius: 999px;
@@ -2271,47 +2235,11 @@ main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 9px;
     color: var(--white);
     background: var(--navy);
     font-size: 14px;
     font-weight: 900;
     line-height: 1;
-  }
-
-  .menu-icon {
-    width: 20px;
-    height: 14px;
-    position: relative;
-    display: block;
-  }
-
-  .menu-icon span {
-    width: 20px;
-    height: 2px;
-    border-radius: 999px;
-    background: currentColor;
-    position: absolute;
-    left: 0;
-    transition: transform 0.2s, top 0.2s;
-  }
-
-  .menu-icon span:first-child {
-    top: 2px;
-  }
-
-  .menu-icon span:last-child {
-    top: 10px;
-  }
-
-  .menu-toggle.is-open .menu-icon span:first-child {
-    top: 6px;
-    transform: rotate(45deg);
-  }
-
-  .menu-toggle.is-open .menu-icon span:last-child {
-    top: 6px;
-    transform: rotate(-45deg);
   }
 
   .header-nav.is-open {
