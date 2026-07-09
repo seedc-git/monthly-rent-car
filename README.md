@@ -2,14 +2,30 @@
 
 Static website for 東京マンスリーレンタカー.
 
-## Production files
+## Branches
+
+- `main`: production source for `monthly-rent-car.jp`
+- `staging`: staging source for `stg.monthly-rent-car.jp`
+
+## Production
+
+Production files live at the repository root:
 
 - `index.html`
 - `line.html`
 - `styles.css`
 - `script.js`
 - `assets/`
+- `shop/`
+
+The production site is served from Xserver. Deploying from GitHub to Xserver
+should be handled by GitHub Actions after FTP/SFTP secrets are configured.
 
 ## Staging
 
-The `stg/` directory contains a noindex copy for `stg.monthly-rent-car.jp`.
+The `staging` branch is published by GitHub Pages:
+
+- URL: `https://stg.monthly-rent-car.jp/`
+- GitHub Pages source: `staging` branch, `/`
+
+Staging pages should include `noindex, nofollow`.
