@@ -216,6 +216,16 @@ ol {
   display: none;
 }
 
+.menu-text {
+  display: inline-block;
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.menu-toggle.is-switching .menu-text {
+  opacity: 0;
+  transform: translateY(3px);
+}
+
 .pc-brand-panel,
 .pc-side-menu {
   display: none;

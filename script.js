@@ -1,5 +1,25 @@
 const toggle = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".header-nav");
+const menuText = toggle?.querySelector(".menu-text");
+let menuTextTimer = null;
+
+const updateMenuText = (text, immediate = false) => {
+  if (!toggle || !menuText || menuText.textContent === text) return;
+
+  window.clearTimeout(menuTextTimer);
+
+  if (immediate) {
+    toggle.classList.remove("is-switching");
+    menuText.textContent = text;
+    return;
+  }
+
+  toggle.classList.add("is-switching");
+  menuTextTimer = window.setTimeout(() => {
+    menuText.textContent = text;
+    toggle.classList.remove("is-switching");
+  }, 120);
+};
 
 if (toggle && nav) {
   toggle.addEventListener("click", () => {
@@ -9,6 +29,7 @@ if (toggle && nav) {
     toggle.classList.toggle("is-open", !isOpen);
     nav.classList.toggle("is-open", !isOpen);
     document.body.classList.toggle("nav-open", !isOpen);
+    updateMenuText(!isOpen ? "とじる" : "MENU");
   });
 
   nav.addEventListener("click", (event) => {
@@ -18,6 +39,7 @@ if (toggle && nav) {
       toggle.classList.remove("is-open");
       nav.classList.remove("is-open");
       document.body.classList.remove("nav-open");
+      updateMenuText("MENU", true);
     }
   });
 }
