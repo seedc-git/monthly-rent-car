@@ -2016,8 +2016,8 @@ main {
   }
 
   .brand-shop-header img {
-    width: clamp(120px, 34vw, 148px);
-    height: 46px;
+    width: clamp(154px, 40vw, 178px);
+    height: 50px;
   }
 
   .shop-label {
@@ -2435,8 +2435,8 @@ main {
   }
 
   .brand-shop-header img {
-    width: clamp(120px, 34vw, 148px);
-    height: 46px;
+    width: clamp(154px, 40vw, 178px);
+    height: 50px;
   }
 
   .shop-label {
@@ -2697,8 +2697,8 @@ main {
   }
 
   .brand-shop-header img {
-    width: 112px;
-    height: 44px;
+    width: clamp(130px, 41vw, 164px);
+    height: 48px;
   }
 
   .shop-label {
