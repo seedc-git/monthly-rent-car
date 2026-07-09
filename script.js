@@ -24,7 +24,16 @@ if (toggle && nav) {
 
 const modalOpenButtons = document.querySelectorAll("[data-modal-open]");
 const modalCloseButtons = document.querySelectorAll("[data-modal-close]");
+const storeModalList = document.querySelector("[data-store-modal-list]");
 let activeModal = null;
+
+const syncStoreModal = () => {
+  const storeGrid = document.querySelector("#stores .store-grid");
+  if (!storeGrid || !storeModalList) return;
+
+  const storeCards = Array.from(storeGrid.querySelectorAll("article"));
+  storeModalList.replaceChildren(...storeCards.map((card) => card.cloneNode(true)));
+};
 
 const closeModal = () => {
   if (!activeModal) return;
@@ -38,6 +47,7 @@ modalOpenButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const modal = document.getElementById(button.dataset.modalOpen);
     if (!modal) return;
+    if (button.dataset.modalOpen === "stores-modal") syncStoreModal();
 
     activeModal = modal;
     modal.classList.add("is-open");

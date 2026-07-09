@@ -487,13 +487,26 @@
       </section>
     </div>
 
-    <div class="fixed-contact" aria-label="お問い合わせ">
-      <div class="fixed-contact-frame">
-        <img class="fixed-contact-image" src="assets/cta/mobile_cta_banner.png" alt="空車・料金をまずは確認。電話、LINE、メールでお問い合わせ">
-        <a class="fixed-contact-hotspot fixed-contact-phone" href="tel:05017920800" aria-label="電話で問い合わせ 050-1792-0800"></a>
-        <a class="fixed-contact-hotspot fixed-contact-line line-smart-link" href="https://lin.ee/ojmETte" data-pc-href="line.html" data-mobile-href="https://lin.ee/ojmETte" aria-label="LINEで問い合わせ"></a>
-        <a class="fixed-contact-hotspot fixed-contact-mail" href="https://form.run/@seedc-Xb5O1CDpSXaFYKArxhZ7" target="_blank" rel="noopener" aria-label="メールで問い合わせ"></a>
-      </div>
+    <div class="modal" id="stores-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-modal-close></div>
+      <section class="modal-panel stores-modal-panel" role="dialog" aria-modal="true" aria-labelledby="stores-modal-title" tabindex="-1">
+        <button class="modal-close" type="button" data-modal-close aria-label="閉じる">× 閉じる</button>
+        <div class="modal-head">
+          <span>Stores</span>
+          <h2 id="stores-modal-title">近くの店舗を探す</h2>
+          <p>ご利用しやすいエリアの店舗をお選びください。</p>
+        </div>
+        <div class="store-modal-grid" data-store-modal-list></div>
+      </section>
+    </div>
+
+    <div class="fixed-contact" aria-label="店舗検索">
+      <button class="fixed-contact-store" type="button" data-modal-open="stores-modal">
+        <span class="contact-icon contact-icon-store" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 10.5V20h16v-9.5"/><path d="M3 10.5 5 4h14l2 6.5"/><path d="M8 20v-5h8v5"/><path d="M3 10.5c1.2 1.3 3.1 1.3 4.3 0 1.2 1.3 3.1 1.3 4.3 0 1.2 1.3 3.1 1.3 4.3 0 1.2 1.3 3.1 1.3 4.3 0"/></svg>
+        </span>
+        <span>近くの店舗を探す</span>
+      </button>
     </div>
 
     <script src="script.js"></script>
