@@ -1,30 +1,55 @@
 name: Deploy production to Xserver
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 concurrency:
   group: production-deploy
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
+    name: Upload root site to Xserver
+    if: ${{ github.event_name == 'workflow_dispatch' || vars.PRODUCTION_DEPLOY_ENABLED == 'true' }}
     runs-on: ubuntu-latest
+    environment: production
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare public files
+      - name: Validate deployment secrets
+        env:
+          FTP_SERVER: ${{ secrets.XSERVER_FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.XSERVER_FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.XSERVER_FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.XSERVER_FTP_SERVER_DIR }}
         run: |
-          mkdir _site
-          cp index.html line.html styles.css script.js _site/
-          cp -R assets shop _site/
+          missing=0
+          for name in FTP_SERVER FTP_USERNAME FTP_PASSWORD FTP_SERVER_DIR; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is not configured"
+              missing=1
+            fi
+          done
+          exit "$missing"
 
-      - name: Deploy via FTP
+      - name: Upload to Xserver public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.XSERVER_FTP_SERVER }}
           username: ${{ secrets.XSERVER_FTP_USERNAME }}
           password: ${{ secrets.XSERVER_FTP_PASSWORD }}
           server-dir: ${{ secrets.XSERVER_FTP_SERVER_DIR }}
-          local-dir: ./_site/
+          local-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            README.md
+            .gitignore
+            .DS_Store
+            **/.DS_Store
