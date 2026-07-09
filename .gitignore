@@ -1,0 +1,13 @@
+.DS_Store
+*.zip
+
+# local build / handoff artifacts
+dist-upload/
+handoff/
+output/
+staging/
+staging-subdomain/
+tokyo-monthly-rentacar-site/
+
+# generated helper scripts for one-off assets
+scripts/
