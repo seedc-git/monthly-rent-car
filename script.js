@@ -1,13 +1,11 @@
 const toggle = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".header-nav");
-const menuText = toggle?.querySelector(".menu-text");
 
 if (toggle && nav) {
   toggle.addEventListener("click", () => {
     const isOpen = toggle.getAttribute("aria-expanded") === "true";
     toggle.setAttribute("aria-expanded", String(!isOpen));
     toggle.setAttribute("aria-label", !isOpen ? "メニューを閉じる" : "メニューを開く");
-    if (menuText) menuText.textContent = !isOpen ? "閉じる" : "メニュー";
     toggle.classList.toggle("is-open", !isOpen);
     nav.classList.toggle("is-open", !isOpen);
     document.body.classList.toggle("nav-open", !isOpen);
@@ -17,7 +15,6 @@ if (toggle && nav) {
     if (event.target.closest("a")) {
       toggle.setAttribute("aria-expanded", "false");
       toggle.setAttribute("aria-label", "メニューを開く");
-      if (menuText) menuText.textContent = "メニュー";
       toggle.classList.remove("is-open");
       nav.classList.remove("is-open");
       document.body.classList.remove("nav-open");
