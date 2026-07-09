@@ -1538,7 +1538,7 @@ main {
 }
 
 .contact-icon-store {
-  color: var(--orange);
+  color: #06c755;
   background: var(--white);
 }
 
@@ -1554,7 +1554,7 @@ main {
   justify-content: center;
   gap: 10px;
   color: var(--white);
-  background: linear-gradient(135deg, var(--orange), var(--orange-2));
+  background: #06c755;
   font: inherit;
   font-size: 18px;
   line-height: 1.2;
@@ -1967,18 +1967,22 @@ main {
   }
 
   .pc-contact-button {
+    width: 100%;
     min-height: 62px;
     padding: 14px 22px;
+    border: 0;
     border-radius: 18px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     color: var(--white);
+    font-family: inherit;
     font-size: 18px;
     font-weight: 950;
     line-height: 1.2;
     box-shadow: 0 16px 34px rgba(5, 38, 111, 0.16);
+    cursor: pointer;
   }
 
   .pc-contact-mail {
@@ -1986,6 +1990,10 @@ main {
   }
 
   .pc-contact-line {
+    background: #06c755;
+  }
+
+  .pc-contact-store {
     background: #06c755;
   }
 
