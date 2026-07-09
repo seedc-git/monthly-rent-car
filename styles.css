@@ -2016,7 +2016,7 @@ main {
   }
 
   .pc-contact-store {
-    background: #06c755;
+    background: linear-gradient(135deg, var(--orange), var(--orange-2));
   }
 
   .pc-side-menu {
