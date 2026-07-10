@@ -15,7 +15,6 @@ jobs:
     name: Upload root site to Xserver
     if: ${{ github.event_name == 'workflow_dispatch' || vars.PRODUCTION_DEPLOY_ENABLED == 'true' }}
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
       - name: Checkout
