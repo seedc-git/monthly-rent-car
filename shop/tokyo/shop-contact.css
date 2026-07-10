@@ -1,0 +1,45 @@
+.fixed-contact-frame {
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+  aspect-ratio: 2048 / 304;
+  border-radius: clamp(12px, 3vw, 22px);
+  box-shadow: 0 14px 30px rgba(5, 38, 111, 0.22);
+  overflow: hidden;
+  position: relative;
+}
+
+.fixed-contact-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.fixed-contact-hotspot {
+  position: absolute;
+  top: 11%;
+  bottom: 11%;
+  border-radius: 12px;
+  color: transparent;
+}
+
+.fixed-contact-hotspot:focus-visible {
+  outline: 3px solid #fff100;
+  outline-offset: -4px;
+}
+
+.fixed-contact-phone {
+  left: 53.6%;
+  width: 13.6%;
+}
+
+.fixed-contact-line {
+  left: 69.1%;
+  width: 13.2%;
+}
+
+.fixed-contact-mail {
+  left: 84.4%;
+  width: 13.0%;
+}
