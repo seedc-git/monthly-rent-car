@@ -1316,6 +1316,13 @@ main {
   background: #06c755;
 }
 
+.flow-contact-store {
+  background: var(--navy);
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 .stores {
   background: linear-gradient(180deg, #eef9ff, #f8fdff);
 }
