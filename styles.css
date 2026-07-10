@@ -169,15 +169,15 @@ ol {
   background: var(--orange);
 }
 
-.shop-tokorozawa .header-inner {
+.shop-page .header-inner {
   justify-content: space-between;
 }
 
-.shop-tokorozawa .brand-shop-header {
+.shop-page .brand-shop-header {
   max-width: calc(100% - 92px);
 }
 
-.shop-tokorozawa .menu-toggle {
+.shop-page .menu-toggle {
   display: inline-flex !important;
   flex: 0 0 auto;
   min-width: 76px;
