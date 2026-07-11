@@ -1317,7 +1317,7 @@ main {
 }
 
 .flow-contact-store {
-  background: var(--navy);
+  background: #06c755;
   border: 0;
   cursor: pointer;
   font-family: inherit;
@@ -2023,7 +2023,7 @@ main {
   }
 
   .pc-contact-store {
-    background: linear-gradient(135deg, var(--orange), var(--orange-2));
+    background: #06c755;
   }
 
   .pc-side-menu {
