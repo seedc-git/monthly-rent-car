@@ -1308,6 +1308,10 @@ main {
   box-shadow: 0 12px 24px rgba(5, 38, 111, 0.14);
 }
 
+.flow-contact-phone {
+  background: var(--navy);
+}
+
 .flow-contact-mail {
   background: var(--navy);
 }
