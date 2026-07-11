@@ -19,8 +19,8 @@
 1. `origin/staging` を起点に変更を実装し、`staging` へ push する。
 2. デプロイ完了を待ち、https://stg.monthly-rent-car.jp の該当ページで動作確認する。見た目だけでなく、リンク・ボタン・タップ領域が実際に機能するかまで確認する。
 3. 依頼者に staging の確認用URL一覧を提示し、承認を得る。承認前に `main` に触らない。
-4. 承認後、staging で確認したのと同一の変更だけを `main` に適用して push する。`staging` を `main` に丸ごとマージ・コピーすることは絶対にしない。
-5. 本番デプロイ（Actions: Deploy production to Xserver）の成功を確認し、本番URLで同じ動作確認をする。
+4. 承認後、staging で確認したのと同一の変更だけを main 向けブランチに適用し、`main` への Pull Request を作成する（main への直接 push はブランチ保護で拒否される）。`staging` を `main` に丸ごとマージ・コピーすることは絶対にしない。
+5. 依頼者が GitHub 上で PR を Merge すると本番デプロイが走る。Merge を依頼者に依頼し、デプロイ（Actions: Deploy production to Xserver）の成功を確認して本番URLで同じ動作確認をする。
 6. 完了報告には「変更内容・コミットID・staging と本番それぞれの確認済みURL一覧」を必ず含める。
 
 ## main（本番）に絶対に入れてはいけないもの
