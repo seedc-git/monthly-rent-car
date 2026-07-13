@@ -814,13 +814,18 @@
               display: grid;
               grid-template-columns: 30px minmax(0, 1fr);
               gap: 12px;
-              padding: 18px 14px 19px;
+              padding: 0 14px;
               background: #fffaf0;
               color: #151515;
               border-top: 1px solid rgba(5, 38, 111, 0.08);
               overflow: hidden;
-              transition: height 0.42s ease, opacity 0.32s ease;
+              transition: height 0.42s ease, opacity 0.32s ease, padding-top 0.42s ease, padding-bottom 0.42s ease;
               will-change: height, opacity;
+            }
+
+            .wako-faq-answer.is-expanded {
+              padding-top: 18px;
+              padding-bottom: 19px;
             }
 
             .wako-faq-answer[hidden] {
@@ -1295,6 +1300,14 @@
 
         const items = Array.from(faq.querySelectorAll(".wako-faq-item"));
 
+        const clearAnswerTransition = (answer) => {
+          window.clearTimeout(answer.dataset.faqTimer);
+          if (answer.faqTransitionEnd) {
+            answer.removeEventListener("transitionend", answer.faqTransitionEnd);
+            answer.faqTransitionEnd = null;
+          }
+        };
+
         const setItemOpen = (item, isOpen, animate = true) => {
           const button = item.querySelector(".wako-faq-question");
           const answer = item.querySelector(".wako-faq-answer");
@@ -1305,10 +1318,11 @@
           button.setAttribute("aria-expanded", String(isOpen));
           icon.textContent = isOpen ? "−" : "＋";
 
-          window.clearTimeout(answer.dataset.faqTimer);
+          clearAnswerTransition(answer);
 
           if (!animate) {
             answer.hidden = !isOpen;
+            answer.classList.toggle("is-expanded", isOpen);
             answer.style.height = isOpen ? `${answer.scrollHeight}px` : "0px";
             answer.style.opacity = isOpen ? "1" : "0";
             return;
@@ -1316,28 +1330,30 @@
 
           if (isOpen) {
             answer.hidden = false;
+            answer.classList.remove("is-expanded");
             answer.style.height = "0px";
             answer.style.opacity = "0";
             answer.offsetHeight;
+            answer.classList.add("is-expanded");
             answer.style.height = `${answer.scrollHeight}px`;
             answer.style.opacity = "1";
-            answer.dataset.faqTimer = window.setTimeout(() => {
-              if (item.classList.contains("is-open")) {
-                answer.style.height = `${answer.scrollHeight}px`;
-              }
-            }, 440);
             return;
           }
 
           if (answer.hidden) return;
+          answer.classList.add("is-expanded");
           answer.style.height = `${answer.scrollHeight}px`;
           answer.style.opacity = "1";
           answer.offsetHeight;
+          answer.classList.remove("is-expanded");
           answer.style.height = "0px";
           answer.style.opacity = "0";
-          answer.dataset.faqTimer = window.setTimeout(() => {
+          answer.faqTransitionEnd = (event) => {
+            if (event.target !== answer || event.propertyName !== "height") return;
+            clearAnswerTransition(answer);
             if (!item.classList.contains("is-open")) answer.hidden = true;
-          }, 440);
+          };
+          answer.addEventListener("transitionend", answer.faqTransitionEnd);
         };
 
         items.forEach((item) => {
