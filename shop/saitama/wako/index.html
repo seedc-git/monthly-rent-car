@@ -816,7 +816,7 @@
               background: #fffaf0;
               border-top: 1px solid rgba(5, 38, 111, 0.08);
               overflow: hidden;
-              transition: height 0.42s ease;
+              transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
               will-change: height;
             }
 
@@ -1318,6 +1318,7 @@
         if (!faq) return;
 
         const items = Array.from(faq.querySelectorAll(".wako-faq-item"));
+        let faqActionId = 0;
 
         const clearAnswerTransition = (answer) => {
           if (answer.faqTransitionEnd) {
@@ -1337,7 +1338,7 @@
 
         const setItemOpen = (item, isOpen, animate = true) => {
           const answer = item.querySelector(".wako-faq-answer");
-          if (!answer) return;
+          if (!answer) return Promise.resolve();
 
           clearAnswerTransition(answer);
 
@@ -1345,7 +1346,7 @@
             setItemState(item, isOpen);
             answer.hidden = !isOpen;
             answer.style.height = isOpen ? `${answer.scrollHeight}px` : "0px";
-            return;
+            return Promise.resolve();
           }
 
           if (isOpen) {
@@ -1355,28 +1356,39 @@
             answer.style.height = `${currentHeight}px`;
             answer.offsetHeight;
             answer.style.height = `${answer.scrollHeight}px`;
-            return;
+            return Promise.resolve();
           }
 
           if (answer.hidden) {
             setItemState(item, false);
-            return;
+            return Promise.resolve();
           }
 
-          setItemState(item, false, true);
-          answer.style.height = `${answer.getBoundingClientRect().height}px`;
-          answer.offsetHeight;
-          answer.style.height = "0px";
-          answer.faqTransitionEnd = (event) => {
-            if (event.target !== answer || event.propertyName !== "height") return;
-            clearAnswerTransition(answer);
-            if (!item.classList.contains("is-open")) {
-              setItemState(item, false);
-              answer.hidden = true;
-              answer.style.height = "0px";
-            }
-          };
-          answer.addEventListener("transitionend", answer.faqTransitionEnd);
+          return new Promise((resolve) => {
+            let isResolved = false;
+            const finishClose = () => {
+              if (isResolved) return;
+              isResolved = true;
+              clearAnswerTransition(answer);
+              if (!item.classList.contains("is-open")) {
+                setItemState(item, false);
+                answer.hidden = true;
+                answer.style.height = "0px";
+              }
+              resolve();
+            };
+
+            setItemState(item, false, true);
+            answer.style.height = `${answer.getBoundingClientRect().height}px`;
+            answer.offsetHeight;
+            answer.style.height = "0px";
+            answer.faqTransitionEnd = (event) => {
+              if (event.target !== answer || event.propertyName !== "height") return;
+              finishClose();
+            };
+            answer.addEventListener("transitionend", answer.faqTransitionEnd);
+            window.setTimeout(finishClose, 360);
+          });
         };
 
         items.forEach((item) => {
@@ -1398,9 +1410,12 @@
           const button = item.querySelector(".wako-faq-question");
           if (!button) return;
 
-          button.addEventListener("click", () => {
+          button.addEventListener("click", async () => {
+            const actionId = ++faqActionId;
             const shouldOpen = button.getAttribute("aria-expanded") !== "true";
-            items.forEach((currentItem) => setItemOpen(currentItem, false));
+            const closeTargets = shouldOpen ? items.filter((currentItem) => currentItem !== item) : [item];
+            await Promise.all(closeTargets.map((currentItem) => setItemOpen(currentItem, false)));
+            if (actionId !== faqActionId) return;
             if (shouldOpen) setItemOpen(item, true);
           });
         });
