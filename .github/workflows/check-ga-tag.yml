@@ -1,0 +1,28 @@
+name: Check GA tag
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - staging
+
+jobs:
+  check-ga-tag:
+    name: check-ga-tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Every HTML page must include the GA4 tag
+        run: |
+          missing=0
+          while IFS= read -r -d '' f; do
+            if ! grep -q 'G-501JL6QG1N' "$f"; then
+              echo "::error file=$f::GA4 tag (G-501JL6QG1N) missing"
+              missing=1
+            fi
+          done < <(find . -name '*.html' -not -path './.git/*' -print0)
+          exit $missing
