@@ -739,8 +739,7 @@
               box-shadow: 0 8px 22px rgba(5, 38, 111, 0.06);
             }
 
-            .wako-faq-item.is-open,
-            .wako-faq-item.is-closing {
+            .wako-faq-item.is-open {
               border-color: rgba(5, 38, 111, 0.22);
             }
 
@@ -760,8 +759,7 @@
               cursor: pointer;
             }
 
-            .wako-faq-item.is-open .wako-faq-question,
-            .wako-faq-item.is-closing .wako-faq-question {
+            .wako-faq-item.is-open .wako-faq-question {
               background: var(--navy);
               color: var(--white);
             }
@@ -779,8 +777,7 @@
               line-height: 1;
             }
 
-            .wako-faq-item.is-open .wako-faq-number,
-            .wako-faq-item.is-closing .wako-faq-number {
+            .wako-faq-item.is-open .wako-faq-number {
               background: var(--white);
               color: var(--navy);
             }
@@ -807,8 +804,7 @@
               line-height: 1;
             }
 
-            .wako-faq-item.is-open .wako-faq-toggle,
-            .wako-faq-item.is-closing .wako-faq-toggle {
+            .wako-faq-item.is-open .wako-faq-toggle {
               background: var(--white);
               border-color: var(--white);
               color: var(--navy);
@@ -1333,7 +1329,7 @@
           item.classList.toggle("is-open", isOpen);
           item.classList.toggle("is-closing", isClosing);
           if (button) button.setAttribute("aria-expanded", String(isOpen));
-          if (icon) icon.textContent = isOpen || isClosing ? "−" : "＋";
+          if (icon) icon.textContent = isOpen ? "−" : "＋";
         };
 
         const setItemOpen = (item, isOpen, animate = true) => {
