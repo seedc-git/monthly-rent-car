@@ -64,11 +64,12 @@
 
     <nav class="pc-side-menu" aria-label="サイトメニュー">
       <p>メニュー</p>
-      <a href="#area">対応エリア</a>
+      <a href="#area">大宮店について</a>
       <a href="#price">車種・料金</a>
       <a href="#features">特徴</a>
       <a href="#flow">ご利用の流れ</a>
       <a href="#voice">お客様の声</a>
+      <a href="#faq">大宮店のよくある質問</a>
       <a href="#stores">店舗一覧</a>
     </nav>
 
@@ -79,11 +80,12 @@
           <span class="shop-label">大宮店</span>
         </a>
         <nav class="header-nav" id="global-nav" aria-label="グローバルナビゲーション">
-          <a href="#area">対応エリア</a>
+          <a href="#area">大宮店について</a>
           <a href="#price">料金</a>
           <a href="#features">特徴</a>
           <a href="#flow">ご利用の流れ</a>
           <a href="#voice">お客様の声</a>
+          <a href="#faq">大宮店のよくある質問</a>
           <a href="#stores">店舗一覧</a>
         </nav>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開く">
@@ -106,13 +108,276 @@
 
       <section class="section service-area" id="area">
         <div class="inner">
-          <div class="section-head">
-            <h2>対応エリア</h2>
-            <p>店舗引き取りのほか、無料での車両お届け、引き取りサービスを行っております。（別途、利用条件あり）</p>
-          </div>
-          <div class="area-layout">
-            <div class="area-map-card">
-              <img class="area-map" src="../../../assets/img/area-map-no-chiba.png" alt="東京・神奈川・埼玉の対応エリア地図">
+          <style>
+            .omiya-access-card {
+              padding: clamp(14px, 3vw, 22px);
+              border: 1px solid var(--line);
+              border-radius: 18px;
+              background: rgba(255, 255, 255, 0.96);
+              box-shadow: var(--shadow);
+            }
+
+            .omiya-access-card .section-head {
+              margin-bottom: 18px;
+            }
+
+            .omiya-access-card .section-head h2 {
+              font-size: clamp(20px, 3vw, 24px);
+            }
+
+            .omiya-access-card .section-head h2::after {
+              width: 38px;
+              height: 3px;
+              margin-top: 10px;
+            }
+
+            .omiya-access-main-photo,
+            .omiya-access-photo {
+              display: grid;
+              place-items: center;
+              border: 1px solid rgba(5, 38, 111, 0.12);
+              border-radius: 10px;
+              background:
+                linear-gradient(135deg, rgba(238, 249, 255, 0.95), rgba(255, 255, 255, 0.95)),
+                repeating-linear-gradient(135deg, rgba(5, 38, 111, 0.06) 0 1px, transparent 1px 14px);
+              color: var(--navy);
+              font-weight: 700;
+              text-align: center;
+            }
+
+            .omiya-access-main-photo {
+              display: block;
+              width: 100%;
+              aspect-ratio: 16 / 9;
+              min-height: 0;
+              height: auto;
+              object-fit: cover;
+              margin-bottom: 12px;
+              font-size: clamp(13px, 1.6vw, 16px);
+            }
+
+            .omiya-access-info {
+              overflow: hidden;
+              border: 1px solid var(--line);
+              border-radius: 10px;
+              background: var(--white);
+            }
+
+            .omiya-access-row {
+              display: grid;
+              grid-template-columns: 28px minmax(0, 1fr);
+              gap: 8px;
+              align-items: center;
+              padding: clamp(10px, 2vw, 14px);
+              border-top: 1px solid var(--line);
+            }
+
+            .omiya-access-row > div,
+            .omiya-access-cell > div {
+              min-width: 0;
+            }
+
+            .omiya-access-row:first-child {
+              border-top: 0;
+            }
+
+            .omiya-access-row.is-split {
+              grid-template-columns: 1fr 1fr;
+              gap: 0;
+              padding: 0;
+            }
+
+            .omiya-access-cell {
+              display: grid;
+              grid-template-columns: 28px minmax(0, 1fr);
+              gap: 8px;
+              align-items: center;
+              padding: clamp(10px, 2vw, 14px);
+            }
+
+            .omiya-access-cell + .omiya-access-cell {
+              border-left: 1px solid var(--line);
+            }
+
+            .omiya-access-icon {
+              width: 24px;
+              color: var(--navy);
+            }
+
+            .omiya-access-icon svg {
+              display: block;
+              width: 100%;
+              height: auto;
+              fill: currentColor;
+            }
+
+            .omiya-access-label {
+              display: block;
+              color: var(--navy);
+              font-size: clamp(13px, 1.7vw, 15px);
+              font-weight: 700;
+              line-height: 1.35;
+            }
+
+            .omiya-access-text {
+              margin-top: 6px;
+              color: #151515;
+              font-size: clamp(12px, 1.55vw, 14px);
+              font-weight: 500;
+              line-height: 1.45;
+              overflow-wrap: anywhere;
+            }
+
+            .omiya-gallery-title {
+              display: grid;
+              grid-template-columns: 1fr auto 1fr;
+              gap: 12px;
+              align-items: center;
+              margin: 16px 0 12px;
+              color: var(--navy);
+              font-size: clamp(15px, 2vw, 18px);
+              font-weight: 800;
+              text-align: center;
+            }
+
+            .omiya-gallery-title::before,
+            .omiya-gallery-title::after {
+              content: "";
+              height: 2px;
+              background: var(--line);
+            }
+
+            .omiya-gallery {
+              position: relative;
+              overflow: hidden;
+              margin-inline: -4px;
+              padding-inline: 4px;
+            }
+
+            .omiya-gallery-track {
+              display: grid;
+            }
+
+            .omiya-access-photo {
+              display: block;
+              width: 100%;
+              aspect-ratio: 16 / 9;
+              height: auto;
+              object-fit: cover;
+              font-size: 0;
+            }
+
+            .omiya-gallery figure {
+              grid-area: 1 / 1;
+              margin: 0;
+              opacity: 0;
+              transition: opacity 1.2s ease;
+              animation: omiya-gallery-switch 12s infinite;
+            }
+
+            .omiya-gallery figure:nth-child(2) {
+              animation-delay: 4s;
+            }
+
+            .omiya-gallery figure:nth-child(3) {
+              animation-delay: 8s;
+            }
+
+            .omiya-gallery figcaption {
+              display: none;
+            }
+
+            @keyframes omiya-gallery-switch {
+              0% {
+                opacity: 0;
+              }
+
+              8%,
+              42% {
+                opacity: 1;
+              }
+
+              50%,
+              100% {
+                opacity: 0;
+              }
+            }
+
+            @media (max-width: 760px) {
+              .omiya-access-card {
+                padding: 14px 10px;
+              }
+
+              .omiya-access-cell {
+                grid-template-columns: 24px minmax(0, 1fr);
+                gap: 7px;
+              }
+            }
+          </style>
+
+          <div class="omiya-access-card">
+            <div class="section-head">
+              <h2>埼玉｜大宮店</h2>
+            </div>
+
+            <img class="omiya-access-main-photo" src="../../../assets/img/wako-store-exterior.png" alt="埼玉マンスリーレンタカー大宮店の店舗イメージ">
+
+            <div class="omiya-access-info">
+              <div class="omiya-access-row">
+                <span class="omiya-access-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+                </span>
+                <div>
+                  <span class="omiya-access-label">受け渡しエリア</span>
+                  <p class="omiya-access-text">大宮駅周辺での受け渡しに対応しています。</p>
+                </div>
+              </div>
+
+              <div class="omiya-access-row">
+                <span class="omiya-access-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M7 2h10a2 2 0 0 1 2 2v9.5a4.5 4.5 0 0 1-3.5 4.4l2.1 2.1-1.5 1.5-3-3h-2.2l-3 3-1.5-1.5 2.1-2.1A4.5 4.5 0 0 1 5 13.5V4a2 2 0 0 1 2-2Zm0 2v5h10V4H7Zm0 7v2.5A2.5 2.5 0 0 0 9.5 16h5a2.5 2.5 0 0 0 2.5-2.5V11H7Zm2.5 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"/></svg>
+                </span>
+                <div>
+                  <span class="omiya-access-label">最寄駅</span>
+                  <p class="omiya-access-text">大宮駅</p>
+                </div>
+              </div>
+
+              <div class="omiya-access-row is-split">
+                <div class="omiya-access-cell">
+                  <span class="omiya-access-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm1-13h-2v6l5 3 .9-1.6-3.9-2.3V7Z"/></svg>
+                  </span>
+                  <div>
+                    <span class="omiya-access-label">営業時間</span>
+                    <p class="omiya-access-text">10:00〜19:00</p>
+                  </div>
+                </div>
+                <div class="omiya-access-cell">
+                  <span class="omiya-access-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M7 2h2v3h6V2h2v3h3v17H4V5h3V2Zm11 8H6v10h12V10ZM6 8h12V7H6v1Z"/></svg>
+                  </span>
+                  <div>
+                    <span class="omiya-access-label">定休日</span>
+                    <p class="omiya-access-text">無休</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="omiya-gallery-title">大宮店の様子</div>
+            <div class="omiya-gallery">
+              <div class="omiya-gallery-track">
+                <figure>
+                  <img class="omiya-access-photo" src="../../../assets/img/wako-store-gallery-01.png" alt="埼玉マンスリーレンタカー大宮店の様子 1">
+                </figure>
+                <figure>
+                  <img class="omiya-access-photo" src="../../../assets/img/wako-store-gallery-02.png" alt="埼玉マンスリーレンタカー大宮店の様子 2">
+                </figure>
+                <figure>
+                  <img class="omiya-access-photo" src="../../../assets/img/wako-store-gallery-03.png" alt="埼玉マンスリーレンタカー大宮店の様子 3">
+                </figure>
+              </div>
             </div>
           </div>
         </div>
@@ -349,6 +614,350 @@
         </div>
       </section>
 
+      <section class="section omiya-faq" id="faq" aria-labelledby="omiya-faq-title">
+        <div class="inner">
+          <style>
+            .omiya-faq {
+              background: linear-gradient(180deg, rgba(239, 250, 255, 0.9), rgba(255, 255, 255, 0.98));
+            }
+
+            .omiya-faq .section-head {
+              margin-bottom: 22px;
+            }
+
+            .omiya-faq .section-head h2 {
+              font-size: clamp(24px, 5.8vw, 34px);
+              letter-spacing: 0;
+            }
+
+            .omiya-faq .section-head h2::after {
+              width: 42px;
+              height: 3px;
+              margin-top: 10px;
+              background: var(--orange);
+            }
+
+            .omiya-faq .section-head p {
+              max-width: 620px;
+              margin-inline: auto;
+              font-size: clamp(13px, 3.3vw, 16px);
+              line-height: 1.8;
+            }
+
+            .omiya-faq-list {
+              display: grid;
+              gap: 10px;
+            }
+
+            .omiya-faq-item {
+              overflow: hidden;
+              border: 1px solid rgba(5, 38, 111, 0.16);
+              border-radius: 7px;
+              background: var(--white);
+              box-shadow: 0 8px 22px rgba(5, 38, 111, 0.06);
+            }
+
+            .omiya-faq-item.is-open {
+              border-color: rgba(5, 38, 111, 0.22);
+            }
+
+            .omiya-faq-question {
+              width: 100%;
+              min-height: 58px;
+              padding: 13px 12px;
+              border: 0;
+              display: grid;
+              grid-template-columns: 36px minmax(0, 1fr) 28px;
+              gap: 10px;
+              align-items: center;
+              background: var(--white);
+              color: var(--navy);
+              font: inherit;
+              text-align: left;
+              cursor: pointer;
+            }
+
+            .omiya-faq-item.is-open .omiya-faq-question {
+              background: var(--navy);
+              color: var(--white);
+            }
+
+            .omiya-faq-number {
+              width: 34px;
+              height: 34px;
+              border-radius: 50%;
+              display: grid;
+              place-items: center;
+              background: var(--navy);
+              color: var(--white);
+              font-size: 14px;
+              font-weight: 800;
+              line-height: 1;
+            }
+
+            .omiya-faq-item.is-open .omiya-faq-number {
+              background: var(--white);
+              color: var(--navy);
+            }
+
+            .omiya-faq-question-text {
+              min-width: 0;
+              font-size: clamp(14px, 3.45vw, 17px);
+              font-weight: 800;
+              line-height: 1.55;
+              letter-spacing: 0;
+            }
+
+            .omiya-faq-toggle {
+              width: 24px;
+              height: 24px;
+              border: 1.5px solid currentColor;
+              border-radius: 50%;
+              display: grid;
+              place-items: center;
+              justify-self: end;
+              color: var(--navy);
+              font-size: 20px;
+              font-weight: 700;
+              line-height: 1;
+            }
+
+            .omiya-faq-item.is-open .omiya-faq-toggle {
+              background: var(--white);
+              border-color: var(--white);
+              color: var(--navy);
+            }
+
+            .omiya-faq-answer {
+              background: #fffaf0;
+              border-top: 1px solid rgba(5, 38, 111, 0.08);
+              overflow: hidden;
+              transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              will-change: height;
+            }
+
+            .omiya-faq-answer[hidden] {
+              display: none;
+            }
+
+            .omiya-faq-answer-body {
+              display: grid;
+              grid-template-columns: 30px minmax(0, 1fr);
+              gap: 12px;
+              padding: 18px 14px 19px;
+              color: #151515;
+            }
+
+            .omiya-faq-answer-label {
+              width: 26px;
+              height: 26px;
+              border-radius: 50%;
+              display: grid;
+              place-items: center;
+              background: var(--orange);
+              color: var(--white);
+              font-size: 13px;
+              font-weight: 800;
+              line-height: 1;
+            }
+
+            .omiya-faq-answer p {
+              color: #151515;
+              font-size: clamp(13px, 3.3vw, 15px);
+              font-weight: 500;
+              line-height: 1.85;
+            }
+
+            @media (min-width: 768px) {
+              .omiya-faq-list {
+                gap: 12px;
+              }
+
+              .omiya-faq-question {
+                min-height: 64px;
+                padding: 15px 18px;
+                grid-template-columns: 42px minmax(0, 1fr) 32px;
+                gap: 14px;
+              }
+
+              .omiya-faq-number {
+                width: 38px;
+                height: 38px;
+                font-size: 15px;
+              }
+
+              .omiya-faq-toggle {
+                width: 28px;
+                height: 28px;
+              }
+
+              .omiya-faq-answer-body {
+                grid-template-columns: 34px minmax(0, 1fr);
+                gap: 14px;
+                padding: 20px 22px 22px;
+              }
+
+              .omiya-faq-answer-label {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+              }
+            }
+          </style>
+
+          <div class="section-head">
+            <h2 id="omiya-faq-title">大宮店のよくある質問</h2>
+            <p>埼玉マンスリーレンタカー大宮店の利用期間や受け渡し、車種など、よくあるご質問をご案内します。</p>
+          </div>
+
+          <div class="omiya-faq-list">
+            <article class="omiya-faq-item is-open">
+              <h3>
+                <button class="omiya-faq-question" type="button" id="omiya-faq-question-1" aria-expanded="true" aria-controls="omiya-faq-answer-1">
+                  <span class="omiya-faq-number" aria-hidden="true">Q1</span>
+                  <span class="omiya-faq-question-text">大宮店では、マンスリーレンタカーを1ヶ月だけ利用できますか？</span>
+                  <span class="omiya-faq-toggle" aria-hidden="true">−</span>
+                </button>
+              </h3>
+              <div class="omiya-faq-answer" id="omiya-faq-answer-1" role="region" aria-labelledby="omiya-faq-question-1">
+                <div class="omiya-faq-answer-body">
+                  <span class="omiya-faq-answer-label" aria-hidden="true">A</span>
+                  <p>はい、1ヶ月からご利用いただけます。利用開始日と利用予定期間をお知らせいただければ、ご案内可能な車両を確認します。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="omiya-faq-item">
+              <h3>
+                <button class="omiya-faq-question" type="button" id="omiya-faq-question-2" aria-expanded="false" aria-controls="omiya-faq-answer-2">
+                  <span class="omiya-faq-number" aria-hidden="true">Q2</span>
+                  <span class="omiya-faq-question-text">大宮駅で車を受け取れますか？</span>
+                  <span class="omiya-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="omiya-faq-answer" id="omiya-faq-answer-2" role="region" aria-labelledby="omiya-faq-question-2" hidden>
+                <div class="omiya-faq-answer-body">
+                  <span class="omiya-faq-answer-label" aria-hidden="true">A</span>
+                  <p>はい、大宮駅周辺での受け渡しにも対応しています。具体的な待ち合わせ場所と時間は、ご予約時にご案内します。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="omiya-faq-item">
+              <h3>
+                <button class="omiya-faq-question" type="button" id="omiya-faq-question-3" aria-expanded="false" aria-controls="omiya-faq-answer-3">
+                  <span class="omiya-faq-number" aria-hidden="true">Q3</span>
+                  <span class="omiya-faq-question-text">大宮周辺の指定場所まで車を届けてもらえますか？</span>
+                  <span class="omiya-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="omiya-faq-answer" id="omiya-faq-answer-3" role="region" aria-labelledby="omiya-faq-question-3" hidden>
+                <div class="omiya-faq-answer-body">
+                  <span class="omiya-faq-answer-label" aria-hidden="true">A</span>
+                  <p>はい、無料〜で承っております。配送先によって対応可否と配送料が異なります。ご希望の住所や最寄り駅をお知らせいただければ、配送可能か確認します。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="omiya-faq-item">
+              <h3>
+                <button class="omiya-faq-question" type="button" id="omiya-faq-question-4" aria-expanded="false" aria-controls="omiya-faq-answer-4">
+                  <span class="omiya-faq-number" aria-hidden="true">Q4</span>
+                  <span class="omiya-faq-question-text">大宮店でマンスリーレンタカーを借りる場合、料金はいくらですか？</span>
+                  <span class="omiya-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="omiya-faq-answer" id="omiya-faq-answer-4" role="region" aria-labelledby="omiya-faq-question-4" hidden>
+                <div class="omiya-faq-answer-body">
+                  <span class="omiya-faq-answer-label" aria-hidden="true">A</span>
+                  <p>車両クラス、利用期間、利用開始日、受け渡し方法などによって料金が異なります。ご希望の条件を確認後、ご案内可能な車両と料金をお伝えします。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="omiya-faq-item">
+              <h3>
+                <button class="omiya-faq-question" type="button" id="omiya-faq-question-5" aria-expanded="false" aria-controls="omiya-faq-answer-5">
+                  <span class="omiya-faq-number" aria-hidden="true">Q5</span>
+                  <span class="omiya-faq-question-text">大宮店で借りる車種を指定できますか？</span>
+                  <span class="omiya-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="omiya-faq-answer" id="omiya-faq-answer-5" role="region" aria-labelledby="omiya-faq-question-5" hidden>
+                <div class="omiya-faq-answer-body">
+                  <span class="omiya-faq-answer-label" aria-hidden="true">A</span>
+                  <p>ご希望の車種クラスはお伺いできますが、車種の指定は難しくなっております。まずはご希望をお知らせください。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="omiya-faq-item">
+              <h3>
+                <button class="omiya-faq-question" type="button" id="omiya-faq-question-6" aria-expanded="false" aria-controls="omiya-faq-answer-6">
+                  <span class="omiya-faq-number" aria-hidden="true">Q6</span>
+                  <span class="omiya-faq-question-text">個人・法人のどちらでも利用できますか？</span>
+                  <span class="omiya-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="omiya-faq-answer" id="omiya-faq-answer-6" role="region" aria-labelledby="omiya-faq-question-6" hidden>
+                <div class="omiya-faq-answer-body">
+                  <span class="omiya-faq-answer-label" aria-hidden="true">A</span>
+                  <p>個人・法人のどちらでもご相談いただけます。日常利用や通勤のほか、社用車、営業車、短期プロジェクト用の車両としてもご利用いただけます。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="omiya-faq-item">
+              <h3>
+                <button class="omiya-faq-question" type="button" id="omiya-faq-question-7" aria-expanded="false" aria-controls="omiya-faq-answer-7">
+                  <span class="omiya-faq-number" aria-hidden="true">Q7</span>
+                  <span class="omiya-faq-question-text">車の修理中や納車待ちの期間だけ利用できますか？</span>
+                  <span class="omiya-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="omiya-faq-answer" id="omiya-faq-answer-7" role="region" aria-labelledby="omiya-faq-question-7" hidden>
+                <div class="omiya-faq-answer-body">
+                  <span class="omiya-faq-answer-label" aria-hidden="true">A</span>
+                  <p>はい、修理期間中や新しい車の納車待ちなど、一時的に車が必要な場合にもご利用いただけます。利用期間が未確定の場合も、予定している期間をもとにご相談ください。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="omiya-faq-item">
+              <h3>
+                <button class="omiya-faq-question" type="button" id="omiya-faq-question-8" aria-expanded="false" aria-controls="omiya-faq-answer-8">
+                  <span class="omiya-faq-number" aria-hidden="true">Q8</span>
+                  <span class="omiya-faq-question-text">1ヶ月の契約後に利用期間を延長できますか？</span>
+                  <span class="omiya-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="omiya-faq-answer" id="omiya-faq-answer-8" role="region" aria-labelledby="omiya-faq-question-8" hidden>
+                <div class="omiya-faq-answer-body">
+                  <span class="omiya-faq-answer-label" aria-hidden="true">A</span>
+                  <p>空車状況や次の予約状況によっては延長できます。延長の可能性がある場合は、予定が分かった時点で早めにご相談ください。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="omiya-faq-item">
+              <h3>
+                <button class="omiya-faq-question" type="button" id="omiya-faq-question-9" aria-expanded="false" aria-controls="omiya-faq-answer-9">
+                  <span class="omiya-faq-number" aria-hidden="true">Q9</span>
+                  <span class="omiya-faq-question-text">問い合わせ後、最短でいつから利用できますか？</span>
+                  <span class="omiya-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="omiya-faq-answer" id="omiya-faq-answer-9" role="region" aria-labelledby="omiya-faq-question-9" hidden>
+                <div class="omiya-faq-answer-body">
+                  <span class="omiya-faq-answer-label" aria-hidden="true">A</span>
+                  <p>利用開始日は、空車状況や契約手続きの進行状況によって異なります。ご希望日をお知らせいただければ、最短でご案内できる日程を確認します。</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="section stores" id="stores">
         <div class="inner">
           <div class="section-head">
@@ -389,11 +998,12 @@
       <div class="inner footer-inner">
         <a class="footer-logo" href="#top"><img src="../../../assets/img/saitama-monthly-logo.png" alt="埼玉マンスリーレンタカー"></a>
         <nav aria-label="フッターナビゲーション">
-          <a href="#area">対応エリア</a>
+          <a href="#area">大宮店について</a>
           <a href="#price">料金</a>
           <a href="#features">特徴</a>
           <a href="#flow">ご利用の流れ</a>
           <a href="#voice">お客様の声</a>
+          <a href="#faq">大宮店のよくある質問</a>
           <a href="#stores">店舗一覧</a>
         </nav>
         <small>Copyright 2026 Monthly Rent-a-Car. All Rights Reserved.</small>
@@ -534,6 +1144,115 @@
       </div>
     </div>
 
+    <script>
+      (() => {
+        const faq = document.querySelector(".omiya-faq");
+        if (!faq) return;
+
+        const items = Array.from(faq.querySelectorAll(".omiya-faq-item"));
+        let faqActionId = 0;
+
+        const clearAnswerTransition = (answer) => {
+          if (answer.faqTransitionEnd) {
+            answer.removeEventListener("transitionend", answer.faqTransitionEnd);
+            answer.faqTransitionEnd = null;
+          }
+        };
+
+        const setItemState = (item, isOpen, isClosing = false) => {
+          const button = item.querySelector(".omiya-faq-question");
+          const icon = item.querySelector(".omiya-faq-toggle");
+          item.classList.toggle("is-open", isOpen);
+          item.classList.toggle("is-closing", isClosing);
+          if (button) button.setAttribute("aria-expanded", String(isOpen));
+          if (icon) icon.textContent = isOpen ? "−" : "＋";
+        };
+
+        const setItemOpen = (item, isOpen, animate = true) => {
+          const answer = item.querySelector(".omiya-faq-answer");
+          if (!answer) return Promise.resolve();
+
+          clearAnswerTransition(answer);
+
+          if (!animate) {
+            setItemState(item, isOpen);
+            answer.hidden = !isOpen;
+            answer.style.height = isOpen ? `${answer.scrollHeight}px` : "0px";
+            return Promise.resolve();
+          }
+
+          if (isOpen) {
+            const currentHeight = answer.hidden ? 0 : answer.getBoundingClientRect().height;
+            setItemState(item, true);
+            answer.hidden = false;
+            answer.style.height = `${currentHeight}px`;
+            answer.offsetHeight;
+            answer.style.height = `${answer.scrollHeight}px`;
+            return Promise.resolve();
+          }
+
+          if (answer.hidden) {
+            setItemState(item, false);
+            return Promise.resolve();
+          }
+
+          return new Promise((resolve) => {
+            let isResolved = false;
+            const finishClose = () => {
+              if (isResolved) return;
+              isResolved = true;
+              clearAnswerTransition(answer);
+              if (!item.classList.contains("is-open")) {
+                setItemState(item, false);
+                answer.hidden = true;
+                answer.style.height = "0px";
+              }
+              resolve();
+            };
+
+            setItemState(item, false, true);
+            answer.style.height = `${answer.getBoundingClientRect().height}px`;
+            answer.offsetHeight;
+            answer.style.height = "0px";
+            answer.faqTransitionEnd = (event) => {
+              if (event.target !== answer || event.propertyName !== "height") return;
+              finishClose();
+            };
+            answer.addEventListener("transitionend", answer.faqTransitionEnd);
+            window.setTimeout(finishClose, 360);
+          });
+        };
+
+        items.forEach((item) => {
+          setItemOpen(item, item.classList.contains("is-open"), false);
+        });
+
+        const syncOpenAnswerHeights = () => {
+          items.forEach((item) => {
+            if (!item.classList.contains("is-open")) return;
+            const answer = item.querySelector(".omiya-faq-answer");
+            if (!answer || answer.hidden) return;
+            answer.style.height = `${answer.scrollHeight}px`;
+          });
+        };
+
+        window.addEventListener("resize", syncOpenAnswerHeights);
+
+        items.forEach((item) => {
+          const button = item.querySelector(".omiya-faq-question");
+          if (!button) return;
+
+          button.addEventListener("click", async () => {
+            const actionId = ++faqActionId;
+            const shouldOpen = button.getAttribute("aria-expanded") !== "true";
+            const closeTargets = shouldOpen ? items.filter((currentItem) => currentItem !== item) : [item];
+            await Promise.all(closeTargets.map((currentItem) => setItemOpen(currentItem, false)));
+            if (actionId !== faqActionId) return;
+            if (shouldOpen) setItemOpen(item, true);
+          });
+        });
+      })();
+    </script>
     <script src="../../../script.js"></script>
   </body>
 </html>
