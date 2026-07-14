@@ -181,6 +181,22 @@
               border-top: 0;
             }
 
+            .omiya-access-row.is-address {
+              grid-template-columns: 24px minmax(0, 1fr);
+              align-items: start;
+            }
+
+            .omiya-address-content {
+              min-width: 0;
+            }
+
+            .omiya-address-head {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            }
+
             .omiya-access-row.is-split {
               grid-template-columns: 1fr 1fr;
               gap: 0;
@@ -226,6 +242,31 @@
               font-weight: 500;
               line-height: 1.45;
               overflow-wrap: anywhere;
+            }
+
+            .omiya-map-button {
+              flex: 0 0 auto;
+              width: fit-content;
+              min-width: 68px;
+              min-height: 30px;
+              margin-left: auto;
+              margin-right: 0;
+              margin-top: 0;
+              padding: 0 9px;
+              border: 2px solid var(--navy);
+              border-radius: 7px;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              gap: 6px;
+              color: var(--navy);
+              font-size: 13px;
+              font-weight: 700;
+            }
+
+            .omiya-map-button svg {
+              width: 14px;
+              fill: currentColor;
             }
 
             .omiya-gallery-title {
@@ -308,9 +349,17 @@
                 padding: 14px 10px;
               }
 
+              .omiya-access-row.is-address {
+                grid-template-columns: 24px minmax(0, 1fr);
+              }
+
               .omiya-access-cell {
                 grid-template-columns: 24px minmax(0, 1fr);
                 gap: 7px;
+              }
+
+              .omiya-map-button {
+                margin-right: 0;
               }
             }
           </style>
@@ -323,13 +372,19 @@
             <img class="omiya-access-main-photo" src="../../../assets/img/wako-store-exterior.png" alt="埼玉マンスリーレンタカー大宮店の店舗イメージ">
 
             <div class="omiya-access-info">
-              <div class="omiya-access-row">
+              <div class="omiya-access-row is-address">
                 <span class="omiya-access-icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
                 </span>
-                <div>
-                  <span class="omiya-access-label">受け渡しエリア</span>
-                  <p class="omiya-access-text">大宮駅周辺での受け渡しに対応しています。</p>
+                <div class="omiya-address-content">
+                  <div class="omiya-address-head">
+                    <span class="omiya-access-label">住所</span>
+                    <a class="omiya-map-button" href="https://maps.app.goo.gl/5sY7SC9XVLdPpFbH7" target="_blank" rel="noopener">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+                      MAP
+                    </a>
+                  </div>
+                  <p class="omiya-access-text">〒330-0854<br>埼玉県さいたま市大宮区桜木町1-7-5 ソニックシティビル</p>
                 </div>
               </div>
 
@@ -339,7 +394,7 @@
                 </span>
                 <div>
                   <span class="omiya-access-label">最寄駅</span>
-                  <p class="omiya-access-text">大宮駅</p>
+                  <p class="omiya-access-text">大宮駅 徒歩6分</p>
                 </div>
               </div>
 
