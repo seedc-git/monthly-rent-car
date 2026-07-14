@@ -2071,6 +2071,13 @@ main {
     line-height: 1.35;
   }
 
+  .pc-side-menu .shop-menu-faq,
+  .site-footer nav .shop-menu-faq {
+    white-space: nowrap;
+    font-size: 14px;
+    letter-spacing: 0;
+  }
+
   .pc-side-menu a:hover {
     color: var(--orange);
     border-left-color: var(--orange);
