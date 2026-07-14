@@ -63,11 +63,12 @@
 
     <nav class="pc-side-menu" aria-label="サイトメニュー">
       <p>メニュー</p>
-      <a href="#area">対応エリア</a>
+      <a href="#area">所沢店について</a>
       <a href="#price">車種・料金</a>
       <a href="#features">特徴</a>
       <a href="#flow">ご利用の流れ</a>
       <a href="#voice">お客様の声</a>
+      <a href="#faq">所沢店のよくある質問</a>
       <a href="#stores">店舗一覧</a>
     </nav>
 
@@ -78,11 +79,12 @@
           <span class="shop-label">所沢店</span>
         </a>
         <nav class="header-nav" id="global-nav" aria-label="グローバルナビゲーション">
-          <a href="#area">対応エリア</a>
+          <a href="#area">所沢店について</a>
           <a href="#price">料金</a>
           <a href="#features">特徴</a>
           <a href="#flow">ご利用の流れ</a>
           <a href="#voice">お客様の声</a>
+          <a href="#faq">所沢店のよくある質問</a>
           <a href="#stores">店舗一覧</a>
         </nav>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開く">
@@ -105,13 +107,331 @@
 
       <section class="section service-area" id="area">
         <div class="inner">
-          <div class="section-head">
-            <h2>対応エリア</h2>
-            <p>店舗引き取りのほか、無料での車両お届け、引き取りサービスを行っております。（別途、利用条件あり）</p>
-          </div>
-          <div class="area-layout">
-            <div class="area-map-card">
-              <img class="area-map" src="../../../assets/img/area-map-no-chiba.png" alt="東京・神奈川・埼玉の対応エリア地図">
+          <style>
+            .tokorozawa-access-card {
+              padding: clamp(14px, 3vw, 22px);
+              border: 1px solid var(--line);
+              border-radius: 18px;
+              background: rgba(255, 255, 255, 0.96);
+              box-shadow: var(--shadow);
+            }
+
+            .tokorozawa-access-card .section-head {
+              margin-bottom: 18px;
+            }
+
+            .tokorozawa-access-card .section-head h2 {
+              font-size: clamp(20px, 3vw, 24px);
+            }
+
+            .tokorozawa-access-card .section-head h2::after {
+              width: 38px;
+              height: 3px;
+              margin-top: 10px;
+            }
+
+            .tokorozawa-access-main-photo,
+            .tokorozawa-access-photo {
+              display: grid;
+              place-items: center;
+              border: 1px solid rgba(5, 38, 111, 0.12);
+              border-radius: 10px;
+              background:
+                linear-gradient(135deg, rgba(238, 249, 255, 0.95), rgba(255, 255, 255, 0.95)),
+                repeating-linear-gradient(135deg, rgba(5, 38, 111, 0.06) 0 1px, transparent 1px 14px);
+              color: var(--navy);
+              font-weight: 700;
+              text-align: center;
+            }
+
+            .tokorozawa-access-main-photo {
+              display: block;
+              width: 100%;
+              aspect-ratio: 16 / 9;
+              min-height: 0;
+              height: auto;
+              object-fit: cover;
+              margin-bottom: 12px;
+              font-size: clamp(13px, 1.6vw, 16px);
+            }
+
+            .tokorozawa-access-info {
+              overflow: hidden;
+              border: 1px solid var(--line);
+              border-radius: 10px;
+              background: var(--white);
+            }
+
+            .tokorozawa-access-row {
+              display: grid;
+              grid-template-columns: 28px minmax(0, 1fr);
+              gap: 8px;
+              align-items: center;
+              padding: clamp(10px, 2vw, 14px);
+              border-top: 1px solid var(--line);
+            }
+
+            .tokorozawa-access-row > div,
+            .tokorozawa-access-cell > div {
+              min-width: 0;
+            }
+
+            .tokorozawa-access-row:first-child {
+              border-top: 0;
+            }
+
+            .tokorozawa-access-row.is-address {
+              grid-template-columns: 24px minmax(0, 1fr);
+              align-items: start;
+            }
+
+            .tokorozawa-address-content {
+              min-width: 0;
+            }
+
+            .tokorozawa-address-head {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            }
+
+            .tokorozawa-access-row.is-split {
+              grid-template-columns: 1fr 1fr;
+              gap: 0;
+              padding: 0;
+            }
+
+            .tokorozawa-access-cell {
+              display: grid;
+              grid-template-columns: 28px minmax(0, 1fr);
+              gap: 8px;
+              align-items: center;
+              padding: clamp(10px, 2vw, 14px);
+            }
+
+            .tokorozawa-access-cell + .tokorozawa-access-cell {
+              border-left: 1px solid var(--line);
+            }
+
+            .tokorozawa-access-icon {
+              width: 24px;
+              color: var(--navy);
+            }
+
+            .tokorozawa-access-icon svg {
+              display: block;
+              width: 100%;
+              height: auto;
+              fill: currentColor;
+            }
+
+            .tokorozawa-access-label {
+              display: block;
+              color: var(--navy);
+              font-size: clamp(13px, 1.7vw, 15px);
+              font-weight: 700;
+              line-height: 1.35;
+            }
+
+            .tokorozawa-access-text {
+              margin-top: 6px;
+              color: #151515;
+              font-size: clamp(12px, 1.55vw, 14px);
+              font-weight: 500;
+              line-height: 1.45;
+              overflow-wrap: anywhere;
+            }
+
+            .tokorozawa-map-button {
+              flex: 0 0 auto;
+              width: fit-content;
+              min-width: 68px;
+              min-height: 30px;
+              margin-left: auto;
+              margin-right: 0;
+              margin-top: 0;
+              padding: 0 9px;
+              border: 2px solid var(--navy);
+              border-radius: 7px;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              gap: 6px;
+              color: var(--navy);
+              font-size: 13px;
+              font-weight: 700;
+            }
+
+            .tokorozawa-map-button svg {
+              width: 14px;
+              fill: currentColor;
+            }
+
+            .tokorozawa-gallery-title {
+              display: grid;
+              grid-template-columns: 1fr auto 1fr;
+              gap: 12px;
+              align-items: center;
+              margin: 16px 0 12px;
+              color: var(--navy);
+              font-size: clamp(15px, 2vw, 18px);
+              font-weight: 800;
+              text-align: center;
+            }
+
+            .tokorozawa-gallery-title::before,
+            .tokorozawa-gallery-title::after {
+              content: "";
+              height: 2px;
+              background: var(--line);
+            }
+
+            .tokorozawa-gallery {
+              position: relative;
+              overflow: hidden;
+              margin-inline: -4px;
+              padding-inline: 4px;
+            }
+
+            .tokorozawa-gallery-track {
+              display: grid;
+            }
+
+            .tokorozawa-access-photo {
+              display: block;
+              width: 100%;
+              aspect-ratio: 16 / 9;
+              height: auto;
+              object-fit: cover;
+              font-size: 0;
+            }
+
+            .tokorozawa-gallery figure {
+              grid-area: 1 / 1;
+              margin: 0;
+              opacity: 0;
+              transition: opacity 1.2s ease;
+              animation: tokorozawa-gallery-switch 12s infinite;
+            }
+
+            .tokorozawa-gallery figure:nth-child(2) {
+              animation-delay: 4s;
+            }
+
+            .tokorozawa-gallery figure:nth-child(3) {
+              animation-delay: 8s;
+            }
+
+            .tokorozawa-gallery figcaption {
+              display: none;
+            }
+
+            @keyframes tokorozawa-gallery-switch {
+              0% {
+                opacity: 0;
+              }
+
+              8%,
+              42% {
+                opacity: 1;
+              }
+
+              50%,
+              100% {
+                opacity: 0;
+              }
+            }
+
+            @media (max-width: 760px) {
+              .tokorozawa-access-card {
+                padding: 14px 10px;
+              }
+
+              .tokorozawa-access-row.is-address {
+                grid-template-columns: 24px minmax(0, 1fr);
+              }
+
+              .tokorozawa-access-cell {
+                grid-template-columns: 24px minmax(0, 1fr);
+                gap: 7px;
+              }
+
+              .tokorozawa-map-button {
+                margin-right: 0;
+              }
+            }
+          </style>
+
+          <div class="tokorozawa-access-card">
+            <div class="section-head">
+              <h2>埼玉｜所沢店</h2>
+            </div>
+
+            <img class="tokorozawa-access-main-photo" src="../../../assets/img/tokorozawa-store-exterior.png" alt="埼玉マンスリーレンタカー所沢店の外観">
+
+            <div class="tokorozawa-access-info">
+              <div class="tokorozawa-access-row is-address">
+                <span class="tokorozawa-access-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+                </span>
+                <div class="tokorozawa-address-content">
+                  <div class="tokorozawa-address-head">
+                    <span class="tokorozawa-access-label">住所</span>
+                    <a class="tokorozawa-map-button" href="https://maps.app.goo.gl/TGJyoykc9mBt9Pj49" target="_blank" rel="noopener">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+                      MAP
+                    </a>
+                  </div>
+                  <p class="tokorozawa-access-text">〒359-0037<br>埼玉県所沢市くすのき台1-2-1 エーワンビル</p>
+                </div>
+              </div>
+
+              <div class="tokorozawa-access-row">
+                <span class="tokorozawa-access-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M7 2h10a2 2 0 0 1 2 2v9.5a4.5 4.5 0 0 1-3.5 4.4l2.1 2.1-1.5 1.5-3-3h-2.2l-3 3-1.5-1.5 2.1-2.1A4.5 4.5 0 0 1 5 13.5V4a2 2 0 0 1 2-2Zm0 2v5h10V4H7Zm0 7v2.5A2.5 2.5 0 0 0 9.5 16h5a2.5 2.5 0 0 0 2.5-2.5V11H7Zm2.5 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"/></svg>
+                </span>
+                <div>
+                  <span class="tokorozawa-access-label">最寄駅</span>
+                  <p class="tokorozawa-access-text">所沢駅 徒歩6分</p>
+                </div>
+              </div>
+
+              <div class="tokorozawa-access-row is-split">
+                <div class="tokorozawa-access-cell">
+                  <span class="tokorozawa-access-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm1-13h-2v6l5 3 .9-1.6-3.9-2.3V7Z"/></svg>
+                  </span>
+                  <div>
+                    <span class="tokorozawa-access-label">営業時間</span>
+                    <p class="tokorozawa-access-text">10:00〜19:00</p>
+                  </div>
+                </div>
+                <div class="tokorozawa-access-cell">
+                  <span class="tokorozawa-access-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M7 2h2v3h6V2h2v3h3v17H4V5h3V2Zm11 8H6v10h12V10ZM6 8h12V7H6v1Z"/></svg>
+                  </span>
+                  <div>
+                    <span class="tokorozawa-access-label">定休日</span>
+                    <p class="tokorozawa-access-text">無休</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tokorozawa-gallery-title">所沢店の様子</div>
+            <div class="tokorozawa-gallery">
+              <div class="tokorozawa-gallery-track">
+                <figure>
+                  <img class="tokorozawa-access-photo" src="../../../assets/img/wako-store-gallery-01.png" alt="埼玉マンスリーレンタカー所沢店の様子 1">
+                </figure>
+                <figure>
+                  <img class="tokorozawa-access-photo" src="../../../assets/img/wako-store-gallery-02.png" alt="埼玉マンスリーレンタカー所沢店の様子 2">
+                </figure>
+                <figure>
+                  <img class="tokorozawa-access-photo" src="../../../assets/img/wako-store-gallery-03.png" alt="埼玉マンスリーレンタカー所沢店の様子 3">
+                </figure>
+              </div>
             </div>
           </div>
         </div>
@@ -348,6 +668,350 @@
         </div>
       </section>
 
+      <section class="section tokorozawa-faq" id="faq" aria-labelledby="tokorozawa-faq-title">
+        <div class="inner">
+          <style>
+            .tokorozawa-faq {
+              background: linear-gradient(180deg, rgba(239, 250, 255, 0.9), rgba(255, 255, 255, 0.98));
+            }
+
+            .tokorozawa-faq .section-head {
+              margin-bottom: 22px;
+            }
+
+            .tokorozawa-faq .section-head h2 {
+              font-size: clamp(24px, 5.8vw, 34px);
+              letter-spacing: 0;
+            }
+
+            .tokorozawa-faq .section-head h2::after {
+              width: 42px;
+              height: 3px;
+              margin-top: 10px;
+              background: var(--orange);
+            }
+
+            .tokorozawa-faq .section-head p {
+              max-width: 620px;
+              margin-inline: auto;
+              font-size: clamp(13px, 3.3vw, 16px);
+              line-height: 1.8;
+            }
+
+            .tokorozawa-faq-list {
+              display: grid;
+              gap: 10px;
+            }
+
+            .tokorozawa-faq-item {
+              overflow: hidden;
+              border: 1px solid rgba(5, 38, 111, 0.16);
+              border-radius: 7px;
+              background: var(--white);
+              box-shadow: 0 8px 22px rgba(5, 38, 111, 0.06);
+            }
+
+            .tokorozawa-faq-item.is-open {
+              border-color: rgba(5, 38, 111, 0.22);
+            }
+
+            .tokorozawa-faq-question {
+              width: 100%;
+              min-height: 58px;
+              padding: 13px 12px;
+              border: 0;
+              display: grid;
+              grid-template-columns: 36px minmax(0, 1fr) 28px;
+              gap: 10px;
+              align-items: center;
+              background: var(--white);
+              color: var(--navy);
+              font: inherit;
+              text-align: left;
+              cursor: pointer;
+            }
+
+            .tokorozawa-faq-item.is-open .tokorozawa-faq-question {
+              background: var(--navy);
+              color: var(--white);
+            }
+
+            .tokorozawa-faq-number {
+              width: 34px;
+              height: 34px;
+              border-radius: 50%;
+              display: grid;
+              place-items: center;
+              background: var(--navy);
+              color: var(--white);
+              font-size: 14px;
+              font-weight: 800;
+              line-height: 1;
+            }
+
+            .tokorozawa-faq-item.is-open .tokorozawa-faq-number {
+              background: var(--white);
+              color: var(--navy);
+            }
+
+            .tokorozawa-faq-question-text {
+              min-width: 0;
+              font-size: clamp(14px, 3.45vw, 17px);
+              font-weight: 800;
+              line-height: 1.55;
+              letter-spacing: 0;
+            }
+
+            .tokorozawa-faq-toggle {
+              width: 24px;
+              height: 24px;
+              border: 1.5px solid currentColor;
+              border-radius: 50%;
+              display: grid;
+              place-items: center;
+              justify-self: end;
+              color: var(--navy);
+              font-size: 20px;
+              font-weight: 700;
+              line-height: 1;
+            }
+
+            .tokorozawa-faq-item.is-open .tokorozawa-faq-toggle {
+              background: var(--white);
+              border-color: var(--white);
+              color: var(--navy);
+            }
+
+            .tokorozawa-faq-answer {
+              background: #fffaf0;
+              border-top: 1px solid rgba(5, 38, 111, 0.08);
+              overflow: hidden;
+              transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              will-change: height;
+            }
+
+            .tokorozawa-faq-answer[hidden] {
+              display: none;
+            }
+
+            .tokorozawa-faq-answer-body {
+              display: grid;
+              grid-template-columns: 30px minmax(0, 1fr);
+              gap: 12px;
+              padding: 18px 14px 19px;
+              color: #151515;
+            }
+
+            .tokorozawa-faq-answer-label {
+              width: 26px;
+              height: 26px;
+              border-radius: 50%;
+              display: grid;
+              place-items: center;
+              background: var(--orange);
+              color: var(--white);
+              font-size: 13px;
+              font-weight: 800;
+              line-height: 1;
+            }
+
+            .tokorozawa-faq-answer p {
+              color: #151515;
+              font-size: clamp(13px, 3.3vw, 15px);
+              font-weight: 500;
+              line-height: 1.85;
+            }
+
+            @media (min-width: 768px) {
+              .tokorozawa-faq-list {
+                gap: 12px;
+              }
+
+              .tokorozawa-faq-question {
+                min-height: 64px;
+                padding: 15px 18px;
+                grid-template-columns: 42px minmax(0, 1fr) 32px;
+                gap: 14px;
+              }
+
+              .tokorozawa-faq-number {
+                width: 38px;
+                height: 38px;
+                font-size: 15px;
+              }
+
+              .tokorozawa-faq-toggle {
+                width: 28px;
+                height: 28px;
+              }
+
+              .tokorozawa-faq-answer-body {
+                grid-template-columns: 34px minmax(0, 1fr);
+                gap: 14px;
+                padding: 20px 22px 22px;
+              }
+
+              .tokorozawa-faq-answer-label {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+              }
+            }
+          </style>
+
+          <div class="section-head">
+            <h2 id="tokorozawa-faq-title">所沢店のよくある質問</h2>
+            <p>埼玉マンスリーレンタカー所沢店の利用期間や受け渡し、車種など、よくあるご質問をご案内します。</p>
+          </div>
+
+          <div class="tokorozawa-faq-list">
+            <article class="tokorozawa-faq-item is-open">
+              <h3>
+                <button class="tokorozawa-faq-question" type="button" id="tokorozawa-faq-question-1" aria-expanded="true" aria-controls="tokorozawa-faq-answer-1">
+                  <span class="tokorozawa-faq-number" aria-hidden="true">Q1</span>
+                  <span class="tokorozawa-faq-question-text">所沢店では、マンスリーレンタカーを1ヶ月だけ利用できますか？</span>
+                  <span class="tokorozawa-faq-toggle" aria-hidden="true">−</span>
+                </button>
+              </h3>
+              <div class="tokorozawa-faq-answer" id="tokorozawa-faq-answer-1" role="region" aria-labelledby="tokorozawa-faq-question-1">
+                <div class="tokorozawa-faq-answer-body">
+                  <span class="tokorozawa-faq-answer-label" aria-hidden="true">A</span>
+                  <p>はい、1ヶ月からご利用いただけます。利用開始日と利用予定期間をお知らせいただければ、ご案内可能な車両を確認します。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="tokorozawa-faq-item">
+              <h3>
+                <button class="tokorozawa-faq-question" type="button" id="tokorozawa-faq-question-2" aria-expanded="false" aria-controls="tokorozawa-faq-answer-2">
+                  <span class="tokorozawa-faq-number" aria-hidden="true">Q2</span>
+                  <span class="tokorozawa-faq-question-text">所沢駅で車を受け取れますか？</span>
+                  <span class="tokorozawa-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="tokorozawa-faq-answer" id="tokorozawa-faq-answer-2" role="region" aria-labelledby="tokorozawa-faq-question-2" hidden>
+                <div class="tokorozawa-faq-answer-body">
+                  <span class="tokorozawa-faq-answer-label" aria-hidden="true">A</span>
+                  <p>はい、所沢駅周辺での受け渡しにも対応しています。具体的な待ち合わせ場所と時間は、ご予約時にご案内します。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="tokorozawa-faq-item">
+              <h3>
+                <button class="tokorozawa-faq-question" type="button" id="tokorozawa-faq-question-3" aria-expanded="false" aria-controls="tokorozawa-faq-answer-3">
+                  <span class="tokorozawa-faq-number" aria-hidden="true">Q3</span>
+                  <span class="tokorozawa-faq-question-text">所沢周辺の指定場所まで車を届けてもらえますか？</span>
+                  <span class="tokorozawa-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="tokorozawa-faq-answer" id="tokorozawa-faq-answer-3" role="region" aria-labelledby="tokorozawa-faq-question-3" hidden>
+                <div class="tokorozawa-faq-answer-body">
+                  <span class="tokorozawa-faq-answer-label" aria-hidden="true">A</span>
+                  <p>はい、無料〜で承っております。配送先によって対応可否と配送料が異なります。ご希望の住所や最寄り駅をお知らせいただければ、配送可能か確認します。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="tokorozawa-faq-item">
+              <h3>
+                <button class="tokorozawa-faq-question" type="button" id="tokorozawa-faq-question-4" aria-expanded="false" aria-controls="tokorozawa-faq-answer-4">
+                  <span class="tokorozawa-faq-number" aria-hidden="true">Q4</span>
+                  <span class="tokorozawa-faq-question-text">所沢店でマンスリーレンタカーを借りる場合、料金はいくらですか？</span>
+                  <span class="tokorozawa-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="tokorozawa-faq-answer" id="tokorozawa-faq-answer-4" role="region" aria-labelledby="tokorozawa-faq-question-4" hidden>
+                <div class="tokorozawa-faq-answer-body">
+                  <span class="tokorozawa-faq-answer-label" aria-hidden="true">A</span>
+                  <p>車両クラス、利用期間、利用開始日、受け渡し方法などによって料金が異なります。ご希望の条件を確認後、ご案内可能な車両と料金をお伝えします。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="tokorozawa-faq-item">
+              <h3>
+                <button class="tokorozawa-faq-question" type="button" id="tokorozawa-faq-question-5" aria-expanded="false" aria-controls="tokorozawa-faq-answer-5">
+                  <span class="tokorozawa-faq-number" aria-hidden="true">Q5</span>
+                  <span class="tokorozawa-faq-question-text">所沢店で借りる車種を指定できますか？</span>
+                  <span class="tokorozawa-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="tokorozawa-faq-answer" id="tokorozawa-faq-answer-5" role="region" aria-labelledby="tokorozawa-faq-question-5" hidden>
+                <div class="tokorozawa-faq-answer-body">
+                  <span class="tokorozawa-faq-answer-label" aria-hidden="true">A</span>
+                  <p>ご希望の車種クラスはお伺いできますが、車種の指定は難しくなっております。まずはご希望をお知らせください。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="tokorozawa-faq-item">
+              <h3>
+                <button class="tokorozawa-faq-question" type="button" id="tokorozawa-faq-question-6" aria-expanded="false" aria-controls="tokorozawa-faq-answer-6">
+                  <span class="tokorozawa-faq-number" aria-hidden="true">Q6</span>
+                  <span class="tokorozawa-faq-question-text">個人・法人のどちらでも利用できますか？</span>
+                  <span class="tokorozawa-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="tokorozawa-faq-answer" id="tokorozawa-faq-answer-6" role="region" aria-labelledby="tokorozawa-faq-question-6" hidden>
+                <div class="tokorozawa-faq-answer-body">
+                  <span class="tokorozawa-faq-answer-label" aria-hidden="true">A</span>
+                  <p>個人・法人のどちらでもご相談いただけます。日常利用や通勤のほか、社用車、営業車、短期プロジェクト用の車両としてもご利用いただけます。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="tokorozawa-faq-item">
+              <h3>
+                <button class="tokorozawa-faq-question" type="button" id="tokorozawa-faq-question-7" aria-expanded="false" aria-controls="tokorozawa-faq-answer-7">
+                  <span class="tokorozawa-faq-number" aria-hidden="true">Q7</span>
+                  <span class="tokorozawa-faq-question-text">車の修理中や納車待ちの期間だけ利用できますか？</span>
+                  <span class="tokorozawa-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="tokorozawa-faq-answer" id="tokorozawa-faq-answer-7" role="region" aria-labelledby="tokorozawa-faq-question-7" hidden>
+                <div class="tokorozawa-faq-answer-body">
+                  <span class="tokorozawa-faq-answer-label" aria-hidden="true">A</span>
+                  <p>はい、修理期間中や新しい車の納車待ちなど、一時的に車が必要な場合にもご利用いただけます。利用期間が未確定の場合も、予定している期間をもとにご相談ください。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="tokorozawa-faq-item">
+              <h3>
+                <button class="tokorozawa-faq-question" type="button" id="tokorozawa-faq-question-8" aria-expanded="false" aria-controls="tokorozawa-faq-answer-8">
+                  <span class="tokorozawa-faq-number" aria-hidden="true">Q8</span>
+                  <span class="tokorozawa-faq-question-text">1ヶ月の契約後に利用期間を延長できますか？</span>
+                  <span class="tokorozawa-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="tokorozawa-faq-answer" id="tokorozawa-faq-answer-8" role="region" aria-labelledby="tokorozawa-faq-question-8" hidden>
+                <div class="tokorozawa-faq-answer-body">
+                  <span class="tokorozawa-faq-answer-label" aria-hidden="true">A</span>
+                  <p>空車状況や次の予約状況によっては延長できます。延長の可能性がある場合は、予定が分かった時点で早めにご相談ください。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="tokorozawa-faq-item">
+              <h3>
+                <button class="tokorozawa-faq-question" type="button" id="tokorozawa-faq-question-9" aria-expanded="false" aria-controls="tokorozawa-faq-answer-9">
+                  <span class="tokorozawa-faq-number" aria-hidden="true">Q9</span>
+                  <span class="tokorozawa-faq-question-text">問い合わせ後、最短でいつから利用できますか？</span>
+                  <span class="tokorozawa-faq-toggle" aria-hidden="true">＋</span>
+                </button>
+              </h3>
+              <div class="tokorozawa-faq-answer" id="tokorozawa-faq-answer-9" role="region" aria-labelledby="tokorozawa-faq-question-9" hidden>
+                <div class="tokorozawa-faq-answer-body">
+                  <span class="tokorozawa-faq-answer-label" aria-hidden="true">A</span>
+                  <p>利用開始日は、空車状況や契約手続きの進行状況によって異なります。ご希望日をお知らせいただければ、最短でご案内できる日程を確認します。</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="section stores" id="stores">
         <div class="inner">
           <div class="section-head">
@@ -388,11 +1052,12 @@
       <div class="inner footer-inner">
         <a class="footer-logo" href="#top"><img src="../../../assets/img/saitama-monthly-logo.png" alt="埼玉マンスリーレンタカー"></a>
         <nav aria-label="フッターナビゲーション">
-          <a href="#area">対応エリア</a>
+          <a href="#area">所沢店について</a>
           <a href="#price">料金</a>
           <a href="#features">特徴</a>
           <a href="#flow">ご利用の流れ</a>
           <a href="#voice">お客様の声</a>
+          <a href="#faq">所沢店のよくある質問</a>
           <a href="#stores">店舗一覧</a>
         </nav>
         <small>Copyright 2026 Monthly Rent-a-Car. All Rights Reserved.</small>
@@ -533,6 +1198,115 @@
       </div>
     </div>
 
+    <script>
+      (() => {
+        const faq = document.querySelector(".tokorozawa-faq");
+        if (!faq) return;
+
+        const items = Array.from(faq.querySelectorAll(".tokorozawa-faq-item"));
+        let faqActionId = 0;
+
+        const clearAnswerTransition = (answer) => {
+          if (answer.faqTransitionEnd) {
+            answer.removeEventListener("transitionend", answer.faqTransitionEnd);
+            answer.faqTransitionEnd = null;
+          }
+        };
+
+        const setItemState = (item, isOpen, isClosing = false) => {
+          const button = item.querySelector(".tokorozawa-faq-question");
+          const icon = item.querySelector(".tokorozawa-faq-toggle");
+          item.classList.toggle("is-open", isOpen);
+          item.classList.toggle("is-closing", isClosing);
+          if (button) button.setAttribute("aria-expanded", String(isOpen));
+          if (icon) icon.textContent = isOpen ? "−" : "＋";
+        };
+
+        const setItemOpen = (item, isOpen, animate = true) => {
+          const answer = item.querySelector(".tokorozawa-faq-answer");
+          if (!answer) return Promise.resolve();
+
+          clearAnswerTransition(answer);
+
+          if (!animate) {
+            setItemState(item, isOpen);
+            answer.hidden = !isOpen;
+            answer.style.height = isOpen ? `${answer.scrollHeight}px` : "0px";
+            return Promise.resolve();
+          }
+
+          if (isOpen) {
+            const currentHeight = answer.hidden ? 0 : answer.getBoundingClientRect().height;
+            setItemState(item, true);
+            answer.hidden = false;
+            answer.style.height = `${currentHeight}px`;
+            answer.offsetHeight;
+            answer.style.height = `${answer.scrollHeight}px`;
+            return Promise.resolve();
+          }
+
+          if (answer.hidden) {
+            setItemState(item, false);
+            return Promise.resolve();
+          }
+
+          return new Promise((resolve) => {
+            let isResolved = false;
+            const finishClose = () => {
+              if (isResolved) return;
+              isResolved = true;
+              clearAnswerTransition(answer);
+              if (!item.classList.contains("is-open")) {
+                setItemState(item, false);
+                answer.hidden = true;
+                answer.style.height = "0px";
+              }
+              resolve();
+            };
+
+            setItemState(item, false, true);
+            answer.style.height = `${answer.getBoundingClientRect().height}px`;
+            answer.offsetHeight;
+            answer.style.height = "0px";
+            answer.faqTransitionEnd = (event) => {
+              if (event.target !== answer || event.propertyName !== "height") return;
+              finishClose();
+            };
+            answer.addEventListener("transitionend", answer.faqTransitionEnd);
+            window.setTimeout(finishClose, 360);
+          });
+        };
+
+        items.forEach((item) => {
+          setItemOpen(item, item.classList.contains("is-open"), false);
+        });
+
+        const syncOpenAnswerHeights = () => {
+          items.forEach((item) => {
+            if (!item.classList.contains("is-open")) return;
+            const answer = item.querySelector(".tokorozawa-faq-answer");
+            if (!answer || answer.hidden) return;
+            answer.style.height = `${answer.scrollHeight}px`;
+          });
+        };
+
+        window.addEventListener("resize", syncOpenAnswerHeights);
+
+        items.forEach((item) => {
+          const button = item.querySelector(".tokorozawa-faq-question");
+          if (!button) return;
+
+          button.addEventListener("click", async () => {
+            const actionId = ++faqActionId;
+            const shouldOpen = button.getAttribute("aria-expanded") !== "true";
+            const closeTargets = shouldOpen ? items.filter((currentItem) => currentItem !== item) : [item];
+            await Promise.all(closeTargets.map((currentItem) => setItemOpen(currentItem, false)));
+            if (actionId !== faqActionId) return;
+            if (shouldOpen) setItemOpen(item, true);
+          });
+        });
+      })();
+    </script>
     <script src="../../../script.js"></script>
   </body>
 </html>
