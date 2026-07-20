@@ -32,23 +32,28 @@
     {
       "@context": "https://schema.org",
       "@type": "AutoRental",
+      "@id": "https://monthly-rent-car.jp/shop/saitama/wako/#store",
       "name": "埼玉マンスリーレンタカー 和光店",
       "url": "https://monthly-rent-car.jp/shop/saitama/wako/",
       "telephone": "+81-50-1792-0800",
+      "priceRange": "¥¥",
       "address": {
         "@type": "PostalAddress",
         "postalCode": "351-0114",
         "addressRegion": "埼玉県",
         "addressLocality": "和光市",
-        "streetAddress": "本町15-51 和光ビル"
+        "streetAddress": "本町15-51 和光ビル",
+        "addressCountry": "JP"
       },
       "geo": { "@type": "GeoCoordinates", "latitude": 35.7853105, "longitude": 139.6067046 },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "opens": "10:00",
-        "closes": "19:00"
-      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "10:00",
+          "closes": "19:00"
+        }
+      ],
       "hasMap": "https://maps.app.goo.gl/R78ztKb9FisrKST7A",
       "image": "https://monthly-rent-car.jp/assets/img/wako-store-exterior.png"
     }
