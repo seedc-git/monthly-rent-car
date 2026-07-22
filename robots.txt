@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://monthly-rent-car.jp/sitemap.xml
