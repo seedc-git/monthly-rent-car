@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+Sitemap: https://stg.monthly-rent-car.jp/sitemap.xml
