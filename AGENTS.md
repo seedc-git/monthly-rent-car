@@ -40,6 +40,8 @@
 - ページを追加・コピーする際は、そのページが参照する CSSクラス・JS・画像が「反映先ブランチに」全部存在するかを必ず確認する。共有 `styles.css` への依存が特に危険（過去、staging の styles.css 前提のページを main に入れて本番の固定CTAが機能しなくなる事故が発生した）。
 - 新ページ固有のスタイルは共有 `styles.css` に追加せず、ページ専用CSSファイルに分離する（例: `shop/shop-contact.css` 方式）。
 - 新規HTMLページには GA4 計測タグ（本番ホスト名ガード付き、ID: G-501JL6QG1N）を必ず含める。既存ページの head からスニペットをコピーする。全HTMLページを CI（Check GA tag）が検査し、欠けていると PR がマージできない・デプロイ前に検知される。
+- 新規SEOページ（トップページ、`shop/**/index.html` など。`line.html` のような内部/遷移用HTMLは除く）を追加するときは、必ずOGP/Twitter metaを追加し、`sitemap.xml` にURLを追加する。CI（SEO pages must include OGP metadata, sitemap, and robots.txt）が検査する。
+- `robots.txt` は staging と main で内容を分ける。staging は `Disallow: /` と `Sitemap: https://stg.monthly-rent-car.jp/sitemap.xml`、main は `Allow: /` と `Sitemap: https://monthly-rent-car.jp/sitemap.xml` にする。
 - push が拒否されたら他タスクが先行している。force push は禁止。fetch → rebase → 動作確認をやり直してから push する。
 - 変更は小さく、1目的1コミット。
 

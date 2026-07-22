@@ -26,3 +26,6 @@ jobs:
             fi
           done < <(find . -name '*.html' -not -path './.git/*' -print0)
           exit $missing
+
+      - name: SEO pages must include OGP metadata, sitemap, and robots.txt
+        run: node tools/check-seo-metadata.js
