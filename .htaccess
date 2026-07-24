@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.monthly-rent-car\.jp$ [NC]
+RewriteRule ^(.*)$ https://monthly-rent-car.jp/$1 [R=301,L]
