@@ -8,6 +8,14 @@ const cnamePath = path.join(root, "CNAME");
 const isStaging = fs.existsSync(cnamePath) && fs.readFileSync(cnamePath, "utf8").trim() === stagingHost;
 const host = isStaging ? stagingHost : productionHost;
 const baseUrl = `https://${host}`;
+const sitemapExcludedPages = new Set(
+  isStaging
+    ? [
+        // Staging-only page. Add it to the production sitemap when publication is approved.
+        "area/tachikawa/index.html",
+      ]
+    : [],
+);
 
 const requiredOgProperties = [
   "og:type",
@@ -119,7 +127,9 @@ function checkSitemap(pages) {
   }
   const xml = read(file);
   const locs = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
-  const expected = pages.map(pageUrlFor);
+  const expected = pages
+    .filter((page) => !sitemapExcludedPages.has(page))
+    .map(pageUrlFor);
   const missing = expected.filter((url) => !locs.includes(url));
   const extra = locs.filter((url) => !expected.includes(url));
   for (const url of missing) fail(file, `missing sitemap URL: ${url}`);
