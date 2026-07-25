@@ -6,19 +6,23 @@
 
 ## 1. 実装方針
 
-外部サイトの画像は取得していない。各画像位置には、透明な1px GIF、明示した`width`・`height`、固定`aspect-ratio`、`data-asset-slot`、`data-alt-todo`、`data-placeholder="true"`を設定し、画像が未入稿でもレイアウトが崩れない状態にしている。
+外部サイトの画像は取得していない。記事内の5枠には、記事の文脈に合わせて生成した仮画像をWebPで配置し、`data-image-status="temporary"`で本番差し替え対象であることを明示した。各画像には実寸の`width`・`height`、内容に合うalt、`data-asset-slot`を設定している。
 
-差し替え時は、画像の内容に合わせてaltを確定する。装飾目的で情報を持たない画像だけは`alt=""`を維持する。
+比較6サービスのロゴ枠は引き続き透明な1px GIFと`data-placeholder="true"`を使用している。商標画像は許可や正式素材を確認できるまで生成・転載しない。
+
+仮画像を本番画像へ差し替える際は、画像の内容に合わせてaltとキャプションを再確認する。装飾目的で情報を持たない画像だけは`alt=""`とする。
 
 ## 2. 記事画像
 
-| スロットID | HTML上の識別子 | 推奨サイズ | 比率 | 配置 | alt案 |
-|---|---|---:|---:|---|---|
-| `tachikawa-area-eyecatch` | `id` / `data-asset-slot` | 1200×630px | 1200:630 | H1直下 | 立川駅周辺と長期レンタカーの利用イメージ |
-| `tachikawa-price-comparison` | `id` / `data-asset-slot` | 1600×900px | 16:9 | 料金比較セクション | 立川のマンスリーレンタカー比較項目を図解した画像 |
-| `tachikawa-selection-points` | `id` / `data-asset-slot` | 1600×900px | 16:9 | 選び方セクション | 立川で長期レンタカーを選ぶチェックポイント |
-| `tachikawa-area-characteristics` | `id` / `data-asset-slot` | 1600×900px | 16:9 | 立川エリア紹介 | 立川駅周辺と市北部の移動特性を示すエリア図 |
-| `tachikawa-shop-introduction` | `id` / `data-asset-slot` | 1600×900px | 16:9 | 立川店紹介 | 東京マンスリーレンタカー立川店の外観と受け渡しイメージ |
+| スロットID | 現在の仮画像 | 実寸 | 配置 | 現在のalt |
+|---|---|---:|---|---|
+| `tachikawa-area-eyecatch` | `tachikawa-area-eyecatch-temp.webp` | 1729×910px | H1直下 | 立川の街並みと長期利用向けコンパクトカーのイメージ |
+| `tachikawa-price-comparison` | `tachikawa-price-comparison-temp.webp` | 1672×941px | 料金比較セクション | 車の模型、見積書、電卓を並べて長期レンタカーの条件を比較するイメージ |
+| `tachikawa-selection-points` | `tachikawa-selection-points-temp.webp` | 1672×941px | 選び方セクション | チェックリストを見ながら長期レンタカーを選ぶイメージ |
+| `tachikawa-area-characteristics` | `tachikawa-area-characteristics-temp.webp` | 1672×941px | 立川エリア紹介 | 立川の駅周辺と住宅地を結ぶ道路・モノレールのイメージ |
+| `tachikawa-shop-introduction` | `tachikawa-shop-handover-temp.webp` | 1672×941px | 立川店紹介 | スタッフと利用者が車両と鍵を確認する一般的な受け渡しイメージ |
+
+配置先はすべて`assets/img/area/tachikawa/`。品質84のWebPへ軽量化し、5枚合計は約896KB。ファーストビュー画像は`fetchpriority="high"`、本文画像は`loading="lazy"`を指定している。5枚はいずれもAI生成の仮画像であり、実在店舗や実スタッフの写真としては扱わない。
 
 ### 画像制作時の注意
 
@@ -56,13 +60,13 @@ stagingでは既存の共通OGPを使用している。
 
 stagingブランチには`assets/ogp/tachikawa.png`も存在するが、既存CIは共通OGPの利用を検証している。立川専用OGPへ切り替える場合は、表示内容・ブランド表記を確認し、CIの意図をレビューしてから変更する。
 
-## 5. 差し替え手順
+## 5. 本番画像への差し替え手順
 
 1. 画像を`assets/`配下の適切なディレクトリへ追加する
 2. `data-asset-slot`で対象位置を検索する
-3. 透明GIFの`src`を画像パスへ変更する
-4. `alt=""`を確定altへ変更する
-5. `data-placeholder="true"`を削除し、実画像とロゴが表示されることを確認する
+3. `-temp.webp`の`src`を本番画像パスへ変更する
+4. 画像内容に合わせてaltとキャプションを確定する
+5. `data-image-status="temporary"`を削除する
 6. 実画像の原寸と一致する`width`・`height`へ変更する
 7. CSSのアスペクト比と画像比率が一致することを確認する
 8. 390px、768px、1440pxでトリミング、キャプション、CLSを確認する
