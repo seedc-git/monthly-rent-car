@@ -1,10 +1,12 @@
 name: Deploy production to Xserver
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Type deploy-production after staging approval"
+        required: true
+        type: string
 
 concurrency:
   group: production-deploy
@@ -13,12 +15,18 @@ concurrency:
 jobs:
   deploy:
     name: Upload root site to Xserver
-    if: ${{ github.event_name == 'workflow_dispatch' || vars.PRODUCTION_DEPLOY_ENABLED == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Confirm production deployment request
+        run: |
+          if [ "${{ inputs.confirmation }}" != "deploy-production" ]; then
+            echo "::error::Production deploy requires confirmation=deploy-production after staging approval."
+            exit 1
+          fi
 
       - name: Validate deployment secrets
         env:
