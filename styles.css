@@ -1575,6 +1575,10 @@ main {
   letter-spacing: 0;
 }
 
+.contact-icon-line::before {
+  content: "LINE";
+}
+
 .contact-icon-store {
   color: #06c755;
   background: var(--white);
