@@ -937,6 +937,31 @@ assert(/aspect-ratio\s*:/i.test(css), cssFile, "画像placeholderにaspect-ratio
 assert(/prefers-reduced-motion/i.test(css), cssFile, "prefers-reduced-motion対応が必要です");
 assert(/@media\s*\([^)]*min-width/i.test(css), cssFile, "PC用min-widthメディアクエリが必要です");
 assert(/@media\s*\([^)]*max-width/i.test(css), cssFile, "モバイル用max-widthメディアクエリが必要です");
+assert(
+  /@media\s*\(\s*min-width\s*:\s*1180px\s*\)[\s\S]*?\.area-ranking-page\.area-tachikawa main,\s*\.area-ranking-page\.area-tachikawa \.site-footer\s*\{[^}]*width\s*:\s*100%/i.test(css),
+  cssFile,
+  "1180px以上ではmainとfooterを通常のPC幅へ戻してください",
+);
+assert(
+  /@media\s*\(\s*min-width\s*:\s*1180px\s*\)[\s\S]*?\.area-ranking-page\.area-tachikawa \.site-header\s*\{[^}]*width\s*:\s*100%/i.test(css),
+  cssFile,
+  "1180px以上ではヘッダーを通常のPC幅へ戻してください",
+);
+assert(
+  /\.area-ranking-page\.area-tachikawa \.header-nav\s*\{[^}]*display\s*:\s*flex/i.test(css),
+  cssFile,
+  "PCでは共通ヘッダーナビを表示してください",
+);
+assert(
+  /\.area-ranking-page\.area-tachikawa \.menu-toggle\s*\{[^}]*display\s*:\s*none/i.test(css),
+  cssFile,
+  "PCではスマートフォン用メニューボタンを非表示にしてください",
+);
+assert(
+  /\.area-ranking-page\.area-tachikawa\s*\{[^}]*overflow-x\s*:\s*clip/i.test(css),
+  cssFile,
+  "ページ全体の横はみ出しを抑止してください",
+);
 
 // Dedicated JavaScript: syntax, root guard, generated TOC, progressive FAQ, CTA event.
 if (articleJs) {
