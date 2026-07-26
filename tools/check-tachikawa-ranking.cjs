@@ -16,6 +16,9 @@ const expectedDescription =
   "立川市で利用できる格安レンタカー10社を、1ヶ月料金、車種、保険・補償、配車・引取り、トラブル時のサポートで比較。立川駅周辺の店舗型から宅配型まで、長期利用に適したサービスと選び方を解説します。";
 const expectedCanonical = "https://monthly-rent-car.jp/area/tachikawa/";
 const cssRoot = ".area-ranking-page.area-tachikawa";
+const transparentHeaderLogo = "../../assets/img/monthly-rentacar-logo-transparent.png";
+const finalEyecatch =
+  "../../assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch.webp";
 
 const expectedRankings = [
   {
@@ -201,6 +204,19 @@ function readRequired(file, absolutePath) {
   } catch (error) {
     fail(file, `ファイルを読み込めません: ${error.message}`);
     return "";
+  }
+}
+
+function pngHasAlpha(absolutePath) {
+  try {
+    const buffer = fs.readFileSync(absolutePath);
+    return (
+      buffer.length > 25 &&
+      buffer.toString("ascii", 1, 4) === "PNG" &&
+      [4, 6].includes(buffer[25])
+    );
+  } catch {
+    return false;
   }
 }
 
@@ -665,7 +681,7 @@ assert(
   "1位行にブランド強調クラスと可視の「おすすめ」表示が必要です",
 );
 
-// Image placeholders.
+// Completed, dimensioned article images.
 const slotTags = findStartTags(bodyHtml, "[a-z][\\w:-]*").filter(
   (entry) => entry.attributes["data-image-slot"] !== undefined,
 );
@@ -691,7 +707,50 @@ for (const [id, [width, height]] of expectedImageSlots) {
     pageFile,
     `#${id}の画像寸法は${width}x${height}にしてください`,
   );
+  assert(
+    Boolean(image?.attributes.src) &&
+      !String(image?.attributes.src).startsWith("data:"),
+    pageFile,
+    `#${id}はdata URIのplaceholderではなく実画像を参照してください`,
+  );
+  assert(
+    image?.attributes.alt !== undefined,
+    pageFile,
+    `#${id}のimgにalt属性が必要です`,
+  );
 }
+assert(!/IMAGE SLOT|LOGO SLOT|画像準備中|差し替え予定/i.test(bodyHtml), pageFile, "画像placeholder表示を残さないでください");
+
+const headerBrand = findElementByClass(bodyHtml, "brand", "a");
+const headerBrandImage = findStartTags(headerBrand?.html || "", "img")[0];
+assert(
+  headerBrandImage?.attributes.src === transparentHeaderLogo,
+  pageFile,
+  "ヘッダーロゴは背景透過版を使用してください",
+);
+const footerBrand = findElementByClass(bodyHtml, "footer-logo", "a");
+const footerBrandImage = findStartTags(footerBrand?.html || "", "img")[0];
+assert(
+  footerBrandImage?.attributes.src === transparentHeaderLogo,
+  pageFile,
+  "フッターロゴも背景透過版を使用してください",
+);
+const transparentLogoPath = path.resolve(
+  path.dirname(pagePath),
+  transparentHeaderLogo,
+);
+assert(
+  pngHasAlpha(transparentLogoPath),
+  pageFile,
+  "背景透過ロゴは実際にalpha channelを持つPNGにしてください",
+);
+const eyecatch = findElementById(html, "tachikawa-ranking-eyecatch");
+const eyecatchImage = findStartTags(eyecatch?.html || "", "img")[0];
+assert(
+  eyecatchImage?.attributes.src === finalEyecatch,
+  pageFile,
+  "アイキャッチは最終版のWebPを参照してください",
+);
 
 // Article CTAs and competitor-link confinement.
 const anchors = findStartTags(html, "a");
@@ -918,6 +977,17 @@ if (toc) {
     );
   });
 }
+const tocViewport = findStartTags(bodyHtml, "[a-z][\\w:-]*").find(
+  (entry) => entry.attributes["data-toc-viewport"] !== undefined,
+);
+assert(Boolean(tocViewport), pageFile, "目次の折り畳みviewportが必要です");
+const tocToggle = findStartTags(bodyHtml, "button").find(
+  (entry) => entry.attributes["data-toc-toggle"] !== undefined,
+);
+assert(Boolean(tocToggle), pageFile, "目次のOPEN/CLOSE buttonが必要です");
+assert(tocToggle?.attributes["aria-expanded"] === "false", pageFile, "目次buttonの初期aria-expandedはfalseにしてください");
+assert(tocToggle?.attributes["aria-controls"] === "article-toc-list", pageFile, "目次buttonのaria-controlsが不正です");
+assert(tocToggle?.attributes.hidden !== undefined, pageFile, "JS無効時は目次buttonをhiddenにしてください");
 
 // CSS must be fully scoped and include the required responsive/accessibility hooks.
 const cssSelectors = collectCssSelectors(css);
@@ -962,6 +1032,41 @@ assert(
   cssFile,
   "ページ全体の横はみ出しを抑止してください",
 );
+assert(
+  /\.toc-list-viewport\.is-collapsible\.is-collapsed\s*\{[^}]*max-height[^}]*overflow\s*:\s*hidden/i.test(css),
+  cssFile,
+  "目次は4項目付近で高さを制限して折り畳んでください",
+);
+assert(
+  /\.toc-list-viewport\.is-collapsible\.is-collapsed::after/i.test(css),
+  cssFile,
+  "折り畳み目次の続きが分かるfadeが必要です",
+);
+assert(
+  /\.table-caption-bar\s*\{[^}]*z-index/i.test(css),
+  cssFile,
+  "表題はスクロール領域外の固定caption barとして表示してください",
+);
+assert(
+  /\.is-table-enhanced \.table-native-caption\s*\{[^}]*clip(?:-path)?/i.test(css),
+  cssFile,
+  "元captionは読み上げ用に残して視覚的に隠してください",
+);
+assert(
+  /\.table-scroll\.is-scrollable thead tr > :first-child[\s\S]*?position\s*:\s*sticky[\s\S]*?left\s*:\s*0/i.test(css),
+  cssFile,
+  "全表の左上見出しセルをsticky固定してください",
+);
+assert(
+  /\.table-scroll--ranking\.is-scrollable thead tr > :nth-child\(2\)[\s\S]*?position\s*:\s*sticky/i.test(css),
+  cssFile,
+  "ランキング表は順位と会社名の2列を固定してください",
+);
+assert(
+  !/tbody th\[scope=["']row["']\]\s*,\s*[\s\S]{0,120}tbody td:first-child/i.test(css),
+  cssFile,
+  "旧sticky規則はランキング表で列を重ねるため削除してください",
+);
 
 // Dedicated JavaScript: syntax, root guard, generated TOC, progressive FAQ, CTA event.
 if (articleJs) {
@@ -979,6 +1084,13 @@ assert(
   jsFile,
   "JSにFAQ button処理がありません",
 );
+assert(/TOC_COLLAPSED_ITEMS\s*=\s*4/.test(articleJs), jsFile, "目次の初期表示は4項目にしてください");
+assert(articleJs.includes('"OPEN"') && articleJs.includes('"CLOSE"'), jsFile, "目次buttonはOPEN/CLOSEを切り替えてください");
+assert(articleJs.includes("table-caption-bar"), jsFile, "JSで表題をスクロール領域外へ複製してください");
+assert(articleJs.includes("table-scroll-viewport"), jsFile, "JSで比較列専用のスクロールviewportを作成してください");
+assert(articleJs.includes("is-scrollable"), jsFile, "実際にoverflowする表だけスクロール状態にしてください");
+assert(articleJs.includes("ResizeObserver"), jsFile, "表のoverflow状態をリサイズ時にも再判定してください");
+assert(articleJs.includes("aria-labelledby"), jsFile, "表スクロール領域をcaptionと関連付けてください");
 assert(articleJs.includes("aria-expanded"), jsFile, "JSでFAQのaria-expandedを同期してください");
 assert(/\.hidden|setAttribute\(\s*["']hidden/i.test(articleJs), jsFile, "JSでFAQ回答のhidden状態を同期してください");
 assert(articleJs.includes("area_tachikawa_cta_click"), jsFile, "CTAイベント名がありません");

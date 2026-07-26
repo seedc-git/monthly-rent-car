@@ -283,6 +283,30 @@
   border-radius: 16px;
 }
 
+.area-ranking-page.area-tachikawa .image-slot-media--logo {
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.area-ranking-page.area-tachikawa .image-slot-media--logo img {
+  padding: 12px 0;
+  object-fit: contain;
+}
+
+.area-ranking-page.area-tachikawa .image-slot-media--nameplate {
+  border: 0;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  box-shadow: none;
+}
+
+.area-ranking-page.area-tachikawa .image-slot-media--nameplate img {
+  object-fit: contain;
+}
+
 .area-ranking-page.area-tachikawa .image-slot-media img {
   width: 100%;
   height: 100%;
@@ -327,6 +351,7 @@
 }
 
 .area-ranking-page.area-tachikawa .table-scroll {
+  --table-key-column-width: 156px;
   width: 100%;
   margin: 30px auto;
   overflow-x: auto;
@@ -339,7 +364,22 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.area-ranking-page.area-tachikawa .table-scroll:focus-visible {
+.area-ranking-page.area-tachikawa .table-scroll.is-table-enhanced {
+  overflow: hidden;
+  overscroll-behavior-inline: auto;
+  scrollbar-color: auto;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll-viewport {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: var(--article-blue) var(--article-sky);
+  -webkit-overflow-scrolling: touch;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll-viewport:focus-visible {
   outline-offset: 4px;
 }
 
@@ -356,7 +396,21 @@
   min-width: 1000px;
 }
 
+.area-ranking-page.area-tachikawa .table-scroll--ranking {
+  --table-key-column-width: 68px;
+  --table-company-column-width: 168px;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll--compact {
+  --table-key-column-width: 184px;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll--compact table {
+  min-width: 520px;
+}
+
 .area-ranking-page.area-tachikawa .table-scroll--detail {
+  --table-key-column-width: 144px;
   max-width: 840px;
 }
 
@@ -368,7 +422,12 @@
   min-width: 860px;
 }
 
-.area-ranking-page.area-tachikawa .table-scroll caption {
+.area-ranking-page.area-tachikawa .table-scroll--comparison {
+  --table-key-column-width: 164px;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll caption,
+.area-ranking-page.area-tachikawa .table-caption-bar {
   padding: 15px 18px;
   color: var(--article-navy);
   background: var(--article-sky-2);
@@ -376,6 +435,24 @@
   font-size: 14px;
   font-weight: 900;
   text-align: left;
+}
+
+.area-ranking-page.area-tachikawa .table-caption-bar {
+  position: relative;
+  z-index: 6;
+}
+
+.area-ranking-page.area-tachikawa .is-table-enhanced .table-native-caption {
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  position: absolute;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .area-ranking-page.area-tachikawa .table-scroll th,
@@ -412,10 +489,80 @@
   background: #fbfdff;
 }
 
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable thead tr > :first-child,
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable tbody tr > :first-child {
+  width: var(--table-key-column-width);
+  min-width: var(--table-key-column-width);
+  max-width: var(--table-key-column-width);
+  position: sticky;
+  left: 0;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable thead tr > :first-child {
+  z-index: 5;
+  color: var(--article-white);
+  background: var(--article-navy);
+}
+
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable tbody tr > :first-child {
+  z-index: 3;
+  background: var(--article-white);
+}
+
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable tbody tr > th:first-child {
+  color: var(--article-navy);
+  background: var(--article-sky-2);
+}
+
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable tbody tr:nth-child(even) > :first-child {
+  background: #f5f9fc;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable thead tr > :nth-child(2),
+.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable tbody tr > :nth-child(2) {
+  width: var(--table-company-column-width);
+  min-width: var(--table-company-column-width);
+  max-width: var(--table-company-column-width);
+  position: sticky;
+  left: var(--table-key-column-width);
+}
+
+.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable thead tr > :nth-child(2) {
+  z-index: 5;
+  color: var(--article-white);
+  background: var(--article-navy);
+}
+
+.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable tbody tr > :nth-child(2) {
+  z-index: 3;
+  color: var(--article-navy);
+  background: var(--article-sky-2);
+}
+
+.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable tbody tr:nth-child(even) > :nth-child(2) {
+  background: #f5f9fc;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable:not(.is-at-start) tbody tr > :first-child,
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable:not(.is-at-start) thead tr > :first-child,
+.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable:not(.is-at-start) tbody tr > :nth-child(2),
+.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable:not(.is-at-start) thead tr > :nth-child(2) {
+  box-shadow: 7px 0 12px -10px rgba(5, 38, 111, 0.8);
+}
+
+.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable:not(.is-at-start) tbody tr > :first-child,
+.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable:not(.is-at-start) thead tr > :first-child {
+  box-shadow: none;
+}
+
 .area-ranking-page.area-tachikawa .table-scroll .is-brand {
   color: var(--article-navy);
   background: #e7f5ff;
   font-weight: 900;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable .price-table tbody tr.is-brand > :first-child {
+  background: #e7f5ff;
 }
 
 .area-ranking-page.area-tachikawa .price-table tbody tr.is-brand > *,
@@ -730,24 +877,87 @@
   max-width: 900px;
   margin: 46px auto 82px;
   padding: clamp(24px, 4vw, 38px);
-  border-top: 5px solid var(--article-navy);
+  border: 2px solid var(--article-orange);
   border-radius: 18px;
   background: var(--article-sky-2);
   box-shadow: 0 12px 32px rgba(5, 38, 111, 0.09);
 }
 
 .area-ranking-page.area-tachikawa .toc-title {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   color: var(--article-navy);
-  font-size: 22px;
+  font-size: 13px;
   font-weight: 950;
+  line-height: 1.25;
+  text-align: center;
 }
 
 .area-ranking-page.area-tachikawa .toc-title span {
-  margin-right: 12px;
+  display: block;
   color: var(--article-orange);
-  font-size: 11px;
+  font-size: clamp(30px, 4vw, 42px);
+  letter-spacing: 0.04em;
+}
+
+.area-ranking-page.area-tachikawa .toc-title small {
+  margin-top: 3px;
+  display: block;
+  color: var(--article-muted);
+  font-size: 12px;
   letter-spacing: 0.14em;
+}
+
+.area-ranking-page.area-tachikawa .toc-list-viewport {
+  position: relative;
+}
+
+.area-ranking-page.area-tachikawa .toc-list-viewport.is-collapsible.is-collapsed {
+  max-height: var(--toc-collapsed-height, 260px);
+  overflow: hidden;
+}
+
+.area-ranking-page.area-tachikawa .toc-list-viewport.is-collapsible.is-collapsed::after {
+  content: "";
+  height: 88px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(244, 251, 255, 0) 0%, var(--article-sky-2) 84%);
+  pointer-events: none;
+}
+
+.area-ranking-page.area-tachikawa .toc-toggle {
+  min-width: 150px;
+  min-height: 56px;
+  margin: 12px auto 0;
+  padding: 12px 26px;
+  border: 0;
+  border-radius: 0;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  color: var(--article-white);
+  background: var(--article-orange);
+  font: inherit;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.area-ranking-page.area-tachikawa .toc-toggle[hidden] {
+  display: none;
+}
+
+.area-ranking-page.area-tachikawa .toc-toggle:hover {
+  background: var(--article-orange-2);
+  transform: translateY(-1px);
 }
 
 .area-ranking-page.area-tachikawa .article-toc ol {
@@ -1154,12 +1364,9 @@
     border-radius: 13px;
   }
 
-  .area-ranking-page.area-tachikawa .table-scroll::after {
-    content: "横にスクロールできます →";
+  .area-ranking-page.area-tachikawa .table-scroll.is-scrollable::after {
+    content: "左の項目を固定して横にスクロールできます →";
     padding: 7px 12px;
-    position: sticky;
-    right: 0;
-    left: 0;
     display: block;
     color: var(--article-muted);
     background: var(--article-sky-2);
@@ -1176,24 +1383,6 @@
   .area-ranking-page.area-tachikawa .table-scroll th,
   .area-ranking-page.area-tachikawa .table-scroll td {
     padding: 12px 13px;
-  }
-
-  .area-ranking-page.area-tachikawa .table-scroll tbody th[scope="row"],
-  .area-ranking-page.area-tachikawa .table-scroll tbody td:first-child {
-    min-width: 108px;
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    background: var(--article-sky-2);
-    box-shadow: 2px 0 0 var(--article-line);
-  }
-
-  .area-ranking-page.area-tachikawa .table-scroll tbody tr:nth-child(even) td:first-child {
-    background: #f5f9fc;
-  }
-
-  .area-ranking-page.area-tachikawa .ranking-table .is-recommended td:first-child {
-    background: #fff5ed;
   }
 
   .area-ranking-page.area-tachikawa .check-list {
@@ -1232,6 +1421,16 @@
   .area-ranking-page.area-tachikawa .article-toc {
     margin: 40px 0 58px;
     padding: 22px 16px;
+  }
+
+  .area-ranking-page.area-tachikawa .toc-title {
+    margin-bottom: 18px;
+  }
+
+  .area-ranking-page.area-tachikawa .toc-toggle {
+    min-width: 132px;
+    min-height: 50px;
+    font-size: 16px;
   }
 
   .area-ranking-page.area-tachikawa .article-toc a {

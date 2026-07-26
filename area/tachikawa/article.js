@@ -7,6 +7,10 @@
   const article = page.querySelector(".ranking-article");
   const toc = page.querySelector("[data-generated-toc]");
   const tocSource = page.querySelector(".toc-source");
+  const tocViewport = page.querySelector("[data-toc-viewport]");
+  const tocToggle = page.querySelector("[data-toc-toggle]");
+  const tocToggleLabel = page.querySelector("[data-toc-toggle-label]");
+  const TOC_COLLAPSED_ITEMS = 4;
 
   if (toc && tocSource) {
     const headings = Array.from(tocSource.querySelectorAll("h2, h3")).filter(
@@ -54,7 +58,120 @@
     if (headings.length) {
       toc.replaceChildren(fragment);
     }
+
+    if (tocViewport && tocToggle && toc.children.length > TOC_COLLAPSED_ITEMS) {
+      const updateCollapsedHeight = () => {
+        const lastVisibleItem = toc.children[TOC_COLLAPSED_ITEMS - 1];
+        const nextItem = toc.children[TOC_COLLAPSED_ITEMS];
+        if (!lastVisibleItem) return;
+
+        const previewHeight = nextItem
+          ? Math.min(34, Math.max(18, nextItem.offsetHeight * 0.35))
+          : 24;
+        const collapsedHeight =
+          lastVisibleItem.offsetTop + lastVisibleItem.offsetHeight + previewHeight;
+        tocViewport.style.setProperty(
+          "--toc-collapsed-height",
+          `${Math.ceil(collapsedHeight)}px`
+        );
+      };
+
+      const setTocExpanded = (isExpanded) => {
+        tocViewport.classList.toggle("is-collapsed", !isExpanded);
+        tocViewport.classList.toggle("is-expanded", isExpanded);
+        tocToggle.setAttribute("aria-expanded", String(isExpanded));
+        tocToggle.setAttribute(
+          "aria-label",
+          isExpanded ? "目次を折り畳む" : "目次をすべて開く"
+        );
+        if (tocToggleLabel) {
+          tocToggleLabel.textContent = isExpanded ? "CLOSE" : "OPEN";
+        }
+      };
+
+      tocViewport.classList.add("is-collapsible");
+      tocToggle.hidden = false;
+      setTocExpanded(false);
+      window.requestAnimationFrame(updateCollapsedHeight);
+
+      tocToggle.addEventListener("click", () => {
+        const isExpanded = tocToggle.getAttribute("aria-expanded") === "true";
+        setTocExpanded(!isExpanded);
+      });
+
+      let resizeFrame = 0;
+      window.addEventListener("resize", () => {
+        window.cancelAnimationFrame(resizeFrame);
+        resizeFrame = window.requestAnimationFrame(updateCollapsedHeight);
+      });
+    }
   }
+
+  const tableWrappers = Array.from(page.querySelectorAll(".table-scroll"));
+
+  tableWrappers.forEach((wrapper, index) => {
+    if (wrapper.classList.contains("is-table-enhanced")) return;
+
+    const table = Array.from(wrapper.children).find(
+      (child) => child.tagName === "TABLE"
+    );
+    const caption = table ? table.querySelector("caption") : null;
+    if (!table || !caption) return;
+
+    const captionText = caption.textContent.replace(/\s+/g, " ").trim();
+    const captionId = caption.id || `tachikawa-table-caption-${index + 1}`;
+    const visibleCaption = document.createElement("div");
+    const viewport = document.createElement("div");
+
+    caption.id = captionId;
+    caption.classList.add("table-native-caption");
+
+    visibleCaption.className = "table-caption-bar";
+    visibleCaption.setAttribute("aria-hidden", "true");
+    visibleCaption.textContent = captionText;
+
+    viewport.className = "table-scroll-viewport";
+    viewport.appendChild(table);
+
+    wrapper.removeAttribute("role");
+    wrapper.removeAttribute("tabindex");
+    wrapper.removeAttribute("aria-label");
+    wrapper.classList.add("is-table-enhanced", "is-at-start", "is-at-end");
+    wrapper.append(visibleCaption, viewport);
+
+    const updateTableState = () => {
+      const maxScrollLeft = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+      const isScrollable = maxScrollLeft > 2;
+      const isAtStart = viewport.scrollLeft <= 2;
+      const isAtEnd = viewport.scrollLeft >= maxScrollLeft - 2;
+
+      wrapper.classList.toggle("is-scrollable", isScrollable);
+      wrapper.classList.toggle("is-at-start", !isScrollable || isAtStart);
+      wrapper.classList.toggle("is-at-end", !isScrollable || isAtEnd);
+
+      if (isScrollable) {
+        viewport.setAttribute("role", "region");
+        viewport.setAttribute("tabindex", "0");
+        viewport.setAttribute("aria-labelledby", captionId);
+      } else {
+        viewport.removeAttribute("role");
+        viewport.removeAttribute("tabindex");
+        viewport.removeAttribute("aria-labelledby");
+      }
+    };
+
+    viewport.addEventListener("scroll", updateTableState, { passive: true });
+
+    if ("ResizeObserver" in window) {
+      const tableResizeObserver = new ResizeObserver(updateTableState);
+      tableResizeObserver.observe(wrapper);
+      tableResizeObserver.observe(table);
+    } else {
+      window.addEventListener("resize", updateTableState);
+    }
+
+    window.requestAnimationFrame(updateTableState);
+  });
 
   const faqList = page.querySelector(".faq-list");
   if (faqList) {

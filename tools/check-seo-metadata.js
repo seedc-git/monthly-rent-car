@@ -73,6 +73,10 @@ function countMatches(html, pattern) {
 function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
+  const expectedOgImage =
+    file === "area/tachikawa/index.html"
+      ? `${baseUrl}/assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch.webp`
+      : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const title = extractFirst(html, /<title>([\s\S]*?)<\/title>/);
   const description = extractFirst(html, /<meta\s+name="description"\s+content="([\s\S]*?)"\s*>/);
 
@@ -108,8 +112,8 @@ function checkPage(file) {
   if (!html.includes(`<meta property="og:url" content="${expectedUrl}">`)) {
     fail(file, `og:url must be ${expectedUrl}`);
   }
-  if (!html.includes(`<meta property="og:image" content="${baseUrl}/assets/ogp/monthly-rentacar.png">`)) {
-    fail(file, "og:image must use the shared OGP image on the current host");
+  if (!html.includes(`<meta property="og:image" content="${expectedOgImage}">`)) {
+    fail(file, `og:image must be ${expectedOgImage}`);
   }
   if (!html.includes('<meta property="og:image:width" content="1200">')) {
     fail(file, "og:image:width must be 1200");

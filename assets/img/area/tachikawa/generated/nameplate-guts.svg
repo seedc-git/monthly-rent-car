@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="160" viewBox="0 0 320 160">
+  <rect x="3" y="3" width="314" height="154" rx="18" fill="#f4fbff" stroke="#cfe5f5" stroke-width="2"/>
+  <path d="M4 21A17 17 0 0 1 21 4h5v152h-5a17 17 0 0 1-17-17Z" fill="#ff6a00"/>
+  <text x="48" y="48" fill="#ff6a00" font-family="'Hiragino Sans','Yu Gothic',sans-serif" font-size="12" font-weight="900" letter-spacing="2">比較対象</text>
+  <text x="48" y="91" fill="#05266f" font-family="'Hiragino Sans','Yu Gothic',sans-serif" font-size="27" font-weight="900">ガッツレンタカー</text>
+  <text x="48" y="122" fill="#566a84" font-family="'Hiragino Sans','Yu Gothic',sans-serif" font-size="15" font-weight="800">立川店</text>
+</svg>
