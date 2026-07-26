@@ -12,6 +12,12 @@ const jsPath = path.join(root, jsFile);
 
 const expectedTitle =
   "【2026年最新】立川市の格安レンタカーおすすめ10選｜1ヶ月・長期料金を比較";
+const expectedMobileTitleLines = [
+  "【2026年最新】",
+  "立川市の格安レンタカー",
+  "おすすめ10選",
+  "1ヶ月・長期料金を比較",
+];
 const expectedDescription =
   "立川市で利用できる格安レンタカー10社を、1ヶ月料金、車種、保険・補償、配車・引取り、トラブル時のサポートで比較。立川駅周辺の店舗型から宅配型まで、長期利用に適したサービスと選び方を解説します。";
 const expectedCanonical = "https://monthly-rent-car.jp/area/tachikawa/";
@@ -247,6 +253,16 @@ function normalizeText(value) {
   )
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function normalizeContinuousText(value) {
+  return decodeHtml(
+    String(value)
+      .replace(/<!--[\s\S]*?-->/g, "")
+      .replace(/<script\b[\s\S]*?<\/script>/gi, "")
+      .replace(/<style\b[\s\S]*?<\/style>/gi, "")
+      .replace(/<[^>]+>/g, ""),
+  ).trim();
 }
 
 function normalizeFaqText(value) {
@@ -543,7 +559,38 @@ const h1Elements = findStartTags(bodyHtml, "h1")
   .map((start) => findMatchingElement(bodyHtml, start))
   .filter(Boolean);
 assert(h1Elements.length === 1, pageFile, `H1は1件必要です（現在${h1Elements.length}件）`);
-assert(normalizeText(h1Elements[0]?.html || "") === expectedTitle, pageFile, "H1が仕様と一致しません");
+assert(
+  normalizeContinuousText(h1Elements[0]?.html || "") === expectedTitle,
+  pageFile,
+  "H1が仕様と一致しません",
+);
+const mobileTitleLines = findStartTags(h1Elements[0]?.html || "", "span")
+  .filter((start) =>
+    String(start.attributes.class || "")
+      .split(/\s+/)
+      .includes("article-title-line"),
+  )
+  .map((start) => findMatchingElement(h1Elements[0]?.html || "", start))
+  .filter(Boolean)
+  .map((element) => normalizeContinuousText(element.html));
+assert(
+  JSON.stringify(mobileTitleLines) === JSON.stringify(expectedMobileTitleLines),
+  pageFile,
+  "モバイルH1は意味単位の4行に分けてください",
+);
+const mobileTitleDividers = findStartTags(h1Elements[0]?.html || "", "span").filter((start) =>
+  String(start.attributes.class || "")
+    .split(/\s+/)
+    .includes("article-title-divider"),
+);
+assert(
+  mobileTitleDividers.length === 1 &&
+    normalizeContinuousText(
+      findMatchingElement(h1Elements[0]?.html || "", mobileTitleDividers[0])?.html || "",
+    ) === "｜",
+  pageFile,
+  "モバイルH1の区切り記号は専用要素で1件だけ保持してください",
+);
 
 const bodyStart = findStartTags(html, "body")[0];
 const bodyClasses = String(bodyStart?.attributes.class || "").split(/\s+/);
@@ -1031,6 +1078,27 @@ assert(
   /\.area-ranking-page\.area-tachikawa\s*\{[^}]*overflow-x\s*:\s*clip/i.test(css),
   cssFile,
   "ページ全体の横はみ出しを抑止してください",
+);
+assert(
+  /\.article-header h1\s*\{[^}]*max-width\s*:\s*100%[^}]*min-width\s*:\s*0[^}]*white-space\s*:\s*normal[^}]*word-break\s*:\s*normal[^}]*overflow-wrap\s*:\s*anywhere[^}]*word-break\s*:\s*auto-phrase/i.test(
+    css,
+  ),
+  cssFile,
+  "H1はauto-phrase未対応ブラウザでも折り返せるフォールバックを指定してください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*clamp\(\s*24px\s*,\s*7\.2vw\s*,\s*32px\s*\)[^}]*line-height\s*:\s*1\.38/i.test(
+    css,
+  ),
+  cssFile,
+  "モバイルH1は320px幅でも見切れない文字サイズと行間にしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*430px\s*\)[\s\S]*?\.article-title-line\s*\{[^}]*display\s*:\s*block[^}]*\}[\s\S]*?\.article-title-divider\s*\{[^}]*display\s*:\s*none/i.test(
+    css,
+  ),
+  cssFile,
+  "430px以下ではH1を意味単位の4行にし、区切り記号を非表示にしてください",
 );
 assert(
   /\.toc-list-viewport\.is-collapsible\.is-collapsed\s*\{[^}]*max-height[^}]*overflow\s*:\s*hidden/i.test(css),
