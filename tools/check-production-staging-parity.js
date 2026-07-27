@@ -1,0 +1,119 @@
+const fs = require("fs");
+const os = require("os");
+const path = require("path");
+const { execFileSync } = require("child_process");
+
+const headSha = process.argv[2];
+const productionHost = "monthly-rent-car.jp";
+const stagingHost = "stg.monthly-rent-car.jp";
+
+if (!headSha) {
+  console.error("Usage: node tools/check-production-staging-parity.js <production-head-sha>");
+  process.exit(1);
+}
+
+function git(args, options = {}) {
+  return execFileSync("git", args, {
+    encoding: "utf8",
+    ...options,
+  });
+}
+
+function listChangedFiles(args) {
+  return git(args)
+    .split("\0")
+    .filter(Boolean);
+}
+
+function normalizeEnvironmentPatch(file, patch, isAdded) {
+  let normalized = patch;
+
+  if (file === "sitemap.xml" || (isAdded && file.endsWith(".html"))) {
+    normalized = normalized.replaceAll(
+      `https://${productionHost}`,
+      `https://${stagingHost}`,
+    );
+  }
+
+  if (isAdded && file.endsWith(".html")) {
+    normalized = normalized.replace(
+      /^\+(\s*)<link rel="canonical" href="https:\/\/stg\.monthly-rent-car\.jp\/[^"]*">\r?$/m,
+      '+$1<meta name="robots" content="noindex, nofollow">',
+    );
+  }
+
+  return normalized;
+}
+
+const range = `origin/main...${headSha}`;
+const changedFiles = listChangedFiles(["diff", "--name-only", "-z", range]);
+const addedFiles = new Set(
+  listChangedFiles(["diff", "--diff-filter=A", "--name-only", "-z", range]),
+);
+
+if (changedFiles.length === 0) {
+  process.exit(0);
+}
+
+const worktreeDir = fs.mkdtempSync(path.join(os.tmpdir(), "staging-check-"));
+const patchDir = fs.mkdtempSync(path.join(os.tmpdir(), "staging-patches-"));
+let failed = false;
+
+try {
+  git(["worktree", "add", "--detach", worktreeDir, "origin/staging"], {
+    stdio: "inherit",
+  });
+
+  for (const [index, file] of changedFiles.entries()) {
+    const patch = git([
+      "diff",
+      "--binary",
+      "--unified=0",
+      range,
+      "--",
+      file,
+    ]);
+    const normalized = normalizeEnvironmentPatch(
+      file,
+      patch,
+      addedFiles.has(file),
+    );
+    const patchPath = path.join(patchDir, `${index}.patch`);
+    fs.writeFileSync(patchPath, normalized);
+
+    try {
+      git(
+        [
+          "-C",
+          worktreeDir,
+          "apply",
+          "--reverse",
+          "--check",
+          "--unidiff-zero",
+          patchPath,
+        ],
+        { stdio: "pipe" },
+      );
+    } catch {
+      failed = true;
+      console.error(
+        `::error file=${file}::Production change is not included in staging`,
+      );
+    }
+  }
+} finally {
+  try {
+    git(["worktree", "remove", worktreeDir], { stdio: "inherit" });
+  } catch {
+    console.error(`::warning::Could not remove temporary worktree ${worktreeDir}`);
+  }
+  fs.rmSync(patchDir, { recursive: true, force: true });
+}
+
+if (failed) {
+  process.exit(1);
+}
+
+console.log(
+  `Production/staging parity check passed for ${changedFiles.length} files`,
+);
