@@ -4,7 +4,8 @@
 - 実装コミット: `87ab79f1aab78589eb1e67f5a8ee7567c564cb04`
 - モバイルH1修正コミット: `6fa5a6b680cca7dd2eeac843a9aca194c25a35c5`
 - モバイル表スクロール修正コミット: `0e74deb33a221b9a198b75219d54ce30495be673`
-- スマートフォン文字・見出し・ランキング表の最終修正: 本記録と同時に`staging`へ反映
+- スマートフォン文字・見出し・ランキング表の実装コミット: `ec0effebff86e1ed967ba70bfbc0c5b1588b1b44`
+- 実ブラウザ検証対象のstaging head: `3299dd2ac6cb5622ce21dda1896c9d64aa7645ac`
 - 実施日: 2026年7月27日
 - 対象ブランチ: `staging`
 
@@ -18,8 +19,8 @@
 | `node --check tools/check-tachikawa-ranking.cjs` | 合格 |
 | `tidy -errors -quiet area/tachikawa/index.html` | 合格。HTMLエラーなし |
 | `git diff --check` | 合格 |
-| GitHub Actions `Check GA tag` | 合格。run `30195248284` |
-| GitHub Pages `pages-build-deployment` | 合格。run `30195247976` |
+| GitHub Actions `Check GA tag` | 合格。run `30246776312` |
+| GitHub Pages `pages-build-deployment` | 合格。run `30246775130` |
 
 専用チェックでは、titleとH1の文言一致、モバイルH1の3行以内表示と安全な折り返し、指定見出し、meta description、canonical、noindex、構造化データ、5列・10社のランキング、12問FAQ、17画像、10本の記事CTA、出典リンク属性、日付、表のcaption/scope、CSSスコープ、4項目で折り畳む目次、全18表の固定caption・固定列・overflow判定・初回スクロール案内、背景透過ロゴのalpha channel、FAQのプログレッシブ拡張、CTAイベント、相対アセットの存在を検証した。
 
@@ -158,7 +159,7 @@
 
 ## 本番非変更の確認
 
-- `origin/main`: `5fcd1bbd7c5044c5d75792e16ed110ac4a9db41f`
+- 確認時点の`origin/main`: `3a49ada9a7a61bd23e07c37478732d99f47a2295`（新宿店MAPリンク更新。本作業とは別）
 - 本番 `https://monthly-rent-car.jp/area/tachikawa/`: HTTP 404
 - `main`へのpush、PR作成、production workflow実行は行っていない。
 - 今回の変更ファイルは`area/tachikawa/index.html`、`area/tachikawa/article.css`、`area/tachikawa/article.js`、`tools/check-tachikawa-ranking.cjs`、本テスト記録、画像仕様記録に限定した。共通CSS、共通JS、固定CTA、画像、トップページ、立川店ページ、robots.txt、sitemap.xml、workflowは未変更。
