@@ -36,15 +36,7 @@ jobs:
           PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           git fetch --no-tags origin main staging
-          git diff --binary --unified=0 origin/main..."$PR_HEAD_SHA" > /tmp/production-pr.patch
-          if [ ! -s /tmp/production-pr.patch ]; then
-            exit 0
-          fi
-          git worktree add /tmp/staging-check origin/staging
-          if ! git -C /tmp/staging-check apply --reverse --check --unidiff-zero /tmp/production-pr.patch; then
-            echo "::error::Production PR changes are not included in the staging branch. Apply and verify the same change on staging before merging to main."
-            exit 1
-          fi
+          node tools/check-production-staging-parity.js "$PR_HEAD_SHA"
 
       - name: Every HTML page must include the GA4 tag
         run: |
