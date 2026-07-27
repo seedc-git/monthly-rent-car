@@ -1131,6 +1131,26 @@ assert(
   "ランキング表は順位と会社名の2列を固定してください",
 );
 assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll-hint\s*\{[^}]*position\s*:\s*absolute[^}]*z-index\s*:\s*7[^}]*pointer-events\s*:\s*none/i.test(css),
+  cssFile,
+  "スマホ表には操作を妨げない中央スクロール案内を配置してください",
+);
+assert(
+  /\.table-scroll-hint__panel\s*\{[^}]*top\s*:\s*calc\(\s*50%\s*-\s*25px\s*\)[^}]*left\s*:\s*calc\(\s*50%\s*-\s*60px\s*\)[^}]*width\s*:\s*120px[^}]*height\s*:\s*80px[^}]*transition\s*:\s*opacity\s*0\.3s/i.test(css),
+  cssFile,
+  "スクロール案内の位置・寸法・消える速さを参照サイトに合わせてください",
+);
+assert(
+  /\.table-scroll-hint\.is-active \.table-scroll-hint__gesture\s*\{[^}]*animation\s*:\s*tachikawa-table-scroll-hint\s*1\.2s\s*linear\s*2/i.test(css),
+  cssFile,
+  "スクロール案内の指は1.2秒の横移動を2回行ってください",
+);
+assert(
+  !/\.table-scroll\.is-scrollable::after\s*\{[^}]*左の項目を固定して横にスクロールできます/i.test(css),
+  cssFile,
+  "旧式の表末尾スクロール案内は残さないでください",
+);
+assert(
   !/tbody th\[scope=["']row["']\]\s*,\s*[\s\S]{0,120}tbody td:first-child/i.test(css),
   cssFile,
   "旧sticky規則はランキング表で列を重ねるため削除してください",
@@ -1156,6 +1176,12 @@ assert(/TOC_COLLAPSED_ITEMS\s*=\s*4/.test(articleJs), jsFile, "目次の初期�
 assert(articleJs.includes('"OPEN"') && articleJs.includes('"CLOSE"'), jsFile, "目次buttonはOPEN/CLOSEを切り替えてください");
 assert(articleJs.includes("table-caption-bar"), jsFile, "JSで表題をスクロール領域外へ複製してください");
 assert(articleJs.includes("table-scroll-viewport"), jsFile, "JSで比較列専用のスクロールviewportを作成してください");
+assert(articleJs.includes("table-scroll-hint"), jsFile, "JSで各表に初回スクロール案内を生成してください");
+assert(articleJs.includes("スクロールできます"), jsFile, "スクロール案内の日本語文言がありません");
+assert(articleJs.includes("hasHintEnteredView"), jsFile, "表中央が画面内へ入った時だけ案内を表示してください");
+assert(articleJs.includes("hasTableInteracted"), jsFile, "表ごとに初回操作済み状態を保持してください");
+assert(articleJs.includes("tableHintUpdaters"), jsFile, "全表の画面進入判定は共有更新処理にまとめてください");
+assert(articleJs.includes("aria-describedby"), jsFile, "スクロール領域へ操作説明を関連付けてください");
 assert(articleJs.includes("is-scrollable"), jsFile, "実際にoverflowする表だけスクロール状態にしてください");
 assert(articleJs.includes("ResizeObserver"), jsFile, "表のoverflow状態をリサイズ時にも再判定してください");
 assert(articleJs.includes("aria-labelledby"), jsFile, "表スクロール領域をcaptionと関連付けてください");

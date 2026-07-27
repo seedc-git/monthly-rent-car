@@ -108,6 +108,15 @@
   }
 
   const tableWrappers = Array.from(page.querySelectorAll(".table-scroll"));
+  const tableHintUpdaters = [];
+  let tableHintFrame = 0;
+
+  const updateTableHints = () => {
+    window.cancelAnimationFrame(tableHintFrame);
+    tableHintFrame = window.requestAnimationFrame(() => {
+      tableHintUpdaters.forEach((updateHint) => updateHint());
+    });
+  };
 
   tableWrappers.forEach((wrapper, index) => {
     if (wrapper.classList.contains("is-table-enhanced")) return;
@@ -120,8 +129,14 @@
 
     const captionText = caption.textContent.replace(/\s+/g, " ").trim();
     const captionId = caption.id || `tachikawa-table-caption-${index + 1}`;
+    const instructionsId = `tachikawa-table-instructions-${index + 1}`;
     const visibleCaption = document.createElement("div");
+    const instructions = document.createElement("span");
     const viewport = document.createElement("div");
+    const scrollHint = document.createElement("div");
+    const scrollHintPanel = document.createElement("span");
+    const scrollHintGesture = document.createElement("span");
+    const scrollHintText = document.createElement("span");
 
     caption.id = captionId;
     caption.classList.add("table-native-caption");
@@ -130,14 +145,49 @@
     visibleCaption.setAttribute("aria-hidden", "true");
     visibleCaption.textContent = captionText;
 
+    instructions.id = instructionsId;
+    instructions.className = "visually-hidden table-scroll-instructions";
+    instructions.textContent = wrapper.classList.contains("table-scroll--ranking")
+      ? "横にスクロールできます。左端の順位とレンタカー会社は固定されています。"
+      : "横にスクロールできます。左端の項目列は固定されています。";
+
     viewport.className = "table-scroll-viewport";
-    viewport.appendChild(table);
+    scrollHint.className = "table-scroll-hint";
+    scrollHint.setAttribute("aria-hidden", "true");
+    scrollHintPanel.className = "table-scroll-hint__panel";
+    scrollHintGesture.className = "table-scroll-hint__gesture";
+    scrollHintText.className = "table-scroll-hint__text";
+    scrollHintText.textContent = "スクロールできます";
+    scrollHintPanel.append(scrollHintGesture, scrollHintText);
+    scrollHint.appendChild(scrollHintPanel);
+    viewport.append(table, scrollHint);
 
     wrapper.removeAttribute("role");
     wrapper.removeAttribute("tabindex");
     wrapper.removeAttribute("aria-label");
     wrapper.classList.add("is-table-enhanced", "is-at-start", "is-at-end");
-    wrapper.append(visibleCaption, viewport);
+    wrapper.append(visibleCaption, instructions, viewport);
+
+    let isTableScrollable = false;
+    let hasHintEnteredView = false;
+    let hasTableInteracted = false;
+
+    const updateScrollHint = () => {
+      if (!hasHintEnteredView) {
+        const viewportRect = viewport.getBoundingClientRect();
+        hasHintEnteredView =
+          viewportRect.top + viewportRect.height / 2 < window.innerHeight;
+      }
+
+      const isMobileViewport = window.innerWidth <= 760;
+      scrollHint.classList.toggle(
+        "is-active",
+        isMobileViewport &&
+          isTableScrollable &&
+          hasHintEnteredView &&
+          !hasTableInteracted
+      );
+    };
 
     const updateTableState = () => {
       const maxScrollLeft = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
@@ -148,19 +198,33 @@
       wrapper.classList.toggle("is-scrollable", isScrollable);
       wrapper.classList.toggle("is-at-start", !isScrollable || isAtStart);
       wrapper.classList.toggle("is-at-end", !isScrollable || isAtEnd);
+      isTableScrollable = isScrollable;
 
       if (isScrollable) {
         viewport.setAttribute("role", "region");
         viewport.setAttribute("tabindex", "0");
         viewport.setAttribute("aria-labelledby", captionId);
+        viewport.setAttribute("aria-describedby", instructionsId);
       } else {
         viewport.removeAttribute("role");
         viewport.removeAttribute("tabindex");
         viewport.removeAttribute("aria-labelledby");
+        viewport.removeAttribute("aria-describedby");
       }
+
+      updateScrollHint();
     };
 
-    viewport.addEventListener("scroll", updateTableState, { passive: true });
+    viewport.addEventListener(
+      "scroll",
+      () => {
+        hasTableInteracted = true;
+        wrapper.classList.add("has-table-interacted");
+        updateTableState();
+      },
+      { passive: true }
+    );
+    tableHintUpdaters.push(updateScrollHint);
 
     if ("ResizeObserver" in window) {
       const tableResizeObserver = new ResizeObserver(updateTableState);
@@ -172,6 +236,12 @@
 
     window.requestAnimationFrame(updateTableState);
   });
+
+  if (tableHintUpdaters.length) {
+    window.addEventListener("scroll", updateTableHints, { passive: true });
+    window.addEventListener("resize", updateTableHints);
+    updateTableHints();
+  }
 
   const faqList = page.querySelector(".faq-list");
   if (faqList) {
