@@ -181,6 +181,7 @@ const expectedImageSlots = new Map([
 ]);
 
 const expectedCtas = [
+  ["intro", "form", "https://form.run/@monthly-rent-car"],
   ["hero", "form", "https://form.run/@monthly-rent-car"],
   ["hero", "line", "https://lin.ee/ojmETte"],
   ["hero", "tel", "tel:05017920800"],
@@ -897,7 +898,11 @@ const bodyAnchors = findStartTags(bodyHtml, "a");
 const articleCtas = anchors.filter(
   (entry) => entry.attributes["data-cta-page"] !== undefined,
 );
-assert(articleCtas.length === 10, pageFile, `記事CTAリンクは10本必要です（現在${articleCtas.length}本）`);
+assert(
+  articleCtas.length === expectedCtas.length,
+  pageFile,
+  `記事CTAリンクは${expectedCtas.length}本必要です（現在${articleCtas.length}本）`,
+);
 assert(
   articleCtas.every(
     (entry) => entry.attributes["data-cta-page"] === "area-tachikawa",
@@ -1180,11 +1185,11 @@ assert(
   "H1は自然な日本語改行と安全なフォールバックを指定してください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*22px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.45/i.test(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*22px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.45/i.test(
     css,
   ),
   cssFile,
-  "モバイルH1は22px・weight 700・line-height 1.45にしてください",
+  "モバイルH1は22px・weight 800・line-height 1.45にしてください",
 );
 assert(
   !/@media\s*\(\s*max-width\s*:\s*430px\s*\)[\s\S]*?\.article-title-line\s*\{[^}]*display\s*:\s*block/i.test(css),
