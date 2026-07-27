@@ -97,8 +97,7 @@
   text-wrap: balance;
   line-break: strict;
   word-break: normal;
-  overflow-wrap: anywhere;
-  word-break: auto-phrase;
+  overflow-wrap: break-word;
 }
 
 .area-ranking-page.area-tachikawa .article-title-line,
@@ -188,6 +187,9 @@
   line-height: 1.45;
   letter-spacing: 0.01em;
   text-wrap: balance;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .area-ranking-page.area-tachikawa .content-section h2::before,
@@ -227,6 +229,47 @@
   font-size: clamp(20px, 2.2vw, 27px);
   font-weight: 950;
   line-height: 1.55;
+  text-wrap: balance;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.area-ranking-page.area-tachikawa .content-section h4 {
+  text-wrap: balance;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.area-ranking-page.area-tachikawa .article-title-keyword,
+.area-ranking-page.area-tachikawa .heading-brand,
+.area-ranking-page.area-tachikawa .heading-branch,
+.area-ranking-page.area-tachikawa .heading-tail,
+.area-ranking-page.area-tachikawa .heading-term {
+  white-space: nowrap;
+}
+
+.area-ranking-page.area-tachikawa .inline-token {
+  white-space: nowrap;
+}
+
+.area-ranking-page.area-tachikawa .table-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.area-ranking-page.area-tachikawa .table-name-part {
+  white-space: nowrap;
+}
+
+.area-ranking-page.area-tachikawa .content-section h2,
+.area-ranking-page.area-tachikawa .content-section h3,
+.area-ranking-page.area-tachikawa .conclusion-box h2,
+.area-ranking-page.area-tachikawa .article-cta h2,
+.area-ranking-page.area-tachikawa .article-cta h3 {
+  scroll-margin-top: 100px;
 }
 
 .area-ranking-page.area-tachikawa .content-section h3::before {
@@ -410,12 +453,11 @@
 }
 
 .area-ranking-page.area-tachikawa .table-scroll--ranking table {
-  min-width: 1000px;
+  min-width: 920px;
 }
 
 .area-ranking-page.area-tachikawa .table-scroll--ranking {
-  --table-key-column-width: 68px;
-  --table-company-column-width: 168px;
+  --table-key-column-width: 210px;
 }
 
 .area-ranking-page.area-tachikawa .table-scroll--compact {
@@ -535,35 +577,8 @@
   background: #f5f9fc;
 }
 
-.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable thead tr > :nth-child(2),
-.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable tbody tr > :nth-child(2) {
-  width: var(--table-company-column-width);
-  min-width: var(--table-company-column-width);
-  max-width: var(--table-company-column-width);
-  position: sticky;
-  left: var(--table-key-column-width);
-}
-
-.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable thead tr > :nth-child(2) {
-  z-index: 5;
-  color: var(--article-white);
-  background: var(--article-navy);
-}
-
-.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable tbody tr > :nth-child(2) {
-  z-index: 3;
-  color: var(--article-navy);
-  background: var(--article-sky-2);
-}
-
-.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable tbody tr:nth-child(even) > :nth-child(2) {
-  background: #f5f9fc;
-}
-
 .area-ranking-page.area-tachikawa .table-scroll.is-scrollable thead tr > :first-child::after,
-.area-ranking-page.area-tachikawa .table-scroll.is-scrollable tbody tr > :first-child::after,
-.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable thead tr > :nth-child(2)::after,
-.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable tbody tr > :nth-child(2)::after {
+.area-ranking-page.area-tachikawa .table-scroll.is-scrollable tbody tr > :first-child::after {
   content: "";
   position: absolute;
   top: 0;
@@ -571,11 +586,6 @@
   bottom: 0;
   width: 1px;
   background: var(--article-line);
-}
-
-.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable thead tr > :first-child::after,
-.area-ranking-page.area-tachikawa .table-scroll--ranking.is-scrollable tbody tr > :first-child::after {
-  content: none;
 }
 
 .area-ranking-page.area-tachikawa .table-scroll .is-brand {
@@ -613,6 +623,15 @@
   color: var(--article-navy);
 }
 
+.area-ranking-page.area-tachikawa
+  .table-scroll--ranking.is-scrollable
+  .ranking-table
+  tbody
+  tr.is-recommended
+  > .ranking-company-cell {
+  background: #fff5ed;
+}
+
 .area-ranking-page.area-tachikawa .ranking-table a {
   color: var(--article-navy);
   font-weight: 900;
@@ -622,12 +641,55 @@
   text-underline-offset: 4px;
 }
 
+.area-ranking-page.area-tachikawa .ranking-company-cell {
+  vertical-align: top;
+}
+
+.area-ranking-page.area-tachikawa .ranking-position-row {
+  margin-bottom: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+
+.area-ranking-page.area-tachikawa .ranking-table a.ranking-company-link {
+  display: block;
+  text-decoration: none;
+}
+
+.area-ranking-page.area-tachikawa .ranking-company-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  color: var(--article-navy);
+  font-weight: 900;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 106, 0, 0.62);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.area-ranking-page.area-tachikawa .ranking-name-part {
+  white-space: nowrap;
+}
+
+.area-ranking-page.area-tachikawa .ranking-branch-name {
+  margin-top: 3px;
+  display: block;
+  color: var(--article-muted);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
 .area-ranking-page.area-tachikawa .recommend-ribbon {
   width: fit-content;
-  margin-bottom: 7px;
+  margin-bottom: 0;
   padding: 3px 9px;
   border-radius: 999px;
-  display: block;
+  display: inline-flex;
   color: var(--article-white);
   background: var(--article-orange);
   font-size: 11px;
@@ -1327,8 +1389,9 @@
 
   .area-ranking-page.area-tachikawa .article-header h1 {
     padding-bottom: 17px;
-    font-size: clamp(24px, 7.2vw, 32px);
-    line-height: 1.38;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.45;
     letter-spacing: 0;
   }
 
@@ -1341,6 +1404,20 @@
     padding-bottom: 48px;
   }
 
+  .area-ranking-page.area-tachikawa .article-body p {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.85;
+  }
+
+  .area-ranking-page.area-tachikawa .article-body p + p {
+    margin-top: 16px;
+  }
+
+  .area-ranking-page.area-tachikawa .article-body strong {
+    font-weight: 800;
+  }
+
   .area-ranking-page.area-tachikawa .introduction {
     margin-top: 28px;
     padding: 22px 18px;
@@ -1348,17 +1425,25 @@
   }
 
   .area-ranking-page.area-tachikawa .content-section {
-    padding: 58px 0;
+    padding: 42px 0 0;
     scroll-margin-top: 80px;
   }
 
   .area-ranking-page.area-tachikawa .content-section h2,
   .area-ranking-page.area-tachikawa .conclusion-box h2,
   .area-ranking-page.area-tachikawa .article-cta h2 {
+    margin-bottom: 17px;
     padding: 15px 14px 15px 20px;
     border-radius: 0 12px 12px 0;
-    font-size: clamp(23px, 6.6vw, 31px);
+    font-size: 19px;
+    font-weight: 700;
     line-height: 1.5;
+    letter-spacing: 0;
+    text-wrap: balance;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: break-word;
+    scroll-margin-top: 84px;
   }
 
   .area-ranking-page.area-tachikawa .content-section h2::after,
@@ -1368,9 +1453,27 @@
   }
 
   .area-ranking-page.area-tachikawa .content-section h3 {
-    margin-top: 38px;
+    margin-top: 30px;
+    margin-bottom: 12px;
     padding-left: 19px;
-    font-size: 21px;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.55;
+    letter-spacing: 0;
+    scroll-margin-top: 84px;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section .faq-item h3 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section h4 {
+    margin: 26px 0 10px;
+    color: var(--article-navy);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.6;
   }
 
   .area-ranking-page.area-tachikawa .image-slot {
@@ -1383,9 +1486,22 @@
     border-radius: 15px;
   }
 
+  .area-ranking-page.area-tachikawa .image-slot figcaption {
+    font-size: 11.5px;
+    line-height: 1.6;
+  }
+
   .area-ranking-page.area-tachikawa .table-scroll {
     margin: 24px 0;
     border-radius: 13px;
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--ranking {
+    --table-key-column-width: clamp(148px, 41vw, 168px);
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--ranking table {
+    min-width: 850px;
   }
 
   /*
@@ -1481,22 +1597,104 @@
   }
 
   .area-ranking-page.area-tachikawa .table-scroll table {
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 1.5;
   }
 
   .area-ranking-page.area-tachikawa .table-scroll th,
   .area-ranking-page.area-tachikawa .table-scroll td {
-    padding: 12px 13px;
+    padding: 8px 7px;
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll caption,
+  .area-ranking-page.area-tachikawa .table-caption-bar {
+    padding: 10px 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-label {
+    margin-top: 22px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-table th,
+  .area-ranking-page.area-tachikawa .ranking-table td {
+    font-size: 12.5px;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-position-row {
+    margin-bottom: 3px;
+    gap: 4px;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-position {
+    min-width: 39px;
+    padding: 4px 7px;
+    font-size: 11.5px;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-recommend-badge {
+    padding: 3px 7px;
+    font-size: 10.5px;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-company-name {
+    font-size: 12.75px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-branch-name {
+    margin-top: 3px;
+    font-size: 11.5px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-table thead th:nth-child(3),
+  .area-ranking-page.area-tachikawa .ranking-table tbody td:nth-child(3) {
+    white-space: nowrap;
+  }
+
+  .area-ranking-page.area-tachikawa .stars {
+    font-size: 13px;
+    letter-spacing: 0.02em;
   }
 
   .area-ranking-page.area-tachikawa .check-list {
     grid-template-columns: 1fr;
   }
 
+  .area-ranking-page.area-tachikawa .check-list li {
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
   .area-ranking-page.area-tachikawa .conclusion-box {
-    margin-top: 58px;
+    margin-top: 42px;
     padding: 24px 18px;
     border-radius: 18px;
+  }
+
+  .area-ranking-page.area-tachikawa .conclusion-box h2,
+  .area-ranking-page.area-tachikawa .article-cta h2 {
+    margin-bottom: 17px;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .area-ranking-page.area-tachikawa .conclusion-box h2 {
+    margin-right: -18px;
+    margin-left: -18px;
+    padding-right: 8px;
+    padding-left: 14px;
+    font-size: 17px;
+    text-wrap: wrap;
   }
 
   .area-ranking-page.area-tachikawa .article-cta {
@@ -1507,6 +1705,20 @@
 
   .area-ranking-page.area-tachikawa .article-cta h2 {
     padding: 0 0 17px;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section .article-cta h3 {
+    margin: 0 auto 17px;
+    padding: 0 0 14px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .area-ranking-page.area-tachikawa .article-cta > p:not(.cta-eyebrow) {
+    font-size: 14.5px;
+    font-weight: 400;
+    line-height: 1.8;
   }
 
   .area-ranking-page.area-tachikawa .article-cta h2::after {
@@ -1539,6 +1751,8 @@
 
   .area-ranking-page.area-tachikawa .article-toc a {
     padding-right: 3px;
+    font-size: 13.5px;
+    line-height: 1.6;
   }
 
   .area-ranking-page.area-tachikawa .article-toc li ol {
@@ -1550,11 +1764,12 @@
   }
 
   .area-ranking-page.area-tachikawa .rank-section .rank-heading h2 {
-    font-size: 22px;
+    font-size: 18px;
+    line-height: 1.5;
   }
 
   .area-ranking-page.area-tachikawa .rank-section .rank-number {
-    font-size: 23px;
+    font-size: 19px;
   }
 
   .area-ranking-page.area-tachikawa .flow-list > li {
@@ -1569,16 +1784,69 @@
     font-size: 20px;
   }
 
+  .area-ranking-page.area-tachikawa .content-section .flow-list h3 {
+    margin: 0 0 8px;
+    padding: 0 0 8px;
+    font-size: 16.5px;
+    line-height: 1.55;
+  }
+
+  .area-ranking-page.area-tachikawa .flow-list p {
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
   .area-ranking-page.area-tachikawa .faq-item button {
     min-height: 68px;
     padding: 15px 46px 15px 14px;
     font-size: 16px;
+    font-weight: 700;
+    line-height: 1.55;
   }
 
   .area-ranking-page.area-tachikawa .faq-answer {
     padding: 17px 15px;
     grid-template-columns: 24px minmax(0, 1fr);
     gap: 8px;
+  }
+
+  .area-ranking-page.area-tachikawa .faq-answer p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .area-ranking-page.area-tachikawa .comparison-note p,
+  .area-ranking-page.area-tachikawa .source-notes p,
+  .area-ranking-page.area-tachikawa .source-notes li,
+  .area-ranking-page.area-tachikawa .research-note,
+  .area-ranking-page.area-tachikawa .source-list li {
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+
+  .area-ranking-page.area-tachikawa .article-body p.ranking-label {
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1.65;
+  }
+
+  .area-ranking-page.area-tachikawa .article-body p.research-note,
+  .area-ranking-page.area-tachikawa .article-body p.comparison-note {
+    font-size: 12.5px;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .area-ranking-page.area-tachikawa .article-body p.source-date {
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1.7;
+  }
+
+  .area-ranking-page.area-tachikawa .article-body p.toc-title {
+    font-size: 13px;
+    font-weight: 950;
+    line-height: 1.25;
   }
 
   .area-ranking-page.area-tachikawa .source-list {
@@ -1588,16 +1856,7 @@
   .area-ranking-page.area-tachikawa .article-dates {
     display: grid;
     gap: 6px;
-  }
-}
-
-@media (max-width: 430px) {
-  .area-ranking-page.area-tachikawa .article-title-line {
-    display: block;
-  }
-
-  .area-ranking-page.area-tachikawa .article-title-divider {
-    display: none;
+    font-size: 12px;
   }
 }
 

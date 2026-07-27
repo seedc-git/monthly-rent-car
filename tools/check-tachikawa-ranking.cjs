@@ -12,7 +12,7 @@ const jsPath = path.join(root, jsFile);
 
 const expectedTitle =
   "【2026年最新】立川市の格安レンタカーおすすめ10選｜1ヶ月・長期料金を比較";
-const expectedMobileTitleLines = [
+const expectedTitleParts = [
   "【2026年最新】",
   "立川市の格安レンタカー",
   "おすすめ10選",
@@ -30,60 +30,80 @@ const expectedRankings = [
   {
     rank: 1,
     name: "東京マンスリーレンタカー（立川店）",
+    company: "東京マンスリーレンタカー",
+    branch: "立川店",
     price: "26,400円〜",
     rating: 5,
   },
   {
     rank: 2,
     name: "ガッツレンタカー立川店",
+    company: "ガッツレンタカー",
+    branch: "立川店",
     price: "27,280円〜",
     rating: 4,
   },
   {
     rank: 3,
     name: "マンスリーゴー",
+    company: "マンスリーゴー",
+    branch: "",
     price: "32,340円〜",
     rating: 4,
   },
   {
     rank: 4,
     name: "GOGOマンスリーレンタカー",
+    company: "GOGOマンスリーレンタカー",
+    branch: "",
     price: "47,800円〜",
     rating: 4,
   },
   {
     rank: 5,
     name: "Maverickレンタカー八王子店",
+    company: "Maverickレンタカー",
+    branch: "八王子店",
     price: "33,200円〜",
     rating: 4,
   },
   {
     rank: 6,
     name: "東京ビジネスレンタカー",
+    company: "東京ビジネスレンタカー",
+    branch: "",
     price: "軽ワゴン62,000円",
     rating: 3,
   },
   {
     rank: 7,
     name: "日本レンタリース東京",
+    company: "日本レンタリース東京",
+    branch: "",
     price: "コンパクト・軽トラック64,900円",
     rating: 3,
   },
   {
     rank: 8,
     name: "ニコニコレンタカー",
+    company: "ニコニコレンタカー",
+    branch: "",
     price: "96,800円〜",
     rating: 3,
   },
   {
     rank: 9,
     name: "ニッポンレンタカー立川北口営業所",
+    company: "ニッポンレンタカー",
+    branch: "立川北口営業所",
     price: "要見積もり",
     rating: 2,
   },
   {
     rank: 10,
     name: "Jネットレンタカー立川店",
+    company: "Jネットレンタカー",
+    branch: "立川店",
     price: "要見積もり",
     rating: 2,
   },
@@ -175,18 +195,18 @@ const expectedCtas = [
 
 const requiredStaticText = [
   "立川市でレンタカーを探すと、「24時間2,200円〜」「1ヶ月26,400円〜」など、さまざまな料金が見つかります。",
-  "まず確認｜利用期間によっておすすめのレンタカーは異なる",
-  "1ヶ月以上の利用なら、東京マンスリーレンタカー立川店が第一候補",
-  "立川市の格安レンタカーおすすめランキングTOP10",
-  "1ヶ月の公開料金を車両クラス別に比較",
+  "利用期間によっておすすめのレンタカーは異なる",
+  "1ヶ月以上なら東京マンスリーレンタカー立川店がおすすめ",
+  "立川市の格安レンタカーおすすめ10選",
+  "車両クラス別に1ヶ月料金を比較",
   "東京マンスリーレンタカーとガッツレンタカーを比較",
-  "長期利用では車両補償とトラブル時の対応も確認",
+  "長期利用で確認したい補償とトラブル対応",
   "立川市で長期レンタカーを選ぶ6つのポイント",
-  "立川でマンスリーレンタカーが利用される主なケース",
+  "立川でマンスリーレンタカーが必要になるケース",
   "立川エリアは駅周辺と市内移動で交通手段を使い分ける",
-  "東京マンスリーレンタカー立川店の利用開始までの流れ",
+  "東京マンスリーレンタカー立川店の利用の流れ",
   "立川市の格安レンタカーに関するよくある質問",
-  "立川市で1ヶ月以上借りるなら、車両クラスとサポートまで比較しよう",
+  "立川市で1ヶ月以上借りる際の比較ポイント",
   "立川で1ヶ月以上のレンタカーを探している方へ",
   "調査方法・出典",
   "※本記事は、各社の公式サイト・料金表・利用条件をもとに当サイトが独自調査したものです。掲載サービスには当サイト運営サービスを含みます。料金・取扱車種・配車条件は、店舗、利用日、契約期間、在庫状況などにより変更される場合があります。",
@@ -526,6 +546,7 @@ const articleJs = readRequired(jsFile, jsPath);
 const bodyMatch = html.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i);
 const bodyHtml = bodyMatch ? bodyMatch[0] : "";
 const bodyText = normalizeText(bodyHtml);
+const bodyContinuousText = normalizeContinuousText(bodyHtml);
 
 // Core metadata and page-level exclusions.
 const titleMatch = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i);
@@ -564,7 +585,7 @@ assert(
   pageFile,
   "H1が仕様と一致しません",
 );
-const mobileTitleLines = findStartTags(h1Elements[0]?.html || "", "span")
+const titleParts = findStartTags(h1Elements[0]?.html || "", "span")
   .filter((start) =>
     String(start.attributes.class || "")
       .split(/\s+/)
@@ -574,9 +595,9 @@ const mobileTitleLines = findStartTags(h1Elements[0]?.html || "", "span")
   .filter(Boolean)
   .map((element) => normalizeContinuousText(element.html));
 assert(
-  JSON.stringify(mobileTitleLines) === JSON.stringify(expectedMobileTitleLines),
+  JSON.stringify(titleParts) === JSON.stringify(expectedTitleParts),
   pageFile,
-  "モバイルH1は意味単位の4行に分けてください",
+  "H1の意味単位spanが仕様と一致しません",
 );
 const mobileTitleDividers = findStartTags(h1Elements[0]?.html || "", "span").filter((start) =>
   String(start.attributes.class || "")
@@ -590,6 +611,24 @@ assert(
     ) === "｜",
   pageFile,
   "モバイルH1の区切り記号は専用要素で1件だけ保持してください",
+);
+const conclusionHeading = findElementById(bodyHtml, "conclusion-heading");
+const conclusionBrand = findElementByClass(
+  conclusionHeading?.html || "",
+  "heading-brand",
+  "span",
+);
+const conclusionBranch = findElementByClass(
+  conclusionHeading?.html || "",
+  "heading-branch",
+  "span",
+);
+assert(
+  normalizeContinuousText(conclusionBrand?.html || "") ===
+    "東京マンスリーレンタカー" &&
+    normalizeContinuousText(conclusionBranch?.html || "") === "立川店",
+  pageFile,
+  "結論見出しの会社名と店舗名は意味単位spanで保持してください",
 );
 
 const bodyStart = findStartTags(html, "body")[0];
@@ -690,6 +729,22 @@ const rankingTable = rankingSection
   : null;
 assert(Boolean(rankingTable), pageFile, "ランキング一覧表（table.ranking-table）が必要です");
 const rankingBody = rankingTable?.html.match(/<tbody\b[^>]*>([\s\S]*?)<\/tbody>/i);
+const rankingHead = rankingTable?.html.match(/<thead\b[^>]*>([\s\S]*?)<\/thead>/i);
+const rankingHeadCells = rankingHead
+  ? [...rankingHead[1].matchAll(/<th\b[^>]*>[\s\S]*?<\/th>/gi)].map(
+      (match) => match[0],
+    )
+  : [];
+assert(
+  rankingHeadCells.length === 5,
+  pageFile,
+  `ランキング表の見出しは5列必要です（現在${rankingHeadCells.length}列）`,
+);
+assert(
+  normalizeContinuousText(rankingHeadCells[0] || "") === "順位・レンタカー会社",
+  pageFile,
+  "ランキング表の先頭見出しは順位・レンタカー会社にしてください",
+);
 const rankingRows = rankingBody
   ? [...rankingBody[1].matchAll(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi)].map(
       (match) => match[0],
@@ -699,9 +754,44 @@ assert(rankingRows.length === 10, pageFile, `ランキング表は10行必要で
 expectedRankings.forEach((expected, index) => {
   const row = rankingRows[index] || "";
   const rowText = normalizeText(row);
+  const rowContinuousText = normalizeContinuousText(row);
+  const rowCells = [
+    ...row.matchAll(/<(th|td)\b[^>]*>[\s\S]*?<\/\1>/gi),
+  ].map((match) => match[0]);
+  const companyCell = findElementByClass(row, "ranking-company-cell", "th");
+  const companyName = findElementByClass(row, "ranking-company-name", "span");
+  const branchName = findElementByClass(row, "ranking-branch-name", "span");
+  assert(
+    rowCells.length === 5,
+    pageFile,
+    `ランキング表${expected.rank}位は5セル必要です（現在${rowCells.length}セル）`,
+  );
+  assert(
+    Boolean(companyCell) && /\bscope\s*=\s*["']row["']/i.test(companyCell.startTag),
+    pageFile,
+    `ランキング表${expected.rank}位の先頭セルはscope=rowの会社見出しにしてください`,
+  );
+  assert(
+    !/^<td\b/i.test(rowCells[0] || ""),
+    pageFile,
+    `ランキング表${expected.rank}位に独立した順位tdを置かないでください`,
+  );
   assert(rowText.includes(`${expected.rank}位`), pageFile, `ランキング表${expected.rank}位の順位表示がありません`);
-  assert(rowText.includes(expected.name), pageFile, `ランキング表${expected.rank}位の会社名が不正です`);
-  assert(rowText.includes(expected.price), pageFile, `ランキング表${expected.rank}位の料金が不正です`);
+  assert(
+    normalizeContinuousText(companyName?.html || "") === expected.company,
+    pageFile,
+    `ランキング表${expected.rank}位の会社名が不正です`,
+  );
+  assert(
+    normalizeContinuousText(branchName?.html || "") === expected.branch,
+    pageFile,
+    `ランキング表${expected.rank}位の店舗・営業所名が不正です`,
+  );
+  assert(
+    rowContinuousText.includes(expected.price),
+    pageFile,
+    `ランキング表${expected.rank}位の料金が不正です`,
+  );
   assert(
     new RegExp(`href=["']#rank-${expected.rank}["']`, "i").test(row),
     pageFile,
@@ -716,7 +806,9 @@ expectedRankings.forEach((expected, index) => {
   const detail = findElementById(html, `rank-${expected.rank}`);
   assert(Boolean(detail), pageFile, `#rank-${expected.rank}詳細セクションがありません`);
   assert(
-    normalizeText(detail?.html || "").includes(`${expected.rank}位：${expected.name}`),
+    normalizeContinuousText(detail?.html || "").includes(
+      `${expected.rank}位：${expected.name}`,
+    ),
     pageFile,
     `#rank-${expected.rank}の見出しが仕様と一致しません`,
   );
@@ -901,7 +993,8 @@ assert(
 for (const label of ["公開日", "最終更新日", "料金・サービス調査日"]) {
   assert(bodyText.includes(label), pageFile, `記事下部に「${label}」が必要です`);
 }
-const finalCtaIndex = bodyHtml.indexOf("立川で1ヶ月以上のレンタカーを探している方へ");
+const finalCtaHeading = findElementById(bodyHtml, "final-cta-title");
+const finalCtaIndex = finalCtaHeading?.start ?? -1;
 assert(
   finalCtaIndex >= 0 && sourceHeadingIndex > finalCtaIndex,
   pageFile,
@@ -992,7 +1085,7 @@ expectedFaq.forEach(([question, answer], index) => {
 // Major content must exist in static HTML, not just scripts/templates.
 for (const text of requiredStaticText) {
   assert(
-    bodyText.includes(normalizeText(text)),
+    bodyContinuousText.includes(normalizeContinuousText(text)),
     pageFile,
     `主要な静的本文がありません: ${text.slice(0, 42)}`,
   );
@@ -1080,25 +1173,51 @@ assert(
   "ページ全体の横はみ出しを抑止してください",
 );
 assert(
-  /\.article-header h1\s*\{[^}]*max-width\s*:\s*100%[^}]*min-width\s*:\s*0[^}]*white-space\s*:\s*normal[^}]*word-break\s*:\s*normal[^}]*overflow-wrap\s*:\s*anywhere[^}]*word-break\s*:\s*auto-phrase/i.test(
+  /\.article-header h1\s*\{[^}]*max-width\s*:\s*100%[^}]*min-width\s*:\s*0[^}]*white-space\s*:\s*normal[^}]*text-wrap\s*:\s*balance[^}]*line-break\s*:\s*strict[^}]*word-break\s*:\s*normal[^}]*overflow-wrap\s*:\s*break-word/i.test(
     css,
   ),
   cssFile,
-  "H1はauto-phrase未対応ブラウザでも折り返せるフォールバックを指定してください",
+  "H1は自然な日本語改行と安全なフォールバックを指定してください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*clamp\(\s*24px\s*,\s*7\.2vw\s*,\s*32px\s*\)[^}]*line-height\s*:\s*1\.38/i.test(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*22px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.45/i.test(
     css,
   ),
   cssFile,
-  "モバイルH1は320px幅でも見切れない文字サイズと行間にしてください",
+  "モバイルH1は22px・weight 700・line-height 1.45にしてください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*430px\s*\)[\s\S]*?\.article-title-line\s*\{[^}]*display\s*:\s*block[^}]*\}[\s\S]*?\.article-title-divider\s*\{[^}]*display\s*:\s*none/i.test(
+  !/@media\s*\(\s*max-width\s*:\s*430px\s*\)[\s\S]*?\.article-title-line\s*\{[^}]*display\s*:\s*block/i.test(css),
+  cssFile,
+  "モバイルH1を意味単位spanごとの固定4行にしないでください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h2,[\s\S]*?font-size\s*:\s*19px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.5/i.test(css),
+  cssFile,
+  "モバイルH2は19px・weight 700・line-height 1.5にしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h3\s*\{[^}]*font-size\s*:\s*17px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.55/i.test(css),
+  cssFile,
+  "モバイルH3は17px・weight 700・line-height 1.55にしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section \.faq-item h3\s*\{[^}]*margin\s*:\s*0[^}]*padding\s*:\s*0/i.test(
     css,
   ),
   cssFile,
-  "430px以下ではH1を意味単位の4行にし、区切り記号を非表示にしてください",
+  "モバイルFAQのH3ラッパーは余白と左インデントをリセットしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-body p\s*\{[^}]*font-size\s*:\s*15px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.85/i.test(css),
+  cssFile,
+  "モバイル本文は15px・weight 400・line-height 1.85にしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll table\s*\{[^}]*font-size\s*:\s*13px[^}]*line-height\s*:\s*1\.5/i.test(css) &&
+    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll th,[\s\S]*?\.table-scroll td\s*\{[^}]*padding\s*:\s*8px\s+7px/i.test(css),
+  cssFile,
+  "モバイル表は13px・line-height 1.5・セル余白8px 7pxにしてください",
 );
 assert(
   /\.toc-list-viewport\.is-collapsible\.is-collapsed\s*\{[^}]*max-height[^}]*overflow\s*:\s*hidden/i.test(css),
@@ -1126,9 +1245,14 @@ assert(
   "全表の左上見出しセルをsticky固定してください",
 );
 assert(
-  /\.table-scroll--ranking\.is-scrollable thead tr > :nth-child\(2\)[\s\S]*?position\s*:\s*sticky/i.test(css),
+  !/\.table-scroll--ranking\.is-scrollable (?:thead|tbody) tr > :nth-child\(2\)[^{]*\{[^}]*position\s*:\s*sticky/i.test(css),
   cssFile,
-  "ランキング表は順位と会社名の2列を固定してください",
+  "ランキング表で第2列を固定しないでください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--ranking\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*148px\s*,\s*41vw\s*,\s*168px\s*\)/i.test(css),
+  cssFile,
+  "ランキング表のモバイル固定列幅はclamp(148px, 41vw, 168px)にしてください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll-hint\s*\{[^}]*position\s*:\s*absolute[^}]*z-index\s*:\s*7[^}]*pointer-events\s*:\s*none/i.test(css),

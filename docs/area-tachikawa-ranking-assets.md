@@ -22,7 +22,7 @@
 | 画像ID | 掲載位置 | 推奨サイズ | 推奨内容 | ファイル名案 | 推奨alt |
 |---|---|---:|---|---|---|
 | `tachikawa-ranking-eyecatch` | H1直下 | 1200×630px | 立川の街並みとレンタカーを組み合わせた記事アイキャッチ | `tachikawa-ranking-eyecatch.webp` | `立川市の街並みとレンタカーを組み合わせたイメージ` |
-| `tachikawa-period-guide` | 「まず確認｜利用期間によっておすすめのレンタカーは異なる」の期間別比較表直下 | 1200×675px | 1日〜3日、1週間前後、1ヶ月以上、期間未確定の選び方を示す図解 | `tachikawa-period-guide.webp` | `レンタカーの利用期間別の選び方を示す図解` |
+| `tachikawa-period-guide` | 「利用期間によっておすすめのレンタカーは異なる」の期間別比較表直下 | 1200×675px | 1日〜3日、1週間前後、1ヶ月以上、期間未確定の選び方を示す図解 | `tachikawa-period-guide.webp` | `レンタカーの利用期間別の選び方を示す図解` |
 | `ranking-logo-tokyo-monthly` | 1位「東京マンスリーレンタカー（立川店）」詳細セクション | 320×160px | 権利確認済みの東京マンスリーレンタカー正式ロゴ | `ranking-logo-tokyo-monthly.svg` | `""`（会社名を隣接テキストで表示） |
 | `ranking-logo-guts` | 2位「ガッツレンタカー立川店」詳細セクション | 320×160px | 掲載許可を確認したガッツレンタカーの正式ロゴ | `ranking-logo-guts.svg` | `""`（会社名を隣接テキストで表示） |
 | `ranking-logo-monthly-go` | 3位「マンスリーゴー」詳細セクション | 320×160px | 掲載許可を確認したマンスリーゴーの正式ロゴ | `ranking-logo-monthly-go.svg` | `""`（会社名を隣接テキストで表示） |

@@ -148,7 +148,7 @@
     instructions.id = instructionsId;
     instructions.className = "visually-hidden table-scroll-instructions";
     instructions.textContent = wrapper.classList.contains("table-scroll--ranking")
-      ? "横にスクロールできます。左端の順位とレンタカー会社は固定されています。"
+      ? "横にスクロールできます。左端の順位・レンタカー会社列は固定されています。"
       : "横にスクロールできます。左端の項目列は固定されています。";
 
     viewport.className = "table-scroll-viewport";
