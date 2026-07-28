@@ -3,6 +3,11 @@ const path = require("path");
 const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
+const stagingHost = "stg.monthly-rent-car.jp";
+const cnamePath = path.join(root, "CNAME");
+const isStaging =
+  fs.existsSync(cnamePath) &&
+  fs.readFileSync(cnamePath, "utf8").trim() === stagingHost;
 const pageFile = "area/tachikawa/index.html";
 const cssFile = "area/tachikawa/article.css";
 const jsFile = "area/tachikawa/article.js";
@@ -562,11 +567,19 @@ const robots = getMetaContent(html, "name", "robots")
   .map((token) => token.trim().toLowerCase())
   .filter(Boolean)
   .sort();
-assert(
-  JSON.stringify(robots) === JSON.stringify(["nofollow", "noindex"]),
-  pageFile,
-  "robotsはnoindex,nofollowの2指定だけにしてください",
-);
+if (isStaging) {
+  assert(
+    JSON.stringify(robots) === JSON.stringify(["nofollow", "noindex"]),
+    pageFile,
+    "stagingのrobotsはnoindex,nofollowの2指定だけにしてください",
+  );
+} else {
+  assert(
+    robots.length === 0,
+    pageFile,
+    "本番HTMLにはnoindex・nofollowを設定しないでください",
+  );
+}
 const canonicalTags = findStartTags(html, "link").filter(
   (entry) => String(entry.attributes.rel).toLowerCase() === "canonical",
 );

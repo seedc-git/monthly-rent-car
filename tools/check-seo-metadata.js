@@ -79,16 +79,20 @@ function checkPage(file) {
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const title = extractFirst(html, /<title>([\s\S]*?)<\/title>/);
   const description = extractFirst(html, /<meta\s+name="description"\s+content="([\s\S]*?)"\s*>/);
+  const robots = extractFirst(
+    html,
+    /<meta\s+name="robots"\s+content="([\s\S]*?)"\s*>/,
+  );
 
   if (!title) fail(file, "title missing");
   if (!description) fail(file, "meta description missing");
 
   if (isStaging) {
-    if (!/<meta name="robots" content="noindex, nofollow">/.test(html)) {
+    if (robots !== "noindex, nofollow") {
       fail(file, "staging page must include noindex, nofollow");
     }
-  } else if (/noindex|nofollow/i.test(html)) {
-    fail(file, "production page must not include noindex or nofollow");
+  } else if (robots) {
+    fail(file, "production page must not include a robots noindex or nofollow meta tag");
   }
 
   for (const property of requiredOgProperties) {
