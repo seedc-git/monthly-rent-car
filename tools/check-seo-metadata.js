@@ -8,6 +8,14 @@ const cnamePath = path.join(root, "CNAME");
 const isStaging = fs.existsSync(cnamePath) && fs.readFileSync(cnamePath, "utf8").trim() === stagingHost;
 const host = isStaging ? stagingHost : productionHost;
 const baseUrl = `https://${host}`;
+const sitemapExcludedPages = new Set(
+  isStaging
+    ? [
+        // Staging-only page. Add it to the production sitemap when publication is approved.
+        "area/tachikawa/index.html",
+      ]
+    : [],
+);
 
 const requiredOgProperties = [
   "og:type",
@@ -65,18 +73,26 @@ function countMatches(html, pattern) {
 function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
+  const expectedOgImage =
+    file === "area/tachikawa/index.html"
+      ? `${baseUrl}/assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch.webp`
+      : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const title = extractFirst(html, /<title>([\s\S]*?)<\/title>/);
   const description = extractFirst(html, /<meta\s+name="description"\s+content="([\s\S]*?)"\s*>/);
+  const robots = extractFirst(
+    html,
+    /<meta\s+name="robots"\s+content="([\s\S]*?)"\s*>/,
+  );
 
   if (!title) fail(file, "title missing");
   if (!description) fail(file, "meta description missing");
 
   if (isStaging) {
-    if (!/<meta name="robots" content="noindex, nofollow">/.test(html)) {
+    if (robots !== "noindex, nofollow") {
       fail(file, "staging page must include noindex, nofollow");
     }
-  } else if (/noindex|nofollow/i.test(html)) {
-    fail(file, "production page must not include noindex or nofollow");
+  } else if (robots) {
+    fail(file, "production page must not include a robots noindex or nofollow meta tag");
   }
 
   for (const property of requiredOgProperties) {
@@ -100,8 +116,8 @@ function checkPage(file) {
   if (!html.includes(`<meta property="og:url" content="${expectedUrl}">`)) {
     fail(file, `og:url must be ${expectedUrl}`);
   }
-  if (!html.includes(`<meta property="og:image" content="${baseUrl}/assets/ogp/monthly-rentacar.png">`)) {
-    fail(file, "og:image must use the shared OGP image on the current host");
+  if (!html.includes(`<meta property="og:image" content="${expectedOgImage}">`)) {
+    fail(file, `og:image must be ${expectedOgImage}`);
   }
   if (!html.includes('<meta property="og:image:width" content="1200">')) {
     fail(file, "og:image:width must be 1200");
@@ -119,7 +135,9 @@ function checkSitemap(pages) {
   }
   const xml = read(file);
   const locs = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
-  const expected = pages.map(pageUrlFor);
+  const expected = pages
+    .filter((page) => !sitemapExcludedPages.has(page))
+    .map(pageUrlFor);
   const missing = expected.filter((url) => !locs.includes(url));
   const extra = locs.filter((url) => !expected.includes(url));
   for (const url of missing) fail(file, `missing sitemap URL: ${url}`);

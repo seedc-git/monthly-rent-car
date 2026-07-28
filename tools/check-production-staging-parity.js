@@ -6,6 +6,9 @@ const { execFileSync } = require("child_process");
 const headSha = process.argv[2];
 const productionHost = "monthly-rent-car.jp";
 const stagingHost = "stg.monthly-rent-car.jp";
+const stagingSitemapExcludedPages = new Set([
+  "area/tachikawa/index.html",
+]);
 
 if (!headSha) {
   console.error("Usage: node tools/check-production-staging-parity.js <production-head-sha>");
@@ -23,6 +26,46 @@ function listChangedFiles(args) {
   return git(args)
     .split("\0")
     .filter(Boolean);
+}
+
+function pageUrlFor(file, host) {
+  if (file === "index.html") return `https://${host}/`;
+  if (file.endsWith("/index.html")) {
+    return `https://${host}/${file.slice(0, -"index.html".length)}`;
+  }
+  return `https://${host}/${file}`;
+}
+
+function normalizeSitemap(xml) {
+  let normalized = xml.replaceAll(
+    `https://${productionHost}`,
+    `https://${stagingHost}`,
+  );
+
+  for (const file of stagingSitemapExcludedPages) {
+    const url = pageUrlFor(file, stagingHost);
+    const escapedUrl = url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    normalized = normalized.replace(
+      new RegExp(
+        `\\s*<url>\\s*<loc>${escapedUrl}<\\/loc>\\s*<\\/url>`,
+        "g",
+      ),
+      "",
+    );
+  }
+
+  return normalized.replace(/\r\n/g, "\n").trim();
+}
+
+function normalizeAddedHtml(html) {
+  return html
+    .replace(
+      /^\s*<meta\s+name="robots"\s+content="noindex, nofollow">\r?\n/m,
+      "",
+    )
+    .replaceAll(`https://${stagingHost}`, `https://${productionHost}`)
+    .replace(/\r\n/g, "\n")
+    .trim();
 }
 
 function normalizeEnvironmentPatch(file, patch, isAdded) {
@@ -65,6 +108,42 @@ try {
   });
 
   for (const [index, file] of changedFiles.entries()) {
+    if (file === "sitemap.xml") {
+      const productionSitemap = git(["show", `${headSha}:${file}`]);
+      const stagingSitemap = fs.readFileSync(
+        path.join(worktreeDir, file),
+        "utf8",
+      );
+      if (
+        normalizeSitemap(productionSitemap) !==
+        normalizeSitemap(stagingSitemap)
+      ) {
+        failed = true;
+        console.error(
+          `::error file=${file}::Production sitemap changes beyond staging exclusions are not included in staging`,
+        );
+      }
+      continue;
+    }
+
+    if (addedFiles.has(file) && file.endsWith(".html")) {
+      const productionHtml = git(["show", `${headSha}:${file}`]);
+      const stagingHtml = fs.readFileSync(
+        path.join(worktreeDir, file),
+        "utf8",
+      );
+      if (
+        normalizeAddedHtml(productionHtml) !==
+        normalizeAddedHtml(stagingHtml)
+      ) {
+        failed = true;
+        console.error(
+          `::error file=${file}::Production HTML content is not included in staging`,
+        );
+      }
+      continue;
+    }
+
     const patch = git([
       "diff",
       "--binary",
