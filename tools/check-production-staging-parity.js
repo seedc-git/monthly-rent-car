@@ -57,6 +57,17 @@ function normalizeSitemap(xml) {
   return normalized.replace(/\r\n/g, "\n").trim();
 }
 
+function normalizeAddedHtml(html) {
+  return html
+    .replace(
+      /^\s*<meta\s+name="robots"\s+content="noindex, nofollow">\r?\n/m,
+      "",
+    )
+    .replaceAll(`https://${stagingHost}`, `https://${productionHost}`)
+    .replace(/\r\n/g, "\n")
+    .trim();
+}
+
 function normalizeEnvironmentPatch(file, patch, isAdded) {
   let normalized = patch;
 
@@ -110,6 +121,24 @@ try {
         failed = true;
         console.error(
           `::error file=${file}::Production sitemap changes beyond staging exclusions are not included in staging`,
+        );
+      }
+      continue;
+    }
+
+    if (addedFiles.has(file) && file.endsWith(".html")) {
+      const productionHtml = git(["show", `${headSha}:${file}`]);
+      const stagingHtml = fs.readFileSync(
+        path.join(worktreeDir, file),
+        "utf8",
+      );
+      if (
+        normalizeAddedHtml(productionHtml) !==
+        normalizeAddedHtml(stagingHtml)
+      ) {
+        failed = true;
+        console.error(
+          `::error file=${file}::Production HTML content is not included in staging`,
         );
       }
       continue;
