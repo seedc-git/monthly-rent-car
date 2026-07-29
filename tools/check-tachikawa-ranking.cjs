@@ -168,7 +168,7 @@ const expectedFaq = [
 const expectedImageSlots = new Map([
   ["tachikawa-ranking-eyecatch", [1200, 630]],
   ["tachikawa-period-guide", [1200, 675]],
-  ["ranking-logo-tokyo-monthly", [320, 160]],
+  ["ranking-logo-tokyo-monthly", [1228, 322]],
   ["ranking-logo-guts", [320, 160]],
   ["ranking-logo-monthly-go", [320, 160]],
   ["ranking-logo-gogo", [320, 160]],
@@ -1162,6 +1162,13 @@ assert(css.includes(cssRoot), cssFile, `${cssRoot}ルートがCSSに必要です
 assert(/overflow-x\s*:\s*(?:auto|scroll)/i.test(css), cssFile, "表のoverflow-x設定が必要です");
 assert(/:focus-visible/i.test(css), cssFile, "focus-visibleスタイルが必要です");
 assert(/aspect-ratio\s*:/i.test(css), cssFile, "画像placeholderにaspect-ratioが必要です");
+assert(
+  /\.image-slot--logo[\s\S]*?\.image-slot-media[\s\S]*?img\s*\{[^}]*object-fit\s*:\s*contain[^}]*object-position\s*:\s*center\s+center/i.test(
+    css,
+  ),
+  cssFile,
+  "ランキングロゴは縦横比を保って全体表示してください",
+);
 assert(/prefers-reduced-motion/i.test(css), cssFile, "prefers-reduced-motion対応が必要です");
 assert(/@media\s*\([^)]*min-width/i.test(css), cssFile, "PC用min-widthメディアクエリが必要です");
 assert(/@media\s*\([^)]*max-width/i.test(css), cssFile, "モバイル用max-widthメディアクエリが必要です");
@@ -1198,11 +1205,25 @@ assert(
   "H1は自然な日本語改行と安全なフォールバックを指定してください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*22px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.45/i.test(
+  /\.article-header h1\s*\{[^}]*font-size\s*:\s*32px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.5/i.test(
     css,
   ),
   cssFile,
-  "モバイルH1は22px・weight 800・line-height 1.45にしてください",
+  "PC H1は32px・weight 700・line-height 1.5にしてください",
+);
+assert(
+  /\.editorial-marker\s*\{[^}]*font-weight\s*:\s*700[^}]*linear-gradient\(\s*transparent\s+80%\s*,\s*var\(--editorial-yellow\)\s+80%\s*\)/i.test(
+    css,
+  ),
+  cssFile,
+  "本文マーカーは文字下部20%だけを強調してください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*20px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.5/i.test(
+    css,
+  ),
+  cssFile,
+  "モバイルH1は20px・weight 700・line-height 1.5にしてください",
 );
 assert(
   !/@media\s*\(\s*max-width\s*:\s*430px\s*\)[\s\S]*?\.article-title-line\s*\{[^}]*display\s*:\s*block/i.test(css),
@@ -1210,14 +1231,14 @@ assert(
   "モバイルH1を意味単位spanごとの固定4行にしないでください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h2,[\s\S]*?font-size\s*:\s*19px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.5/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h2,[\s\S]*?font-size\s*:\s*21px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.5/i.test(css),
   cssFile,
-  "モバイルH2は19px・weight 700・line-height 1.5にしてください",
+  "モバイルH2は21px・weight 400・line-height 1.5にしてください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h3\s*\{[^}]*font-size\s*:\s*17px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.55/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h3\s*\{[^}]*font-size\s*:\s*19px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.8/i.test(css),
   cssFile,
-  "モバイルH3は17px・weight 700・line-height 1.55にしてください",
+  "モバイルH3は19px・weight 400・line-height 1.8にしてください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section \.faq-item h3\s*\{[^}]*margin\s*:\s*0[^}]*padding\s*:\s*0/i.test(
@@ -1227,9 +1248,9 @@ assert(
   "モバイルFAQのH3ラッパーは余白と左インデントをリセットしてください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-body p\s*\{[^}]*font-size\s*:\s*15px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.85/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-body p\s*\{[^}]*font-size\s*:\s*16px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.5/i.test(css),
   cssFile,
-  "モバイル本文は15px・weight 400・line-height 1.85にしてください",
+  "モバイル本文は16px・weight 400・line-height 1.5にしてください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll table\s*\{[^}]*font-size\s*:\s*13px[^}]*line-height\s*:\s*1\.5/i.test(css) &&
