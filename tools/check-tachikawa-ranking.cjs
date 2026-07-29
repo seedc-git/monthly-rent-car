@@ -170,7 +170,7 @@ const expectedFaq = [
 ];
 
 const expectedImageSlots = new Map([
-  ["tachikawa-ranking-eyecatch", [960, 540]],
+  ["tachikawa-ranking-eyecatch", [1077, 500]],
   ["tachikawa-period-guide", [1200, 675]],
   ["ranking-logo-tokyo-monthly", [1228, 322]],
   ["ranking-logo-guts", [320, 160]],
@@ -1007,7 +1007,7 @@ assert(
 );
 assert(
   eyecatchImage?.attributes.alt ===
-    "青空の下に立つJR立川駅北口の駅舎と赤いアーチ",
+    "JR立川駅北口の駅舎と駅前デッキ",
   pageFile,
   "アイキャッチaltは新しい立川駅入り画像の内容を説明してください",
 );
@@ -1411,6 +1411,13 @@ assert(
   "PC H1は42px・weight 900・line-height 1.32にしてください",
 );
 assert(
+  /\.article-header h1\s*\{[^}]*font-family\s*:[^;}]*["']Hiragino Sans["'][^}]*font-weight\s*:\s*900[^}]*font-synthesis\s*:\s*weight/i.test(
+    css,
+  ),
+  cssFile,
+  "H1は太字字形を持つHiragino Sansのweight 900を使用してください",
+);
+assert(
   /\.editorial-marker\s*\{[^}]*font-weight\s*:\s*700[^}]*linear-gradient\(\s*transparent\s+80%\s*,\s*var\(--editorial-yellow\)\s+80%\s*\)/i.test(
     css,
   ),
@@ -1433,14 +1440,14 @@ assert(
   "H1はモバイルだけ意味単位で2行にしてください",
 );
 assert(
-  /\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*23px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.55/i.test(
+  /\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*21px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.55/i.test(
     css,
   ) &&
-    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*20px[^}]*line-height\s*:\s*1\.55/i.test(
+    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*17px[^}]*line-height\s*:\s*1\.55/i.test(
       css,
     ),
   cssFile,
-  "補足タイトルはPC 23px・モバイル20pxでH1より一段小さくしてください",
+  "補足タイトルはPC 21px・モバイル17pxでH1より一段小さくしてください",
 );
 assert(
   /\.article-title-detail\s*\{[^}]*white-space\s*:\s*nowrap/i.test(

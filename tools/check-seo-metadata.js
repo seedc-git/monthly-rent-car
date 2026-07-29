@@ -78,7 +78,7 @@ function checkPage(file) {
       ? `${baseUrl}/assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp`
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const [expectedOgImageWidth, expectedOgImageHeight] =
-    file === "area/tachikawa/index.html" ? ["960", "540"] : ["1200", "630"];
+    file === "area/tachikawa/index.html" ? ["1077", "500"] : ["1200", "630"];
   const title = extractFirst(html, /<title>([\s\S]*?)<\/title>/);
   const description = extractFirst(html, /<meta\s+name="description"\s+content="([\s\S]*?)"\s*>/);
   const robots = extractFirst(

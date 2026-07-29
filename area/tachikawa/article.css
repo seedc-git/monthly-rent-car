@@ -135,11 +135,13 @@
   margin: 0;
   padding-bottom: 0;
   color: var(--article-navy);
-  font-family: var(--editorial-body-font);
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic StdN",
+    "Noto Sans JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
   font-size: 42px;
   font-weight: 900;
   line-height: 1.32;
   letter-spacing: -0.025em;
+  font-synthesis: weight;
   white-space: normal;
   text-wrap: balance;
   line-break: strict;
@@ -182,8 +184,9 @@
   max-width: 100%;
   margin: 18px 0 0;
   color: #4d626b;
-  font-family: var(--editorial-body-font);
-  font-size: 23px;
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic StdN",
+    "Noto Sans JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  font-size: 21px;
   font-weight: 800;
   line-height: 1.55;
   letter-spacing: 0;
@@ -658,7 +661,7 @@
   height: calc(100% - 10px);
   inset: 5px;
   border-radius: 10px;
-  object-position: center center;
+  object-position: right center;
 }
 
 .area-ranking-page.area-tachikawa
@@ -714,29 +717,6 @@
   line-height: 1.9;
   letter-spacing: 0.01em;
   text-align: left;
-}
-
-.area-ranking-page.area-tachikawa .article-image-credit {
-  max-width: calc(100% - 16px);
-  padding: 3px 5px;
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  z-index: 1;
-  display: block;
-  border-radius: 3px;
-  color: #4f5d68;
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 9px;
-  line-height: 1.35;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.area-ranking-page.area-tachikawa .article-image-credit a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .area-ranking-page.area-tachikawa .image-slot--eyecatch figcaption {
@@ -1874,7 +1854,7 @@
 
   .area-ranking-page.area-tachikawa .article-title-subtitle {
     margin-top: 8px;
-    font-size: 20px;
+    font-size: 17px;
     line-height: 1.55;
   }
 
@@ -2964,7 +2944,7 @@
   }
 
   .area-ranking-page.area-tachikawa .article-title-subtitle {
-    font-size: 19px;
+    font-size: 16px;
   }
 }
 
@@ -2980,7 +2960,7 @@
   }
 
   .area-ranking-page.area-tachikawa .article-title-subtitle {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
