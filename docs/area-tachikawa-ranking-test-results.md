@@ -13,8 +13,8 @@
 
 | テスト | 結果 |
 |---|---|
-| `node tools/check-tachikawa-ranking.cjs` | 合格。798 assertions |
-| `node --input-type=commonjs < tools/check-seo-metadata.js` | 合格。stagingの12 HTMLページ |
+| `node tools/check-tachikawa-ranking.cjs` | 合格。853 assertions |
+| `node --input-type=commonjs < tools/check-seo-metadata.js` | 合格。stagingの13 HTMLページ |
 | `node --check area/tachikawa/article.js` | 合格 |
 | `node --check tools/check-tachikawa-ranking.cjs` | 合格 |
 | `tidy -errors -quiet area/tachikawa/index.html` | 合格。HTMLエラーなし |
@@ -117,11 +117,11 @@
 | H1のブラウザ互換 | `word-break: normal`、`overflow-wrap: break-word`、`line-break: strict`、`text-wrap: balance`を併用し、意味単位用spanで不自然な途中改行を防止 |
 | H1文言 | 3行化後もDOMの`textContent`、title、OGP、構造化データの文言は指定文字列と完全一致 |
 | ページ全体の横スクロール抑止 | ルートを`overflow-x: clip` |
-| 表の横スクロール | 固定captionの下に比較列専用viewportを生成。overflowする表だけフォーカス可能とし、表中央が画面内へ入ると初回だけ手・左右矢印・「スクロールできます」を表示 |
-| 表の固定列 | モバイルの18表すべて左端のキー列だけをsticky固定。ランキング表は「順位・レンタカー会社」を1セルに統合して1列だけ固定 |
+| 表の横スクロール | 固定captionの下に比較列専用viewportを生成。overflowする7表だけフォーカス可能とし、表上部から最大160pxの案内位置が画面内へ入ると初回だけ手・左右矢印・「横にスクロールできます」を表示 |
+| 表の固定列 | モバイルで横overflowする7表だけ左端のキー列をsticky固定。ランキング表は「順位・レンタカー会社」を1セルに統合して1列だけ固定 |
 | ランキング列 | 6列から5列へ変更。`順位・レンタカー会社`、`長期利用おすすめ度`、`1ヶ月料金`、`立川での利用方法`、`主な特徴` |
 | ランキング固定幅 | `clamp(148px, 41vw, 168px)`。実測375px時153.75px、390px時159.89px、430px時168px |
-| 表のスクロール状態 | ネイティブの連続・慣性スクロール、スナップなし。固定キー領域の右端は1px罫線。最初の横スクロールで案内を0.3秒で消し、左端へ戻しても再表示しない |
+| 表のスクロール状態 | ネイティブの連続・慣性スクロール、スナップなし。固定キー領域の右端は1px罫線。案内は約3秒後または最初の横スクロールで消し、左端へ戻しても再表示しない |
 | 画像 | 17枠すべて実画像へ差し替え。width/height/aspect-ratio/alt、WebP最適化、遅延読み込みを実装 |
 | ロゴ | ヘッダー・フッター・東京マンスリーレンタカーの画像をalpha付き透過PNGへ差し替え |
 | 星評価 | すべて`aria-label`あり |
@@ -141,8 +141,8 @@
 
 ## モバイル表スクロールの実ブラウザ確認
 
-- 参照ページが使用する`scroll-hint@1.1.10`と添付動画13.04秒を照合し、表示開始条件、120×80pxの案内、1.2秒×2回の指アニメーション、2.4秒後の左右矢印、最初の横スクロール後の0.3秒フェードを再現した。
-- Chrome DevTools Protocolで375 / 390 / 430 CSS pxを実レイアウトし、全18表が横overflowし、ページ本体には横overflowがないことを確認した。
+- 参照ページが使用する`scroll-hint@1.1.10`と添付動画13.04秒を照合し、表上部を基準にした表示開始条件、150×80pxの案内、1.2秒×2回の指アニメーション、2.4秒後の左右矢印、約3秒後または最初の横スクロール後の終了を実装した。
+- 375 / 390 / 430 CSS pxを実レイアウトし、全18表のうち7表だけが横overflow、残る11表は画面内に収まり、ページ本体には横overflowがないことを確認した。
 - 375 / 390 / 430pxのランキング表を180px横スクロールすると、統合した第1列の移動量だけが0px、残り4列はすべて-180pxだった。
 - 利用期間表を140px横スクロールすると、captionと「利用期間」列の移動量は0px、「選び方」以下の可動セルだけが-140pxだった。
 - 推奨1位行は横スクロール後も固定セルを含む5セルすべて同じ`rgb(255, 245, 237)`で、固定境界に不自然な背景差がないことを確認した。

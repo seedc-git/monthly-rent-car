@@ -101,7 +101,7 @@
       if (dismissed || dismissTimer || !hint.classList.contains("is-active")) {
         return;
       }
-      dismissTimer = window.setTimeout(dismiss, 2600);
+      dismissTimer = window.setTimeout(dismiss, 3000);
     };
 
     const hintObserver = new MutationObserver(scheduleDismissal);
