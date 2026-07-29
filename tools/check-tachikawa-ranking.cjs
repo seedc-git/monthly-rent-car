@@ -1212,6 +1212,13 @@ assert(
 assert(css.includes(cssRoot), cssFile, `${cssRoot}ルートがCSSに必要です`);
 assert(/overflow-x\s*:\s*(?:auto|scroll)/i.test(css), cssFile, "表のoverflow-x設定が必要です");
 assert(/:focus-visible/i.test(css), cssFile, "focus-visibleスタイルが必要です");
+assert(
+  /\.toc-toggle\s*\{[^}]*color\s*:\s*var\(--article-white\)[^}]*background\s*:\s*var\(--editorial-cyan\)/i.test(
+    css,
+  ),
+  cssFile,
+  "目次開閉ボタンは白文字と十分に濃いブランド色でコントラストを確保してください",
+);
 assert(/aspect-ratio\s*:/i.test(css), cssFile, "画像placeholderにaspect-ratioが必要です");
 assert(
   /\.image-slot--logo[\s\S]*?\.image-slot-media[\s\S]*?img\s*\{[^}]*object-fit\s*:\s*contain[^}]*object-position\s*:\s*center\s+center/i.test(
@@ -1280,6 +1287,11 @@ assert(
   !/@media\s*\(\s*max-width\s*:\s*430px\s*\)[\s\S]*?\.article-title-line\s*\{[^}]*display\s*:\s*block/i.test(css),
   cssFile,
   "モバイルH1を意味単位spanごとの固定4行にしないでください",
+);
+assert(
+  /\.article-title-tail,[\s\S]*?white-space\s*:\s*nowrap/i.test(css),
+  cssFile,
+  "H1末尾の「1ヶ月・長期料金を比較」は途中で分断しないでください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section[\s\S]*?>\s*h2\[data-section-number\]\s*\{[^}]*font-size\s*:\s*23px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.55/i.test(css),

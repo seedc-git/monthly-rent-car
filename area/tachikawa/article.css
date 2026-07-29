@@ -1271,7 +1271,7 @@
   display: grid;
   place-items: center;
   color: var(--article-white);
-  background: #bdbdbd;
+  background: var(--editorial-cyan);
   font: inherit;
   font-size: 18px;
   font-weight: 900;
@@ -1286,7 +1286,7 @@
 }
 
 .area-ranking-page.area-tachikawa .toc-toggle:hover {
-  background: #a9a9a9;
+  background: #056876;
   transform: translateY(-1px);
 }
 
@@ -1665,6 +1665,10 @@
     font-weight: 750;
     line-height: 1.45;
     letter-spacing: 0;
+  }
+
+  .area-ranking-page.area-tachikawa .article-title-divider {
+    display: none;
   }
 
   .area-ranking-page.area-tachikawa .article-header h1::after {
@@ -2268,12 +2272,12 @@
     min-width: 132px;
     min-height: 50px;
     color: var(--article-white);
-    background: #bdbdbd;
+    background: var(--editorial-cyan);
     font-size: 16px;
   }
 
   .area-ranking-page.area-tachikawa .toc-toggle:hover {
-    background: #a9a9a9;
+    background: #056876;
   }
 
   .area-ranking-page.area-tachikawa .toc-list-viewport.is-collapsible.is-collapsed::after {
