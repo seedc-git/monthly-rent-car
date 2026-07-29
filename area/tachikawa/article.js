@@ -60,6 +60,9 @@
     }
 
     if (tocViewport && tocToggle && toc.children.length > TOC_COLLAPSED_ITEMS) {
+      const mobileTocQuery = window.matchMedia("(max-width: 760px)");
+      let isTocExpanded = false;
+
       const updateCollapsedHeight = () => {
         const lastVisibleItem = toc.children[TOC_COLLAPSED_ITEMS - 1];
         const nextItem = toc.children[TOC_COLLAPSED_ITEMS];
@@ -77,6 +80,7 @@
       };
 
       const setTocExpanded = (isExpanded) => {
+        isTocExpanded = isExpanded;
         tocViewport.classList.toggle("is-collapsed", !isExpanded);
         tocViewport.classList.toggle("is-expanded", isExpanded);
         tocToggle.setAttribute("aria-expanded", String(isExpanded));
@@ -89,10 +93,21 @@
         }
       };
 
-      tocViewport.classList.add("is-collapsible");
-      tocToggle.hidden = false;
-      setTocExpanded(false);
-      window.requestAnimationFrame(updateCollapsedHeight);
+      const syncTocMode = () => {
+        const isMobile = mobileTocQuery.matches;
+        tocViewport.classList.toggle("is-collapsible", isMobile);
+        tocToggle.hidden = !isMobile;
+
+        if (isMobile) {
+          setTocExpanded(isTocExpanded);
+          window.requestAnimationFrame(updateCollapsedHeight);
+          return;
+        }
+
+        tocViewport.classList.remove("is-collapsed");
+        tocViewport.classList.add("is-expanded");
+        tocToggle.setAttribute("aria-expanded", "true");
+      };
 
       tocToggle.addEventListener("click", () => {
         const isExpanded = tocToggle.getAttribute("aria-expanded") === "true";
@@ -102,13 +117,59 @@
       let resizeFrame = 0;
       window.addEventListener("resize", () => {
         window.cancelAnimationFrame(resizeFrame);
-        resizeFrame = window.requestAnimationFrame(updateCollapsedHeight);
+        resizeFrame = window.requestAnimationFrame(() => {
+          syncTocMode();
+          if (mobileTocQuery.matches) updateCollapsedHeight();
+        });
       });
+
+      if (typeof mobileTocQuery.addEventListener === "function") {
+        mobileTocQuery.addEventListener("change", syncTocMode);
+      }
+
+      setTocExpanded(false);
+      syncTocMode();
+    }
+
+    const tocLinksById = new Map(
+      headings.map((heading) => [
+        heading.id,
+        toc.querySelector(`a[href="#${heading.id}"]`)
+      ])
+    );
+
+    const setCurrentTocLink = (headingId) => {
+      tocLinksById.forEach((link, id) => {
+        if (!link) return;
+        if (id === headingId) {
+          link.setAttribute("aria-current", "location");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    };
+
+    if ("IntersectionObserver" in window && tocLinksById.size) {
+      const tocObserver = new IntersectionObserver(
+        (entries) => {
+          const currentEntry = entries.find((entry) => entry.isIntersecting);
+          if (currentEntry) setCurrentTocLink(currentEntry.target.id);
+        },
+        {
+          rootMargin: "-18% 0px -72% 0px",
+          threshold: 0
+        }
+      );
+
+      headings.forEach((heading) => tocObserver.observe(heading));
     }
   }
 
   const tableWrappers = Array.from(page.querySelectorAll(".table-scroll"));
   const tableHintUpdaters = [];
+  const TABLE_HINT_PANEL_HEIGHT = 80;
+  const TABLE_HINT_TOP_LIMIT = 160;
+  const TABLE_HINT_VISIBLE_RATIO = 0.78;
   let tableHintFrame = 0;
 
   const updateTableHints = () => {
@@ -148,7 +209,7 @@
     instructions.id = instructionsId;
     instructions.className = "visually-hidden table-scroll-instructions";
     instructions.textContent = wrapper.classList.contains("table-scroll--ranking")
-      ? "横にスクロールできます。左端の順位・レンタカー会社列は固定されています。"
+      ? "横にスクロールできます。左端のレンタカー会社名列は固定されています。"
       : "横にスクロールできます。左端の項目列は固定されています。";
 
     viewport.className = "table-scroll-viewport";
@@ -157,7 +218,7 @@
     scrollHintPanel.className = "table-scroll-hint__panel";
     scrollHintGesture.className = "table-scroll-hint__gesture";
     scrollHintText.className = "table-scroll-hint__text";
-    scrollHintText.textContent = "スクロールできます";
+    scrollHintText.textContent = "横にスクロールできます";
     scrollHintPanel.append(scrollHintGesture, scrollHintText);
     scrollHint.appendChild(scrollHintPanel);
     viewport.append(table, scrollHint);
@@ -175,8 +236,17 @@
     const updateScrollHint = () => {
       if (!hasHintEnteredView) {
         const viewportRect = viewport.getBoundingClientRect();
+        const hintPanelTop = Math.min(
+          TABLE_HINT_TOP_LIMIT,
+          Math.max(0, (viewportRect.height - TABLE_HINT_PANEL_HEIGHT) / 2)
+        );
+        const hintCenterY =
+          viewportRect.top + hintPanelTop + TABLE_HINT_PANEL_HEIGHT / 2;
+
         hasHintEnteredView =
-          viewportRect.top + viewportRect.height / 2 < window.innerHeight;
+          viewportRect.bottom > 0 &&
+          hintCenterY > 0 &&
+          hintCenterY <= window.innerHeight * TABLE_HINT_VISIBLE_RATIO;
       }
 
       const isMobileViewport = window.innerWidth <= 760;
@@ -198,6 +268,10 @@
       wrapper.classList.toggle("is-scrollable", isScrollable);
       wrapper.classList.toggle("is-at-start", !isScrollable || isAtStart);
       wrapper.classList.toggle("is-at-end", !isScrollable || isAtEnd);
+      wrapper.style.setProperty(
+        "--table-caption-height",
+        `${visibleCaption.offsetHeight}px`
+      );
       isTableScrollable = isScrollable;
 
       if (isScrollable) {

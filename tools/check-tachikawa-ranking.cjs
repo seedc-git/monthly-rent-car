@@ -11,17 +11,21 @@ const isStaging =
 const pageFile = "area/tachikawa/index.html";
 const cssFile = "area/tachikawa/article.css";
 const jsFile = "area/tachikawa/article.js";
+const designCssFile = "area/tachikawa/article-design-01.css";
+const designJsFile = "area/tachikawa/article-design-01.js";
 const pagePath = path.join(root, pageFile);
 const cssPath = path.join(root, cssFile);
 const jsPath = path.join(root, jsFile);
+const designCssPath = path.join(root, designCssFile);
+const designJsPath = path.join(root, designJsFile);
 
 const expectedTitle =
   "【2026年最新】立川市の格安レンタカーおすすめ10選｜1ヶ月・長期料金を比較";
+const expectedH1 = "立川市の格安レンタカーおすすめ10選";
+const expectedTitleSubtitle = "1ヶ月・長期料金を比較";
 const expectedTitleParts = [
-  "【2026年最新】",
   "立川市の格安レンタカー",
   "おすすめ10選",
-  "1ヶ月・長期料金を比較",
 ];
 const expectedDescription =
   "立川市で利用できる格安レンタカー10社を、1ヶ月料金、車種、保険・補償、配車・引取り、トラブル時のサポートで比較。立川駅周辺の店舗型から宅配型まで、長期利用に適したサービスと選び方を解説します。";
@@ -29,7 +33,7 @@ const expectedCanonical = "https://monthly-rent-car.jp/area/tachikawa/";
 const cssRoot = ".area-ranking-page.area-tachikawa";
 const transparentHeaderLogo = "../../assets/img/monthly-rentacar-logo-transparent.png";
 const finalEyecatch =
-  "../../assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch.webp";
+  "../../assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp";
 
 const expectedRankings = [
   {
@@ -166,9 +170,9 @@ const expectedFaq = [
 ];
 
 const expectedImageSlots = new Map([
-  ["tachikawa-ranking-eyecatch", [1200, 630]],
+  ["tachikawa-ranking-eyecatch", [1077, 500]],
   ["tachikawa-period-guide", [1200, 675]],
-  ["ranking-logo-tokyo-monthly", [320, 160]],
+  ["ranking-logo-tokyo-monthly", [1228, 322]],
   ["ranking-logo-guts", [320, 160]],
   ["ranking-logo-monthly-go", [320, 160]],
   ["ranking-logo-gogo", [320, 160]],
@@ -549,10 +553,91 @@ function hostWithoutWww(value) {
 const html = readRequired(pageFile, pagePath);
 const css = readRequired(cssFile, cssPath);
 const articleJs = readRequired(jsFile, jsPath);
+const designCss = readRequired(designCssFile, designCssPath);
+const designJs = readRequired(designJsFile, designJsPath);
 const bodyMatch = html.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i);
 const bodyHtml = bodyMatch ? bodyMatch[0] : "";
 const bodyText = normalizeText(bodyHtml);
 const bodyContinuousText = normalizeContinuousText(bodyHtml);
+
+assert(
+  html.includes("article-design-01.css") &&
+    html.includes("article-design-01.js"),
+  pageFile,
+  "記事デザイン専用CSS・JSを読み込んでください",
+);
+assert(
+  designJs.includes("IntersectionObserver") &&
+    designJs.includes("MutationObserver") &&
+    designJs.includes("dataset.readingProgress"),
+  designJsFile,
+  "下線表示・表ヒント終了・読了進捗の拡張が必要です",
+);
+assert(
+  /setTimeout\(\s*dismiss\s*,\s*3000\s*\)/.test(designJs) &&
+    /viewport\.addEventListener\(\s*["']scroll["']\s*,\s*dismiss/.test(
+      designJs,
+    ),
+  designJsFile,
+  "表のスクロール案内は約3秒後または最初の横操作で終了してください",
+);
+assert(
+  designCss.includes("has-design-motion") &&
+    designCss.includes("prefers-reduced-motion"),
+  designCssFile,
+  "動く下線とprefers-reduced-motion対応が必要です",
+);
+assert(
+  /rootMargin\s*:\s*["']0px 0px -200px 0px["']/.test(designJs) &&
+    /observer\.unobserve\(entry\.target\)/.test(designJs),
+  designJsFile,
+  "下線は参考実装と同じ発火位置で1回だけ表示してください",
+);
+assert(
+  /is-design-underline::after[\s\S]*?transform\s*:\s*scaleX\(0\)[^}]*transform-origin\s*:\s*right center[^}]*transition\s*:\s*transform 1s ease-in/i.test(
+    designCss,
+  ) &&
+    /is-design-visible::after[\s\S]*?transform\s*:\s*scaleX\(1\)[^}]*transform-origin\s*:\s*left center/i.test(
+      designCss,
+    ),
+  designCssFile,
+  "見出し下線は右起点の待機状態から左起点で1秒かけて表示してください",
+);
+assert(
+  /\.editorial-marker\s*\{[^}]*background-position\s*:\s*right bottom[^}]*background-size\s*:\s*0 100%[^}]*transition\s*:\s*background-size 1s ease-in/i.test(
+    designCss,
+  ) &&
+    /\.editorial-marker\.is-design-visible\s*\{[^}]*background-position\s*:\s*left bottom[^}]*background-size\s*:\s*100% 100%/i.test(
+      designCss,
+    ),
+  designCssFile,
+  "本文の黄色マーカーにも同じ1秒の下線アニメーションを適用してください",
+);
+assert(
+  (html.match(/\bdata-reading-progress\b/g) || []).length === 1,
+  pageFile,
+  "読了進捗バーはHTMLに1件だけ配置してください",
+);
+assert(
+  /<div\s+class=["']article-meta["'][^>]*aria-label=["']記事情報["']/i.test(html),
+  pageFile,
+  "記事の比較件数・料金・調査時点を静的HTMLで表示してください",
+);
+assert(
+  /\.article-shell\s*\{[^}]*width\s*:\s*min\(\s*780px\s*,\s*calc\(\s*100%\s*-\s*40px\s*\)\s*\)/i.test(css),
+  cssFile,
+  "PCの記事本文幅は780px以内にしてください",
+);
+assert(
+  articleJs.includes('aria-current", "location"'),
+  jsFile,
+  "目次には現在位置をaria-currentで示してください",
+);
+assert(
+  !/linear-gradient/i.test(designCss),
+  designCssFile,
+  "演出専用CSSに装飾目的のグラデーションを追加しないでください",
+);
 
 // Core metadata and page-level exclusions.
 const titleMatch = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i);
@@ -595,7 +680,7 @@ const h1Elements = findStartTags(bodyHtml, "h1")
   .filter(Boolean);
 assert(h1Elements.length === 1, pageFile, `H1は1件必要です（現在${h1Elements.length}件）`);
 assert(
-  normalizeContinuousText(h1Elements[0]?.html || "") === expectedTitle,
+  normalizeContinuousText(h1Elements[0]?.html || "") === expectedH1,
   pageFile,
   "H1が仕様と一致しません",
 );
@@ -613,18 +698,29 @@ assert(
   pageFile,
   "H1の意味単位spanが仕様と一致しません",
 );
-const mobileTitleDividers = findStartTags(h1Elements[0]?.html || "", "span").filter((start) =>
+const mobileTitleBreaks = findStartTags(h1Elements[0]?.html || "", "br").filter((start) =>
   String(start.attributes.class || "")
     .split(/\s+/)
-    .includes("article-title-divider"),
+    .includes("article-title-break"),
 );
 assert(
-  mobileTitleDividers.length === 1 &&
-    normalizeContinuousText(
-      findMatchingElement(h1Elements[0]?.html || "", mobileTitleDividers[0])?.html || "",
-    ) === "｜",
+  mobileTitleBreaks.length === 1,
   pageFile,
-  "モバイルH1の区切り記号は専用要素で1件だけ保持してください",
+  "モバイルH1は意味単位の改行位置を1件だけ保持してください",
+);
+const titleSubtitleElements = findStartTags(bodyHtml, "p")
+  .filter((start) =>
+    String(start.attributes.class || "")
+      .split(/\s+/)
+      .includes("article-title-subtitle"),
+  )
+  .map((start) => findMatchingElement(bodyHtml, start))
+  .filter(Boolean);
+assert(
+  titleSubtitleElements.length === 1 &&
+    normalizeContinuousText(titleSubtitleElements[0].html) === expectedTitleSubtitle,
+  pageFile,
+  "H1の補足タイトルが仕様と一致しません",
 );
 const conclusionHeading = findElementById(bodyHtml, "conclusion-heading");
 const conclusionBrand = findElementByClass(
@@ -755,9 +851,14 @@ assert(
   `ランキング表の見出しは5列必要です（現在${rankingHeadCells.length}列）`,
 );
 assert(
-  normalizeContinuousText(rankingHeadCells[0] || "") === "順位・レンタカー会社",
+  normalizeContinuousText(rankingHeadCells[0] || "") === "レンタカー会社名",
   pageFile,
-  "ランキング表の先頭見出しは順位・レンタカー会社にしてください",
+  "ランキング表の先頭見出しはレンタカー会社名にしてください",
+);
+assert(
+  normalizeContinuousText(rankingHeadCells[1] || "") === "おすすめ度",
+  pageFile,
+  "ランキング表の第2見出しはおすすめ度にしてください",
 );
 const rankingRows = rankingBody
   ? [...rankingBody[1].matchAll(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi)].map(
@@ -903,6 +1004,12 @@ assert(
   eyecatchImage?.attributes.src === finalEyecatch,
   pageFile,
   "アイキャッチは最終版のWebPを参照してください",
+);
+assert(
+  eyecatchImage?.attributes.alt ===
+    "JR立川駅北口の駅舎と駅前デッキ",
+  pageFile,
+  "アイキャッチaltは新しい立川駅入り画像の内容を説明してください",
 );
 
 // Article CTAs and competitor-link confinement.
@@ -1057,6 +1164,67 @@ scrollWrapperStarts.forEach((wrapper, index) => {
   assert(wrapper.attributes.tabindex === "0", pageFile, `表wrapper ${index + 1}にtabindex=\"0\"が必要です`);
   assert(Boolean(wrapper.attributes["aria-label"]), pageFile, `表wrapper ${index + 1}にaria-labelが必要です`);
 });
+const tableWrapperClasses = scrollWrapperStarts.map((wrapper) =>
+  String(wrapper.attributes.class || "").split(/\s+/),
+);
+assert(
+  tableWrapperClasses.filter((classes) =>
+    classes.includes("table-scroll--period"),
+  ).length === 1,
+  pageFile,
+  "利用期間表にはモバイル列幅専用のtable-scroll--periodを付けてください",
+);
+assert(
+  tableWrapperClasses.filter((classes) =>
+    classes.includes("table-scroll--price"),
+  ).length === 4,
+  pageFile,
+  "4つの料金表にはモバイル列幅専用のtable-scroll--priceを付けてください",
+);
+assert(
+  (bodyHtml.match(/\bclass=["']table-key-column["']/g) || []).length === 10,
+  pageFile,
+  "各社詳細の10表はcolgroupで短い項目列を明示してください",
+);
+assert(
+  (bodyHtml.match(/\bclass=["']table-value-column["']/g) || []).length === 1,
+  pageFile,
+  "評価基準表はcolgroupで割合列を短くしてください",
+);
+assert(
+  findStartTags(bodyHtml, "ul").filter((entry) =>
+    String(entry.attributes.class || "")
+      .split(/\s+/)
+      .includes("table-cell-list"),
+  ).length >= 15,
+  pageFile,
+  "長文セルはtable-cell-listで短い箇条書きにしてください",
+);
+for (const shortTablePoint of [
+  "駅からの近さ",
+  "時間・日料金",
+  "車両クラス・補償",
+  "修理・納車に応じた相談",
+  "損保会社と直接精算",
+  "いずれも利用者負担",
+]) {
+  assert(
+    bodyText.includes(shortTablePoint),
+    pageFile,
+    `表内の短い要点「${shortTablePoint}」が必要です`,
+  );
+}
+for (const retiredLongCell of [
+  "駅からの近さ、営業時間、時間単位・日単位の料金を重視",
+  "延長のしやすさと、修理・納車状況に合わせた相談のしやすさを重視",
+  "ジャンピング、タイヤ交換、パンク修理、ガス欠、脱輪等は利用者負担",
+]) {
+  assert(
+    !bodyText.includes(retiredLongCell),
+    pageFile,
+    `長文セル「${retiredLongCell}」は短い箇条書きへ分割してください`,
+  );
+}
 
 // Visible FAQ must be button-operated and exactly match FAQPage.
 const faqButtons = findStartTags(bodyHtml, "button").filter((entry) => {
@@ -1161,7 +1329,21 @@ assert(
 assert(css.includes(cssRoot), cssFile, `${cssRoot}ルートがCSSに必要です`);
 assert(/overflow-x\s*:\s*(?:auto|scroll)/i.test(css), cssFile, "表のoverflow-x設定が必要です");
 assert(/:focus-visible/i.test(css), cssFile, "focus-visibleスタイルが必要です");
+assert(
+  /\.toc-toggle\s*\{[^}]*color\s*:\s*var\(--article-white\)[^}]*background\s*:\s*var\(--editorial-cyan\)/i.test(
+    css,
+  ),
+  cssFile,
+  "目次開閉ボタンは白文字と十分に濃いブランド色でコントラストを確保してください",
+);
 assert(/aspect-ratio\s*:/i.test(css), cssFile, "画像placeholderにaspect-ratioが必要です");
+assert(
+  /\.image-slot--logo[\s\S]*?\.image-slot-media[\s\S]*?img\s*\{[^}]*object-fit\s*:\s*contain[^}]*object-position\s*:\s*center\s+center/i.test(
+    css,
+  ),
+  cssFile,
+  "ランキングロゴは縦横比を保って全体表示してください",
+);
 assert(/prefers-reduced-motion/i.test(css), cssFile, "prefers-reduced-motion対応が必要です");
 assert(/@media\s*\([^)]*min-width/i.test(css), cssFile, "PC用min-widthメディアクエリが必要です");
 assert(/@media\s*\([^)]*max-width/i.test(css), cssFile, "モバイル用max-widthメディアクエリが必要です");
@@ -1174,6 +1356,30 @@ assert(
   /@media\s*\(\s*min-width\s*:\s*1180px\s*\)[\s\S]*?\.area-ranking-page\.area-tachikawa \.site-header\s*\{[^}]*width\s*:\s*100%/i.test(css),
   cssFile,
   "1180px以上ではヘッダーを通常のPC幅へ戻してください",
+);
+assert(
+  /\.area-ranking-page\.area-tachikawa \.site-header\s*\{[^}]*position\s*:\s*relative[^}]*inset\s*:\s*auto/i.test(
+    css,
+  ) &&
+    /\.area-ranking-page\.area-tachikawa main\s*\{[^}]*padding-top\s*:\s*0/i.test(
+      css,
+    ),
+  cssFile,
+  "記事ヘッダーは固定せず、mainの固定ヘッダー用上余白をなくしてください",
+);
+assert(
+  /\.area-ranking-page\.area-tachikawa \.header-nav\.is-open\s*\{[^}]*position\s*:\s*absolute[^}]*top\s*:\s*100%/i.test(
+    css,
+  ),
+  cssFile,
+  "開いたヘッダーメニューもヘッダーと一緒にスクロールする配置にしてください",
+);
+assert(
+  /\.reading-progress\s*\{[^}]*position\s*:\s*fixed[^}]*top\s*:\s*0/i.test(
+    designCss,
+  ),
+  designCssFile,
+  "固定解除後の読了進捗バーは画面上端に配置してください",
 );
 assert(
   /\.area-ranking-page\.area-tachikawa \.header-nav\s*\{[^}]*display\s*:\s*flex/i.test(css),
@@ -1198,26 +1404,67 @@ assert(
   "H1は自然な日本語改行と安全なフォールバックを指定してください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*22px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.45/i.test(
+  /\.article-header h1\s*\{[^}]*font-size\s*:\s*42px[^}]*font-weight\s*:\s*900[^}]*line-height\s*:\s*1\.32/i.test(
     css,
   ),
   cssFile,
-  "モバイルH1は22px・weight 800・line-height 1.45にしてください",
+  "PC H1は42px・weight 900・line-height 1.32にしてください",
 );
 assert(
-  !/@media\s*\(\s*max-width\s*:\s*430px\s*\)[\s\S]*?\.article-title-line\s*\{[^}]*display\s*:\s*block/i.test(css),
+  /\.article-header h1\s*\{[^}]*font-family\s*:[^;}]*["']Hiragino Sans["'][^}]*font-weight\s*:\s*900[^}]*font-synthesis\s*:\s*weight/i.test(
+    css,
+  ),
   cssFile,
-  "モバイルH1を意味単位spanごとの固定4行にしないでください",
+  "H1は太字字形を持つHiragino Sansのweight 900を使用してください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h2,[\s\S]*?font-size\s*:\s*19px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.5/i.test(css),
+  /\.editorial-marker\s*\{[^}]*font-weight\s*:\s*700[^}]*linear-gradient\(\s*transparent\s+80%\s*,\s*var\(--editorial-yellow\)\s+80%\s*\)/i.test(
+    css,
+  ),
   cssFile,
-  "モバイルH2は19px・weight 700・line-height 1.5にしてください",
+  "本文マーカーは文字下部20%だけを強調してください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h3\s*\{[^}]*font-size\s*:\s*17px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.55/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*clamp\(\s*28px\s*,\s*7\.44vw\s*,\s*32px\s*\)[^}]*font-weight\s*:\s*900[^}]*line-height\s*:\s*1\.45/i.test(
+    css,
+  ),
   cssFile,
-  "モバイルH3は17px・weight 700・line-height 1.55にしてください",
+  "モバイルH1は28〜32px・weight 900・line-height 1.45にしてください",
+);
+assert(
+  /\.article-title-break\s*\{[^}]*display\s*:\s*none/i.test(css) &&
+    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-title-break\s*\{[^}]*display\s*:\s*block/i.test(
+      css,
+    ),
+  cssFile,
+  "H1はモバイルだけ意味単位で2行にしてください",
+);
+assert(
+  /\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*21px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.55/i.test(
+    css,
+  ) &&
+    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*17px[^}]*line-height\s*:\s*1\.55/i.test(
+      css,
+    ),
+  cssFile,
+  "補足タイトルはPC 21px・モバイル17pxでH1より一段小さくしてください",
+);
+assert(
+  /\.article-title-detail\s*\{[^}]*white-space\s*:\s*nowrap/i.test(
+    css,
+  ),
+  cssFile,
+  "補足タイトルは比較条件の意味単位を分断しないでください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section[\s\S]*?>\s*h2\[data-section-number\]\s*\{[^}]*font-size\s*:\s*23px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.55/i.test(css),
+  cssFile,
+  "モバイルH2は23px・weight 800・line-height 1.55にしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section\s*>\s*h3\s*\{[^}]*font-size\s*:\s*20px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.6/i.test(css),
+  cssFile,
+  "モバイルH3は20px・weight 700・line-height 1.6にしてください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section \.faq-item h3\s*\{[^}]*margin\s*:\s*0[^}]*padding\s*:\s*0/i.test(
@@ -1227,15 +1474,15 @@ assert(
   "モバイルFAQのH3ラッパーは余白と左インデントをリセットしてください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-body p\s*\{[^}]*font-size\s*:\s*15px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.85/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-body p\s*\{[^}]*font-size\s*:\s*16px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.9/i.test(css),
   cssFile,
-  "モバイル本文は15px・weight 400・line-height 1.85にしてください",
+  "モバイル本文は16px・line-height 1.9にしてください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll table\s*\{[^}]*font-size\s*:\s*13px[^}]*line-height\s*:\s*1\.5/i.test(css) &&
-    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll th,[\s\S]*?\.table-scroll td\s*\{[^}]*padding\s*:\s*8px\s+7px/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll table\s*\{[^}]*font-size\s*:\s*14px[^}]*line-height\s*:\s*1\.55/i.test(css) &&
+    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll th,[\s\S]*?\.table-scroll td\s*\{[^}]*padding\s*:\s*10px\s+8px/i.test(css),
   cssFile,
-  "モバイル表は13px・line-height 1.5・セル余白8px 7pxにしてください",
+  "モバイル表は14px・line-height 1.55・セル余白10px 8pxにしてください",
 );
 assert(
   /\.toc-list-viewport\.is-collapsible\.is-collapsed\s*\{[^}]*max-height[^}]*overflow\s*:\s*hidden/i.test(css),
@@ -1268,19 +1515,88 @@ assert(
   "ランキング表で第2列を固定しないでください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--ranking\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*148px\s*,\s*41vw\s*,\s*168px\s*\)/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--ranking\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*112px\s*,\s*30vw\s*,\s*120px\s*\)[^}]*--ranking-rating-column-width\s*:\s*92px[^}]*--ranking-price-column-width\s*:\s*clamp\(\s*112px\s*,\s*30vw\s*,\s*128px\s*\)[^}]*--ranking-method-column-width\s*:\s*clamp\(\s*144px\s*,\s*40vw\s*,\s*172px\s*\)[^}]*--ranking-feature-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+    css,
+  ),
   cssFile,
-  "ランキング表のモバイル固定列幅はclamp(148px, 41vw, 168px)にしてください",
+  "ランキング表は会社名・おすすめ度・1ヶ月料金を初期画面へ収め、最終列は固定列以外の画面幅を確保してください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--period\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*82px\s*,\s*23vw\s*,\s*92px\s*\)[^}]*--period-choice-column-width\s*:\s*clamp\(\s*148px\s*,\s*40vw\s*,\s*168px\s*\)[^}]*--period-candidate-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+    css,
+  ) &&
+    /\.table-scroll--price\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*96px\s*,\s*28vw\s*,\s*116px\s*\)[^}]*--price-class-column-width\s*:\s*clamp\(\s*112px\s*,\s*32vw\s*,\s*136px\s*\)[^}]*--price-amount-column-width\s*:\s*clamp\(\s*100px\s*,\s*25vw\s*,\s*108px\s*\)[^}]*--price-final-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+      css,
+    ) &&
+    /\.table-scroll--comparison\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*92px\s*,\s*27vw\s*,\s*116px\s*\)[^}]*--comparison-primary-column-width\s*:\s*clamp\(\s*152px\s*,\s*42vw\s*,\s*180px\s*\)[^}]*--comparison-final-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+      css,
+    ),
+  cssFile,
+  "期間・料金・比較表は途中列を短くし、最終列へ固定列以外の画面幅を確保してください",
+);
+assert(
+  /\.table-scroll:is\(\s*\.table-scroll--period,\s*\.table-scroll--ranking,\s*\.table-scroll--price,\s*\.table-scroll--comparison\s*\)\s*thead\s*th,[\s\S]*?\{\s*border-color\s*:\s*#bfc3c5;\s*color\s*:\s*#333;\s*background\s*:\s*#eee;\s*font-weight\s*:\s*700/i.test(
+    css,
+  ),
+  cssFile,
+  "横スクロール表の見出しは薄いグレー背景と濃色文字へ統一してください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--detail table,[\s\S]*?\.table-scroll--compact table\s*\{[^}]*width\s*:\s*100%[^}]*min-width\s*:\s*0[^}]*table-layout\s*:\s*fixed/i.test(
+    css,
+  ),
+  cssFile,
+  "モバイルの2列表は全幅内に収めて横スクロールをなくしてください",
+);
+assert(
+  /\.table-scroll--detail[\s\S]*?col\.table-key-column\s*\{[^}]*width\s*:\s*var\(--table-key-column-width\)/i.test(
+    css,
+  ) &&
+    /\.table-scroll--compact[\s\S]*?col\.table-value-column\s*\{[^}]*width\s*:\s*72px/i.test(
+      css,
+    ),
+  cssFile,
+  "2列表はcolgroupで項目列・数値列の無駄な余白をなくしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll thead th\s*\{[^}]*white-space\s*:\s*normal/i.test(
+    css,
+  ),
+  cssFile,
+  "モバイル表の見出しは列幅内で自然に折り返してください",
+);
+assert(
+  !/\.ranking-table\s+tbody\s+td:nth-child\(3\)\s*\{[^}]*white-space\s*:\s*nowrap/i.test(
+    css,
+  ),
+  cssFile,
+  "短縮した料金列の複合テキストはセル内で自然に折り返してください",
+);
+assert(
+  /\.table-cell-list\s*\{[^}]*display\s*:\s*grid[^}]*list-style\s*:\s*none/i.test(
+    css,
+  ) &&
+    /\.table-cell-list li::before\s*\{[^}]*content\s*:\s*["']・["']/i.test(
+      css,
+    ),
+  cssFile,
+  "表の長い説明は短い中黒箇条書きとして表示してください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll-hint\s*\{[^}]*position\s*:\s*absolute[^}]*z-index\s*:\s*7[^}]*pointer-events\s*:\s*none/i.test(css),
   cssFile,
-  "スマホ表には操作を妨げない中央スクロール案内を配置してください",
+  "スマホ表には操作を妨げないスクロール案内を配置してください",
 );
 assert(
-  /\.table-scroll-hint__panel\s*\{[^}]*top\s*:\s*calc\(\s*50%\s*-\s*25px\s*\)[^}]*left\s*:\s*calc\(\s*50%\s*-\s*60px\s*\)[^}]*width\s*:\s*120px[^}]*height\s*:\s*80px[^}]*transition\s*:\s*opacity\s*0\.3s/i.test(css),
+  /\.table-scroll-hint__panel\s*\{[^}]*top\s*:\s*min\(\s*160px\s*,\s*calc\(\s*50%\s*-\s*40px\s*\)\s*\)[^}]*left\s*:\s*calc\(\s*50%\s*-\s*75px\s*\)[^}]*width\s*:\s*150px[^}]*height\s*:\s*80px[^}]*transition\s*:\s*opacity\s*0\.3s/i.test(css),
   cssFile,
-  "スクロール案内の位置・寸法・消える速さを参照サイトに合わせてください",
+  "スクロール案内は縦長表でも上部2行付近に見える位置へ配置してください",
+);
+assert(
+  /\.table-scroll\.is-scrollable:not\(\.is-at-end\)::after\s*\{[^}]*top\s*:\s*var\(\s*--table-caption-height\s*,\s*44px\s*\)[^}]*width\s*:\s*24px[^}]*linear-gradient/i.test(css) &&
+    /\.table-scroll\.is-scrollable:not\(\.is-at-end\)::before\s*\{[^}]*content\s*:\s*["']›["'][^}]*top\s*:\s*calc\(\s*var\(\s*--table-caption-height\s*,\s*44px\s*\)\s*\+\s*10px\s*\)/i.test(css),
+  cssFile,
+  "横続きの表には右端のグラデーションと矢印を表示してください",
 );
 assert(
   /\.table-scroll-hint\.is-active \.table-scroll-hint__gesture\s*\{[^}]*animation\s*:\s*tachikawa-table-scroll-hint\s*1\.2s\s*linear\s*2/i.test(css),
@@ -1319,8 +1635,26 @@ assert(articleJs.includes('"OPEN"') && articleJs.includes('"CLOSE"'), jsFile, "�
 assert(articleJs.includes("table-caption-bar"), jsFile, "JSで表題をスクロール領域外へ複製してください");
 assert(articleJs.includes("table-scroll-viewport"), jsFile, "JSで比較列専用のスクロールviewportを作成してください");
 assert(articleJs.includes("table-scroll-hint"), jsFile, "JSで各表に初回スクロール案内を生成してください");
-assert(articleJs.includes("スクロールできます"), jsFile, "スクロール案内の日本語文言がありません");
-assert(articleJs.includes("hasHintEnteredView"), jsFile, "表中央が画面内へ入った時だけ案内を表示してください");
+assert(articleJs.includes("横にスクロールできます"), jsFile, "スクロール案内の日本語文言がありません");
+assert(
+  articleJs.includes("左端のレンタカー会社名列は固定されています"),
+  jsFile,
+  "ランキング表の読み上げ用説明を現在の見出し名に合わせてください",
+);
+assert(articleJs.includes("hasHintEnteredView"), jsFile, "表上部が画面内へ入った時だけ案内を表示してください");
+assert(
+  /TABLE_HINT_TOP_LIMIT\s*=\s*160/.test(articleJs) &&
+    /TABLE_HINT_VISIBLE_RATIO\s*=\s*0\.78/.test(articleJs) &&
+    /viewportRect\.bottom\s*>\s*0/.test(articleJs) &&
+    /hintCenterY\s*<=\s*window\.innerHeight\s*\*\s*TABLE_HINT_VISIBLE_RATIO/.test(articleJs),
+  jsFile,
+  "スクロール案内は表上部の表示位置が画面へ入った時点で発火してください",
+);
+assert(
+  /--table-caption-height/.test(articleJs),
+  jsFile,
+  "右端の横続き表示は実際の表題高さへ追従してください",
+);
 assert(articleJs.includes("hasTableInteracted"), jsFile, "表ごとに初回操作済み状態を保持してください");
 assert(articleJs.includes("tableHintUpdaters"), jsFile, "全表の画面進入判定は共有更新処理にまとめてください");
 assert(articleJs.includes("aria-describedby"), jsFile, "スクロール領域へ操作説明を関連付けてください");
