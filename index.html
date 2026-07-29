@@ -30,10 +30,24 @@
         window.gtag = function () { dataLayer.push(arguments); };
         gtag("js", new Date());
         gtag("config", "G-501JL6QG1N");
-        var gaScript = document.createElement("script");
-        gaScript.async = true;
-        gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-501JL6QG1N";
-        document.head.appendChild(gaScript);
+        var gaScriptRequested = false;
+        var gaFallbackTimer;
+        var loadGaScript = function () {
+          if (gaScriptRequested) return;
+          gaScriptRequested = true;
+          if (gaFallbackTimer) window.clearTimeout(gaFallbackTimer);
+          window.removeEventListener("load", loadGaScript);
+          var gaScript = document.createElement("script");
+          gaScript.async = true;
+          gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-501JL6QG1N";
+          document.head.appendChild(gaScript);
+        };
+        if (document.readyState === "complete") {
+          loadGaScript();
+        } else {
+          window.addEventListener("load", loadGaScript, { once: true });
+          gaFallbackTimer = window.setTimeout(loadGaScript, 2000);
+        }
       }
     </script>
 
