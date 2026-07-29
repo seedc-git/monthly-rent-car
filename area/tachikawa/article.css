@@ -14,14 +14,18 @@
   --article-green: #06c755;
   --article-shadow: 0 18px 46px rgba(5, 38, 111, 0.12);
   --editorial-navy: #073478;
-  --editorial-cyan: #008ea8;
-  --editorial-cyan-border: #20b8d0;
-  --editorial-orange: #f58600;
-  --editorial-yellow: #ffe59a;
+  --editorial-cyan: #26bfd4;
+  --editorial-cyan-border: #26bfd4;
+  --editorial-orange: #e8660a;
+  --editorial-yellow: #ffcb65;
   --editorial-heading-bg: #f2f2f2;
-  --editorial-recommend-bg: #edf8fc;
-  --editorial-ink: #252525;
+  --editorial-recommend-bg: #eff9fb;
+  --editorial-ink: #333;
   --editorial-border: #d5d5d5;
+  --editorial-body-font: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3",
+    Meiryo, "メイリオ", Osaka, "MS PGothic", Arial, Helvetica, sans-serif;
+  --editorial-heading-font: Roboto, "Noto Sans JP", "Hiragino Kaku Gothic Pro",
+    Meiryo, sans-serif;
   max-width: 100%;
   overflow-x: clip;
   color: var(--article-ink);
@@ -61,34 +65,35 @@
 
 .area-ranking-page.area-tachikawa .ranking-article {
   overflow: clip;
-  background:
-    linear-gradient(180deg, var(--article-sky-2) 0, var(--article-white) 520px);
+  color: var(--editorial-ink);
+  background: #f7f9f9;
+  font-family: var(--editorial-body-font);
 }
 
 .area-ranking-page.area-tachikawa .article-shell {
-  width: min(1120px, calc(100% - 48px));
+  width: min(1040px, calc(100% - 48px));
   margin-inline: auto;
 }
 
 .area-ranking-page.area-tachikawa .article-header {
-  max-width: 980px;
+  max-width: 800px;
   margin-inline: auto;
-  padding: clamp(48px, 7vw, 88px) 0 clamp(28px, 4vw, 46px);
-  text-align: center;
+  padding: 58px 0 28px;
+  text-align: left;
 }
 
 .area-ranking-page.area-tachikawa .article-kicker {
   width: fit-content;
-  margin: 0 auto 16px;
-  padding: 7px 18px;
-  border: 1px solid rgba(5, 38, 111, 0.18);
-  border-radius: 999px;
-  color: var(--article-navy);
-  background: var(--article-white);
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  box-shadow: 0 8px 24px rgba(5, 38, 111, 0.08);
+  margin: 0 0 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #4b8da5;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  box-shadow: none;
 }
 
 .area-ranking-page.area-tachikawa .article-header h1 {
@@ -96,12 +101,13 @@
   min-width: 0;
   position: relative;
   margin: 0;
-  padding-bottom: 22px;
-  color: var(--article-navy);
-  font-size: clamp(32px, 4.6vw, 56px);
-  font-weight: 950;
-  line-height: 1.38;
-  letter-spacing: 0.01em;
+  padding-bottom: 0;
+  color: var(--editorial-ink);
+  font-family: var(--editorial-body-font);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0;
   white-space: normal;
   text-wrap: balance;
   line-break: strict;
@@ -115,17 +121,7 @@
 }
 
 .area-ranking-page.area-tachikawa .article-header h1::after {
-  content: "";
-  width: min(260px, 54%);
-  height: 6px;
-  border-radius: 999px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  background:
-    linear-gradient(90deg, var(--article-navy) 0 70%, var(--article-orange) 70%);
+  content: none;
 }
 
 .area-ranking-page.area-tachikawa .article-body {
@@ -135,12 +131,14 @@
 }
 
 .area-ranking-page.area-tachikawa .article-body p {
-  font-size: clamp(16px, 1.55vw, 18px);
-  line-height: 1.95;
+  color: var(--editorial-ink);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .area-ranking-page.area-tachikawa .article-body p + p {
-  margin-top: 15px;
+  margin-top: 24px;
 }
 
 .area-ranking-page.area-tachikawa .article-body strong {
@@ -151,70 +149,79 @@
 }
 
 .area-ranking-page.area-tachikawa .introduction {
-  max-width: 880px;
-  margin: 44px auto 0;
-  padding: clamp(24px, 4vw, 42px);
-  border: 1px solid var(--article-line);
-  border-radius: 24px;
-  background: var(--article-white);
-  box-shadow: var(--article-shadow);
+  max-width: 800px;
+  margin: 32px auto 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .area-ranking-page.area-tachikawa .introduction p:first-child::first-letter {
-  color: var(--article-orange);
-  font-size: 2.5em;
-  font-weight: 950;
-  line-height: 0.8;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
 .area-ranking-page.area-tachikawa .editorial-marker {
-  padding-inline: 0.06em;
-  font-weight: 800;
+  padding-inline: 0;
+  font-weight: 700;
   background:
-    linear-gradient(transparent 62%, var(--editorial-yellow) 62%);
+    linear-gradient(transparent 80%, var(--editorial-yellow) 80%);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
 
 .area-ranking-page.area-tachikawa .editorial-accent {
-  color: #c24f00;
-  font-weight: 900;
-  text-decoration: underline;
-  text-decoration-color: rgba(245, 134, 0, 0.42);
-  text-decoration-thickness: 0.18em;
-  text-underline-offset: 0.12em;
+  color: #d94f12;
+  font-weight: 800;
+  text-decoration: none;
 }
 
 .area-ranking-page.area-tachikawa .metric-accent {
-  color: #c24f00;
-  font-size: 1.16em;
-  font-weight: 950;
+  color: #df5e00;
+  font-size: 1em;
+  font-weight: 700;
   letter-spacing: 0.01em;
+}
+
+.area-ranking-page.area-tachikawa
+  :is(
+    .article-quick-recommendation,
+    .conclusion-box,
+    .rank-section--first
+  )
+  .metric-accent {
+  font-size: 1.18em;
+  font-weight: 800;
 }
 
 .area-ranking-page.area-tachikawa .feature-accent {
   color: var(--editorial-navy);
-  font-weight: 900;
+  font-weight: 700;
   text-decoration: underline;
-  text-decoration-color: rgba(245, 134, 0, 0.58);
-  text-decoration-thickness: 0.14em;
-  text-underline-offset: 0.18em;
+  text-decoration-color: var(--editorial-yellow);
+  text-decoration-thickness: 0.22em;
+  text-underline-offset: 0.08em;
+  text-decoration-skip-ink: none;
 }
 
 .area-ranking-page.area-tachikawa .article-body p.key-point {
-  max-width: 840px;
+  max-width: 800px;
   margin: 24px auto;
-  padding: 18px 20px;
-  border-left: 6px solid var(--editorial-orange);
-  color: var(--editorial-navy);
-  background: #fff9e8;
-  font-weight: 800;
+  padding: 16px 18px;
+  border-left: 6px solid var(--editorial-cyan);
+  color: var(--editorial-ink);
+  background: var(--editorial-heading-bg);
+  font-weight: 700;
 }
 
 .area-ranking-page.area-tachikawa .article-comparison-points,
 .area-ranking-page.area-tachikawa .article-quick-recommendation {
-  max-width: 880px;
-  margin: 32px auto 0;
+  max-width: 800px;
+  margin: 30px auto 0;
   border: 1px solid var(--editorial-border);
   background: var(--article-white);
 }
@@ -232,10 +239,9 @@
 }
 
 .area-ranking-page.area-tachikawa .article-comparison-points ol {
-  padding: 12px 24px 18px;
+  padding: 10px 22px 14px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 28px;
+  grid-template-columns: 1fr;
 }
 
 .area-ranking-page.area-tachikawa .article-comparison-points li {
@@ -272,9 +278,9 @@
 }
 
 .area-ranking-page.area-tachikawa .quick-recommendation-body {
-  padding: 20px 24px;
+  padding: 18px 22px;
   display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
+  grid-template-columns: 160px minmax(0, 1fr);
   align-items: center;
   gap: 24px;
 }
@@ -304,7 +310,7 @@
   min-height: 52px;
   margin-top: 14px;
   padding: 12px 22px;
-  border-radius: 999px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -324,33 +330,39 @@
 }
 
 .area-ranking-page.area-tachikawa .content-section {
-  padding: clamp(64px, 8vw, 96px) 0;
-  border-top: 1px solid var(--article-line);
+  padding: 36px 0 0;
+  border-top: 0;
   scroll-margin-top: 100px;
 }
 
 .area-ranking-page.area-tachikawa .content-section > p,
 .area-ranking-page.area-tachikawa .content-section > ul,
 .area-ranking-page.area-tachikawa .content-section > h3 {
-  max-width: 840px;
+  max-width: 800px;
   margin-right: auto;
   margin-left: auto;
+}
+
+.area-ranking-page.area-tachikawa .content-section > p {
+  padding-inline: 10px;
 }
 
 .area-ranking-page.area-tachikawa .content-section h2,
 .area-ranking-page.area-tachikawa .conclusion-box h2,
 .area-ranking-page.area-tachikawa .article-cta h2 {
   position: relative;
-  margin: 0 0 clamp(28px, 4vw, 42px);
-  padding: 18px 22px 18px 28px;
-  border-radius: 0 16px 16px 0;
-  color: var(--article-navy);
-  background:
-    linear-gradient(90deg, var(--article-sky) 0, rgba(223, 244, 255, 0.32) 82%, transparent);
-  font-size: clamp(25px, 3.2vw, 38px);
-  font-weight: 950;
-  line-height: 1.45;
-  letter-spacing: 0.01em;
+  margin: 0 5px 19px;
+  padding: 9px 12px;
+  border: 1px solid var(--article-white);
+  border-radius: 0;
+  color: var(--article-white);
+  background: var(--editorial-cyan);
+  box-shadow: 0 0 0 5px var(--editorial-cyan);
+  font-family: var(--editorial-heading-font);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
   text-wrap: balance;
   line-break: strict;
   word-break: normal;
@@ -360,54 +372,29 @@
 .area-ranking-page.area-tachikawa .content-section h2::before,
 .area-ranking-page.area-tachikawa .conclusion-box h2::before,
 .area-ranking-page.area-tachikawa .article-cta h2::before {
-  content: "";
-  width: 7px;
-  border-radius: 999px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  background:
-    linear-gradient(180deg, var(--article-navy) 0 72%, var(--article-orange) 72%);
+  content: none;
 }
 
 .area-ranking-page.area-tachikawa .content-section h2::after,
 .area-ranking-page.area-tachikawa .conclusion-box h2::after,
 .area-ranking-page.area-tachikawa .article-cta h2::after {
-  content: "";
-  width: 92px;
-  height: 4px;
-  border-radius: 999px;
-  position: absolute;
-  bottom: -11px;
-  left: 28px;
-  background: var(--article-orange);
+  content: none;
 }
 
 .area-ranking-page.area-tachikawa .content-section > h2[data-section-number] {
-  padding-left: 82px;
+  width: calc(100% - 10px);
+  max-width: 790px;
+  min-height: 0;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 9px 7px;
   border-radius: 0;
-  color: var(--editorial-cyan);
-  background: var(--editorial-heading-bg);
+  color: var(--article-white);
+  background: var(--editorial-cyan);
 }
 
 .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::before {
-  content: attr(data-section-number);
-  width: 42px;
-  height: 38px;
-  border-radius: 0;
-  position: absolute;
-  top: 50%;
-  bottom: auto;
-  left: 22px;
-  display: grid;
-  place-items: center;
-  color: var(--article-white);
-  background: var(--editorial-cyan-border);
-  font-size: 17px;
-  font-weight: 950;
-  line-height: 1;
-  transform: translateY(-50%);
+  content: none;
 }
 
 .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::after {
@@ -416,14 +403,17 @@
 
 .area-ranking-page.area-tachikawa .content-section h3 {
   position: relative;
-  margin-top: 46px;
-  margin-bottom: 20px;
-  padding: 4px 0 10px 24px;
-  border-bottom: 2px solid var(--article-line);
-  color: var(--article-navy);
-  font-size: clamp(20px, 2.2vw, 27px);
-  font-weight: 950;
-  line-height: 1.55;
+  margin-top: 24px;
+  margin-bottom: 14px;
+  padding: 12px 10px;
+  border: 0;
+  border-left: 6px solid var(--editorial-cyan);
+  color: var(--editorial-cyan);
+  background: var(--editorial-heading-bg);
+  font-family: var(--editorial-heading-font);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.8;
   text-wrap: balance;
   line-break: strict;
   word-break: normal;
@@ -438,11 +428,16 @@
 }
 
 .area-ranking-page.area-tachikawa .article-title-keyword,
-.area-ranking-page.area-tachikawa .heading-brand,
 .area-ranking-page.area-tachikawa .heading-branch,
 .area-ranking-page.area-tachikawa .heading-tail,
 .area-ranking-page.area-tachikawa .heading-term {
   white-space: nowrap;
+}
+
+.area-ranking-page.area-tachikawa .heading-brand {
+  white-space: normal;
+  line-break: strict;
+  overflow-wrap: anywhere;
 }
 
 .area-ranking-page.area-tachikawa .inline-token {
@@ -468,15 +463,7 @@
 }
 
 .area-ranking-page.area-tachikawa .content-section h3::before {
-  content: "";
-  width: 8px;
-  height: calc(100% - 10px);
-  min-height: 25px;
-  border-radius: 999px;
-  position: absolute;
-  top: 3px;
-  left: 0;
-  background: var(--article-orange);
+  content: none;
 }
 
 .area-ranking-page.area-tachikawa .heading-number {
@@ -494,24 +481,22 @@
 }
 
 .area-ranking-page.area-tachikawa .image-slot {
-  max-width: 960px;
-  margin: clamp(28px, 5vw, 48px) auto;
+  max-width: 800px;
+  margin: 30px auto;
 }
 
 .area-ranking-page.area-tachikawa .image-slot-media {
   position: relative;
   aspect-ratio: 2 / 1;
   overflow: hidden;
-  border: 2px dashed rgba(17, 123, 184, 0.4);
-  border-radius: 22px;
-  background:
-    radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.9), transparent 25%),
-    linear-gradient(135deg, #dff4ff 0, #f7fcff 52%, #ffe8d6 100%);
-  box-shadow: 0 12px 32px rgba(5, 38, 111, 0.1);
+  border: 0;
+  border-radius: 0;
+  background: #f5f7f8;
+  box-shadow: none;
 }
 
 .area-ranking-page.area-tachikawa .image-slot--eyecatch {
-  max-width: 1040px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -524,15 +509,16 @@
 }
 
 .area-ranking-page.area-tachikawa .image-slot--logo {
-  width: min(320px, 100%);
-  margin: 24px auto 34px;
+  width: min(440px, 100%);
+  margin: 22px auto 30px;
 }
 
 .area-ranking-page.area-tachikawa .image-slot--logo .image-slot-media {
-  border-radius: 16px;
+  border-radius: 0;
 }
 
 .area-ranking-page.area-tachikawa .image-slot-media--logo {
+  aspect-ratio: 3 / 1;
   overflow: visible;
   border: 0;
   background: transparent;
@@ -540,7 +526,7 @@
 }
 
 .area-ranking-page.area-tachikawa .image-slot-media--logo img {
-  padding: 12px 0;
+  padding: 0;
   object-fit: contain;
 }
 
@@ -562,6 +548,14 @@
   position: absolute;
   inset: 0;
   object-fit: cover;
+}
+
+.area-ranking-page.area-tachikawa
+  .image-slot--logo
+  .image-slot-media
+  img {
+  object-fit: contain;
+  object-position: center center;
 }
 
 .area-ranking-page.area-tachikawa .image-slot-media > span {
@@ -592,9 +586,9 @@
 }
 
 .area-ranking-page.area-tachikawa .image-slot figcaption {
-  margin-top: 10px;
-  color: var(--article-muted);
-  font-size: 13px;
+  margin-top: 8px;
+  color: #777;
+  font-size: 12px;
   line-height: 1.6;
   text-align: center;
 }
@@ -609,6 +603,9 @@
   border-radius: 18px;
   background: var(--article-white);
   box-shadow: 0 12px 32px rgba(5, 38, 111, 0.08);
+  color: var(--article-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP",
+    "Yu Gothic", YuGothic, Meiryo, sans-serif;
   scrollbar-color: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -934,14 +931,14 @@
 
 .area-ranking-page.area-tachikawa .comparison-note,
 .area-ranking-page.area-tachikawa .source-notes {
-  max-width: 900px;
+  max-width: 800px;
   margin: 24px auto 0;
-  padding: 20px 22px;
-  border: 1px solid var(--article-line);
-  border-left: 6px solid var(--article-orange);
-  border-radius: 14px;
-  color: var(--article-muted);
-  background: var(--article-sky-2);
+  padding: 16px 18px;
+  border: 1px solid var(--editorial-border);
+  border-left: 5px solid var(--editorial-cyan);
+  border-radius: 0;
+  color: #666;
+  background: #f7f7f7;
 }
 
 .area-ranking-page.area-tachikawa .comparison-note p,
@@ -956,36 +953,44 @@
 }
 
 .area-ranking-page.area-tachikawa .conclusion-box {
-  max-width: 940px;
-  margin: clamp(64px, 8vw, 96px) auto 0;
-  padding: clamp(28px, 5vw, 48px);
-  border: 2px solid var(--article-navy);
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at 100% 0, rgba(255, 106, 0, 0.13), transparent 35%),
-    var(--article-white);
-  box-shadow: var(--article-shadow);
+  max-width: 800px;
+  margin: 46px auto 0;
+  padding: 0 24px 24px;
+  border: 1px solid var(--editorial-cyan);
+  border-radius: 0;
+  background: var(--article-white);
+  box-shadow: none;
 }
 
 .area-ranking-page.area-tachikawa .conclusion-box h2 {
-  margin-bottom: 32px;
-  font-size: clamp(25px, 3vw, 34px);
+  margin: 0 -24px 22px;
+  padding: 13px 18px;
+  border: 0;
+  border-left: 6px solid var(--editorial-cyan);
+  color: var(--editorial-navy);
+  background: var(--editorial-recommend-bg);
+  box-shadow: none;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.55;
 }
 
 .area-ranking-page.area-tachikawa .check-list {
   margin-top: 24px;
+  border-top: 1px solid #e2e5e7;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 18px;
+  grid-template-columns: 1fr;
+  gap: 0;
 }
 
 .area-ranking-page.area-tachikawa .check-list li {
   position: relative;
-  padding: 12px 14px 12px 45px;
-  border-radius: 12px;
-  color: var(--article-navy);
-  background: var(--article-sky-2);
-  font-weight: 800;
+  padding: 11px 14px 11px 44px;
+  border-bottom: 1px solid #e2e5e7;
+  border-radius: 0;
+  color: var(--editorial-ink);
+  background: #fafbfc;
+  font-weight: 700;
   line-height: 1.6;
 }
 
@@ -1006,36 +1011,42 @@
 }
 
 .area-ranking-page.area-tachikawa .article-cta {
-  max-width: 960px;
-  margin: clamp(60px, 8vw, 92px) auto;
-  padding: clamp(30px, 5vw, 54px);
-  overflow: hidden;
+  max-width: 800px;
+  margin: 46px auto;
+  padding: 0 24px 24px;
+  overflow: visible;
   position: relative;
-  border-radius: 26px;
-  color: var(--article-white);
-  background:
-    radial-gradient(circle at 100% 0, rgba(255, 138, 42, 0.34), transparent 36%),
-    linear-gradient(135deg, var(--article-navy) 0, var(--article-navy-2) 100%);
-  box-shadow: 0 24px 54px rgba(5, 38, 111, 0.22);
-  text-align: center;
+  border: 1px solid var(--editorial-cyan);
+  border-radius: 0;
+  color: var(--editorial-ink);
+  background: var(--article-white);
+  box-shadow: none;
+  text-align: left;
 }
 
 .area-ranking-page.area-tachikawa .article-cta h2 {
-  margin-bottom: 28px;
-  padding: 0 0 18px;
-  color: var(--article-white);
-  background: transparent;
-  font-size: clamp(26px, 3.4vw, 39px);
+  margin: 0 -24px 22px;
+  padding: 13px 18px;
+  border: 0;
+  color: var(--editorial-navy);
+  background: var(--editorial-recommend-bg);
+  box-shadow: none;
+  font-size: 21px;
+  line-height: 1.55;
+  text-align: center;
 }
 
 .area-ranking-page.area-tachikawa .content-section .article-cta h3 {
-  max-width: 760px;
-  margin: 0 auto 24px;
-  padding: 0 0 17px;
-  border-bottom: 0;
-  color: var(--article-white);
-  font-size: clamp(24px, 3vw, 34px);
-  line-height: 1.5;
+  max-width: none;
+  margin: 0 -24px 22px;
+  padding: 13px 18px;
+  border: 0;
+  border-left: 6px solid var(--editorial-cyan);
+  color: var(--editorial-navy);
+  background: var(--editorial-recommend-bg);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.55;
   text-align: center;
 }
 
@@ -1066,19 +1077,19 @@
 .area-ranking-page.area-tachikawa .article-cta p {
   max-width: 760px;
   margin-inline: auto;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--editorial-ink);
 }
 
 .area-ranking-page.area-tachikawa .article-cta .cta-eyebrow {
   width: fit-content;
-  margin: 0 auto 14px;
-  padding: 5px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.38);
-  border-radius: 999px;
-  color: var(--article-white);
+  margin: 16px 0 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--editorial-orange);
   font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .area-ranking-page.area-tachikawa .cta-actions {
@@ -1094,7 +1105,7 @@
   min-height: 62px;
   padding: 14px 20px;
   border: 2px solid transparent;
-  border-radius: 14px;
+  border-radius: 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1115,8 +1126,8 @@
 .area-ranking-page.area-tachikawa .cta-button--primary {
   grid-column: 1 / -1;
   color: var(--article-white);
-  background: linear-gradient(135deg, var(--article-orange), var(--article-orange-2));
-  box-shadow: 0 12px 28px rgba(255, 106, 0, 0.28);
+  background: var(--editorial-orange);
+  box-shadow: none;
 }
 
 .area-ranking-page.area-tachikawa .cta-button--line {
@@ -1143,29 +1154,30 @@
 }
 
 .area-ranking-page.area-tachikawa .research-note {
-  max-width: 900px;
-  margin: 0 auto 46px;
+  max-width: 800px;
+  margin: 0 auto 40px;
   padding: 18px 20px;
-  border-radius: 12px;
-  color: var(--article-muted);
+  border: 1px solid var(--editorial-border);
+  border-radius: 0;
+  color: #666;
   background: #f2f5f8;
   font-size: 13px;
   line-height: 1.8;
 }
 
 .area-ranking-page.area-tachikawa .article-toc {
-  max-width: 900px;
-  margin: 46px auto 82px;
-  padding: clamp(24px, 4vw, 38px);
-  border: 2px solid var(--article-orange);
-  border-radius: 18px;
-  background: var(--article-sky-2);
-  box-shadow: 0 12px 32px rgba(5, 38, 111, 0.09);
+  max-width: 800px;
+  margin: 40px auto 58px;
+  padding: 24px 22px;
+  border: 1px solid var(--editorial-border);
+  border-radius: 0;
+  background: var(--article-white);
+  box-shadow: none;
 }
 
 .area-ranking-page.area-tachikawa .toc-title {
-  margin-bottom: 24px;
-  color: var(--article-navy);
+  margin-bottom: 20px;
+  color: var(--editorial-ink);
   font-size: 13px;
   font-weight: 950;
   line-height: 1.25;
@@ -1175,7 +1187,7 @@
 .area-ranking-page.area-tachikawa .toc-title span {
   display: block;
   color: var(--article-orange);
-  font-size: clamp(30px, 4vw, 42px);
+  font-size: 30px;
   letter-spacing: 0.04em;
 }
 
@@ -1221,7 +1233,7 @@
   display: grid;
   place-items: center;
   color: var(--article-white);
-  background: var(--article-orange);
+  background: #bdbdbd;
   font: inherit;
   font-size: 18px;
   font-weight: 900;
@@ -1236,7 +1248,7 @@
 }
 
 .area-ranking-page.area-tachikawa .toc-toggle:hover {
-  background: var(--article-orange-2);
+  background: #a9a9a9;
   transform: translateY(-1px);
 }
 
@@ -1258,9 +1270,9 @@
   padding: 8px 10px 8px 42px;
   position: relative;
   display: block;
-  border-radius: 8px;
-  color: var(--article-navy);
-  font-weight: 800;
+  border-radius: 0;
+  color: #25779a;
+  font-weight: 700;
   line-height: 1.55;
   text-decoration: underline;
   text-decoration-color: rgba(17, 123, 184, 0.35);
@@ -1282,25 +1294,28 @@
 }
 
 .area-ranking-page.area-tachikawa .rank-section .rank-heading {
-  max-width: 100%;
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  align-items: stretch;
+  max-width: 800px;
+  margin-inline: auto;
+  border-left: 6px solid var(--editorial-cyan);
+  display: block;
+  background: var(--editorial-heading-bg);
 }
 
 .area-ranking-page.area-tachikawa .rank-section .rank-heading h2 {
   margin: 0;
-  border-radius: 0 16px 16px 0;
+  padding: 12px 10px;
+  border: 0;
+  border-radius: 0;
+  color: var(--editorial-cyan);
+  background: transparent;
+  box-shadow: none;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.8;
 }
 
 .area-ranking-page.area-tachikawa .rank-section .rank-number {
-  border-radius: 16px 0 0 16px;
-  display: grid;
-  place-items: center;
-  color: var(--article-white);
-  background: var(--article-orange);
-  font-size: 30px;
-  font-weight: 950;
+  display: none;
 }
 
 .area-ranking-page.area-tachikawa .rank-section > p:last-child {
@@ -1308,7 +1323,7 @@
 }
 
 .area-ranking-page.area-tachikawa .flow-list {
-  max-width: 900px;
+  max-width: 800px;
   margin: 36px auto 0;
   padding: 0;
   display: grid;
@@ -1323,13 +1338,13 @@
 .area-ranking-page.area-tachikawa .flow-list > li {
   min-height: 0;
   padding: 24px;
-  border: 1px solid var(--article-line);
-  border-radius: 18px;
+  border: 1px solid var(--editorial-border);
+  border-radius: 0;
   display: grid;
   grid-template-columns: 72px minmax(0, 1fr);
   gap: 20px;
   background: var(--article-white);
-  box-shadow: 0 10px 26px rgba(5, 38, 111, 0.07);
+  box-shadow: none;
 }
 
 .area-ranking-page.area-tachikawa .flow-step {
@@ -1340,7 +1355,7 @@
   place-items: center;
   align-content: center;
   color: var(--article-white);
-  background: var(--article-navy);
+  background: var(--editorial-cyan);
   font-size: 25px;
   font-weight: 950;
   line-height: 1;
@@ -1371,7 +1386,7 @@
 }
 
 .area-ranking-page.area-tachikawa .faq-list {
-  max-width: 900px;
+  max-width: 800px;
   margin: 30px auto 0;
   display: grid;
   gap: 13px;
@@ -1379,10 +1394,10 @@
 
 .area-ranking-page.area-tachikawa .faq-item {
   overflow: hidden;
-  border: 1px solid var(--article-line);
-  border-radius: 16px;
+  border: 1px solid var(--editorial-border);
+  border-radius: 0;
   background: var(--article-white);
-  box-shadow: 0 8px 22px rgba(5, 38, 111, 0.06);
+  box-shadow: none;
 }
 
 .area-ranking-page.area-tachikawa .faq-item h3 {
@@ -1405,8 +1420,8 @@
   display: flex;
   align-items: center;
   gap: 13px;
-  color: var(--article-navy);
-  background: var(--article-sky-2);
+  color: var(--editorial-ink);
+  background: var(--editorial-heading-bg);
   font: inherit;
   font-size: 17px;
   font-weight: 900;
@@ -1577,7 +1592,7 @@
   }
 
   .area-ranking-page.area-tachikawa .article-header {
-    padding: 26px 0 20px;
+    padding: 24px 0 18px;
     text-align: left;
   }
 
@@ -1599,12 +1614,12 @@
   }
 
   .area-ranking-page.area-tachikawa .article-header h1 {
-    padding-bottom: 17px;
+    padding-bottom: 0;
     color: var(--editorial-ink);
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 1.45;
-    letter-spacing: 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
   }
 
   .area-ranking-page.area-tachikawa .article-header h1::after {
@@ -1617,13 +1632,13 @@
   }
 
   .area-ranking-page.area-tachikawa .article-body p {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 1.85;
+    line-height: 1.5;
   }
 
   .area-ranking-page.area-tachikawa .article-body p + p {
-    margin-top: 16px;
+    margin-top: 24px;
   }
 
   .area-ranking-page.area-tachikawa .article-body strong {
@@ -1631,8 +1646,8 @@
   }
 
   .area-ranking-page.area-tachikawa .introduction {
-    margin-top: 26px;
-    padding: 0;
+    margin-top: 24px;
+    padding: 0 4px;
     border: 0;
     border-radius: 0;
     background: transparent;
@@ -1647,19 +1662,23 @@
   }
 
   .area-ranking-page.area-tachikawa .content-section {
-    padding: 42px 0 0;
+    padding: 36px 0 0;
     border-top: 0;
     scroll-margin-top: 80px;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section > p {
+    padding-inline: 4px;
   }
 
   .area-ranking-page.area-tachikawa .content-section h2,
   .area-ranking-page.area-tachikawa .conclusion-box h2,
   .area-ranking-page.area-tachikawa .article-cta h2 {
-    margin-bottom: 17px;
-    padding: 15px 14px 15px 20px;
-    border-radius: 0 12px 12px 0;
-    font-size: 19px;
-    font-weight: 700;
+    margin-bottom: 19px;
+    padding: 9px 10px;
+    border-radius: 0;
+    font-size: 21px;
+    font-weight: 400;
     line-height: 1.5;
     letter-spacing: 0;
     text-wrap: balance;
@@ -1677,11 +1696,11 @@
 
   .area-ranking-page.area-tachikawa .content-section h3 {
     margin-top: 30px;
-    margin-bottom: 12px;
-    padding-left: 19px;
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 1.55;
+    margin-bottom: 14px;
+    padding: 12px 4px;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.8;
     letter-spacing: 0;
     scroll-margin-top: 84px;
   }
@@ -1704,7 +1723,7 @@
   }
 
   .area-ranking-page.area-tachikawa .image-slot:not(.image-slot--logo) .image-slot-media {
-    border: 1px solid #bdc7ce;
+    border: 0;
     border-radius: 0;
     background: #f4f7f8;
     box-shadow: none;
@@ -1717,7 +1736,7 @@
 
   .area-ranking-page.area-tachikawa .editorial-marker {
     background:
-      linear-gradient(transparent 60%, var(--editorial-yellow) 60%);
+      linear-gradient(transparent 80%, var(--editorial-yellow) 80%);
     font-weight: 700;
   }
 
@@ -1727,8 +1746,8 @@
   }
 
   .area-ranking-page.area-tachikawa .metric-accent {
-    font-size: 1.18em;
-    font-weight: 900;
+    font-size: 1em;
+    font-weight: 700;
   }
 
   .area-ranking-page.area-tachikawa .article-body p.key-point {
@@ -1805,25 +1824,24 @@
   }
 
   .area-ranking-page.area-tachikawa .content-section > h2[data-section-number] {
-    min-height: 62px;
-    padding: 14px 12px 14px 54px;
-    border-left: 6px solid var(--editorial-cyan-border);
+    width: calc(100% - 10px);
+    max-width: 790px;
+    min-height: 0;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 9px 7px;
+    border: 1px solid var(--article-white);
     border-radius: 0;
-    color: var(--editorial-cyan);
-    background: var(--editorial-heading-bg);
-    font-size: 19px;
-    font-weight: 800;
+    color: var(--article-white);
+    background: var(--editorial-cyan);
+    box-shadow: 0 0 0 5px var(--editorial-cyan);
+    font-size: 21px;
+    font-weight: 400;
     line-height: 1.5;
   }
 
   .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::before {
-    width: 30px;
-    height: 28px;
-    top: 16px;
-    bottom: auto;
-    left: 11px;
-    font-size: 13px;
-    transform: none;
+    content: none;
   }
 
   .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::after {
@@ -1831,16 +1849,16 @@
   }
 
   .area-ranking-page.area-tachikawa .content-section > h3 {
-    margin-top: 28px;
-    margin-bottom: 13px;
-    padding: 10px 12px;
+    margin-top: 24px;
+    margin-bottom: 14px;
+    padding: 12px 4px;
     border: 0;
-    border-left: 5px solid var(--editorial-cyan-border);
-    color: var(--editorial-navy);
-    background: var(--editorial-recommend-bg);
-    font-size: 17px;
-    font-weight: 800;
-    line-height: 1.55;
+    border-left: 6px solid var(--editorial-cyan);
+    color: var(--editorial-cyan);
+    background: var(--editorial-heading-bg);
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.8;
   }
 
   .area-ranking-page.area-tachikawa .content-section > h3::before {
@@ -2209,15 +2227,20 @@
   }
 
   .area-ranking-page.area-tachikawa .rank-section .rank-heading {
-    grid-template-columns: 46px minmax(0, 1fr);
+    display: block;
   }
 
   .area-ranking-page.area-tachikawa .rank-section .rank-heading h2 {
+    margin: 0;
+    padding: 12px 4px;
+    border: 0;
     border-radius: 0;
-    color: var(--editorial-navy);
-    background: var(--editorial-heading-bg);
-    font-size: 18px;
-    line-height: 1.5;
+    color: var(--editorial-cyan);
+    background: transparent;
+    box-shadow: none;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.8;
   }
 
   .area-ranking-page.area-tachikawa .rank-section .rank-heading h2::before,
@@ -2316,6 +2339,18 @@
     display: grid;
     gap: 6px;
     font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .area-ranking-page.area-tachikawa .quick-recommendation-body {
+    padding: 12px;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .area-ranking-page.area-tachikawa .quick-recommendation-copy {
+    min-width: 0;
   }
 }
 
