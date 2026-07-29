@@ -14,14 +14,14 @@
   --article-green: #06c755;
   --article-shadow: 0 18px 46px rgba(5, 38, 111, 0.12);
   --editorial-navy: #073478;
-  --editorial-cyan: #26bfd4;
-  --editorial-cyan-border: #26bfd4;
-  --editorial-orange: #e8660a;
-  --editorial-yellow: #ffcb65;
-  --editorial-heading-bg: #f2f2f2;
-  --editorial-recommend-bg: #eff9fb;
-  --editorial-ink: #333;
-  --editorial-border: #d5d5d5;
+  --editorial-cyan: #08798a;
+  --editorial-cyan-border: #08798a;
+  --editorial-orange: #b94d00;
+  --editorial-yellow: #ffdc78;
+  --editorial-heading-bg: #f1f7f8;
+  --editorial-recommend-bg: #eef8fa;
+  --editorial-ink: #262b33;
+  --editorial-border: #cfdcdf;
   --editorial-body-font: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3",
     Meiryo, "メイリオ", Osaka, "MS PGothic", Arial, Helvetica, sans-serif;
   --editorial-heading-font: Roboto, "Noto Sans JP", "Hiragino Kaku Gothic Pro",
@@ -66,19 +66,19 @@
 .area-ranking-page.area-tachikawa .ranking-article {
   overflow: clip;
   color: var(--editorial-ink);
-  background: #f7f9f9;
+  background: var(--article-white);
   font-family: var(--editorial-body-font);
 }
 
 .area-ranking-page.area-tachikawa .article-shell {
-  width: min(1040px, calc(100% - 48px));
+  width: min(780px, calc(100% - 40px));
   margin-inline: auto;
 }
 
 .area-ranking-page.area-tachikawa .article-header {
-  max-width: 800px;
+  max-width: 740px;
   margin-inline: auto;
-  padding: 58px 0 28px;
+  padding: 56px 0 30px;
   text-align: left;
 }
 
@@ -104,9 +104,9 @@
   padding-bottom: 0;
   color: var(--editorial-ink);
   font-family: var(--editorial-body-font);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.5;
+  font-size: 36px;
+  font-weight: 750;
+  line-height: 1.45;
   letter-spacing: 0;
   white-space: normal;
   text-wrap: balance;
@@ -121,24 +121,33 @@
 }
 
 .area-ranking-page.area-tachikawa .article-header h1::after {
-  content: none;
+  content: "";
+  width: 128px;
+  height: 4px;
+  margin-top: 20px;
+  display: block;
+  background: var(--editorial-cyan);
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 0.62s cubic-bezier(0.2, 0.72, 0.2, 1);
 }
 
 .area-ranking-page.area-tachikawa .article-body {
-  width: min(1040px, 100%);
+  width: 100%;
   margin-inline: auto;
-  padding-bottom: 72px;
+  padding-bottom: 80px;
 }
 
 .area-ranking-page.area-tachikawa .article-body p {
   color: var(--editorial-ink);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
 }
 
 .area-ranking-page.area-tachikawa .article-body p + p {
-  margin-top: 24px;
+  margin-top: 1.25em;
 }
 
 .area-ranking-page.area-tachikawa .article-body strong {
@@ -149,12 +158,13 @@
 }
 
 .area-ranking-page.area-tachikawa .introduction {
-  max-width: 800px;
-  margin: 32px auto 0;
-  padding: 0 10px;
-  border: 0;
+  max-width: 740px;
+  margin: 36px auto 0;
+  padding: 24px 26px;
+  border: 1px solid #d9e4e6;
+  border-left: 5px solid var(--editorial-cyan);
   border-radius: 0;
-  background: transparent;
+  background: #f8fbfb;
   box-shadow: none;
 }
 
@@ -168,10 +178,13 @@
 .area-ranking-page.area-tachikawa .editorial-marker {
   padding-inline: 0;
   font-weight: 700;
-  background:
+  background-image:
     linear-gradient(transparent 80%, var(--editorial-yellow) 80%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+  transition: background-size 0.62s cubic-bezier(0.2, 0.72, 0.2, 1);
 }
 
 .area-ranking-page.area-tachikawa .editorial-accent {
@@ -220,8 +233,8 @@
 
 .area-ranking-page.area-tachikawa .article-comparison-points,
 .area-ranking-page.area-tachikawa .article-quick-recommendation {
-  max-width: 800px;
-  margin: 30px auto 0;
+  max-width: 740px;
+  margin: 32px auto 0;
   border: 1px solid var(--editorial-border);
   background: var(--article-white);
 }
@@ -231,7 +244,7 @@
   margin: 0;
   padding: 13px 18px;
   color: var(--editorial-ink);
-  background: var(--editorial-heading-bg);
+  background: #eef6f7;
   font-size: 16px;
   font-weight: 900;
   line-height: 1.5;
@@ -310,7 +323,7 @@
   min-height: 52px;
   margin-top: 14px;
   padding: 12px 22px;
-  border-radius: 4px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -330,7 +343,7 @@
 }
 
 .area-ranking-page.area-tachikawa .content-section {
-  padding: 36px 0 0;
+  padding: 64px 0 0;
   border-top: 0;
   scroll-margin-top: 100px;
 }
@@ -338,29 +351,30 @@
 .area-ranking-page.area-tachikawa .content-section > p,
 .area-ranking-page.area-tachikawa .content-section > ul,
 .area-ranking-page.area-tachikawa .content-section > h3 {
-  max-width: 800px;
+  max-width: 740px;
   margin-right: auto;
   margin-left: auto;
 }
 
 .area-ranking-page.area-tachikawa .content-section > p {
-  padding-inline: 10px;
+  padding-inline: 0;
 }
 
 .area-ranking-page.area-tachikawa .content-section h2,
 .area-ranking-page.area-tachikawa .conclusion-box h2,
 .area-ranking-page.area-tachikawa .article-cta h2 {
   position: relative;
-  margin: 0 5px 19px;
-  padding: 9px 12px;
-  border: 1px solid var(--article-white);
+  margin: 0 0 30px;
+  padding: 18px 20px 17px 64px;
+  border: 1px solid #cadde1;
+  border-left: 5px solid var(--editorial-cyan);
   border-radius: 0;
-  color: var(--article-white);
-  background: var(--editorial-cyan);
-  box-shadow: 0 0 0 5px var(--editorial-cyan);
-  font-family: var(--editorial-heading-font);
-  font-size: 24px;
-  font-weight: 400;
+  color: var(--editorial-navy);
+  background: var(--editorial-heading-bg);
+  box-shadow: none;
+  font-family: var(--editorial-body-font);
+  font-size: 28px;
+  font-weight: 800;
   line-height: 1.5;
   letter-spacing: 0;
   text-wrap: balance;
@@ -382,38 +396,60 @@
 }
 
 .area-ranking-page.area-tachikawa .content-section > h2[data-section-number] {
-  width: calc(100% - 10px);
-  max-width: 790px;
+  width: 100%;
+  max-width: 740px;
   min-height: 0;
   margin-right: auto;
   margin-left: auto;
-  padding: 9px 7px;
+  padding: 18px 20px 17px 64px;
   border-radius: 0;
-  color: var(--article-white);
-  background: var(--editorial-cyan);
+  color: var(--editorial-navy);
+  background: var(--editorial-heading-bg);
 }
 
 .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::before {
-  content: none;
+  content: attr(data-section-number);
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 21px;
+  left: 18px;
+  display: grid;
+  place-items: center;
+  color: var(--article-white);
+  background: var(--editorial-cyan);
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::after {
-  content: none;
+  content: "";
+  width: 88px;
+  height: 3px;
+  position: absolute;
+  bottom: -1px;
+  left: 64px;
+  background: var(--editorial-orange);
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 0.62s cubic-bezier(0.2, 0.72, 0.2, 1);
 }
 
 .area-ranking-page.area-tachikawa .content-section h3 {
   position: relative;
-  margin-top: 24px;
-  margin-bottom: 14px;
-  padding: 12px 10px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  padding: 5px 0 10px 16px;
   border: 0;
-  border-left: 6px solid var(--editorial-cyan);
-  color: var(--editorial-cyan);
-  background: var(--editorial-heading-bg);
-  font-family: var(--editorial-heading-font);
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.8;
+  border-left: 4px solid var(--editorial-cyan);
+  border-bottom: 1px solid #cfdee2;
+  color: var(--editorial-navy);
+  background: transparent;
+  font-family: var(--editorial-body-font);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.6;
   text-wrap: balance;
   line-break: strict;
   word-break: normal;
@@ -481,8 +517,8 @@
 }
 
 .area-ranking-page.area-tachikawa .image-slot {
-  max-width: 800px;
-  margin: 30px auto;
+  max-width: 740px;
+  margin: 32px auto;
 }
 
 .area-ranking-page.area-tachikawa .image-slot-media {
@@ -496,7 +532,7 @@
 }
 
 .area-ranking-page.area-tachikawa .image-slot--eyecatch {
-  max-width: 800px;
+  max-width: 740px;
   margin: 0 auto;
 }
 
@@ -586,11 +622,11 @@
 }
 
 .area-ranking-page.area-tachikawa .image-slot figcaption {
-  margin-top: 8px;
-  color: #777;
-  font-size: 12px;
-  line-height: 1.6;
-  text-align: center;
+  margin-top: 9px;
+  color: #5d6a72;
+  font-size: 13px;
+  line-height: 1.65;
+  text-align: left;
 }
 
 .area-ranking-page.area-tachikawa .table-scroll {
@@ -599,10 +635,10 @@
   margin: 30px auto;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
-  border: 1px solid var(--article-line);
-  border-radius: 18px;
+  border: 1px solid #cbdade;
+  border-radius: 3px;
   background: var(--article-white);
-  box-shadow: 0 12px 32px rgba(5, 38, 111, 0.08);
+  box-shadow: none;
   color: var(--article-ink);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP",
     "Yu Gothic", YuGothic, Meiryo, sans-serif;
@@ -662,7 +698,7 @@
 
 .area-ranking-page.area-tachikawa .table-scroll--detail {
   --table-key-column-width: 144px;
-  max-width: 840px;
+  max-width: 740px;
 }
 
 .area-ranking-page.area-tachikawa .table-scroll--detail table {
@@ -681,8 +717,8 @@
 .area-ranking-page.area-tachikawa .table-caption-bar {
   padding: 15px 18px;
   color: var(--article-navy);
-  background: var(--article-sky-2);
-  border-bottom: 1px solid var(--article-line);
+  background: #eef6f7;
+  border-bottom: 1px solid #cbdade;
   font-size: 14px;
   font-weight: 900;
   text-align: left;
@@ -709,8 +745,8 @@
 .area-ranking-page.area-tachikawa .table-scroll th,
 .area-ranking-page.area-tachikawa .table-scroll td {
   padding: 15px 16px;
-  border-right: 1px solid var(--article-line);
-  border-bottom: 1px solid var(--article-line);
+  border-right: 1px solid #d6e1e4;
+  border-bottom: 1px solid #d6e1e4;
   vertical-align: middle;
   text-align: left;
 }
@@ -732,7 +768,7 @@
 
 .area-ranking-page.area-tachikawa .table-scroll tbody th {
   color: var(--article-navy);
-  background: var(--article-sky-2);
+  background: #f2f7f8;
   font-weight: 900;
 }
 
@@ -762,7 +798,7 @@
 
 .area-ranking-page.area-tachikawa .table-scroll.is-scrollable tbody tr > th:first-child {
   color: var(--article-navy);
-  background: var(--article-sky-2);
+  background: #f2f7f8;
 }
 
 .area-ranking-page.area-tachikawa .table-scroll.is-scrollable tbody tr:nth-child(even) > :first-child {
@@ -799,7 +835,7 @@
 }
 
 .area-ranking-page.area-tachikawa .ranking-label {
-  max-width: 840px;
+  max-width: 740px;
   margin: 28px auto -18px;
   color: var(--article-navy);
   font-weight: 900;
@@ -931,7 +967,7 @@
 
 .area-ranking-page.area-tachikawa .comparison-note,
 .area-ranking-page.area-tachikawa .source-notes {
-  max-width: 800px;
+  max-width: 740px;
   margin: 24px auto 0;
   padding: 16px 18px;
   border: 1px solid var(--editorial-border);
@@ -953,7 +989,7 @@
 }
 
 .area-ranking-page.area-tachikawa .conclusion-box {
-  max-width: 800px;
+  max-width: 740px;
   margin: 46px auto 0;
   padding: 0 24px 24px;
   border: 1px solid var(--editorial-cyan);
@@ -1011,7 +1047,7 @@
 }
 
 .area-ranking-page.area-tachikawa .article-cta {
-  max-width: 800px;
+  max-width: 740px;
   margin: 46px auto;
   padding: 0 24px 24px;
   overflow: visible;
@@ -1032,6 +1068,7 @@
   background: var(--editorial-recommend-bg);
   box-shadow: none;
   font-size: 21px;
+  font-weight: 700;
   line-height: 1.55;
   text-align: center;
 }
@@ -1154,7 +1191,7 @@
 }
 
 .area-ranking-page.area-tachikawa .research-note {
-  max-width: 800px;
+  max-width: 740px;
   margin: 0 auto 40px;
   padding: 18px 20px;
   border: 1px solid var(--editorial-border);
@@ -1166,7 +1203,7 @@
 }
 
 .area-ranking-page.area-tachikawa .article-toc {
-  max-width: 800px;
+  max-width: 740px;
   margin: 40px auto 58px;
   padding: 24px 22px;
   border: 1px solid var(--editorial-border);
@@ -1293,25 +1330,32 @@
   background: var(--article-white);
 }
 
+.area-ranking-page.area-tachikawa .article-toc a[aria-current="location"] {
+  color: var(--editorial-navy);
+  background: #edf6f7;
+  text-decoration-thickness: 2px;
+}
+
 .area-ranking-page.area-tachikawa .rank-section .rank-heading {
-  max-width: 800px;
+  max-width: 740px;
   margin-inline: auto;
-  border-left: 6px solid var(--editorial-cyan);
+  border: 1px solid #cfdee2;
+  border-left: 5px solid var(--editorial-cyan);
   display: block;
   background: var(--editorial-heading-bg);
 }
 
 .area-ranking-page.area-tachikawa .rank-section .rank-heading h2 {
   margin: 0;
-  padding: 12px 10px;
+  padding: 15px 18px;
   border: 0;
   border-radius: 0;
-  color: var(--editorial-cyan);
+  color: var(--editorial-navy);
   background: transparent;
   box-shadow: none;
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.8;
+  font-size: 24px;
+  font-weight: 750;
+  line-height: 1.55;
 }
 
 .area-ranking-page.area-tachikawa .rank-section .rank-number {
@@ -1323,7 +1367,7 @@
 }
 
 .area-ranking-page.area-tachikawa .flow-list {
-  max-width: 800px;
+  max-width: 740px;
   margin: 36px auto 0;
   padding: 0;
   display: grid;
@@ -1386,7 +1430,7 @@
 }
 
 .area-ranking-page.area-tachikawa .faq-list {
-  max-width: 800px;
+  max-width: 740px;
   margin: 30px auto 0;
   display: grid;
   gap: 13px;
@@ -1488,7 +1532,7 @@
 }
 
 .area-ranking-page.area-tachikawa .source-list {
-  max-width: 840px;
+  max-width: 740px;
   margin: 30px auto 0;
   padding-left: 24px;
   columns: 2;
@@ -1512,7 +1556,7 @@
 }
 
 .area-ranking-page.area-tachikawa .article-dates {
-  max-width: 840px;
+  max-width: 740px;
   margin: 0 auto;
   padding: 22px 0 0;
   border-top: 1px solid var(--article-line);
@@ -1580,7 +1624,7 @@
 
 @media (max-width: 760px) {
   .area-ranking-page.area-tachikawa {
-    padding-bottom: 106px;
+    padding-bottom: 88px;
   }
 
   .area-ranking-page.area-tachikawa .ranking-article {
@@ -1588,11 +1632,11 @@
   }
 
   .area-ranking-page.area-tachikawa .article-shell {
-    width: min(100% - 28px, 1120px);
+    width: calc(100% - 32px);
   }
 
   .area-ranking-page.area-tachikawa .article-header {
-    padding: 24px 0 18px;
+    padding: 30px 0 22px;
     text-align: left;
   }
 
@@ -1616,29 +1660,32 @@
   .area-ranking-page.area-tachikawa .article-header h1 {
     padding-bottom: 0;
     color: var(--editorial-ink);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.5;
-    letter-spacing: -0.01em;
+    font-size: 27px;
+    font-weight: 750;
+    line-height: 1.45;
+    letter-spacing: 0;
   }
 
   .area-ranking-page.area-tachikawa .article-header h1::after {
-    width: 48%;
+    width: 104px;
+    height: 3px;
+    margin-top: 16px;
     right: auto;
   }
 
   .area-ranking-page.area-tachikawa .article-body {
-    padding-bottom: 48px;
+    padding-bottom: 56px;
   }
 
   .area-ranking-page.area-tachikawa .article-body p {
     font-size: 16px;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.9;
+    letter-spacing: 0.006em;
   }
 
   .area-ranking-page.area-tachikawa .article-body p + p {
-    margin-top: 24px;
+    margin-top: 1.25em;
   }
 
   .area-ranking-page.area-tachikawa .article-body strong {
@@ -1646,11 +1693,12 @@
   }
 
   .area-ranking-page.area-tachikawa .introduction {
-    margin-top: 24px;
-    padding: 0 4px;
-    border: 0;
+    margin-top: 26px;
+    padding: 20px 18px;
+    border: 1px solid #d9e4e6;
+    border-left: 4px solid var(--editorial-cyan);
     border-radius: 0;
-    background: transparent;
+    background: #f8fbfb;
     box-shadow: none;
   }
 
@@ -1662,24 +1710,24 @@
   }
 
   .area-ranking-page.area-tachikawa .content-section {
-    padding: 36px 0 0;
+    padding: 54px 0 0;
     border-top: 0;
     scroll-margin-top: 80px;
   }
 
   .area-ranking-page.area-tachikawa .content-section > p {
-    padding-inline: 4px;
+    padding-inline: 0;
   }
 
   .area-ranking-page.area-tachikawa .content-section h2,
   .area-ranking-page.area-tachikawa .conclusion-box h2,
   .area-ranking-page.area-tachikawa .article-cta h2 {
-    margin-bottom: 19px;
-    padding: 9px 10px;
+    margin-bottom: 26px;
+    padding: 16px 14px 15px 56px;
     border-radius: 0;
-    font-size: 21px;
-    font-weight: 400;
-    line-height: 1.5;
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.55;
     letter-spacing: 0;
     text-wrap: balance;
     line-break: strict;
@@ -1695,12 +1743,12 @@
   }
 
   .area-ranking-page.area-tachikawa .content-section h3 {
-    margin-top: 30px;
-    margin-bottom: 14px;
-    padding: 12px 4px;
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 1.8;
+    margin-top: 34px;
+    margin-bottom: 18px;
+    padding: 4px 0 9px 13px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.6;
     letter-spacing: 0;
     scroll-margin-top: 84px;
   }
@@ -1730,12 +1778,12 @@
   }
 
   .area-ranking-page.area-tachikawa .image-slot figcaption {
-    font-size: 11.5px;
-    line-height: 1.6;
+    font-size: 13px;
+    line-height: 1.65;
   }
 
   .area-ranking-page.area-tachikawa .editorial-marker {
-    background:
+    background-image:
       linear-gradient(transparent 80%, var(--editorial-yellow) 80%);
     font-weight: 700;
   }
@@ -1792,73 +1840,89 @@
   }
 
   .area-ranking-page.area-tachikawa .article-comparison-points small {
-    font-size: 12.5px;
-    line-height: 1.55;
+    font-size: 13px;
+    line-height: 1.6;
   }
 
   .area-ranking-page.area-tachikawa .quick-recommendation-body {
-    padding: 14px;
-    grid-template-columns: 88px minmax(0, 1fr);
+    padding: 18px;
+    grid-template-columns: 1fr;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
+  }
+
+  .area-ranking-page.area-tachikawa .quick-recommendation-body > img {
+    width: 150px;
+    margin-inline: auto;
   }
 
   .area-ranking-page.area-tachikawa .article-body .quick-recommendation-copy p {
-    font-size: 12.5px;
-    line-height: 1.65;
+    font-size: 15px;
+    line-height: 1.8;
   }
 
   .area-ranking-page.area-tachikawa .article-body .quick-recommendation-copy .quick-recommendation-name {
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 800;
     line-height: 1.45;
   }
 
   .area-ranking-page.area-tachikawa .quick-recommendation-button {
-    min-height: 46px;
-    margin-top: 10px;
-    padding: 10px 12px;
+    min-height: 52px;
+    margin-top: 14px;
+    padding: 12px 14px;
     gap: 8px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 800;
   }
 
   .area-ranking-page.area-tachikawa .content-section > h2[data-section-number] {
-    width: calc(100% - 10px);
-    max-width: 790px;
+    width: 100%;
+    max-width: none;
     min-height: 0;
-    margin-right: 5px;
-    margin-left: 5px;
-    padding: 9px 7px;
-    border: 1px solid var(--article-white);
+    margin-right: 0;
+    margin-left: 0;
+    padding: 16px 14px 15px 56px;
+    border: 1px solid #cadde1;
+    border-left: 4px solid var(--editorial-cyan);
     border-radius: 0;
-    color: var(--article-white);
-    background: var(--editorial-cyan);
-    box-shadow: 0 0 0 5px var(--editorial-cyan);
-    font-size: 21px;
-    font-weight: 400;
-    line-height: 1.5;
+    color: var(--editorial-navy);
+    background: var(--editorial-heading-bg);
+    box-shadow: none;
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.55;
   }
 
   .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::before {
-    content: none;
+    content: attr(data-section-number);
+    width: 28px;
+    height: 28px;
+    top: 19px;
+    left: 15px;
+    font-size: 12px;
   }
 
   .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::after {
-    content: none;
+    content: "";
+    width: 68px;
+    height: 3px;
+    bottom: -1px;
+    left: 56px;
   }
 
   .area-ranking-page.area-tachikawa .content-section > h3 {
-    margin-top: 24px;
-    margin-bottom: 14px;
-    padding: 12px 4px;
+    margin-top: 34px;
+    margin-bottom: 18px;
+    padding: 4px 0 9px 13px;
     border: 0;
-    border-left: 6px solid var(--editorial-cyan);
-    color: var(--editorial-cyan);
-    background: var(--editorial-heading-bg);
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 1.8;
+    border-left: 4px solid var(--editorial-cyan);
+    border-bottom: 1px solid #cfdee2;
+    color: var(--editorial-navy);
+    background: transparent;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.6;
   }
 
   .area-ranking-page.area-tachikawa .content-section > h3::before {
@@ -1867,7 +1931,7 @@
 
   .area-ranking-page.area-tachikawa .table-scroll {
     margin: 24px 0;
-    border-radius: 13px;
+    border-radius: 3px;
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--ranking {
@@ -1983,7 +2047,7 @@
   .area-ranking-page.area-tachikawa .table-scroll caption,
   .area-ranking-page.area-tachikawa .table-caption-bar {
     padding: 10px 12px;
-    font-size: 12.5px;
+    font-size: 13px;
     line-height: 1.5;
   }
 
@@ -1995,7 +2059,7 @@
 
   .area-ranking-page.area-tachikawa .ranking-table th,
   .area-ranking-page.area-tachikawa .ranking-table td {
-    font-size: 12.5px;
+    font-size: 13px;
   }
 
   .area-ranking-page.area-tachikawa .ranking-position-row {
@@ -2006,16 +2070,16 @@
   .area-ranking-page.area-tachikawa .ranking-position {
     min-width: 39px;
     padding: 4px 7px;
-    font-size: 11.5px;
+    font-size: 12.5px;
   }
 
   .area-ranking-page.area-tachikawa .ranking-recommend-badge {
     padding: 3px 7px;
-    font-size: 10.5px;
+    font-size: 12px;
   }
 
   .area-ranking-page.area-tachikawa .ranking-company-name {
-    font-size: 12.75px;
+    font-size: 13.5px;
     font-weight: 700;
     line-height: 1.5;
     text-decoration-thickness: 2px;
@@ -2024,7 +2088,7 @@
 
   .area-ranking-page.area-tachikawa .ranking-branch-name {
     margin-top: 3px;
-    font-size: 11.5px;
+    font-size: 13px;
     font-weight: 500;
     line-height: 1.5;
   }
@@ -2144,9 +2208,9 @@
   }
 
   .area-ranking-page.area-tachikawa .article-cta > p:not(.cta-eyebrow) {
-    font-size: 14.5px;
+    font-size: 15.5px;
     font-weight: 400;
-    line-height: 1.8;
+    line-height: 1.85;
   }
 
   .area-ranking-page.area-tachikawa .article-cta .cta-eyebrow {
@@ -2156,7 +2220,7 @@
     border: 0;
     border-radius: 0;
     color: var(--editorial-orange);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
     letter-spacing: 0.04em;
   }
@@ -2171,7 +2235,7 @@
     min-height: 52px;
     padding: 12px 14px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
   }
 
@@ -2232,15 +2296,15 @@
 
   .area-ranking-page.area-tachikawa .rank-section .rank-heading h2 {
     margin: 0;
-    padding: 12px 4px;
+    padding: 14px 15px;
     border: 0;
     border-radius: 0;
-    color: var(--editorial-cyan);
+    color: var(--editorial-navy);
     background: transparent;
     box-shadow: none;
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 1.8;
+    font-size: 21px;
+    font-weight: 750;
+    line-height: 1.55;
   }
 
   .area-ranking-page.area-tachikawa .rank-section .rank-heading h2::before,
@@ -2269,8 +2333,8 @@
   .area-ranking-page.area-tachikawa .content-section .flow-list h3 {
     margin: 0 0 8px;
     padding: 0 0 8px;
-    font-size: 16.5px;
-    line-height: 1.55;
+    font-size: 18.5px;
+    line-height: 1.6;
   }
 
   .area-ranking-page.area-tachikawa .flow-list p {
@@ -2302,8 +2366,8 @@
   .area-ranking-page.area-tachikawa .source-notes li,
   .area-ranking-page.area-tachikawa .research-note,
   .area-ranking-page.area-tachikawa .source-list li {
-    font-size: 12.5px;
-    line-height: 1.7;
+    font-size: 13px;
+    line-height: 1.75;
   }
 
   .area-ranking-page.area-tachikawa .article-body p.ranking-label {
@@ -2314,9 +2378,9 @@
 
   .area-ranking-page.area-tachikawa .article-body p.research-note,
   .area-ranking-page.area-tachikawa .article-body p.comparison-note {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 400;
-    line-height: 1.7;
+    line-height: 1.75;
   }
 
   .area-ranking-page.area-tachikawa .article-body p.source-date {
@@ -2338,19 +2402,13 @@
   .area-ranking-page.area-tachikawa .article-dates {
     display: grid;
     gap: 6px;
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 
 @media (max-width: 360px) {
-  .area-ranking-page.area-tachikawa .quick-recommendation-body {
-    padding: 12px;
-    grid-template-columns: 56px minmax(0, 1fr);
-    gap: 8px;
-  }
-
-  .area-ranking-page.area-tachikawa .quick-recommendation-copy {
-    min-width: 0;
+  .area-ranking-page.area-tachikawa .article-header h1 {
+    font-size: 26px;
   }
 }
 
@@ -2373,5 +2431,436 @@
   .area-ranking-page.area-tachikawa .table-scroll-hint__panel::after {
     opacity: 1;
     transition-delay: 0s !important;
+  }
+}
+
+/* ===== ARTICLE DESIGN 02: READABILITY ENHANCEMENT ===== */
+/* Comprehensive design overhaul for maximum readability */
+
+.area-ranking-page.area-tachikawa {
+  --color-navy: #001d4d;
+  --color-navy-light: #003d7a;
+  --color-blue: #0052a3;
+  --color-blue-light: #0066cc;
+  --color-orange: #e85d04;
+  --color-yellow: #ffd60a;
+  --color-text: #1a1a1a;
+  --color-text-muted: #4a4a4a;
+  --color-border: #a8a8a8;
+  --color-bg-light: #f8f9fb;
+  --color-bg-section: #f0f5ff;
+  --shadow-sm: 0 4px 12px rgba(0, 29, 77, 0.1);
+  --shadow-md: 0 8px 24px rgba(0, 29, 77, 0.12);
+  --shadow-lg: 0 12px 32px rgba(0, 29, 77, 0.15);
+}
+
+.area-ranking-page.area-tachikawa .article-header {
+  padding: 50px 0 40px !important;
+}
+
+.area-ranking-page.area-tachikawa .article-header h1 {
+  font-size: clamp(28px, 5vw, 48px) !important;
+  font-weight: 900 !important;
+  color: var(--color-navy) !important;
+  line-height: 1.35 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.area-ranking-page.area-tachikawa .article-header h1::after {
+  height: 7px !important;
+  background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-orange) 100%) !important;
+  margin-top: 24px !important;
+}
+
+.area-ranking-page.area-tachikawa .article-body p {
+  font-size: 17px !important;
+  line-height: 2.1 !important;
+  letter-spacing: 0.02em !important;
+  color: var(--color-text) !important;
+  word-break: break-word !important;
+}
+
+.area-ranking-page.area-tachikawa .article-body p + p {
+  margin-top: 2em !important;
+}
+
+.area-ranking-page.area-tachikawa .content-section {
+  padding-top: 80px !important;
+  padding-bottom: 0 !important;
+}
+
+.area-ranking-page.area-tachikawa .content-section > h2[data-section-number] {
+  font-size: clamp(26px, 4.5vw, 36px) !important;
+  font-weight: 900 !important;
+  color: var(--color-white) !important;
+  background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-light) 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 24px 24px 24px 80px !important;
+  box-shadow: var(--shadow-md) !important;
+  margin: 0 auto 36px !important;
+}
+
+.area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::before {
+  width: 50px !important;
+  height: 50px !important;
+  background: var(--color-orange) !important;
+  font-size: 18px !important;
+  left: 18px !important;
+  top: 18px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 12px rgba(232, 93, 4, 0.3) !important;
+}
+
+.area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::after {
+  height: 5px !important;
+  background: var(--color-orange) !important;
+  left: 80px !important;
+  border-radius: 999px !important;
+}
+
+.area-ranking-page.area-tachikawa .content-section > h3 {
+  font-size: clamp(20px, 3vw, 26px) !important;
+  font-weight: 900 !important;
+  color: var(--color-navy) !important;
+  padding: 8px 0 16px 20px !important;
+  border-left: 8px solid var(--color-blue) !important;
+  margin-top: 50px !important;
+  margin-bottom: 28px !important;
+  line-height: 1.4 !important;
+}
+
+.area-ranking-page.area-tachikawa .content-section > h3::after {
+  width: 80px !important;
+  height: 5px !important;
+  bottom: -16px !important;
+  background: var(--color-orange) !important;
+  border-radius: 999px !important;
+}
+
+.area-ranking-page.area-tachikawa .introduction {
+  border: 2px solid var(--color-border) !important;
+  border-left: 8px solid var(--color-blue) !important;
+  background: var(--color-bg-section) !important;
+  border-radius: 12px !important;
+  padding: 28px 28px 28px 32px !important;
+  box-shadow: var(--shadow-sm) !important;
+  margin-top: 40px !important;
+}
+
+.area-ranking-page.area-tachikawa .introduction::before {
+  color: var(--color-blue) !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.15em !important;
+  margin-bottom: 12px !important;
+}
+
+.area-ranking-page.area-tachikawa .editorial-marker,
+.area-ranking-page.area-tachikawa .feature-accent {
+  background-image: linear-gradient(var(--color-yellow), var(--color-yellow)) !important;
+  background-size: 100% 0.4em !important;
+  background-position: 0 88% !important;
+  font-weight: 800 !important;
+  padding-inline: 0.05em !important;
+}
+
+.area-ranking-page.area-tachikawa .metric-accent {
+  color: var(--color-orange) !important;
+  font-weight: 900 !important;
+  font-size: 1.08em !important;
+}
+
+.area-ranking-page.area-tachikawa .article-comparison-points,
+.area-ranking-page.area-tachikawa .article-quick-recommendation {
+  border: 2px solid var(--color-border) !important;
+  border-radius: 14px !important;
+  background: var(--color-white) !important;
+  box-shadow: var(--shadow-sm) !important;
+  overflow: hidden !important;
+}
+
+.area-ranking-page.area-tachikawa .article-body p.comparison-points-title,
+.area-ranking-page.area-tachikawa .article-body p.quick-recommendation-label {
+  background: linear-gradient(135deg, var(--color-bg-section) 0%, var(--color-white) 100%) !important;
+  color: var(--color-navy) !important;
+  font-size: 17px !important;
+  font-weight: 900 !important;
+  padding: 16px 20px !important;
+  border-bottom: 2px solid var(--color-border) !important;
+}
+
+.area-ranking-page.area-tachikawa .check-list li {
+  padding: 14px 14px 14px 48px !important;
+  background: var(--color-bg-light) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  font-weight: 700 !important;
+  line-height: 1.85 !important;
+  font-size: 16px !important;
+}
+
+.area-ranking-page.area-tachikawa .check-list li::before {
+  width: 28px !important;
+  height: 28px !important;
+  background: var(--color-blue) !important;
+  color: white !important;
+  font-size: 16px !important;
+  left: 12px !important;
+  top: 13px !important;
+  border-radius: 50% !important;
+  font-weight: 900 !important;
+}
+
+.area-ranking-page.area-tachikawa .article-cta,
+.area-ranking-page.area-tachikawa .conclusion-box {
+  border: 2px solid var(--color-border) !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, var(--color-bg-section) 0%, var(--color-white) 100%) !important;
+  box-shadow: var(--shadow-md) !important;
+  padding: 32px !important;
+  margin: 50px auto !important;
+}
+
+.area-ranking-page.area-tachikawa .article-cta h2,
+.area-ranking-page.area-tachikawa .conclusion-box h2,
+.area-ranking-page.area-tachikawa .content-section .article-cta h3 {
+  border-bottom: 4px solid var(--color-blue) !important;
+  color: var(--color-navy) !important;
+  font-size: 26px !important;
+  font-weight: 900 !important;
+  padding-bottom: 16px !important;
+  margin-bottom: 24px !important;
+}
+
+.area-ranking-page.area-tachikawa .cta-button,
+.area-ranking-page.area-tachikawa .cta-tel {
+  min-height: 62px !important;
+  border-radius: 10px !important;
+  font-size: 17px !important;
+  font-weight: 900 !important;
+  border: 2px solid transparent !important;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.area-ranking-page.area-tachikawa .cta-button--primary {
+  background: linear-gradient(135deg, var(--color-orange) 0%, #ff8c42 100%) !important;
+  color: white !important;
+  box-shadow: 0 6px 20px rgba(232, 93, 4, 0.3) !important;
+}
+
+.area-ranking-page.area-tachikawa .cta-button--primary:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 28px rgba(232, 93, 4, 0.4) !important;
+}
+
+.area-ranking-page.area-tachikawa .cta-button--line {
+  background: var(--color-blue) !important;
+  color: white !important;
+  box-shadow: 0 4px 16px rgba(0, 82, 163, 0.25) !important;
+}
+
+.area-ranking-page.area-tachikawa .cta-tel {
+  background: var(--color-white) !important;
+  color: var(--color-navy) !important;
+  border: 2px solid var(--color-border) !important;
+}
+
+.area-ranking-page.area-tachikawa .rank-section .rank-heading h2 {
+  background: linear-gradient(135deg, var(--color-bg-section) 0%, var(--color-white) 100%) !important;
+  border-left: 8px solid var(--color-blue) !important;
+  color: var(--color-navy) !important;
+  font-size: 24px !important;
+  font-weight: 900 !important;
+  padding: 18px 18px 18px 22px !important;
+  border-radius: 0 12px 12px 0 !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll {
+  border: 2px solid var(--color-border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--shadow-sm) !important;
+  margin: 32px auto !important;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll thead th {
+  background: var(--color-navy) !important;
+  color: white !important;
+  font-weight: 900 !important;
+}
+
+.area-ranking-page.area-tachikawa .table-scroll tbody th {
+  background: var(--color-bg-section) !important;
+  color: var(--color-navy) !important;
+  font-weight: 900 !important;
+}
+
+.area-ranking-page.area-tachikawa .faq-item {
+  border: 2px solid var(--color-border) !important;
+  border-radius: 12px !important;
+  background: var(--color-white) !important;
+  box-shadow: var(--shadow-sm) !important;
+  margin-bottom: 16px !important;
+  overflow: hidden !important;
+}
+
+.area-ranking-page.area-tachikawa .faq-item button {
+  background: var(--color-bg-light) !important;
+  color: var(--color-navy) !important;
+  font-size: 17px !important;
+  font-weight: 900 !important;
+  padding: 20px 56px 20px 20px !important;
+  min-height: 70px !important;
+  border: none !important;
+  line-height: 1.6 !important;
+}
+
+.area-ranking-page.area-tachikawa .faq-item button:hover {
+  background: var(--color-bg-section) !important;
+}
+
+.area-ranking-page.area-tachikawa .faq-answer {
+  padding: 24px 24px !important;
+  border-top: 1px solid var(--color-border) !important;
+  background: var(--color-white) !important;
+}
+
+.area-ranking-page.area-tachikawa .faq-answer p {
+  font-size: 16px !important;
+  line-height: 2 !important;
+  color: var(--color-text) !important;
+}
+
+.area-ranking-page.area-tachikawa .image-slot-media {
+  border: 2px solid var(--color-border) !important;
+  border-radius: 14px !important;
+  background: var(--color-bg-light) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.area-ranking-page.area-tachikawa .image-slot figcaption {
+  color: var(--color-text-muted) !important;
+  font-size: 13px !important;
+  line-height: 1.8 !important;
+  margin-top: 12px !important;
+}
+
+@media (max-width: 760px) {
+  .area-ranking-page.area-tachikawa .article-header {
+    padding: 32px 0 28px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .article-header h1 {
+    font-size: 24px !important;
+    line-height: 1.4 !important;
+  }
+
+  .area-ranking-page.area-tachikawa .article-header h1::after {
+    width: 140px !important;
+    height: 6px !important;
+    margin-top: 18px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .article-body p {
+    font-size: 16px !important;
+    line-height: 2.2 !important;
+  }
+
+  .area-ranking-page.area-tachikawa .article-body p + p {
+    margin-top: 2.2em !important;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section {
+    padding-top: 60px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section > h2[data-section-number] {
+    font-size: 22px !important;
+    padding: 20px 20px 20px 64px !important;
+    margin-bottom: 28px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::before {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 14px !important;
+    left: 14px !important;
+    top: 17px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section > h2[data-section-number]::after {
+    left: 64px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section > h3 {
+    font-size: 19px !important;
+    margin-top: 40px !important;
+    margin-bottom: 22px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .introduction {
+    padding: 22px 22px 22px 24px !important;
+    margin-top: 30px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .article-cta,
+  .area-ranking-page.area-tachikawa .conclusion-box {
+    padding: 26px 22px !important;
+    margin: 40px auto !important;
+  }
+
+  .area-ranking-page.area-tachikawa .cta-button,
+  .area-ranking-page.area-tachikawa .cta-tel {
+    min-height: 58px !important;
+    font-size: 16px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .check-list li {
+    padding: 12px 12px 12px 44px !important;
+    font-size: 15px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .check-list li::before {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 14px !important;
+    left: 10px !important;
+    top: 11px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .area-ranking-page.area-tachikawa .article-body p {
+    font-size: 15px !important;
+    line-height: 2.3 !important;
+    letter-spacing: 0.025em !important;
+  }
+
+  .area-ranking-page.area-tachikawa .article-body p + p {
+    margin-top: 2.4em !important;
+  }
+
+  .area-ranking-page.area-tachikawa .content-section > h3 {
+    font-size: 17px !important;
+    padding-left: 16px !important;
+    border-left-width: 6px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .introduction {
+    border-left-width: 6px !important;
+  }
+
+  .area-ranking-page.area-tachikawa .check-list li {
+    padding: 11px 11px 11px 40px !important;
+    font-size: 14px !important;
+    line-height: 1.9 !important;
+  }
+
+  .area-ranking-page.area-tachikawa .check-list li::before {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 12px !important;
+    left: 8px !important;
+    top: 10px !important;
   }
 }
