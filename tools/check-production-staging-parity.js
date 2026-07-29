@@ -78,6 +78,23 @@ function normalizeEnvironmentPatch(file, patch, isAdded) {
     );
   }
 
+  if (!isAdded && file.endsWith(".html")) {
+    normalized = normalized
+      .split("\n")
+      .map((line) => {
+        const isEnvironmentMeta =
+          /^[+-]\s*<meta\s+/i.test(line) &&
+          /(property="og:(?:url|image)"|name="twitter:image")/i.test(line);
+        return isEnvironmentMeta
+          ? line.replaceAll(
+              `https://${productionHost}`,
+              `https://${stagingHost}`,
+            )
+          : line;
+      })
+      .join("\n");
+  }
+
   if (isAdded && file.endsWith(".html")) {
     normalized = normalized.replace(
       /^\+(\s*)<link rel="canonical" href="https:\/\/stg\.monthly-rent-car\.jp\/[^"]*">\r?$/m,
