@@ -1,0 +1,107 @@
+.area-ranking-page.area-tachikawa .reading-progress {
+  height: 3px;
+  position: fixed;
+  top: 82px;
+  right: 0;
+  left: 0;
+  z-index: 70;
+  overflow: hidden;
+  background: #dce7e9;
+  pointer-events: none;
+}
+
+.area-ranking-page.area-tachikawa .reading-progress__bar {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--editorial-cyan);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.area-ranking-page.area-tachikawa .article-meta {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 0;
+  color: #4d626b;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.area-ranking-page.area-tachikawa .article-meta span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.area-ranking-page.area-tachikawa .article-meta > span + span::before {
+  content: "";
+  width: 1px;
+  height: 1em;
+  margin: 0 10px;
+  background: #b9c9cd;
+}
+
+.area-ranking-page.area-tachikawa.has-design-motion
+  .article-header
+  h1.is-design-underline::after,
+.area-ranking-page.area-tachikawa.has-design-motion
+  .content-section
+  > h2.is-design-underline::after {
+  transform: scaleX(0);
+}
+
+.area-ranking-page.area-tachikawa.has-design-motion
+  .article-header
+  h1.is-design-underline.is-design-visible::after,
+.area-ranking-page.area-tachikawa.has-design-motion
+  .content-section
+  > h2.is-design-underline.is-design-visible::after {
+  transform: scaleX(1);
+}
+
+.area-ranking-page.area-tachikawa.has-design-motion .editorial-marker {
+  background-size: 0 100%;
+}
+
+.area-ranking-page.area-tachikawa.has-design-motion
+  .editorial-marker.is-design-visible {
+  background-size: 100% 100%;
+}
+
+@media (max-width: 760px) {
+  .area-ranking-page.area-tachikawa .reading-progress {
+    top: 69px;
+  }
+
+  .area-ranking-page.area-tachikawa .article-meta {
+    margin-top: 15px;
+    font-size: 13px;
+  }
+
+  .area-ranking-page.area-tachikawa .article-meta > span + span::before {
+    margin-inline: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .area-ranking-page.area-tachikawa .article-meta > span + span::before {
+    margin-inline: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .area-ranking-page.area-tachikawa
+    .article-header
+    h1.is-design-underline::after,
+  .area-ranking-page.area-tachikawa
+    .content-section
+    > h2.is-design-underline::after {
+    transform: scaleX(1) !important;
+  }
+
+  .area-ranking-page.area-tachikawa .editorial-marker {
+    background-size: 100% 100% !important;
+  }
+}

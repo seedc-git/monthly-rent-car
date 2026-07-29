@@ -11,9 +11,13 @@ const isStaging =
 const pageFile = "area/tachikawa/index.html";
 const cssFile = "area/tachikawa/article.css";
 const jsFile = "area/tachikawa/article.js";
+const designCssFile = "area/tachikawa/article-design-01.css";
+const designJsFile = "area/tachikawa/article-design-01.js";
 const pagePath = path.join(root, pageFile);
 const cssPath = path.join(root, cssFile);
 const jsPath = path.join(root, jsFile);
+const designCssPath = path.join(root, designCssFile);
+const designJsPath = path.join(root, designJsFile);
 
 const expectedTitle =
   "【2026年最新】立川市の格安レンタカーおすすめ10選｜1ヶ月・長期料金を比較";
@@ -549,10 +553,57 @@ function hostWithoutWww(value) {
 const html = readRequired(pageFile, pagePath);
 const css = readRequired(cssFile, cssPath);
 const articleJs = readRequired(jsFile, jsPath);
+const designCss = readRequired(designCssFile, designCssPath);
+const designJs = readRequired(designJsFile, designJsPath);
 const bodyMatch = html.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i);
 const bodyHtml = bodyMatch ? bodyMatch[0] : "";
 const bodyText = normalizeText(bodyHtml);
 const bodyContinuousText = normalizeContinuousText(bodyHtml);
+
+assert(
+  html.includes("article-design-01.css") &&
+    html.includes("article-design-01.js"),
+  pageFile,
+  "記事デザイン専用CSS・JSを読み込んでください",
+);
+assert(
+  designJs.includes("IntersectionObserver") &&
+    designJs.includes("MutationObserver") &&
+    designJs.includes("dataset.readingProgress"),
+  designJsFile,
+  "下線表示・表ヒント終了・読了進捗の拡張が必要です",
+);
+assert(
+  designCss.includes("has-design-motion") &&
+    designCss.includes("prefers-reduced-motion"),
+  designCssFile,
+  "動く下線とprefers-reduced-motion対応が必要です",
+);
+assert(
+  (html.match(/\bdata-reading-progress\b/g) || []).length === 1,
+  pageFile,
+  "読了進捗バーはHTMLに1件だけ配置してください",
+);
+assert(
+  /<div\s+class=["']article-meta["'][^>]*aria-label=["']記事情報["']/i.test(html),
+  pageFile,
+  "記事の比較件数・料金・調査時点を静的HTMLで表示してください",
+);
+assert(
+  /\.article-shell\s*\{[^}]*width\s*:\s*min\(\s*780px\s*,\s*calc\(\s*100%\s*-\s*40px\s*\)\s*\)/i.test(css),
+  cssFile,
+  "PCの記事本文幅は780px以内にしてください",
+);
+assert(
+  articleJs.includes('aria-current", "location"'),
+  jsFile,
+  "目次には現在位置をaria-currentで示してください",
+);
+assert(
+  !/linear-gradient/i.test(designCss),
+  designCssFile,
+  "演出専用CSSに装飾目的のグラデーションを追加しないでください",
+);
 
 // Core metadata and page-level exclusions.
 const titleMatch = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i);
@@ -1205,11 +1256,11 @@ assert(
   "H1は自然な日本語改行と安全なフォールバックを指定してください",
 );
 assert(
-  /\.article-header h1\s*\{[^}]*font-size\s*:\s*32px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.5/i.test(
+  /\.article-header h1\s*\{[^}]*font-size\s*:\s*36px[^}]*font-weight\s*:\s*750[^}]*line-height\s*:\s*1\.45/i.test(
     css,
   ),
   cssFile,
-  "PC H1は32px・weight 700・line-height 1.5にしてください",
+  "PC H1は36px・weight 750・line-height 1.45にしてください",
 );
 assert(
   /\.editorial-marker\s*\{[^}]*font-weight\s*:\s*700[^}]*linear-gradient\(\s*transparent\s+80%\s*,\s*var\(--editorial-yellow\)\s+80%\s*\)/i.test(
@@ -1219,11 +1270,11 @@ assert(
   "本文マーカーは文字下部20%だけを強調してください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*20px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.5/i.test(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*27px[^}]*font-weight\s*:\s*750[^}]*line-height\s*:\s*1\.45/i.test(
     css,
   ),
   cssFile,
-  "モバイルH1は20px・weight 700・line-height 1.5にしてください",
+  "モバイルH1は27px・weight 750・line-height 1.45にしてください",
 );
 assert(
   !/@media\s*\(\s*max-width\s*:\s*430px\s*\)[\s\S]*?\.article-title-line\s*\{[^}]*display\s*:\s*block/i.test(css),
@@ -1231,14 +1282,14 @@ assert(
   "モバイルH1を意味単位spanごとの固定4行にしないでください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h2,[\s\S]*?font-size\s*:\s*21px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.5/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section[\s\S]*?>\s*h2\[data-section-number\]\s*\{[^}]*font-size\s*:\s*23px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.55/i.test(css),
   cssFile,
-  "モバイルH2は21px・weight 400・line-height 1.5にしてください",
+  "モバイルH2は23px・weight 800・line-height 1.55にしてください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section h3\s*\{[^}]*font-size\s*:\s*19px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.8/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section\s*>\s*h3\s*\{[^}]*font-size\s*:\s*20px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.6/i.test(css),
   cssFile,
-  "モバイルH3は19px・weight 400・line-height 1.8にしてください",
+  "モバイルH3は20px・weight 700・line-height 1.6にしてください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section \.faq-item h3\s*\{[^}]*margin\s*:\s*0[^}]*padding\s*:\s*0/i.test(
@@ -1248,9 +1299,9 @@ assert(
   "モバイルFAQのH3ラッパーは余白と左インデントをリセットしてください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-body p\s*\{[^}]*font-size\s*:\s*16px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.5/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-body p\s*\{[^}]*font-size\s*:\s*16px[^}]*font-weight\s*:\s*400[^}]*line-height\s*:\s*1\.9/i.test(css),
   cssFile,
-  "モバイル本文は16px・weight 400・line-height 1.5にしてください",
+  "モバイル本文は16px・line-height 1.9にしてください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll table\s*\{[^}]*font-size\s*:\s*13px[^}]*line-height\s*:\s*1\.5/i.test(css) &&
