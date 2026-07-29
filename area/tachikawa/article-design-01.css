@@ -20,27 +20,44 @@
 }
 
 .area-ranking-page.area-tachikawa .article-meta {
-  margin-top: 18px;
+  margin-top: 16px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 0;
-  color: #4d626b;
-  font-size: 13px;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 5px;
+  color: #26394e;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.35;
 }
 
-.area-ranking-page.area-tachikawa .article-meta span {
+.area-ranking-page.area-tachikawa .article-meta > span {
+  min-width: 0;
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 1px solid #d2dee7;
+  border-radius: 5px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  background: #fff;
+  white-space: nowrap;
 }
 
 .area-ranking-page.area-tachikawa .article-meta > span + span::before {
-  content: "";
-  width: 1px;
-  height: 1em;
-  margin: 0 10px;
-  background: #b9c9cd;
+  content: none;
+}
+
+.area-ranking-page.area-tachikawa .article-meta-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: #526e83;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .area-ranking-page.area-tachikawa.has-design-motion
@@ -78,18 +95,31 @@
 
 @media (max-width: 760px) {
   .area-ranking-page.area-tachikawa .article-meta {
-    margin-top: 15px;
-    font-size: 13px;
+    margin-top: 12px;
+    gap: 3px;
+    font-size: clamp(10px, 2.65vw, 11px);
   }
 
-  .area-ranking-page.area-tachikawa .article-meta > span + span::before {
-    margin-inline: 8px;
+  .area-ranking-page.area-tachikawa .article-meta > span {
+    min-height: 28px;
+    padding: 5px clamp(4px, 1.2vw, 6px);
+  }
+
+  .area-ranking-page.area-tachikawa .article-meta-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
   }
 }
 
-@media (max-width: 360px) {
-  .area-ranking-page.area-tachikawa .article-meta > span + span::before {
-    margin-inline: 6px;
+@media (max-width: 374px) {
+  .area-ranking-page.area-tachikawa .article-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .area-ranking-page.area-tachikawa .article-meta > span {
+    justify-content: flex-start;
   }
 }
 

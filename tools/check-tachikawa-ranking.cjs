@@ -22,7 +22,7 @@ const designJsPath = path.join(root, designJsFile);
 const expectedTitle =
   "【2026年最新】立川市の格安レンタカーおすすめ10選｜1ヶ月・長期料金を比較";
 const expectedH1 = "立川市の格安レンタカーおすすめ10選";
-const expectedTitleSubtitle = "【2026年最新】1ヶ月・長期料金を比較";
+const expectedTitleSubtitle = "1ヶ月・長期料金を比較";
 const expectedTitleParts = [
   "立川市の格安レンタカー",
   "おすすめ10選",
@@ -33,7 +33,7 @@ const expectedCanonical = "https://monthly-rent-car.jp/area/tachikawa/";
 const cssRoot = ".area-ranking-page.area-tachikawa";
 const transparentHeaderLogo = "../../assets/img/monthly-rentacar-logo-transparent.png";
 const finalEyecatch =
-  "../../assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch-20260727.webp";
+  "../../assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp";
 
 const expectedRankings = [
   {
@@ -170,7 +170,7 @@ const expectedFaq = [
 ];
 
 const expectedImageSlots = new Map([
-  ["tachikawa-ranking-eyecatch", [1200, 630]],
+  ["tachikawa-ranking-eyecatch", [960, 540]],
   ["tachikawa-period-guide", [1200, 675]],
   ["ranking-logo-tokyo-monthly", [1228, 322]],
   ["ranking-logo-guts", [320, 160]],
@@ -1007,7 +1007,7 @@ assert(
 );
 assert(
   eyecatchImage?.attributes.alt ===
-    "立川駅と、立川市の格安レンタカーおすすめ10選・1ヶ月長期料金比較のタイトル",
+    "青空の下に立つJR立川駅北口の駅舎と赤いアーチ",
   pageFile,
   "アイキャッチaltは新しい立川駅入り画像の内容を説明してください",
 );
@@ -1404,11 +1404,11 @@ assert(
   "H1は自然な日本語改行と安全なフォールバックを指定してください",
 );
 assert(
-  /\.article-header h1\s*\{[^}]*font-size\s*:\s*36px[^}]*font-weight\s*:\s*750[^}]*line-height\s*:\s*1\.45/i.test(
+  /\.article-header h1\s*\{[^}]*font-size\s*:\s*42px[^}]*font-weight\s*:\s*900[^}]*line-height\s*:\s*1\.32/i.test(
     css,
   ),
   cssFile,
-  "PC H1は36px・weight 750・line-height 1.45にしてください",
+  "PC H1は42px・weight 900・line-height 1.32にしてください",
 );
 assert(
   /\.editorial-marker\s*\{[^}]*font-weight\s*:\s*700[^}]*linear-gradient\(\s*transparent\s+80%\s*,\s*var\(--editorial-yellow\)\s+80%\s*\)/i.test(
@@ -1418,11 +1418,11 @@ assert(
   "本文マーカーは文字下部20%だけを強調してください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*27px[^}]*font-weight\s*:\s*750[^}]*line-height\s*:\s*1\.45/i.test(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-header h1\s*\{[^}]*font-size\s*:\s*clamp\(\s*28px\s*,\s*7\.44vw\s*,\s*32px\s*\)[^}]*font-weight\s*:\s*900[^}]*line-height\s*:\s*1\.45/i.test(
     css,
   ),
   cssFile,
-  "モバイルH1は27px・weight 750・line-height 1.45にしてください",
+  "モバイルH1は28〜32px・weight 900・line-height 1.45にしてください",
 );
 assert(
   /\.article-title-break\s*\{[^}]*display\s*:\s*none/i.test(css) &&
@@ -1433,21 +1433,21 @@ assert(
   "H1はモバイルだけ意味単位で2行にしてください",
 );
 assert(
-  /\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*20px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.6/i.test(
+  /\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*23px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.55/i.test(
     css,
   ) &&
-    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*17px[^}]*line-height\s*:\s*1\.7/i.test(
+    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*20px[^}]*line-height\s*:\s*1\.55/i.test(
       css,
     ),
   cssFile,
-  "補足タイトルはPC 20px・モバイル17pxでH1より一段小さくしてください",
+  "補足タイトルはPC 23px・モバイル20pxでH1より一段小さくしてください",
 );
 assert(
-  /\.article-title-date,[\s\S]*?\.article-title-detail\s*\{[^}]*white-space\s*:\s*nowrap/i.test(
+  /\.article-title-detail\s*\{[^}]*white-space\s*:\s*nowrap/i.test(
     css,
   ),
   cssFile,
-  "補足タイトルは日付と比較条件の意味単位を分断しないでください",
+  "補足タイトルは比較条件の意味単位を分断しないでください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section[\s\S]*?>\s*h2\[data-section-number\]\s*\{[^}]*font-size\s*:\s*23px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.55/i.test(css),
