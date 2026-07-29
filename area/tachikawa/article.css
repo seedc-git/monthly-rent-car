@@ -34,7 +34,20 @@
 
 .area-ranking-page.area-tachikawa main {
   min-width: 0;
+  padding-top: 0;
   background: var(--article-white);
+}
+
+.area-ranking-page.area-tachikawa .site-header {
+  position: relative;
+  inset: auto;
+}
+
+.area-ranking-page.area-tachikawa .header-nav.is-open {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
 }
 
 .area-ranking-page.area-tachikawa .area-skip-link {
@@ -115,9 +128,12 @@
   overflow-wrap: break-word;
 }
 
-.area-ranking-page.area-tachikawa .article-title-line,
-.area-ranking-page.area-tachikawa .article-title-divider {
+.area-ranking-page.area-tachikawa .article-title-line {
   display: inline;
+}
+
+.area-ranking-page.area-tachikawa .article-title-break {
+  display: none;
 }
 
 .area-ranking-page.area-tachikawa .article-header h1::after {
@@ -130,6 +146,26 @@
   transform: scaleX(1);
   transform-origin: left center;
   transition: transform 0.62s cubic-bezier(0.2, 0.72, 0.2, 1);
+}
+
+.area-ranking-page.area-tachikawa .article-title-subtitle {
+  max-width: 100%;
+  margin: 12px 0 0;
+  color: #4d626b;
+  font-family: var(--editorial-body-font);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.area-ranking-page.area-tachikawa .article-title-date,
+.area-ranking-page.area-tachikawa .article-title-detail {
+  white-space: nowrap;
+}
+
+.area-ranking-page.area-tachikawa .article-title-date {
+  margin-right: 0.45em;
 }
 
 .area-ranking-page.area-tachikawa .article-body {
@@ -463,8 +499,6 @@
   overflow-wrap: break-word;
 }
 
-.area-ranking-page.area-tachikawa .article-title-keyword,
-.area-ranking-page.area-tachikawa .article-title-tail,
 .area-ranking-page.area-tachikawa .heading-branch,
 .area-ranking-page.area-tachikawa .heading-tail,
 .area-ranking-page.area-tachikawa .heading-term {
@@ -748,8 +782,31 @@
   padding: 15px 16px;
   border-right: 1px solid #d6e1e4;
   border-bottom: 1px solid #d6e1e4;
+  overflow-wrap: anywhere;
   vertical-align: middle;
   text-align: left;
+}
+
+.area-ranking-page.area-tachikawa .table-cell-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  list-style: none;
+}
+
+.area-ranking-page.area-tachikawa .table-cell-list li {
+  min-width: 0;
+  position: relative;
+  padding-left: 1em;
+}
+
+.area-ranking-page.area-tachikawa .table-cell-list li::before {
+  content: "・";
+  position: absolute;
+  left: 0;
+  color: var(--editorial-cyan);
+  font-weight: 900;
 }
 
 .area-ranking-page.area-tachikawa .table-scroll tr > :last-child {
@@ -1618,8 +1675,14 @@
   }
 
   .area-ranking-page.area-tachikawa main {
-    padding-top: 82px;
+    padding-top: 0;
     box-shadow: none;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1179px) {
+  .area-ranking-page.area-tachikawa .site-header {
+    margin-left: var(--pc-phone-left);
   }
 }
 
@@ -1667,8 +1730,8 @@
     letter-spacing: 0;
   }
 
-  .area-ranking-page.area-tachikawa .article-title-divider {
-    display: none;
+  .area-ranking-page.area-tachikawa .article-title-break {
+    display: block;
   }
 
   .area-ranking-page.area-tachikawa .article-header h1::after {
@@ -1676,6 +1739,12 @@
     height: 3px;
     margin-top: 16px;
     right: auto;
+  }
+
+  .area-ranking-page.area-tachikawa .article-title-subtitle {
+    margin-top: 10px;
+    font-size: 17px;
+    line-height: 1.7;
   }
 
   .area-ranking-page.area-tachikawa .article-body {
@@ -1939,12 +2008,169 @@
     border-radius: 3px;
   }
 
+  .area-ranking-page.area-tachikawa .table-scroll--period {
+    --table-key-column-width: clamp(82px, 23vw, 92px);
+    --table-data-column-width:
+      calc(100vw - 34px - var(--table-key-column-width));
+  }
+
   .area-ranking-page.area-tachikawa .table-scroll--ranking {
-    --table-key-column-width: clamp(148px, 41vw, 168px);
+    --table-key-column-width: clamp(112px, 32vw, 136px);
+    --table-data-column-width:
+      calc(100vw - 34px - var(--table-key-column-width));
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--price {
+    --table-key-column-width: clamp(96px, 28vw, 116px);
+    --table-data-column-width:
+      calc(100vw - 34px - var(--table-key-column-width));
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--comparison {
+    --table-key-column-width: clamp(92px, 27vw, 116px);
+    --table-data-column-width:
+      calc(100vw - 34px - var(--table-key-column-width));
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--period table,
+  .area-ranking-page.area-tachikawa .table-scroll--price table,
+  .area-ranking-page.area-tachikawa .table-scroll--ranking table,
+  .area-ranking-page.area-tachikawa .table-scroll--comparison table {
+    table-layout: fixed;
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--period table {
+    width: calc(
+      var(--table-key-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width)
+    );
+    min-width: calc(
+      var(--table-key-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width)
+    );
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--price table {
+    width: calc(
+      var(--table-key-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width)
+    );
+    min-width: calc(
+      var(--table-key-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width)
+    );
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--ranking table {
-    min-width: 850px;
+    width: calc(
+      var(--table-key-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width)
+    );
+    min-width: calc(
+      var(--table-key-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width)
+    );
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--comparison table {
+    width: calc(
+      var(--table-key-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width)
+    );
+    min-width: calc(
+      var(--table-key-column-width) +
+      var(--table-data-column-width) +
+      var(--table-data-column-width)
+    );
+  }
+
+  .area-ranking-page.area-tachikawa
+    :is(
+      .table-scroll--period,
+      .table-scroll--price,
+      .table-scroll--ranking,
+      .table-scroll--comparison
+    )
+    tr
+    > :first-child {
+    width: var(--table-key-column-width);
+    min-width: var(--table-key-column-width);
+    max-width: var(--table-key-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    :is(
+      .table-scroll--period,
+      .table-scroll--price,
+      .table-scroll--ranking,
+      .table-scroll--comparison
+    )
+    tr
+    > :nth-child(n + 2) {
+    width: var(--table-data-column-width);
+    min-width: var(--table-data-column-width);
+    max-width: var(--table-data-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--detail {
+    --table-key-column-width: clamp(92px, 26vw, 108px);
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll--detail table,
+  .area-ranking-page.area-tachikawa .table-scroll--compact table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--detail
+    col.table-key-column {
+    width: var(--table-key-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--compact
+    col.table-value-column {
+    width: 72px;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--detail
+    tr
+    > :first-child {
+    width: var(--table-key-column-width);
+    min-width: var(--table-key-column-width);
+    max-width: var(--table-key-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--detail
+    tr
+    > :nth-child(2) {
+    width: calc(100% - var(--table-key-column-width));
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--compact
+    tr
+    > :last-child {
+    width: 72px;
+    min-width: 72px;
+    max-width: 72px;
   }
 
   /*
@@ -2040,13 +2266,27 @@
   }
 
   .area-ranking-page.area-tachikawa .table-scroll table {
-    font-size: 13px;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 1.55;
   }
 
   .area-ranking-page.area-tachikawa .table-scroll th,
   .area-ranking-page.area-tachikawa .table-scroll td {
-    padding: 8px 7px;
+    padding: 10px 8px;
+  }
+
+  .area-ranking-page.area-tachikawa .table-scroll thead th {
+    white-space: normal;
+  }
+
+  .area-ranking-page.area-tachikawa .table-cell-list {
+    gap: 3px;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-name-part,
+  .area-ranking-page.area-tachikawa .table-name-part {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .area-ranking-page.area-tachikawa .table-scroll caption,
@@ -2064,7 +2304,7 @@
 
   .area-ranking-page.area-tachikawa .ranking-table th,
   .area-ranking-page.area-tachikawa .ranking-table td {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .area-ranking-page.area-tachikawa .ranking-position-row {
@@ -2414,6 +2654,10 @@
 @media (max-width: 360px) {
   .area-ranking-page.area-tachikawa .article-header h1 {
     font-size: 26px;
+  }
+
+  .area-ranking-page.area-tachikawa .article-title-subtitle {
+    font-size: 16px;
   }
 }
 

@@ -75,7 +75,7 @@ function checkPage(file) {
   const expectedUrl = pageUrlFor(file);
   const expectedOgImage =
     file === "area/tachikawa/index.html"
-      ? `${baseUrl}/assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch.webp`
+      ? `${baseUrl}/assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch-20260727.webp`
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const title = extractFirst(html, /<title>([\s\S]*?)<\/title>/);
   const description = extractFirst(html, /<meta\s+name="description"\s+content="([\s\S]*?)"\s*>/);

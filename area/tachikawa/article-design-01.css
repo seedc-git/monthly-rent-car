@@ -1,7 +1,7 @@
 .area-ranking-page.area-tachikawa .reading-progress {
   height: 3px;
   position: fixed;
-  top: 82px;
+  top: 0;
   right: 0;
   left: 0;
   z-index: 70;
@@ -50,6 +50,8 @@
   .content-section
   > h2.is-design-underline::after {
   transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 1s ease-in;
 }
 
 .area-ranking-page.area-tachikawa.has-design-motion
@@ -59,22 +61,22 @@
   .content-section
   > h2.is-design-underline.is-design-visible::after {
   transform: scaleX(1);
+  transform-origin: left center;
 }
 
 .area-ranking-page.area-tachikawa.has-design-motion .editorial-marker {
+  background-position: right bottom;
   background-size: 0 100%;
+  transition: background-size 1s ease-in;
 }
 
 .area-ranking-page.area-tachikawa.has-design-motion
   .editorial-marker.is-design-visible {
+  background-position: left bottom;
   background-size: 100% 100%;
 }
 
 @media (max-width: 760px) {
-  .area-ranking-page.area-tachikawa .reading-progress {
-    top: 69px;
-  }
-
   .area-ranking-page.area-tachikawa .article-meta {
     margin-top: 15px;
     font-size: 13px;
@@ -99,9 +101,11 @@
     .content-section
     > h2.is-design-underline::after {
     transform: scaleX(1) !important;
+    transition: none !important;
   }
 
   .area-ranking-page.area-tachikawa .editorial-marker {
     background-size: 100% 100% !important;
+    transition: none !important;
   }
 }

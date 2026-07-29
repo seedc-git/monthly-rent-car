@@ -21,11 +21,11 @@ const designJsPath = path.join(root, designJsFile);
 
 const expectedTitle =
   "【2026年最新】立川市の格安レンタカーおすすめ10選｜1ヶ月・長期料金を比較";
+const expectedH1 = "立川市の格安レンタカーおすすめ10選";
+const expectedTitleSubtitle = "【2026年最新】1ヶ月・長期料金を比較";
 const expectedTitleParts = [
-  "【2026年最新】",
   "立川市の格安レンタカー",
   "おすすめ10選",
-  "1ヶ月・長期料金を比較",
 ];
 const expectedDescription =
   "立川市で利用できる格安レンタカー10社を、1ヶ月料金、車種、保険・補償、配車・引取り、トラブル時のサポートで比較。立川駅周辺の店舗型から宅配型まで、長期利用に適したサービスと選び方を解説します。";
@@ -33,7 +33,7 @@ const expectedCanonical = "https://monthly-rent-car.jp/area/tachikawa/";
 const cssRoot = ".area-ranking-page.area-tachikawa";
 const transparentHeaderLogo = "../../assets/img/monthly-rentacar-logo-transparent.png";
 const finalEyecatch =
-  "../../assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch.webp";
+  "../../assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch-20260727.webp";
 
 const expectedRankings = [
   {
@@ -580,6 +580,32 @@ assert(
   "動く下線とprefers-reduced-motion対応が必要です",
 );
 assert(
+  /rootMargin\s*:\s*["']0px 0px -200px 0px["']/.test(designJs) &&
+    /observer\.unobserve\(entry\.target\)/.test(designJs),
+  designJsFile,
+  "下線は参考実装と同じ発火位置で1回だけ表示してください",
+);
+assert(
+  /is-design-underline::after[\s\S]*?transform\s*:\s*scaleX\(0\)[^}]*transform-origin\s*:\s*right center[^}]*transition\s*:\s*transform 1s ease-in/i.test(
+    designCss,
+  ) &&
+    /is-design-visible::after[\s\S]*?transform\s*:\s*scaleX\(1\)[^}]*transform-origin\s*:\s*left center/i.test(
+      designCss,
+    ),
+  designCssFile,
+  "見出し下線は右起点の待機状態から左起点で1秒かけて表示してください",
+);
+assert(
+  /\.editorial-marker\s*\{[^}]*background-position\s*:\s*right bottom[^}]*background-size\s*:\s*0 100%[^}]*transition\s*:\s*background-size 1s ease-in/i.test(
+    designCss,
+  ) &&
+    /\.editorial-marker\.is-design-visible\s*\{[^}]*background-position\s*:\s*left bottom[^}]*background-size\s*:\s*100% 100%/i.test(
+      designCss,
+    ),
+  designCssFile,
+  "本文の黄色マーカーにも同じ1秒の下線アニメーションを適用してください",
+);
+assert(
   (html.match(/\bdata-reading-progress\b/g) || []).length === 1,
   pageFile,
   "読了進捗バーはHTMLに1件だけ配置してください",
@@ -646,7 +672,7 @@ const h1Elements = findStartTags(bodyHtml, "h1")
   .filter(Boolean);
 assert(h1Elements.length === 1, pageFile, `H1は1件必要です（現在${h1Elements.length}件）`);
 assert(
-  normalizeContinuousText(h1Elements[0]?.html || "") === expectedTitle,
+  normalizeContinuousText(h1Elements[0]?.html || "") === expectedH1,
   pageFile,
   "H1が仕様と一致しません",
 );
@@ -664,18 +690,29 @@ assert(
   pageFile,
   "H1の意味単位spanが仕様と一致しません",
 );
-const mobileTitleDividers = findStartTags(h1Elements[0]?.html || "", "span").filter((start) =>
+const mobileTitleBreaks = findStartTags(h1Elements[0]?.html || "", "br").filter((start) =>
   String(start.attributes.class || "")
     .split(/\s+/)
-    .includes("article-title-divider"),
+    .includes("article-title-break"),
 );
 assert(
-  mobileTitleDividers.length === 1 &&
-    normalizeContinuousText(
-      findMatchingElement(h1Elements[0]?.html || "", mobileTitleDividers[0])?.html || "",
-    ) === "｜",
+  mobileTitleBreaks.length === 1,
   pageFile,
-  "モバイルH1の区切り記号は専用要素で1件だけ保持してください",
+  "モバイルH1は意味単位の改行位置を1件だけ保持してください",
+);
+const titleSubtitleElements = findStartTags(bodyHtml, "p")
+  .filter((start) =>
+    String(start.attributes.class || "")
+      .split(/\s+/)
+      .includes("article-title-subtitle"),
+  )
+  .map((start) => findMatchingElement(bodyHtml, start))
+  .filter(Boolean);
+assert(
+  titleSubtitleElements.length === 1 &&
+    normalizeContinuousText(titleSubtitleElements[0].html) === expectedTitleSubtitle,
+  pageFile,
+  "H1の補足タイトルが仕様と一致しません",
 );
 const conclusionHeading = findElementById(bodyHtml, "conclusion-heading");
 const conclusionBrand = findElementByClass(
@@ -955,6 +992,12 @@ assert(
   pageFile,
   "アイキャッチは最終版のWebPを参照してください",
 );
+assert(
+  eyecatchImage?.attributes.alt ===
+    "立川駅と、立川市の格安レンタカーおすすめ10選・1ヶ月長期料金比較のタイトル",
+  pageFile,
+  "アイキャッチaltは新しい立川駅入り画像の内容を説明してください",
+);
 
 // Article CTAs and competitor-link confinement.
 const anchors = findStartTags(html, "a");
@@ -1108,6 +1151,67 @@ scrollWrapperStarts.forEach((wrapper, index) => {
   assert(wrapper.attributes.tabindex === "0", pageFile, `表wrapper ${index + 1}にtabindex=\"0\"が必要です`);
   assert(Boolean(wrapper.attributes["aria-label"]), pageFile, `表wrapper ${index + 1}にaria-labelが必要です`);
 });
+const tableWrapperClasses = scrollWrapperStarts.map((wrapper) =>
+  String(wrapper.attributes.class || "").split(/\s+/),
+);
+assert(
+  tableWrapperClasses.filter((classes) =>
+    classes.includes("table-scroll--period"),
+  ).length === 1,
+  pageFile,
+  "利用期間表にはモバイル列幅専用のtable-scroll--periodを付けてください",
+);
+assert(
+  tableWrapperClasses.filter((classes) =>
+    classes.includes("table-scroll--price"),
+  ).length === 4,
+  pageFile,
+  "4つの料金表にはモバイル列幅専用のtable-scroll--priceを付けてください",
+);
+assert(
+  (bodyHtml.match(/\bclass=["']table-key-column["']/g) || []).length === 10,
+  pageFile,
+  "各社詳細の10表はcolgroupで短い項目列を明示してください",
+);
+assert(
+  (bodyHtml.match(/\bclass=["']table-value-column["']/g) || []).length === 1,
+  pageFile,
+  "評価基準表はcolgroupで割合列を短くしてください",
+);
+assert(
+  findStartTags(bodyHtml, "ul").filter((entry) =>
+    String(entry.attributes.class || "")
+      .split(/\s+/)
+      .includes("table-cell-list"),
+  ).length >= 15,
+  pageFile,
+  "長文セルはtable-cell-listで短い箇条書きにしてください",
+);
+for (const shortTablePoint of [
+  "駅からの近さ",
+  "時間・日料金",
+  "車両クラス・補償",
+  "修理・納車に応じた相談",
+  "損保会社と直接精算",
+  "いずれも利用者負担",
+]) {
+  assert(
+    bodyText.includes(shortTablePoint),
+    pageFile,
+    `表内の短い要点「${shortTablePoint}」が必要です`,
+  );
+}
+for (const retiredLongCell of [
+  "駅からの近さ、営業時間、時間単位・日単位の料金を重視",
+  "延長のしやすさと、修理・納車状況に合わせた相談のしやすさを重視",
+  "ジャンピング、タイヤ交換、パンク修理、ガス欠、脱輪等は利用者負担",
+]) {
+  assert(
+    !bodyText.includes(retiredLongCell),
+    pageFile,
+    `長文セル「${retiredLongCell}」は短い箇条書きへ分割してください`,
+  );
+}
 
 // Visible FAQ must be button-operated and exactly match FAQPage.
 const faqButtons = findStartTags(bodyHtml, "button").filter((entry) => {
@@ -1241,6 +1345,30 @@ assert(
   "1180px以上ではヘッダーを通常のPC幅へ戻してください",
 );
 assert(
+  /\.area-ranking-page\.area-tachikawa \.site-header\s*\{[^}]*position\s*:\s*relative[^}]*inset\s*:\s*auto/i.test(
+    css,
+  ) &&
+    /\.area-ranking-page\.area-tachikawa main\s*\{[^}]*padding-top\s*:\s*0/i.test(
+      css,
+    ),
+  cssFile,
+  "記事ヘッダーは固定せず、mainの固定ヘッダー用上余白をなくしてください",
+);
+assert(
+  /\.area-ranking-page\.area-tachikawa \.header-nav\.is-open\s*\{[^}]*position\s*:\s*absolute[^}]*top\s*:\s*100%/i.test(
+    css,
+  ),
+  cssFile,
+  "開いたヘッダーメニューもヘッダーと一緒にスクロールする配置にしてください",
+);
+assert(
+  /\.reading-progress\s*\{[^}]*position\s*:\s*fixed[^}]*top\s*:\s*0/i.test(
+    designCss,
+  ),
+  designCssFile,
+  "固定解除後の読了進捗バーは画面上端に配置してください",
+);
+assert(
   /\.area-ranking-page\.area-tachikawa \.header-nav\s*\{[^}]*display\s*:\s*flex/i.test(css),
   cssFile,
   "PCでは共通ヘッダーナビを表示してください",
@@ -1284,14 +1412,29 @@ assert(
   "モバイルH1は27px・weight 750・line-height 1.45にしてください",
 );
 assert(
-  !/@media\s*\(\s*max-width\s*:\s*430px\s*\)[\s\S]*?\.article-title-line\s*\{[^}]*display\s*:\s*block/i.test(css),
+  /\.article-title-break\s*\{[^}]*display\s*:\s*none/i.test(css) &&
+    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-title-break\s*\{[^}]*display\s*:\s*block/i.test(
+      css,
+    ),
   cssFile,
-  "モバイルH1を意味単位spanごとの固定4行にしないでください",
+  "H1はモバイルだけ意味単位で2行にしてください",
 );
 assert(
-  /\.article-title-tail,[\s\S]*?white-space\s*:\s*nowrap/i.test(css),
+  /\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*20px[^}]*font-weight\s*:\s*700[^}]*line-height\s*:\s*1\.6/i.test(
+    css,
+  ) &&
+    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.article-title-subtitle\s*\{[^}]*font-size\s*:\s*17px[^}]*line-height\s*:\s*1\.7/i.test(
+      css,
+    ),
   cssFile,
-  "H1末尾の「1ヶ月・長期料金を比較」は途中で分断しないでください",
+  "補足タイトルはPC 20px・モバイル17pxでH1より一段小さくしてください",
+);
+assert(
+  /\.article-title-date,[\s\S]*?\.article-title-detail\s*\{[^}]*white-space\s*:\s*nowrap/i.test(
+    css,
+  ),
+  cssFile,
+  "補足タイトルは日付と比較条件の意味単位を分断しないでください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section[\s\S]*?>\s*h2\[data-section-number\]\s*\{[^}]*font-size\s*:\s*23px[^}]*font-weight\s*:\s*800[^}]*line-height\s*:\s*1\.55/i.test(css),
@@ -1316,10 +1459,10 @@ assert(
   "モバイル本文は16px・line-height 1.9にしてください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll table\s*\{[^}]*font-size\s*:\s*13px[^}]*line-height\s*:\s*1\.5/i.test(css) &&
-    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll th,[\s\S]*?\.table-scroll td\s*\{[^}]*padding\s*:\s*8px\s+7px/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll table\s*\{[^}]*font-size\s*:\s*14px[^}]*line-height\s*:\s*1\.55/i.test(css) &&
+    /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll th,[\s\S]*?\.table-scroll td\s*\{[^}]*padding\s*:\s*10px\s+8px/i.test(css),
   cssFile,
-  "モバイル表は13px・line-height 1.5・セル余白8px 7pxにしてください",
+  "モバイル表は14px・line-height 1.55・セル余白10px 8pxにしてください",
 );
 assert(
   /\.toc-list-viewport\.is-collapsible\.is-collapsed\s*\{[^}]*max-height[^}]*overflow\s*:\s*hidden/i.test(css),
@@ -1352,9 +1495,56 @@ assert(
   "ランキング表で第2列を固定しないでください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--ranking\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*148px\s*,\s*41vw\s*,\s*168px\s*\)/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--ranking\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*112px\s*,\s*32vw\s*,\s*136px\s*\)/i.test(css),
   cssFile,
-  "ランキング表のモバイル固定列幅はclamp(148px, 41vw, 168px)にしてください",
+  "ランキング表のモバイル固定列幅はclamp(112px, 32vw, 136px)にしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--period\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*82px\s*,\s*23vw\s*,\s*92px\s*\)[^}]*--table-data-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+    css,
+  ) &&
+    /\.table-scroll--price\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*96px\s*,\s*28vw\s*,\s*116px\s*\)[^}]*--table-data-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+      css,
+    ) &&
+    /\.table-scroll--comparison\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*92px\s*,\s*27vw\s*,\s*116px\s*\)[^}]*--table-data-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+      css,
+    ),
+  cssFile,
+  "期間・料金・比較表は固定列を縮め、各データ列をモバイル画面の残り幅以内にしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--detail table,[\s\S]*?\.table-scroll--compact table\s*\{[^}]*width\s*:\s*100%[^}]*min-width\s*:\s*0[^}]*table-layout\s*:\s*fixed/i.test(
+    css,
+  ),
+  cssFile,
+  "モバイルの2列表は全幅内に収めて横スクロールをなくしてください",
+);
+assert(
+  /\.table-scroll--detail[\s\S]*?col\.table-key-column\s*\{[^}]*width\s*:\s*var\(--table-key-column-width\)/i.test(
+    css,
+  ) &&
+    /\.table-scroll--compact[\s\S]*?col\.table-value-column\s*\{[^}]*width\s*:\s*72px/i.test(
+      css,
+    ),
+  cssFile,
+  "2列表はcolgroupで項目列・数値列の無駄な余白をなくしてください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll thead th\s*\{[^}]*white-space\s*:\s*normal/i.test(
+    css,
+  ),
+  cssFile,
+  "モバイル表の見出しは列幅内で自然に折り返してください",
+);
+assert(
+  /\.table-cell-list\s*\{[^}]*display\s*:\s*grid[^}]*list-style\s*:\s*none/i.test(
+    css,
+  ) &&
+    /\.table-cell-list li::before\s*\{[^}]*content\s*:\s*["']・["']/i.test(
+      css,
+    ),
+  cssFile,
+  "表の長い説明は短い中黒箇条書きとして表示してください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll-hint\s*\{[^}]*position\s*:\s*absolute[^}]*z-index\s*:\s*7[^}]*pointer-events\s*:\s*none/i.test(css),
