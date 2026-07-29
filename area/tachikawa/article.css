@@ -899,6 +899,35 @@
   font-weight: 900;
 }
 
+.area-ranking-page.area-tachikawa .ranking-header-line {
+  display: block;
+}
+
+.area-ranking-page.area-tachikawa
+  .table-scroll:is(
+    .table-scroll--period,
+    .table-scroll--ranking,
+    .table-scroll--price,
+    .table-scroll--comparison
+  )
+  thead
+  th,
+.area-ranking-page.area-tachikawa
+  .table-scroll:is(
+    .table-scroll--period,
+    .table-scroll--ranking,
+    .table-scroll--price,
+    .table-scroll--comparison
+  ).is-scrollable
+  thead
+  tr
+  > :first-child {
+  border-color: #bfc3c5;
+  color: #333;
+  background: #eee;
+  font-weight: 700;
+}
+
 .area-ranking-page.area-tachikawa .ranking-table .is-recommended > * {
   background: #fff5ed;
   border-bottom-color: rgba(255, 106, 0, 0.28);
@@ -2010,26 +2039,37 @@
 
   .area-ranking-page.area-tachikawa .table-scroll--period {
     --table-key-column-width: clamp(82px, 23vw, 92px);
-    --table-data-column-width:
+    --period-choice-column-width: clamp(148px, 40vw, 168px);
+    --period-candidate-column-width:
       calc(100vw - 34px - var(--table-key-column-width));
+    --table-data-column-width: var(--period-candidate-column-width);
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--ranking {
-    --table-key-column-width: clamp(112px, 32vw, 136px);
-    --table-data-column-width:
+    --table-key-column-width: clamp(112px, 30vw, 120px);
+    --ranking-rating-column-width: 92px;
+    --ranking-price-column-width: clamp(112px, 30vw, 128px);
+    --ranking-method-column-width: clamp(144px, 40vw, 172px);
+    --ranking-feature-column-width:
       calc(100vw - 34px - var(--table-key-column-width));
+    --table-data-column-width: var(--ranking-feature-column-width);
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--price {
     --table-key-column-width: clamp(96px, 28vw, 116px);
-    --table-data-column-width:
+    --price-class-column-width: clamp(112px, 32vw, 136px);
+    --price-amount-column-width: clamp(100px, 25vw, 108px);
+    --price-final-column-width:
       calc(100vw - 34px - var(--table-key-column-width));
+    --table-data-column-width: var(--price-final-column-width);
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--comparison {
     --table-key-column-width: clamp(92px, 27vw, 116px);
-    --table-data-column-width:
+    --comparison-primary-column-width: clamp(152px, 42vw, 180px);
+    --comparison-final-column-width:
       calc(100vw - 34px - var(--table-key-column-width));
+    --table-data-column-width: var(--comparison-final-column-width);
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--period table,
@@ -2042,58 +2082,58 @@
   .area-ranking-page.area-tachikawa .table-scroll--period table {
     width: calc(
       var(--table-key-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width)
+      var(--period-choice-column-width) +
+      var(--period-candidate-column-width)
     );
     min-width: calc(
       var(--table-key-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width)
+      var(--period-choice-column-width) +
+      var(--period-candidate-column-width)
     );
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--price table {
     width: calc(
       var(--table-key-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width)
+      var(--price-class-column-width) +
+      var(--price-amount-column-width) +
+      var(--price-final-column-width)
     );
     min-width: calc(
       var(--table-key-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width)
+      var(--price-class-column-width) +
+      var(--price-amount-column-width) +
+      var(--price-final-column-width)
     );
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--ranking table {
     width: calc(
       var(--table-key-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width)
+      var(--ranking-rating-column-width) +
+      var(--ranking-price-column-width) +
+      var(--ranking-method-column-width) +
+      var(--ranking-feature-column-width)
     );
     min-width: calc(
       var(--table-key-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width)
+      var(--ranking-rating-column-width) +
+      var(--ranking-price-column-width) +
+      var(--ranking-method-column-width) +
+      var(--ranking-feature-column-width)
     );
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--comparison table {
     width: calc(
       var(--table-key-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width)
+      var(--comparison-primary-column-width) +
+      var(--comparison-final-column-width)
     );
     min-width: calc(
       var(--table-key-column-width) +
-      var(--table-data-column-width) +
-      var(--table-data-column-width)
+      var(--comparison-primary-column-width) +
+      var(--comparison-final-column-width)
     );
   }
 
@@ -2123,6 +2163,105 @@
     width: var(--table-data-column-width);
     min-width: var(--table-data-column-width);
     max-width: var(--table-data-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--period
+    tr
+    > :nth-child(2) {
+    width: var(--period-choice-column-width);
+    min-width: var(--period-choice-column-width);
+    max-width: var(--period-choice-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--period
+    tr
+    > :nth-child(3) {
+    width: var(--period-candidate-column-width);
+    min-width: var(--period-candidate-column-width);
+    max-width: var(--period-candidate-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--ranking
+    tr
+    > :nth-child(2) {
+    width: var(--ranking-rating-column-width);
+    min-width: var(--ranking-rating-column-width);
+    max-width: var(--ranking-rating-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--ranking
+    tr
+    > :nth-child(3) {
+    width: var(--ranking-price-column-width);
+    min-width: var(--ranking-price-column-width);
+    max-width: var(--ranking-price-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--ranking
+    tr
+    > :nth-child(4) {
+    width: var(--ranking-method-column-width);
+    min-width: var(--ranking-method-column-width);
+    max-width: var(--ranking-method-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--ranking
+    tr
+    > :nth-child(5) {
+    width: var(--ranking-feature-column-width);
+    min-width: var(--ranking-feature-column-width);
+    max-width: var(--ranking-feature-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--price
+    tr
+    > :nth-child(2) {
+    width: var(--price-class-column-width);
+    min-width: var(--price-class-column-width);
+    max-width: var(--price-class-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--price
+    tr
+    > :nth-child(3) {
+    width: var(--price-amount-column-width);
+    min-width: var(--price-amount-column-width);
+    max-width: var(--price-amount-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--price
+    tr
+    > :nth-child(4) {
+    width: var(--price-final-column-width);
+    min-width: var(--price-final-column-width);
+    max-width: var(--price-final-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--comparison
+    tr
+    > :nth-child(2) {
+    width: var(--comparison-primary-column-width);
+    min-width: var(--comparison-primary-column-width);
+    max-width: var(--comparison-primary-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--comparison
+    tr
+    > :nth-child(3) {
+    width: var(--comparison-final-column-width);
+    min-width: var(--comparison-final-column-width);
+    max-width: var(--comparison-final-column-width);
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--detail {
@@ -2381,8 +2520,8 @@
     line-height: 1.5;
   }
 
-  .area-ranking-page.area-tachikawa .ranking-table thead th:nth-child(3),
-  .area-ranking-page.area-tachikawa .ranking-table tbody td:nth-child(3) {
+  .area-ranking-page.area-tachikawa .ranking-table thead th:nth-child(2),
+  .area-ranking-page.area-tachikawa .ranking-table thead th:nth-child(3) {
     white-space: nowrap;
   }
 
