@@ -75,8 +75,10 @@ function checkPage(file) {
   const expectedUrl = pageUrlFor(file);
   const expectedOgImage =
     file === "area/tachikawa/index.html"
-      ? `${baseUrl}/assets/img/area/tachikawa/generated/tachikawa-ranking-eyecatch-20260727.webp`
+      ? `${baseUrl}/assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp`
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
+  const [expectedOgImageWidth, expectedOgImageHeight] =
+    file === "area/tachikawa/index.html" ? ["960", "540"] : ["1200", "630"];
   const title = extractFirst(html, /<title>([\s\S]*?)<\/title>/);
   const description = extractFirst(html, /<meta\s+name="description"\s+content="([\s\S]*?)"\s*>/);
   const robots = extractFirst(
@@ -119,11 +121,11 @@ function checkPage(file) {
   if (!html.includes(`<meta property="og:image" content="${expectedOgImage}">`)) {
     fail(file, `og:image must be ${expectedOgImage}`);
   }
-  if (!html.includes('<meta property="og:image:width" content="1200">')) {
-    fail(file, "og:image:width must be 1200");
+  if (!html.includes(`<meta property="og:image:width" content="${expectedOgImageWidth}">`)) {
+    fail(file, `og:image:width must be ${expectedOgImageWidth}`);
   }
-  if (!html.includes('<meta property="og:image:height" content="630">')) {
-    fail(file, "og:image:height must be 630");
+  if (!html.includes(`<meta property="og:image:height" content="${expectedOgImageHeight}">`)) {
+    fail(file, `og:image:height must be ${expectedOgImageHeight}`);
   }
 }
 
