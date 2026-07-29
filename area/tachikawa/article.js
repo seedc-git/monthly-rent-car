@@ -60,6 +60,9 @@
     }
 
     if (tocViewport && tocToggle && toc.children.length > TOC_COLLAPSED_ITEMS) {
+      const mobileTocQuery = window.matchMedia("(max-width: 760px)");
+      let isTocExpanded = false;
+
       const updateCollapsedHeight = () => {
         const lastVisibleItem = toc.children[TOC_COLLAPSED_ITEMS - 1];
         const nextItem = toc.children[TOC_COLLAPSED_ITEMS];
@@ -77,6 +80,7 @@
       };
 
       const setTocExpanded = (isExpanded) => {
+        isTocExpanded = isExpanded;
         tocViewport.classList.toggle("is-collapsed", !isExpanded);
         tocViewport.classList.toggle("is-expanded", isExpanded);
         tocToggle.setAttribute("aria-expanded", String(isExpanded));
@@ -89,10 +93,21 @@
         }
       };
 
-      tocViewport.classList.add("is-collapsible");
-      tocToggle.hidden = false;
-      setTocExpanded(false);
-      window.requestAnimationFrame(updateCollapsedHeight);
+      const syncTocMode = () => {
+        const isMobile = mobileTocQuery.matches;
+        tocViewport.classList.toggle("is-collapsible", isMobile);
+        tocToggle.hidden = !isMobile;
+
+        if (isMobile) {
+          setTocExpanded(isTocExpanded);
+          window.requestAnimationFrame(updateCollapsedHeight);
+          return;
+        }
+
+        tocViewport.classList.remove("is-collapsed");
+        tocViewport.classList.add("is-expanded");
+        tocToggle.setAttribute("aria-expanded", "true");
+      };
 
       tocToggle.addEventListener("click", () => {
         const isExpanded = tocToggle.getAttribute("aria-expanded") === "true";
@@ -102,8 +117,51 @@
       let resizeFrame = 0;
       window.addEventListener("resize", () => {
         window.cancelAnimationFrame(resizeFrame);
-        resizeFrame = window.requestAnimationFrame(updateCollapsedHeight);
+        resizeFrame = window.requestAnimationFrame(() => {
+          syncTocMode();
+          if (mobileTocQuery.matches) updateCollapsedHeight();
+        });
       });
+
+      if (typeof mobileTocQuery.addEventListener === "function") {
+        mobileTocQuery.addEventListener("change", syncTocMode);
+      }
+
+      setTocExpanded(false);
+      syncTocMode();
+    }
+
+    const tocLinksById = new Map(
+      headings.map((heading) => [
+        heading.id,
+        toc.querySelector(`a[href="#${heading.id}"]`)
+      ])
+    );
+
+    const setCurrentTocLink = (headingId) => {
+      tocLinksById.forEach((link, id) => {
+        if (!link) return;
+        if (id === headingId) {
+          link.setAttribute("aria-current", "location");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    };
+
+    if ("IntersectionObserver" in window && tocLinksById.size) {
+      const tocObserver = new IntersectionObserver(
+        (entries) => {
+          const currentEntry = entries.find((entry) => entry.isIntersecting);
+          if (currentEntry) setCurrentTocLink(currentEntry.target.id);
+        },
+        {
+          rootMargin: "-18% 0px -72% 0px",
+          threshold: 0
+        }
+      );
+
+      headings.forEach((heading) => tocObserver.observe(heading));
     }
   }
 
