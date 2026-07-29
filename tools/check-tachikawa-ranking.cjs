@@ -851,9 +851,14 @@ assert(
   `ランキング表の見出しは5列必要です（現在${rankingHeadCells.length}列）`,
 );
 assert(
-  normalizeContinuousText(rankingHeadCells[0] || "") === "順位・レンタカー会社",
+  normalizeContinuousText(rankingHeadCells[0] || "") === "レンタカー会社名",
   pageFile,
-  "ランキング表の先頭見出しは順位・レンタカー会社にしてください",
+  "ランキング表の先頭見出しはレンタカー会社名にしてください",
+);
+assert(
+  normalizeContinuousText(rankingHeadCells[1] || "") === "おすすめ度",
+  pageFile,
+  "ランキング表の第2見出しはおすすめ度にしてください",
 );
 const rankingRows = rankingBody
   ? [...rankingBody[1].matchAll(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi)].map(
@@ -1503,22 +1508,31 @@ assert(
   "ランキング表で第2列を固定しないでください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--ranking\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*112px\s*,\s*32vw\s*,\s*136px\s*\)/i.test(css),
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--ranking\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*112px\s*,\s*30vw\s*,\s*120px\s*\)[^}]*--ranking-rating-column-width\s*:\s*92px[^}]*--ranking-price-column-width\s*:\s*clamp\(\s*112px\s*,\s*30vw\s*,\s*128px\s*\)[^}]*--ranking-method-column-width\s*:\s*clamp\(\s*144px\s*,\s*40vw\s*,\s*172px\s*\)[^}]*--ranking-feature-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+    css,
+  ),
   cssFile,
-  "ランキング表のモバイル固定列幅はclamp(112px, 32vw, 136px)にしてください",
+  "ランキング表は会社名・おすすめ度・1ヶ月料金を初期画面へ収め、最終列は固定列以外の画面幅を確保してください",
 );
 assert(
-  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--period\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*82px\s*,\s*23vw\s*,\s*92px\s*\)[^}]*--table-data-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--period\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*82px\s*,\s*23vw\s*,\s*92px\s*\)[^}]*--period-choice-column-width\s*:\s*clamp\(\s*148px\s*,\s*40vw\s*,\s*168px\s*\)[^}]*--period-candidate-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
     css,
   ) &&
-    /\.table-scroll--price\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*96px\s*,\s*28vw\s*,\s*116px\s*\)[^}]*--table-data-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+    /\.table-scroll--price\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*96px\s*,\s*28vw\s*,\s*116px\s*\)[^}]*--price-class-column-width\s*:\s*clamp\(\s*112px\s*,\s*32vw\s*,\s*136px\s*\)[^}]*--price-amount-column-width\s*:\s*clamp\(\s*100px\s*,\s*25vw\s*,\s*108px\s*\)[^}]*--price-final-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
       css,
     ) &&
-    /\.table-scroll--comparison\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*92px\s*,\s*27vw\s*,\s*116px\s*\)[^}]*--table-data-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
+    /\.table-scroll--comparison\s*\{[^}]*--table-key-column-width\s*:\s*clamp\(\s*92px\s*,\s*27vw\s*,\s*116px\s*\)[^}]*--comparison-primary-column-width\s*:\s*clamp\(\s*152px\s*,\s*42vw\s*,\s*180px\s*\)[^}]*--comparison-final-column-width\s*:[^;]*calc\(\s*100vw\s*-\s*34px\s*-\s*var\(\s*--table-key-column-width\s*\)\s*\)/i.test(
       css,
     ),
   cssFile,
-  "期間・料金・比較表は固定列を縮め、各データ列をモバイル画面の残り幅以内にしてください",
+  "期間・料金・比較表は途中列を短くし、最終列へ固定列以外の画面幅を確保してください",
+);
+assert(
+  /\.table-scroll:is\(\s*\.table-scroll--period,\s*\.table-scroll--ranking,\s*\.table-scroll--price,\s*\.table-scroll--comparison\s*\)\s*thead\s*th,[\s\S]*?\{\s*border-color\s*:\s*#bfc3c5;\s*color\s*:\s*#333;\s*background\s*:\s*#eee;\s*font-weight\s*:\s*700/i.test(
+    css,
+  ),
+  cssFile,
+  "横スクロール表の見出しは薄いグレー背景と濃色文字へ統一してください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll--detail table,[\s\S]*?\.table-scroll--compact table\s*\{[^}]*width\s*:\s*100%[^}]*min-width\s*:\s*0[^}]*table-layout\s*:\s*fixed/i.test(
@@ -1543,6 +1557,13 @@ assert(
   ),
   cssFile,
   "モバイル表の見出しは列幅内で自然に折り返してください",
+);
+assert(
+  !/\.ranking-table\s+tbody\s+td:nth-child\(3\)\s*\{[^}]*white-space\s*:\s*nowrap/i.test(
+    css,
+  ),
+  cssFile,
+  "短縮した料金列の複合テキストはセル内で自然に折り返してください",
 );
 assert(
   /\.table-cell-list\s*\{[^}]*display\s*:\s*grid[^}]*list-style\s*:\s*none/i.test(
@@ -1608,6 +1629,11 @@ assert(articleJs.includes("table-caption-bar"), jsFile, "JSで表題をスクロ
 assert(articleJs.includes("table-scroll-viewport"), jsFile, "JSで比較列専用のスクロールviewportを作成してください");
 assert(articleJs.includes("table-scroll-hint"), jsFile, "JSで各表に初回スクロール案内を生成してください");
 assert(articleJs.includes("横にスクロールできます"), jsFile, "スクロール案内の日本語文言がありません");
+assert(
+  articleJs.includes("左端のレンタカー会社名列は固定されています"),
+  jsFile,
+  "ランキング表の読み上げ用説明を現在の見出し名に合わせてください",
+);
 assert(articleJs.includes("hasHintEnteredView"), jsFile, "表上部が画面内へ入った時だけ案内を表示してください");
 assert(
   /TABLE_HINT_TOP_LIMIT\s*=\s*160/.test(articleJs) &&
