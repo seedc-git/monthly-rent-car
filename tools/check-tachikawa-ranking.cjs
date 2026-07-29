@@ -574,6 +574,14 @@ assert(
   "下線表示・表ヒント終了・読了進捗の拡張が必要です",
 );
 assert(
+  /setTimeout\(\s*dismiss\s*,\s*3000\s*\)/.test(designJs) &&
+    /viewport\.addEventListener\(\s*["']scroll["']\s*,\s*dismiss/.test(
+      designJs,
+    ),
+  designJsFile,
+  "表のスクロール案内は約3秒後または最初の横操作で終了してください",
+);
+assert(
   designCss.includes("has-design-motion") &&
     designCss.includes("prefers-reduced-motion"),
   designCssFile,
@@ -1549,12 +1557,18 @@ assert(
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.table-scroll-hint\s*\{[^}]*position\s*:\s*absolute[^}]*z-index\s*:\s*7[^}]*pointer-events\s*:\s*none/i.test(css),
   cssFile,
-  "スマホ表には操作を妨げない中央スクロール案内を配置してください",
+  "スマホ表には操作を妨げないスクロール案内を配置してください",
 );
 assert(
-  /\.table-scroll-hint__panel\s*\{[^}]*top\s*:\s*calc\(\s*50%\s*-\s*25px\s*\)[^}]*left\s*:\s*calc\(\s*50%\s*-\s*60px\s*\)[^}]*width\s*:\s*120px[^}]*height\s*:\s*80px[^}]*transition\s*:\s*opacity\s*0\.3s/i.test(css),
+  /\.table-scroll-hint__panel\s*\{[^}]*top\s*:\s*min\(\s*160px\s*,\s*calc\(\s*50%\s*-\s*40px\s*\)\s*\)[^}]*left\s*:\s*calc\(\s*50%\s*-\s*75px\s*\)[^}]*width\s*:\s*150px[^}]*height\s*:\s*80px[^}]*transition\s*:\s*opacity\s*0\.3s/i.test(css),
   cssFile,
-  "スクロール案内の位置・寸法・消える速さを参照サイトに合わせてください",
+  "スクロール案内は縦長表でも上部2行付近に見える位置へ配置してください",
+);
+assert(
+  /\.table-scroll\.is-scrollable:not\(\.is-at-end\)::after\s*\{[^}]*top\s*:\s*var\(\s*--table-caption-height\s*,\s*44px\s*\)[^}]*width\s*:\s*24px[^}]*linear-gradient/i.test(css) &&
+    /\.table-scroll\.is-scrollable:not\(\.is-at-end\)::before\s*\{[^}]*content\s*:\s*["']›["'][^}]*top\s*:\s*calc\(\s*var\(\s*--table-caption-height\s*,\s*44px\s*\)\s*\+\s*10px\s*\)/i.test(css),
+  cssFile,
+  "横続きの表には右端のグラデーションと矢印を表示してください",
 );
 assert(
   /\.table-scroll-hint\.is-active \.table-scroll-hint__gesture\s*\{[^}]*animation\s*:\s*tachikawa-table-scroll-hint\s*1\.2s\s*linear\s*2/i.test(css),
@@ -1593,8 +1607,21 @@ assert(articleJs.includes('"OPEN"') && articleJs.includes('"CLOSE"'), jsFile, "�
 assert(articleJs.includes("table-caption-bar"), jsFile, "JSで表題をスクロール領域外へ複製してください");
 assert(articleJs.includes("table-scroll-viewport"), jsFile, "JSで比較列専用のスクロールviewportを作成してください");
 assert(articleJs.includes("table-scroll-hint"), jsFile, "JSで各表に初回スクロール案内を生成してください");
-assert(articleJs.includes("スクロールできます"), jsFile, "スクロール案内の日本語文言がありません");
-assert(articleJs.includes("hasHintEnteredView"), jsFile, "表中央が画面内へ入った時だけ案内を表示してください");
+assert(articleJs.includes("横にスクロールできます"), jsFile, "スクロール案内の日本語文言がありません");
+assert(articleJs.includes("hasHintEnteredView"), jsFile, "表上部が画面内へ入った時だけ案内を表示してください");
+assert(
+  /TABLE_HINT_TOP_LIMIT\s*=\s*160/.test(articleJs) &&
+    /TABLE_HINT_VISIBLE_RATIO\s*=\s*0\.78/.test(articleJs) &&
+    /viewportRect\.bottom\s*>\s*0/.test(articleJs) &&
+    /hintCenterY\s*<=\s*window\.innerHeight\s*\*\s*TABLE_HINT_VISIBLE_RATIO/.test(articleJs),
+  jsFile,
+  "スクロール案内は表上部の表示位置が画面へ入った時点で発火してください",
+);
+assert(
+  /--table-caption-height/.test(articleJs),
+  jsFile,
+  "右端の横続き表示は実際の表題高さへ追従してください",
+);
 assert(articleJs.includes("hasTableInteracted"), jsFile, "表ごとに初回操作済み状態を保持してください");
 assert(articleJs.includes("tableHintUpdaters"), jsFile, "全表の画面進入判定は共有更新処理にまとめてください");
 assert(articleJs.includes("aria-describedby"), jsFile, "スクロール領域へ操作説明を関連付けてください");

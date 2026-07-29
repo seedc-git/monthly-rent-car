@@ -167,6 +167,9 @@
 
   const tableWrappers = Array.from(page.querySelectorAll(".table-scroll"));
   const tableHintUpdaters = [];
+  const TABLE_HINT_PANEL_HEIGHT = 80;
+  const TABLE_HINT_TOP_LIMIT = 160;
+  const TABLE_HINT_VISIBLE_RATIO = 0.78;
   let tableHintFrame = 0;
 
   const updateTableHints = () => {
@@ -215,7 +218,7 @@
     scrollHintPanel.className = "table-scroll-hint__panel";
     scrollHintGesture.className = "table-scroll-hint__gesture";
     scrollHintText.className = "table-scroll-hint__text";
-    scrollHintText.textContent = "スクロールできます";
+    scrollHintText.textContent = "横にスクロールできます";
     scrollHintPanel.append(scrollHintGesture, scrollHintText);
     scrollHint.appendChild(scrollHintPanel);
     viewport.append(table, scrollHint);
@@ -233,8 +236,17 @@
     const updateScrollHint = () => {
       if (!hasHintEnteredView) {
         const viewportRect = viewport.getBoundingClientRect();
+        const hintPanelTop = Math.min(
+          TABLE_HINT_TOP_LIMIT,
+          Math.max(0, (viewportRect.height - TABLE_HINT_PANEL_HEIGHT) / 2)
+        );
+        const hintCenterY =
+          viewportRect.top + hintPanelTop + TABLE_HINT_PANEL_HEIGHT / 2;
+
         hasHintEnteredView =
-          viewportRect.top + viewportRect.height / 2 < window.innerHeight;
+          viewportRect.bottom > 0 &&
+          hintCenterY > 0 &&
+          hintCenterY <= window.innerHeight * TABLE_HINT_VISIBLE_RATIO;
       }
 
       const isMobileViewport = window.innerWidth <= 760;
@@ -256,6 +268,10 @@
       wrapper.classList.toggle("is-scrollable", isScrollable);
       wrapper.classList.toggle("is-at-start", !isScrollable || isAtStart);
       wrapper.classList.toggle("is-at-end", !isScrollable || isAtEnd);
+      wrapper.style.setProperty(
+        "--table-caption-height",
+        `${visibleCaption.offsetHeight}px`
+      );
       isTableScrollable = isScrollable;
 
       if (isScrollable) {
