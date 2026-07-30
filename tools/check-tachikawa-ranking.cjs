@@ -192,7 +192,7 @@ const expectedImageSlots = new Map([
 ]);
 
 const expectedCtas = [
-  ["intro", "form", "https://form.run/@monthly-rent-car"],
+  ["intro", "shop", "/shop/tokyo/tachikawa/"],
   ["hero", "form", "https://form.run/@monthly-rent-car"],
   ["hero", "line", "https://lin.ee/ojmETte"],
   ["hero", "tel", "tel:05017920800"],
