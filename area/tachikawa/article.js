@@ -60,9 +60,6 @@
     }
 
     if (tocViewport && tocToggle && toc.children.length > TOC_COLLAPSED_ITEMS) {
-      const mobileTocQuery = window.matchMedia("(max-width: 760px)");
-      let isTocExpanded = false;
-
       const updateCollapsedHeight = () => {
         const lastVisibleItem = toc.children[TOC_COLLAPSED_ITEMS - 1];
         const nextItem = toc.children[TOC_COLLAPSED_ITEMS];
@@ -80,7 +77,6 @@
       };
 
       const setTocExpanded = (isExpanded) => {
-        isTocExpanded = isExpanded;
         tocViewport.classList.toggle("is-collapsed", !isExpanded);
         tocViewport.classList.toggle("is-expanded", isExpanded);
         tocToggle.setAttribute("aria-expanded", String(isExpanded));
@@ -93,21 +89,10 @@
         }
       };
 
-      const syncTocMode = () => {
-        const isMobile = mobileTocQuery.matches;
-        tocViewport.classList.toggle("is-collapsible", isMobile);
-        tocToggle.hidden = !isMobile;
-
-        if (isMobile) {
-          setTocExpanded(isTocExpanded);
-          window.requestAnimationFrame(updateCollapsedHeight);
-          return;
-        }
-
-        tocViewport.classList.remove("is-collapsed");
-        tocViewport.classList.add("is-expanded");
-        tocToggle.setAttribute("aria-expanded", "true");
-      };
+      tocViewport.classList.add("is-collapsible");
+      tocToggle.hidden = false;
+      setTocExpanded(false);
+      window.requestAnimationFrame(updateCollapsedHeight);
 
       tocToggle.addEventListener("click", () => {
         const isExpanded = tocToggle.getAttribute("aria-expanded") === "true";
@@ -117,18 +102,8 @@
       let resizeFrame = 0;
       window.addEventListener("resize", () => {
         window.cancelAnimationFrame(resizeFrame);
-        resizeFrame = window.requestAnimationFrame(() => {
-          syncTocMode();
-          if (mobileTocQuery.matches) updateCollapsedHeight();
-        });
+        resizeFrame = window.requestAnimationFrame(updateCollapsedHeight);
       });
-
-      if (typeof mobileTocQuery.addEventListener === "function") {
-        mobileTocQuery.addEventListener("change", syncTocMode);
-      }
-
-      setTocExpanded(false);
-      syncTocMode();
     }
 
     const tocLinksById = new Map(
