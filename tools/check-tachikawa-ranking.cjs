@@ -34,6 +34,8 @@ const cssRoot = ".area-ranking-page.area-tachikawa";
 const transparentHeaderLogo = "../../assets/img/monthly-rentacar-logo-transparent.png";
 const finalEyecatch =
   "../../assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp";
+const finalPeriodGuide =
+  "../../assets/img/area/tachikawa/tachikawa-period-positioning-map-20260730.webp";
 
 const expectedRankings = [
   {
@@ -171,7 +173,7 @@ const expectedFaq = [
 
 const expectedImageSlots = new Map([
   ["tachikawa-ranking-eyecatch", [1077, 500]],
-  ["tachikawa-period-guide", [1200, 675]],
+  ["tachikawa-period-guide", [1448, 1086]],
   ["ranking-logo-tokyo-monthly", [1228, 322]],
   ["ranking-logo-guts", [320, 160]],
   ["ranking-logo-monthly-go", [320, 160]],
@@ -1011,6 +1013,19 @@ assert(
   pageFile,
   "アイキャッチaltは新しい立川駅入り画像の内容を説明してください",
 );
+const periodGuide = findElementById(html, "tachikawa-period-guide");
+const periodGuideImage = findStartTags(periodGuide?.html || "", "img")[0];
+assert(
+  periodGuideImage?.attributes.src === finalPeriodGuide,
+  pageFile,
+  "利用期間別ガイドは指定されたポジショニングマップを参照してください",
+);
+assert(
+  periodGuideImage?.attributes.alt ===
+    "短期・長期と価格帯で立川市のレンタカー会社を比較したポジショニングマップ",
+  pageFile,
+  "利用期間別ガイドのaltはポジショニングマップの内容を説明してください",
+);
 
 // Article CTAs and competitor-link confinement.
 const anchors = findStartTags(html, "a");
@@ -1338,6 +1353,13 @@ assert(
 );
 assert(/aspect-ratio\s*:/i.test(css), cssFile, "画像placeholderにaspect-ratioが必要です");
 assert(
+  /#tachikawa-period-guide\s+\.image-slot-media--period-map\s*\{[^}]*aspect-ratio\s*:\s*4\s*\/\s*3[^}]*\}[\s\S]*?#tachikawa-period-guide\s+\.image-slot-media--period-map\s+img\s*\{[^}]*object-fit\s*:\s*contain/i.test(
+    css,
+  ),
+  cssFile,
+  "利用期間別ガイドは4:3で全体を切らずに表示してください",
+);
+assert(
   /\.image-slot--logo[\s\S]*?\.image-slot-media[\s\S]*?img\s*\{[^}]*object-fit\s*:\s*contain[^}]*object-position\s*:\s*center\s+center/i.test(
     css,
   ),
@@ -1373,6 +1395,20 @@ assert(
   ),
   cssFile,
   "開いたヘッダーメニューもヘッダーと一緒にスクロールする配置にしてください",
+);
+assert(
+  /@media\s*\(\s*min-width\s*:\s*1024px\s*\)[\s\S]*?\.table-scroll:is\(\s*\.table-scroll--ranking,\s*\.table-scroll--comparison\s*\)[\s\S]*?table\s*\{[^}]*width\s*:\s*100%[^}]*min-width\s*:\s*0[^}]*table-layout\s*:\s*fixed/i.test(
+    css,
+  ),
+  cssFile,
+  "1024px以上ではランキング表と比較表を記事幅内へ収めてください",
+);
+assert(
+  /@media\s*\(\s*min-width\s*:\s*1024px\s*\)[\s\S]*?\.ranking-company-name\s*\{[^}]*font-size\s*:\s*17px[^}]*line-height\s*:\s*1\.45/i.test(
+    css,
+  ),
+  cssFile,
+  "PCのランキング会社名は17pxで読みやすくしてください",
 );
 assert(
   /\.reading-progress\s*\{[^}]*position\s*:\s*fixed[^}]*top\s*:\s*0/i.test(
@@ -1632,6 +1668,22 @@ assert(
 );
 assert(/TOC_COLLAPSED_ITEMS\s*=\s*4/.test(articleJs), jsFile, "目次の初期表示は4項目にしてください");
 assert(articleJs.includes('"OPEN"') && articleJs.includes('"CLOSE"'), jsFile, "目次buttonはOPEN/CLOSEを切り替えてください");
+assert(
+  /tocViewport\.classList\.add\(["']is-collapsible["']\)/.test(articleJs) &&
+    /tocToggle\.hidden\s*=\s*false/.test(articleJs),
+  jsFile,
+  "目次はPC・スマホ共通で4項目に折り畳んでください",
+);
+assert(
+  !/matchMedia\(["'][^"']*max-width[^"']*["']\)/.test(
+    articleJs.slice(
+      articleJs.indexOf("TOC_COLLAPSED_ITEMS"),
+      articleJs.indexOf("const tocLinksById"),
+    ),
+  ),
+  jsFile,
+  "目次の折り畳みをモバイル幅だけに限定しないでください",
+);
 assert(articleJs.includes("table-caption-bar"), jsFile, "JSで表題をスクロール領域外へ複製してください");
 assert(articleJs.includes("table-scroll-viewport"), jsFile, "JSで比較列専用のスクロールviewportを作成してください");
 assert(articleJs.includes("table-scroll-hint"), jsFile, "JSで各表に初回スクロール案内を生成してください");
