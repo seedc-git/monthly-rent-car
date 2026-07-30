@@ -406,6 +406,16 @@
   transform: translateY(-1px);
 }
 
+.area-ranking-page.area-tachikawa .quick-recommendation-button-copy {
+  min-width: 0;
+  display: block;
+  text-wrap: balance;
+}
+
+.area-ranking-page.area-tachikawa .quick-recommendation-button-arrow {
+  flex: 0 0 auto;
+}
+
 .area-ranking-page.area-tachikawa .content-section {
   padding: 64px 0 0;
   border-top: 0;
@@ -1352,7 +1362,8 @@
 }
 
 .area-ranking-page.area-tachikawa .article-cta--hero .article-cta-brand-logo,
-.area-ranking-page.area-tachikawa .article-cta--rank1 .article-cta-brand-logo {
+.area-ranking-page.area-tachikawa .article-cta--rank1 .article-cta-brand-logo,
+.area-ranking-page.area-tachikawa .article-cta--price .article-cta-brand-logo {
   width: min(260px, 58%);
   height: auto;
   margin: 0 auto 22px;
@@ -1399,13 +1410,15 @@
 }
 
 .area-ranking-page.area-tachikawa .article-cta--hero .cta-actions,
-.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-actions {
+.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-actions,
+.area-ranking-page.area-tachikawa .article-cta--price .cta-actions {
   max-width: 680px;
   grid-template-columns: 1fr;
 }
 
 .area-ranking-page.area-tachikawa .article-cta--hero .cta-button--shop,
-.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button--shop {
+.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button--shop,
+.area-ranking-page.area-tachikawa .article-cta--price .cta-button--shop {
   min-height: 78px;
   flex-direction: column;
   gap: 4px;
@@ -1414,12 +1427,15 @@
 .area-ranking-page.area-tachikawa .article-cta--hero .cta-button-main,
 .area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note,
 .area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-main,
-.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-note {
+.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-note,
+.area-ranking-page.area-tachikawa .article-cta--price .cta-button-main,
+.area-ranking-page.area-tachikawa .article-cta--price .cta-button-note {
   display: block;
 }
 
 .area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note,
-.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-note {
+.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-note,
+.area-ranking-page.area-tachikawa .article-cta--price .cta-button-note {
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.02em;
@@ -1895,6 +1911,46 @@
     width: 100%;
     min-width: 0;
     table-layout: fixed;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--kei-wagon
+    .price-table--kei-wagon {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--kei-wagon
+    .price-table--kei-wagon
+    tr
+    > :nth-child(1) {
+    width: 27%;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--kei-wagon
+    .price-table--kei-wagon
+    tr
+    > :nth-child(2) {
+    width: 24%;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--kei-wagon
+    .price-table--kei-wagon
+    tr
+    > :nth-child(3) {
+    width: 16%;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--kei-wagon
+    .price-table--kei-wagon
+    tr
+    > :nth-child(4) {
+    width: 33%;
   }
 
   .area-ranking-page.area-tachikawa
@@ -2412,6 +2468,12 @@
     --price-final-column-width:
       calc(100vw - 34px - var(--table-key-column-width));
     --table-data-column-width: var(--price-final-column-width);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--price.table-scroll--kei-wagon {
+    --price-class-column-width: clamp(124px, 36vw, 148px);
+    --price-amount-column-width: clamp(88px, 22vw, 96px);
   }
 
   .area-ranking-page.area-tachikawa .table-scroll--comparison {
@@ -3003,7 +3065,8 @@
   }
 
   .area-ranking-page.area-tachikawa .article-cta--hero .article-cta-brand-logo,
-  .area-ranking-page.area-tachikawa .article-cta--rank1 .article-cta-brand-logo {
+  .area-ranking-page.area-tachikawa .article-cta--rank1 .article-cta-brand-logo,
+  .area-ranking-page.area-tachikawa .article-cta--price .article-cta-brand-logo {
     width: min(210px, 64%);
     margin-bottom: 18px;
   }
@@ -3029,13 +3092,15 @@
   }
 
   .area-ranking-page.area-tachikawa .article-cta--hero .cta-button--shop,
-  .area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button--shop {
+  .area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button--shop,
+  .area-ranking-page.area-tachikawa .article-cta--price .cta-button--shop {
     min-height: 70px;
     gap: 3px;
   }
 
   .area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note,
-  .area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-note {
+  .area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-note,
+  .area-ranking-page.area-tachikawa .article-cta--price .cta-button-note {
     font-size: 12px;
   }
 
@@ -3108,22 +3173,38 @@
   }
 
   .area-ranking-page.area-tachikawa .flow-list > li {
-    padding: 19px 16px;
-    grid-template-columns: 52px minmax(0, 1fr);
-    gap: 13px;
+    padding: 20px 14px;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 14px;
   }
 
   .area-ranking-page.area-tachikawa .flow-step {
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
+    width: 56px;
+    height: 56px;
+    border: 6px solid #fff2eb;
+    grid-template-rows: auto auto;
+    row-gap: 1px;
+    place-items: center;
+    align-content: center;
+    box-shadow: none;
+    font-size: 21px;
+    line-height: 0.95;
+  }
+
+  .area-ranking-page.area-tachikawa .flow-step span {
+    display: block;
+    font-size: 9px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
   }
 
   .area-ranking-page.area-tachikawa .content-section .flow-list h3 {
     margin: 0 0 8px;
-    padding: 0 0 8px;
-    font-size: 18.5px;
-    line-height: 1.6;
+    padding: 0 0 8px 10px;
+    font-size: 18px;
+    line-height: 1.55;
+    letter-spacing: -0.01em;
   }
 
   .area-ranking-page.area-tachikawa .flow-list p {
@@ -3221,6 +3302,153 @@
   }
 }
 
+/*
+ * Article CTA buttons
+ * A hard lower shadow makes the controls feel pressable, while the restrained
+ * shine periodically draws attention without changing the editorial palette.
+ */
+.area-ranking-page.area-tachikawa
+  :is(.quick-recommendation-button, .cta-button--primary) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid #aa4100;
+  border-radius: 9px;
+  color: var(--article-white);
+  background: linear-gradient(100deg, #c45100 0%, #b94d00 56%, #a94200 100%);
+  box-shadow:
+    0 5px 0 #782b00,
+    0 12px 24px rgba(5, 38, 111, 0.18);
+  font-weight: 900;
+  text-shadow: 0 1px 1px rgba(64, 20, 0, 0.24);
+  transform: translateY(0);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.area-ranking-page.area-tachikawa
+  :is(.quick-recommendation-button, .cta-button--primary)::before {
+  content: "";
+  position: absolute;
+  top: -35%;
+  left: -55%;
+  z-index: 0;
+  width: 30%;
+  height: 170%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.72) 48%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-24deg);
+  animation: tachikawa-cta-shine 4.5s
+    cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite;
+}
+
+.area-ranking-page.area-tachikawa
+  :is(.quick-recommendation-button, .cta-button--primary)
+  > * {
+  position: relative;
+  z-index: 1;
+}
+
+.area-ranking-page.area-tachikawa .cta-button--primary {
+  padding-right: 58px;
+}
+
+.area-ranking-page.area-tachikawa .cta-button--primary::after {
+  content: "›";
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  z-index: 1;
+  font-size: 29px;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: none;
+  transform: translateY(-53%);
+  transition: transform 0.18s ease;
+}
+
+.area-ranking-page.area-tachikawa .quick-recommendation-button-arrow {
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+
+@media (hover: hover) {
+  .area-ranking-page.area-tachikawa
+    :is(.quick-recommendation-button, .cta-button--primary):hover {
+    filter: brightness(1.04) saturate(1.03);
+    box-shadow:
+      0 2px 0 #782b00,
+      0 7px 16px rgba(5, 38, 111, 0.17);
+    transform: translateY(3px);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .cta-button--primary:hover::after {
+    transform: translate(4px, -53%);
+  }
+
+  .area-ranking-page.area-tachikawa
+    .quick-recommendation-button:hover
+    .quick-recommendation-button-arrow {
+    transform: translateX(4px);
+  }
+}
+
+.area-ranking-page.area-tachikawa
+  :is(.quick-recommendation-button, .cta-button--primary):active {
+  filter: brightness(0.98);
+  box-shadow:
+    0 1px 0 #782b00,
+    0 5px 12px rgba(5, 38, 111, 0.14);
+  transform: translateY(4px);
+}
+
+@keyframes tachikawa-cta-shine {
+  0%,
+  58% {
+    left: -55%;
+  }
+
+  78%,
+  100% {
+    left: 135%;
+  }
+}
+
+@media (max-width: 760px) {
+  .area-ranking-page.area-tachikawa
+    :is(.quick-recommendation-button, .cta-button--primary) {
+    border-radius: 8px;
+    box-shadow:
+      0 4px 0 #782b00,
+      0 9px 18px rgba(5, 38, 111, 0.17);
+  }
+
+  .area-ranking-page.area-tachikawa .cta-button--primary {
+    padding-right: 48px;
+  }
+
+  .area-ranking-page.area-tachikawa .cta-button--primary::after {
+    right: 16px;
+    font-size: 26px;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .quick-recommendation-button {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .area-ranking-page.area-tachikawa *,
   .area-ranking-page.area-tachikawa *::before,
@@ -3229,6 +3457,11 @@
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .area-ranking-page.area-tachikawa
+    :is(.quick-recommendation-button, .cta-button--primary)::before {
+    display: none;
   }
 
   .area-ranking-page.area-tachikawa .table-scroll-hint__gesture {

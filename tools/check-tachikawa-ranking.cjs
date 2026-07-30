@@ -213,7 +213,7 @@ const expectedCtas = [
   ["hero", "shop", "/shop/tokyo/tachikawa/"],
   ["rank1", "shop", "/shop/tokyo/tachikawa/"],
   ["rank1-banner", "shop", "/shop/tokyo/tachikawa/"],
-  ["price", "form", "https://form.run/@monthly-rent-car"],
+  ["price", "shop", "/shop/tokyo/tachikawa/"],
   ["support", "form", "https://form.run/@monthly-rent-car"],
   ["final", "form", "https://form.run/@monthly-rent-car"],
   ["final", "line", "https://lin.ee/ojmETte"],
@@ -1191,6 +1191,43 @@ assert(
   pageFile,
   "冒頭おすすめCTAの文言が指定内容と一致しません",
 );
+const introRecommendationButton = findElementByClass(
+  introRecommendation?.html || "",
+  "quick-recommendation-button",
+  "a",
+);
+const introRecommendationButtonCopy = findElementByClass(
+  introRecommendationButton?.html || "",
+  "quick-recommendation-button-copy",
+  "span",
+);
+assert(
+  normalizeContinuousText(introRecommendationButtonCopy?.html || "") ===
+    "東京マンスリーレンタカー立川店の空車と1ヶ月料金を確認する",
+  pageFile,
+  "冒頭おすすめCTAの主文は1つのcopy要素にまとめてください",
+);
+
+const keiWagonTable = findElementByClass(
+  bodyHtml,
+  "price-table--kei-wagon",
+  "table",
+);
+const keiWagonTableText = normalizeContinuousText(keiWagonTable?.html || "");
+assert(Boolean(keiWagonTable), pageFile, "4ドア軽ワゴン比較表がありません");
+assert(
+  keiWagonTableText.includes(
+    "4ドア軽ワゴンに近い用途・カテゴリーの公開料金（税込）",
+  ),
+  pageFile,
+  "4ドア軽ワゴン比較表の税込表記はcaptionに残してください",
+);
+assert(
+  keiWagonTableText.includes("1ヶ月料金") &&
+    !keiWagonTableText.includes("1ヶ月料金（税込）"),
+  pageFile,
+  "4ドア軽ワゴン比較表の料金列見出しは「1ヶ月料金」にしてください",
+);
 
 const heroCta = findElementByClass(bodyHtml, "article-cta--hero", "aside");
 assert(Boolean(heroCta), pageFile, "冒頭の空車確認CTAセクションがありません");
@@ -1266,6 +1303,34 @@ assert(
       "東京マンスリーレンタカー、1日あたり800円から。立川店の詳細を見る",
   pageFile,
   "1位詳細CTAには指定された立川店バナーと説明altが必要です",
+);
+
+const priceCta = findElementByClass(bodyHtml, "article-cta--price", "aside");
+assert(Boolean(priceCta), pageFile, "希望車種の空車確認CTAセクションがありません");
+const priceCtaLogo = findStartTags(priceCta?.html || "", "img")[0];
+assert(
+  priceCtaLogo?.attributes.src === transparentHeaderLogo &&
+    priceCtaLogo?.attributes.alt === "東京マンスリーレンタカー",
+  pageFile,
+  "希望車種CTAには東京マンスリーレンタカーの透過ロゴが必要です",
+);
+const priceCtaButtons = findStartTags(priceCta?.html || "", "a").filter(
+  (entry) =>
+    String(entry.attributes.class || "")
+      .split(/\s+/)
+      .includes("cta-button"),
+);
+assert(
+  priceCtaButtons.length === 1,
+  pageFile,
+  `希望車種CTAのボタンは1本だけ必要です（現在${priceCtaButtons.length}本）`,
+);
+assert(
+  normalizeContinuousText(priceCta?.html || "").replace(/\s+/g, "").includes(
+    "空車状況と1ヶ月の総額を確認する（電話・LINE・メール）",
+  ),
+  pageFile,
+  "希望車種CTAボタンの主文・連絡方法表記が指定内容と一致しません",
 );
 
 const sourceHeadingIndex = bodyHtml.indexOf("調査方法・出典");
@@ -1593,6 +1658,55 @@ assert(
   /@media\s*\(\s*min-width\s*:\s*1180px\s*\)[\s\S]*?\.area-ranking-page\.area-tachikawa main,\s*\.area-ranking-page\.area-tachikawa \.site-footer\s*\{[^}]*width\s*:\s*100%/i.test(css),
   cssFile,
   "1180px以上ではmainとfooterを通常のPC幅へ戻してください",
+);
+assert(
+  /\.quick-recommendation-button-copy\s*\{[^}]*min-width\s*:\s*0[^}]*display\s*:\s*block[^}]*text-wrap\s*:\s*balance/i.test(
+    css,
+  ),
+  cssFile,
+  "冒頭おすすめCTAの文言はPC・モバイルで自然に改行できる必要があります",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.flow-step\s*\{[^}]*width\s*:\s*56px[^}]*height\s*:\s*56px[^}]*border\s*:\s*6px\s+solid\s+#fff2eb[^}]*grid-template-rows\s*:\s*auto\s+auto/i.test(
+    css,
+  ),
+  cssFile,
+  "モバイルのSTEP円はラベルが切れない内径を確保してください",
+);
+assert(
+  /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.content-section\s+\.flow-list\s+h3\s*\{[^}]*padding\s*:\s*0\s+0\s+8px\s+10px/i.test(
+    css,
+  ),
+  cssFile,
+  "モバイルのSTEP見出しは縦線と文字の間に余白が必要です",
+);
+assert(
+  /:is\(\.quick-recommendation-button,\s*\.cta-button--primary\)\s*\{[^}]*border-radius\s*:\s*9px[^}]*background\s*:\s*linear-gradient\(\s*100deg,\s*#c45100\s+0%,\s*#b94d00\s+56%,\s*#a94200\s+100%\s*\)[^}]*box-shadow\s*:[^}]*0\s+5px\s+0\s+#782b00/i.test(
+    css,
+  ),
+  cssFile,
+  "記事内の主要CTAにはグラデーションと立体的な下影が必要です",
+);
+assert(
+  /:is\(\.quick-recommendation-button,\s*\.cta-button--primary\)::before\s*\{[^}]*background\s*:\s*linear-gradient\([^}]*animation\s*:\s*tachikawa-cta-shine\s+4\.5s/i.test(
+    css,
+  ),
+  cssFile,
+  "記事内の主要CTAには一定間隔で横切る光のアニメーションが必要です",
+);
+assert(
+  /\.cta-button--primary::after\s*\{[^}]*content\s*:\s*[\"']›[\"'][^}]*right\s*:\s*22px/i.test(
+    css,
+  ),
+  cssFile,
+  "記事内の主要CTAには右方向の矢印が必要です",
+);
+assert(
+  /@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)[\s\S]*?:is\(\.quick-recommendation-button,\s*\.cta-button--primary\)::before\s*\{[^}]*display\s*:\s*none/i.test(
+    css,
+  ),
+  cssFile,
+  "動きを抑える設定ではCTAの光アニメーションを停止してください",
 );
 assert(
   /@media\s*\(\s*min-width\s*:\s*1180px\s*\)[\s\S]*?\.area-ranking-page\.area-tachikawa \.site-header\s*\{[^}]*width\s*:\s*100%/i.test(css),
