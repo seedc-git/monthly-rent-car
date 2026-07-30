@@ -686,6 +686,32 @@
   object-position: center center;
 }
 
+.area-ranking-page.area-tachikawa .image-slot--company-photo {
+  width: min(400px, 100%);
+  margin: 22px auto 30px;
+}
+
+.area-ranking-page.area-tachikawa
+  .image-slot--company-photo
+  .image-slot-media--company-photo {
+  aspect-ratio: 4 / 3;
+  border: 1px solid #cfdae5;
+  border-radius: 8px;
+  background: var(--article-white);
+}
+
+.area-ranking-page.area-tachikawa
+  .image-slot--company-photo
+  .image-slot-media--company-photo
+  img {
+  object-fit: contain;
+  object-position: center center;
+}
+
+.area-ranking-page.area-tachikawa .image-slot--company-photo figcaption {
+  text-align: center;
+}
+
 .area-ranking-page.area-tachikawa .image-slot-media > span {
   padding: 16px;
   position: absolute;
@@ -1294,6 +1320,14 @@
   letter-spacing: 0.04em;
 }
 
+.area-ranking-page.area-tachikawa .article-cta--hero .article-cta-brand-logo {
+  width: min(260px, 58%);
+  height: auto;
+  margin: 0 auto 22px;
+  display: block;
+  object-fit: contain;
+}
+
 .area-ranking-page.area-tachikawa .cta-actions {
   max-width: 780px;
   margin: 28px auto 0;
@@ -1330,6 +1364,29 @@
   color: var(--article-white);
   background: var(--editorial-orange);
   box-shadow: none;
+}
+
+.area-ranking-page.area-tachikawa .article-cta--hero .cta-actions {
+  max-width: 680px;
+  grid-template-columns: 1fr;
+}
+
+.area-ranking-page.area-tachikawa .article-cta--hero .cta-button--shop {
+  min-height: 78px;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.area-ranking-page.area-tachikawa .article-cta--hero .cta-button-main,
+.area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note {
+  display: block;
+}
+
+.area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
 }
 
 .area-ranking-page.area-tachikawa .cta-button--line {
@@ -1460,12 +1517,15 @@
 }
 
 .area-ranking-page.area-tachikawa .article-toc ol {
-  counter-reset: toc;
   display: grid;
   gap: 8px;
 }
 
-.area-ranking-page.area-tachikawa .article-toc li {
+.area-ranking-page.area-tachikawa .article-toc .toc-list-viewport > ol {
+  counter-reset: toc;
+}
+
+.area-ranking-page.area-tachikawa .article-toc .toc-list-viewport > ol > li {
   counter-increment: toc;
 }
 
@@ -1494,6 +1554,25 @@
   color: var(--article-orange);
   font-size: 12px;
   font-weight: 950;
+}
+
+.area-ranking-page.area-tachikawa .article-toc .toc-item--level-3 {
+  counter-increment: none;
+}
+
+.area-ranking-page.area-tachikawa .article-toc .toc-item--level-3 > a {
+  padding-left: 26px;
+  font-weight: 600;
+}
+
+.area-ranking-page.area-tachikawa .article-toc .toc-item--level-3 > a::before {
+  width: 6px;
+  height: 6px;
+  content: "";
+  top: 1.05em;
+  left: 8px;
+  border-radius: 50%;
+  background: var(--editorial-cyan);
 }
 
 .area-ranking-page.area-tachikawa .article-toc a:hover {
@@ -2859,6 +2938,11 @@
     letter-spacing: 0.04em;
   }
 
+  .area-ranking-page.area-tachikawa .article-cta--hero .article-cta-brand-logo {
+    width: min(210px, 64%);
+    margin-bottom: 18px;
+  }
+
   .area-ranking-page.area-tachikawa .cta-actions {
     margin-top: 20px;
     grid-template-columns: 1fr;
@@ -2877,6 +2961,15 @@
     grid-column: auto;
     background: var(--editorial-orange);
     box-shadow: none;
+  }
+
+  .area-ranking-page.area-tachikawa .article-cta--hero .cta-button--shop {
+    min-height: 70px;
+    gap: 3px;
+  }
+
+  .area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note {
+    font-size: 12px;
   }
 
   .area-ranking-page.area-tachikawa .cta-tel {

@@ -175,7 +175,7 @@ const expectedImageSlots = new Map([
   ["tachikawa-ranking-eyecatch", [1077, 500]],
   ["tachikawa-period-guide", [1448, 1086]],
   ["ranking-logo-tokyo-monthly", [1228, 322]],
-  ["ranking-logo-guts", [320, 160]],
+  ["ranking-photo-guts", [320, 240]],
   ["ranking-logo-monthly-go", [320, 160]],
   ["ranking-logo-gogo", [320, 160]],
   ["ranking-logo-maverick", [320, 160]],
@@ -193,9 +193,7 @@ const expectedImageSlots = new Map([
 
 const expectedCtas = [
   ["intro", "shop", "/shop/tokyo/tachikawa/"],
-  ["hero", "form", "https://form.run/@monthly-rent-car"],
-  ["hero", "line", "https://lin.ee/ojmETte"],
-  ["hero", "tel", "tel:05017920800"],
+  ["hero", "shop", "/shop/tokyo/tachikawa/"],
   ["rank1", "form", "https://form.run/@monthly-rent-car"],
   ["rank1", "line", "https://lin.ee/ojmETte"],
   ["price", "form", "https://form.run/@monthly-rent-car"],
@@ -1076,6 +1074,43 @@ for (const [position, channel, href] of expectedCtas) {
   }
 }
 
+const introRecommendation = findElementByClass(
+  bodyHtml,
+  "article-quick-recommendation",
+  "aside",
+);
+assert(
+  normalizeContinuousText(introRecommendation?.html || "").includes(
+    "東京マンスリーレンタカー立川店の空車と1ヶ月料金を確認する",
+  ),
+  pageFile,
+  "冒頭おすすめCTAの文言が指定内容と一致しません",
+);
+
+const heroCta = findElementByClass(bodyHtml, "article-cta--hero", "aside");
+assert(Boolean(heroCta), pageFile, "冒頭の空車確認CTAセクションがありません");
+const heroCtaHeading = findElementById(heroCta?.html || "", "hero-cta-title");
+assert(
+  normalizeContinuousText(heroCtaHeading?.html || "") ===
+    "東京マンスリーレンタカー立川店の空車と1ヶ月料金を確認する",
+  pageFile,
+  "冒頭の空車確認CTA見出しが指定内容と一致しません",
+);
+const heroCtaLogo = findStartTags(heroCta?.html || "", "img")[0];
+assert(
+  heroCtaLogo?.attributes.src === transparentHeaderLogo &&
+    heroCtaLogo?.attributes.alt === "東京マンスリーレンタカー",
+  pageFile,
+  "冒頭の空車確認CTAには東京マンスリーレンタカーの透過ロゴが必要です",
+);
+assert(
+  normalizeContinuousText(heroCta?.html || "").includes(
+    "空車状況と1ヶ月の総額を確認する（電話・LINE・メール）",
+  ),
+  pageFile,
+  "冒頭の空車確認CTAボタンの主文・連絡方法表記が指定内容と一致しません",
+);
+
 const sourceHeadingIndex = bodyHtml.indexOf("調査方法・出典");
 const allowedExternalHosts = new Set([
   "monthly-rent-car.jp",
@@ -1366,6 +1401,20 @@ assert(
   cssFile,
   "ランキングロゴは縦横比を保って全体表示してください",
 );
+assert(
+  /id="ranking-photo-guts"[\s\S]*?guts-rentacar-tachikawa-vehicle-20260730\.webp[\s\S]*?width="320"[\s\S]*?height="240"[\s\S]*?alt="ガッツレンタカー立川店の前に停車する黒い軽自動車"/i.test(
+    bodyHtml,
+  ),
+  pageFile,
+  "ガッツレンタカー立川店には指定された4:3の車両写真と説明altが必要です",
+);
+assert(
+  /\.image-slot--company-photo[\s\S]*?\.image-slot-media--company-photo\s*\{[^}]*aspect-ratio\s*:\s*4\s*\/\s*3[^}]*\}[\s\S]*?\.image-slot--company-photo[\s\S]*?\.image-slot-media--company-photo[\s\S]*?img\s*\{[^}]*object-fit\s*:\s*contain[^}]*object-position\s*:\s*center\s+center/i.test(
+    css,
+  ),
+  cssFile,
+  "ガッツレンタカーの車両写真は4:3で全体を切らずに表示してください",
+);
 assert(/prefers-reduced-motion/i.test(css), cssFile, "prefers-reduced-motion対応が必要です");
 assert(/@media\s*\([^)]*min-width/i.test(css), cssFile, "PC用min-widthメディアクエリが必要です");
 assert(/@media\s*\([^)]*max-width/i.test(css), cssFile, "モバイル用max-widthメディアクエリが必要です");
@@ -1531,6 +1580,25 @@ assert(
   "折り畳み目次の続きが分かるfadeが必要です",
 );
 assert(
+  /\.article-toc \.toc-list-viewport\s*>\s*ol\s*>\s*li\s*\{[^}]*counter-increment\s*:\s*toc/i.test(
+    css,
+  ),
+  cssFile,
+  "目次番号はH2相当の最上位項目だけで進めてください",
+);
+assert(
+  /\.article-toc \.toc-item--level-3\s*>\s*a::before\s*\{[^}]*content\s*:\s*["']{2}/i.test(
+    css,
+  ),
+  cssFile,
+  "目次のH3相当項目は番号を再採番せず、階層用マーカーで表示してください",
+);
+assert(
+  !/\.article-toc li\s*\{[^}]*counter-increment\s*:\s*toc/i.test(css),
+  cssFile,
+  "入れ子を含む全目次項目で番号を進めないでください",
+);
+assert(
   /\.table-caption-bar\s*\{[^}]*z-index/i.test(css),
   cssFile,
   "表題はスクロール領域外の固定caption barとして表示してください",
@@ -1661,6 +1729,12 @@ if (articleJs) {
 assert(articleJs.includes(cssRoot), jsFile, `JSは${cssRoot}をroot guardにしてください`);
 assert(articleJs.includes("data-generated-toc"), jsFile, "JSに目次生成処理がありません");
 assert(/querySelectorAll\([^)]*h2[^)]*h3|h2\s*,\s*h3/i.test(articleJs), jsFile, "JSはH2/H3から目次を生成してください");
+assert(
+  articleJs.includes("toc-item--level-") &&
+    articleJs.includes("link.dataset.tocLevel"),
+  jsFile,
+  "JSでH2/H3の目次階層を明示してください",
+);
 assert(
   /data-faq-(?:toggle|button)|faq-(?:toggle|item)[^"']*button/i.test(articleJs),
   jsFile,
