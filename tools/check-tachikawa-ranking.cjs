@@ -34,6 +34,8 @@ const cssRoot = ".area-ranking-page.area-tachikawa";
 const transparentHeaderLogo = "../../assets/img/monthly-rentacar-logo-transparent.png";
 const finalEyecatch =
   "../../assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp";
+const finalPeriodGuide =
+  "../../assets/img/area/tachikawa/tachikawa-period-positioning-map-20260730.webp";
 
 const expectedRankings = [
   {
@@ -171,7 +173,7 @@ const expectedFaq = [
 
 const expectedImageSlots = new Map([
   ["tachikawa-ranking-eyecatch", [1077, 500]],
-  ["tachikawa-period-guide", [1200, 675]],
+  ["tachikawa-period-guide", [1448, 1086]],
   ["ranking-logo-tokyo-monthly", [1228, 322]],
   ["ranking-logo-guts", [320, 160]],
   ["ranking-logo-monthly-go", [320, 160]],
@@ -1011,6 +1013,19 @@ assert(
   pageFile,
   "アイキャッチaltは新しい立川駅入り画像の内容を説明してください",
 );
+const periodGuide = findElementById(html, "tachikawa-period-guide");
+const periodGuideImage = findStartTags(periodGuide?.html || "", "img")[0];
+assert(
+  periodGuideImage?.attributes.src === finalPeriodGuide,
+  pageFile,
+  "利用期間別ガイドは指定されたポジショニングマップを参照してください",
+);
+assert(
+  periodGuideImage?.attributes.alt ===
+    "短期・長期と価格帯で立川市のレンタカー会社を比較したポジショニングマップ",
+  pageFile,
+  "利用期間別ガイドのaltはポジショニングマップの内容を説明してください",
+);
 
 // Article CTAs and competitor-link confinement.
 const anchors = findStartTags(html, "a");
@@ -1337,6 +1352,13 @@ assert(
   "目次開閉ボタンは白文字と十分に濃いブランド色でコントラストを確保してください",
 );
 assert(/aspect-ratio\s*:/i.test(css), cssFile, "画像placeholderにaspect-ratioが必要です");
+assert(
+  /#tachikawa-period-guide\s+\.image-slot-media--period-map\s*\{[^}]*aspect-ratio\s*:\s*4\s*\/\s*3[^}]*\}[\s\S]*?#tachikawa-period-guide\s+\.image-slot-media--period-map\s+img\s*\{[^}]*object-fit\s*:\s*contain/i.test(
+    css,
+  ),
+  cssFile,
+  "利用期間別ガイドは4:3で全体を切らずに表示してください",
+);
 assert(
   /\.image-slot--logo[\s\S]*?\.image-slot-media[\s\S]*?img\s*\{[^}]*object-fit\s*:\s*contain[^}]*object-position\s*:\s*center\s+center/i.test(
     css,

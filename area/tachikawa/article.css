@@ -611,6 +611,20 @@
   aspect-ratio: 16 / 9;
 }
 
+.area-ranking-page.area-tachikawa
+  #tachikawa-period-guide
+  .image-slot-media--period-map {
+  aspect-ratio: 4 / 3;
+  background: var(--article-white);
+}
+
+.area-ranking-page.area-tachikawa
+  #tachikawa-period-guide
+  .image-slot-media--period-map
+  img {
+  object-fit: contain;
+}
+
 .area-ranking-page.area-tachikawa .image-slot--logo {
   width: min(440px, 100%);
   margin: 22px auto 30px;
