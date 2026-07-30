@@ -1745,6 +1745,89 @@
   margin: 0;
 }
 
+@media (min-width: 1024px) {
+  .area-ranking-page.area-tachikawa
+    .table-scroll:is(.table-scroll--ranking, .table-scroll--comparison)
+    table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll:is(.table-scroll--ranking, .table-scroll--comparison)
+    :is(th, td) {
+    padding: 12px 10px;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--ranking
+    tr
+    > :nth-child(1) {
+    width: 25%;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--ranking
+    tr
+    > :nth-child(2) {
+    width: 14%;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--ranking
+    tr
+    > :nth-child(3) {
+    width: 18%;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--ranking
+    tr
+    > :nth-child(4) {
+    width: 20%;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--ranking
+    tr
+    > :nth-child(5) {
+    width: 23%;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--comparison
+    tr
+    > :nth-child(1) {
+    width: 21%;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .table-scroll--comparison
+    tr
+    > :nth-child(2),
+  .area-ranking-page.area-tachikawa
+    .table-scroll--comparison
+    tr
+    > :nth-child(3) {
+    width: 39.5%;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-company-name {
+    font-size: 17px;
+    line-height: 1.45;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-branch-name {
+    font-size: 14px;
+  }
+
+  .area-ranking-page.area-tachikawa .ranking-table .stars {
+    font-size: 17px;
+    letter-spacing: 0.02em;
+  }
+}
+
 @media (min-width: 1180px) {
   .area-ranking-page.area-tachikawa {
     width: 100%;

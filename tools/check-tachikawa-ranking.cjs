@@ -1397,6 +1397,20 @@ assert(
   "開いたヘッダーメニューもヘッダーと一緒にスクロールする配置にしてください",
 );
 assert(
+  /@media\s*\(\s*min-width\s*:\s*1024px\s*\)[\s\S]*?\.table-scroll:is\(\s*\.table-scroll--ranking,\s*\.table-scroll--comparison\s*\)[\s\S]*?table\s*\{[^}]*width\s*:\s*100%[^}]*min-width\s*:\s*0[^}]*table-layout\s*:\s*fixed/i.test(
+    css,
+  ),
+  cssFile,
+  "1024px以上ではランキング表と比較表を記事幅内へ収めてください",
+);
+assert(
+  /@media\s*\(\s*min-width\s*:\s*1024px\s*\)[\s\S]*?\.ranking-company-name\s*\{[^}]*font-size\s*:\s*17px[^}]*line-height\s*:\s*1\.45/i.test(
+    css,
+  ),
+  cssFile,
+  "PCのランキング会社名は17pxで読みやすくしてください",
+);
+assert(
   /\.reading-progress\s*\{[^}]*position\s*:\s*fixed[^}]*top\s*:\s*0/i.test(
     designCss,
   ),
