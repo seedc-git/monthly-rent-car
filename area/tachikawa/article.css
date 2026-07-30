@@ -1419,7 +1419,12 @@
   left: 0;
   z-index: 1;
   background:
-    linear-gradient(180deg, rgba(244, 251, 255, 0) 0%, var(--article-sky-2) 84%);
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.9) 50%,
+      var(--article-white) 100%
+    );
   pointer-events: none;
 }
 
@@ -2819,11 +2824,6 @@
 
   .area-ranking-page.area-tachikawa .toc-toggle:hover {
     background: #056876;
-  }
-
-  .area-ranking-page.area-tachikawa .toc-list-viewport.is-collapsible.is-collapsed::after {
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--article-white) 84%);
   }
 
   .area-ranking-page.area-tachikawa .article-toc a {

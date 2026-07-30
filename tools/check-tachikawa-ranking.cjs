@@ -1654,6 +1654,22 @@ assert(
 );
 assert(/TOC_COLLAPSED_ITEMS\s*=\s*4/.test(articleJs), jsFile, "目次の初期表示は4項目にしてください");
 assert(articleJs.includes('"OPEN"') && articleJs.includes('"CLOSE"'), jsFile, "目次buttonはOPEN/CLOSEを切り替えてください");
+assert(
+  /tocViewport\.classList\.add\(["']is-collapsible["']\)/.test(articleJs) &&
+    /tocToggle\.hidden\s*=\s*false/.test(articleJs),
+  jsFile,
+  "目次はPC・スマホ共通で4項目に折り畳んでください",
+);
+assert(
+  !/matchMedia\(["'][^"']*max-width[^"']*["']\)/.test(
+    articleJs.slice(
+      articleJs.indexOf("TOC_COLLAPSED_ITEMS"),
+      articleJs.indexOf("const tocLinksById"),
+    ),
+  ),
+  jsFile,
+  "目次の折り畳みをモバイル幅だけに限定しないでください",
+);
 assert(articleJs.includes("table-caption-bar"), jsFile, "JSで表題をスクロール領域外へ複製してください");
 assert(articleJs.includes("table-scroll-viewport"), jsFile, "JSで比較列専用のスクロールviewportを作成してください");
 assert(articleJs.includes("table-scroll-hint"), jsFile, "JSで各表に初回スクロール案内を生成してください");
