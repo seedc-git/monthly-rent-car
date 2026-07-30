@@ -712,6 +712,37 @@
   text-align: center;
 }
 
+.area-ranking-page.area-tachikawa .image-slot--company-creative {
+  width: min(650px, 100%);
+  margin: 22px auto 30px;
+}
+
+.area-ranking-page.area-tachikawa .image-slot--company-creative-small {
+  width: min(532px, 100%);
+}
+
+.area-ranking-page.area-tachikawa
+  .image-slot--company-creative
+  .image-slot-media--company-creative {
+  aspect-ratio: auto;
+  border: 1px solid #cfdae5;
+  border-radius: 8px;
+  background: var(--article-white);
+}
+
+.area-ranking-page.area-tachikawa
+  .image-slot--company-creative
+  .image-slot-media--company-creative
+  img {
+  width: 100%;
+  height: auto;
+  position: static;
+  inset: auto;
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+}
+
 .area-ranking-page.area-tachikawa .image-slot-media > span {
   padding: 16px;
   position: absolute;
@@ -1320,7 +1351,8 @@
   letter-spacing: 0.04em;
 }
 
-.area-ranking-page.area-tachikawa .article-cta--hero .article-cta-brand-logo {
+.area-ranking-page.area-tachikawa .article-cta--hero .article-cta-brand-logo,
+.area-ranking-page.area-tachikawa .article-cta--rank1 .article-cta-brand-logo {
   width: min(260px, 58%);
   height: auto;
   margin: 0 auto 22px;
@@ -1366,27 +1398,59 @@
   box-shadow: none;
 }
 
-.area-ranking-page.area-tachikawa .article-cta--hero .cta-actions {
+.area-ranking-page.area-tachikawa .article-cta--hero .cta-actions,
+.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-actions {
   max-width: 680px;
   grid-template-columns: 1fr;
 }
 
-.area-ranking-page.area-tachikawa .article-cta--hero .cta-button--shop {
+.area-ranking-page.area-tachikawa .article-cta--hero .cta-button--shop,
+.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button--shop {
   min-height: 78px;
   flex-direction: column;
   gap: 4px;
 }
 
 .area-ranking-page.area-tachikawa .article-cta--hero .cta-button-main,
-.area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note {
+.area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note,
+.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-main,
+.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-note {
   display: block;
 }
 
-.area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note {
+.area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note,
+.area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-note {
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.02em;
   line-height: 1.35;
+}
+
+.area-ranking-page.area-tachikawa .article-cta--rank1 .article-cta-banner {
+  width: 100%;
+  max-width: 680px;
+  margin: 18px auto 0;
+  overflow: hidden;
+  border-radius: 6px;
+  display: block;
+  background: var(--article-white);
+  line-height: 0;
+}
+
+.area-ranking-page.area-tachikawa
+  .article-cta--rank1
+  .article-cta-banner
+  img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.area-ranking-page.area-tachikawa
+  .article-cta--rank1
+  .article-cta-banner:focus-visible {
+  outline: 3px solid var(--editorial-cyan);
+  outline-offset: 3px;
 }
 
 .area-ranking-page.area-tachikawa .cta-button--line {
@@ -2938,7 +3002,8 @@
     letter-spacing: 0.04em;
   }
 
-  .area-ranking-page.area-tachikawa .article-cta--hero .article-cta-brand-logo {
+  .area-ranking-page.area-tachikawa .article-cta--hero .article-cta-brand-logo,
+  .area-ranking-page.area-tachikawa .article-cta--rank1 .article-cta-brand-logo {
     width: min(210px, 64%);
     margin-bottom: 18px;
   }
@@ -2963,12 +3028,14 @@
     box-shadow: none;
   }
 
-  .area-ranking-page.area-tachikawa .article-cta--hero .cta-button--shop {
+  .area-ranking-page.area-tachikawa .article-cta--hero .cta-button--shop,
+  .area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button--shop {
     min-height: 70px;
     gap: 3px;
   }
 
-  .area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note {
+  .area-ranking-page.area-tachikawa .article-cta--hero .cta-button-note,
+  .area-ranking-page.area-tachikawa .article-cta--rank1 .cta-button-note {
     font-size: 12px;
   }
 
