@@ -49,5 +49,8 @@ jobs:
           done < <(find . -name '*.html' -not -path './.git/*' -print0)
           exit $missing
 
+      - name: Thank-you lead tracking must be guarded and one-shot
+        run: node tools/check-thanks-analytics.cjs
+
       - name: SEO pages must include OGP metadata, sitemap, and robots.txt
         run: node tools/check-seo-metadata.js

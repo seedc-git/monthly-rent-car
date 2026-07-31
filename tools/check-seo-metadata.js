@@ -4,12 +4,16 @@ const path = require("path");
 const root = process.cwd();
 const stagingHost = "stg.monthly-rent-car.jp";
 const productionHost = "monthly-rent-car.jp";
+const productionThanksUrl = `https://${productionHost}/thanks/`;
 const cnamePath = path.join(root, "CNAME");
 const isStaging = fs.existsSync(cnamePath) && fs.readFileSync(cnamePath, "utf8").trim() === stagingHost;
 const host = isStaging ? stagingHost : productionHost;
 const baseUrl = `https://${host}`;
 const internalPages = new Set([
   "line.html",
+  "thanks/index.html",
+]);
+const productionNoindexPages = new Set([
   "thanks/index.html",
 ]);
 const sitemapExcludedPages = new Set(
@@ -139,13 +143,31 @@ function checkInternalPage(file) {
     html,
     /<meta\s+name="robots"\s+content="([\s\S]*?)"\s*>/,
   );
+  const canonical = extractFirst(
+    html,
+    /<link\s+rel="canonical"\s+href="([\s\S]*?)"\s*>/,
+  );
 
   if (isStaging) {
     if (robots !== "noindex, nofollow") {
       fail(file, "staging internal page must include noindex, nofollow");
     }
+  } else if (productionNoindexPages.has(file)) {
+    if (robots !== "noindex") {
+      fail(file, "production thank-you page must include robots noindex");
+    }
   } else if (robots) {
-    fail(file, "production internal page must not include a robots noindex or nofollow meta tag");
+    fail(file, "production internal page must not include a robots meta tag");
+  }
+
+  if (file === "thanks/index.html") {
+    const canonicalCount = countMatches(html, /rel="canonical"/g);
+    if (canonicalCount !== 1) {
+      fail(file, `rel=canonical must appear exactly once, found ${canonicalCount}`);
+    }
+    if (canonical !== productionThanksUrl) {
+      fail(file, `canonical must be ${productionThanksUrl}`);
+    }
   }
 }
 

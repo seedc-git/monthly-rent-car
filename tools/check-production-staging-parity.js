@@ -95,6 +95,13 @@ function normalizeEnvironmentPatch(file, patch, isAdded) {
       .join("\n");
   }
 
+  if (!isAdded && file === "thanks/index.html") {
+    normalized = normalized.replace(
+      /^(\+\s*<meta\s+name="robots"\s+content=")noindex(">)/m,
+      "$1noindex, nofollow$2",
+    );
+  }
+
   if (isAdded && file.endsWith(".html")) {
     normalized = normalized.replace(
       /^\+(\s*)<link rel="canonical" href="https:\/\/stg\.monthly-rent-car\.jp\/[^"]*">\r?$/m,
