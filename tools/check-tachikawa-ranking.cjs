@@ -31,7 +31,8 @@ const expectedDescription =
   "立川市で利用できる格安レンタカー10社を、1ヶ月料金、車種、保険・補償、配車・引取り、トラブル時のサポートで比較。立川駅周辺の店舗型から宅配型まで、長期利用に適したサービスと選び方を解説します。";
 const expectedCanonical = "https://monthly-rent-car.jp/area/tachikawa/";
 const cssRoot = ".area-ranking-page.area-tachikawa";
-const transparentHeaderLogo = "../../assets/img/monthly-rentacar-logo-transparent.png";
+const transparentHeaderLogo =
+  "../../assets/img/monthly-rentacar-logo-transparent-660.webp";
 const finalEyecatch =
   "../../assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp";
 const finalPeriodGuide =
@@ -262,14 +263,48 @@ function readRequired(file, absolutePath) {
   }
 }
 
-function pngHasAlpha(absolutePath) {
+function imageHasAlpha(absolutePath) {
   try {
     const buffer = fs.readFileSync(absolutePath);
-    return (
+    const isTransparentPng =
       buffer.length > 25 &&
       buffer.toString("ascii", 1, 4) === "PNG" &&
-      [4, 6].includes(buffer[25])
-    );
+      [4, 6].includes(buffer[25]);
+    if (isTransparentPng) return true;
+
+    if (
+      buffer.length < 21 ||
+      buffer.toString("ascii", 0, 4) !== "RIFF" ||
+      buffer.toString("ascii", 8, 12) !== "WEBP"
+    ) {
+      return false;
+    }
+
+    for (let offset = 12; offset + 8 <= buffer.length; ) {
+      const chunkType = buffer.toString("ascii", offset, offset + 4);
+      const chunkSize = buffer.readUInt32LE(offset + 4);
+      const chunkDataOffset = offset + 8;
+      if (chunkType === "ALPH") return true;
+      if (
+        chunkType === "VP8X" &&
+        chunkSize >= 1 &&
+        chunkDataOffset < buffer.length &&
+        (buffer[chunkDataOffset] & 0x10) !== 0
+      ) {
+        return true;
+      }
+      if (
+        chunkType === "VP8L" &&
+        chunkSize >= 5 &&
+        chunkDataOffset + 5 <= buffer.length &&
+        buffer[chunkDataOffset] === 0x2f &&
+        (buffer.readUInt32LE(chunkDataOffset + 1) & 0x10000000) !== 0
+      ) {
+        return true;
+      }
+      offset = chunkDataOffset + chunkSize + (chunkSize % 2);
+    }
+    return false;
   } catch {
     return false;
   }
@@ -1017,9 +1052,9 @@ const transparentLogoPath = path.resolve(
   transparentHeaderLogo,
 );
 assert(
-  pngHasAlpha(transparentLogoPath),
+  imageHasAlpha(transparentLogoPath),
   pageFile,
-  "背景透過ロゴは実際にalpha channelを持つPNGにしてください",
+  "背景透過ロゴは実際にalpha channelを持つ画像にしてください",
 );
 const eyecatch = findElementById(html, "tachikawa-ranking-eyecatch");
 const eyecatchImage = findStartTags(eyecatch?.html || "", "img")[0];
