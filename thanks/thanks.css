@@ -1,7 +1,7 @@
 .thanks-page {
   --thanks-navy: #05266f;
   --thanks-cyan: #08798a;
-  --thanks-orange: #ff6a00;
+  --thanks-orange: #b94d00;
   --thanks-ink: #26303b;
   --thanks-muted: #566a84;
   --thanks-line: #cfdcdf;
@@ -298,28 +298,20 @@
   gap: 18px;
   color: #ffffff;
   background: var(--thanks-orange);
-  box-shadow: 0 14px 30px rgba(255, 106, 0, 0.22);
+  box-shadow: 0 14px 30px rgba(185, 77, 0, 0.22);
   font-size: 16px;
   font-weight: 900;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .thanks-home-button:hover {
-  background: #e95f00;
+  background: #943d00;
   transform: translateY(-2px);
 }
 
 .thanks-home-button span:last-child {
   font-size: 20px;
   line-height: 1;
-}
-
-.thanks-article-link {
-  color: var(--thanks-navy);
-  font-size: 14px;
-  font-weight: 800;
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 .thanks-page .site-footer {
