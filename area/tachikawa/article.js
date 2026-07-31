@@ -30,6 +30,9 @@
 
       const item = document.createElement("li");
       const link = document.createElement("a");
+      const tocLevel = heading.tagName === "H2" ? "2" : "3";
+      item.classList.add(`toc-item--level-${tocLevel}`);
+      link.dataset.tocLevel = tocLevel;
       link.href = `#${heading.id}`;
       link.textContent = heading.textContent.replace(/\s+/g, " ").trim();
       item.appendChild(link);
