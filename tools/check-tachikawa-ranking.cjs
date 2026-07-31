@@ -1204,7 +1204,7 @@ const introRecommendation = findElementByClass(
 );
 assert(
   normalizeContinuousText(introRecommendation?.html || "").includes(
-    "空車を確認する（電話・LINE・メール）",
+    "＼電話・LINE・メールで／空車を確認する",
   ),
   pageFile,
   "冒頭おすすめCTAの文言が指定内容と一致しません",
@@ -1231,7 +1231,7 @@ const introRecommendationButtonNote = findElementByClass(
 );
 assert(
   normalizeContinuousText(introRecommendationButtonCopy?.html || "") ===
-    "空車を確認する（電話・LINE・メール）",
+    "＼電話・LINE・メールで／空車を確認する",
   pageFile,
   "冒頭おすすめCTAの主文は1つのcopy要素にまとめてください",
 );
@@ -1239,9 +1239,9 @@ assert(
   normalizeContinuousText(introRecommendationButtonMain?.html || "") ===
       "空車を確認する" &&
     normalizeContinuousText(introRecommendationButtonNote?.html || "") ===
-      "（電話・LINE・メール）" &&
+      "＼電話・LINE・メールで／" &&
     introRecommendationButton?.startTag.includes(
-      'aria-label="空車を確認する（電話・LINE・メール）"',
+      'aria-label="電話・LINE・メールで空車を確認する"',
     ),
   pageFile,
   "冒頭おすすめCTAは主文と連絡手段を2段に分けてください",
