@@ -420,12 +420,27 @@
 }
 
 .area-ranking-page.area-tachikawa
+  .quick-recommendation-button-main {
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.area-ranking-page.area-tachikawa
   .quick-recommendation-button-note {
-  margin-top: 2px;
+  margin-top: 3px;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.02em;
   line-height: 1.35;
+}
+
+.area-ranking-page.area-tachikawa
+  :is(
+    .quick-recommendation-button-punctuation,
+    .quick-recommendation-button-channel
+  ) {
+  display: inline;
 }
 
 .area-ranking-page.area-tachikawa .quick-recommendation-button-arrow {
@@ -3372,6 +3387,13 @@
   z-index: 1;
 }
 
+.area-ranking-page.area-tachikawa .quick-recommendation-button {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic",
+    "YuGothic", "Noto Sans JP", Meiryo, sans-serif;
+  text-shadow: none;
+}
+
 .area-ranking-page.area-tachikawa .cta-button--primary {
   padding-right: 58px;
 }
@@ -3395,6 +3417,70 @@
   font-weight: 800;
   line-height: 1;
   transition: transform 0.18s ease;
+}
+
+@media (min-width: 761px) {
+  .area-ranking-page.area-tachikawa .quick-recommendation-button {
+    min-height: 80px;
+    padding: 10px 18px 10px 14px;
+    gap: 16px;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .quick-recommendation-button-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr);
+    grid-template-areas: "channels main";
+    align-items: stretch;
+    column-gap: 18px;
+    text-wrap: initial;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .quick-recommendation-button-main {
+    grid-area: main;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(23px, 1.7vw, 27px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .quick-recommendation-button-note {
+    grid-area: channels;
+    margin-top: 0;
+    padding-right: 14px;
+    border-right: 1px solid rgba(255, 255, 255, 0.58);
+    color: #252b33;
+    display: grid;
+    align-content: center;
+    gap: 2px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .quick-recommendation-button-punctuation {
+    display: none;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .quick-recommendation-button-channel {
+    display: block;
+  }
+
+  .area-ranking-page.area-tachikawa
+    .quick-recommendation-button-arrow {
+    font-size: 30px;
+  }
 }
 
 @media (hover: hover) {

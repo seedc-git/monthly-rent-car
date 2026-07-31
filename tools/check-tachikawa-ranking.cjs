@@ -1229,6 +1229,16 @@ const introRecommendationButtonNote = findElementByClass(
   "quick-recommendation-button-note",
   "span",
 );
+const introRecommendationChannels = [
+  ...(introRecommendationButtonNote?.html || "").matchAll(
+    /<span\b(?=[^>]*\bclass=["'][^"']*\bquick-recommendation-button-channel\b[^"']*["'])[^>]*>([^<]+)<\/span>/gi,
+  ),
+].map((match) => normalizeContinuousText(match[1]));
+const introRecommendationPunctuation = [
+  ...(introRecommendationButtonNote?.html || "").matchAll(
+    /<span\b(?=[^>]*\bclass=["'][^"']*\bquick-recommendation-button-punctuation\b[^"']*["'])(?=[^>]*\baria-hidden=["']true["'])[^>]*>([^<]+)<\/span>/gi,
+  ),
+].map((match) => normalizeContinuousText(match[1]));
 assert(
   normalizeContinuousText(introRecommendationButtonCopy?.html || "") ===
     "空車を確認する（電話・LINE・メール）",
@@ -1242,6 +1252,17 @@ assert(
       "（電話・LINE・メール）",
   pageFile,
   "冒頭おすすめCTAは主文と連絡手段を2段に分けてください",
+);
+assert(
+  JSON.stringify(introRecommendationChannels) ===
+      JSON.stringify(["電話", "LINE", "メール"]) &&
+    JSON.stringify(introRecommendationPunctuation) ===
+      JSON.stringify(["（", "・", "・", "）"]) &&
+    introRecommendationButton?.startTag.includes(
+      'aria-label="空車を確認する（電話・LINE・メール）"',
+    ),
+  pageFile,
+  "冒頭おすすめCTAは連絡手段を3項目に分け、読み上げ用ラベルを設定してください",
 );
 
 const keiWagonTable = findElementByClass(
@@ -1701,6 +1722,27 @@ assert(
   ),
   cssFile,
   "冒頭おすすめCTAの文言はPC・モバイルで自然に改行できる必要があります",
+);
+assert(
+  /\.quick-recommendation-button\s*\{[^}]*font-family\s*:[^}]*Hiragino Sans[^}]*text-shadow\s*:\s*none/i.test(
+    css,
+  ),
+  cssFile,
+  "冒頭おすすめCTAは輪郭がぼけない日本語フォント設定にしてください",
+);
+assert(
+  /@media\s*\(\s*min-width\s*:\s*761px\s*\)[\s\S]*?\.quick-recommendation-button-copy\s*\{[^}]*display\s*:\s*grid[^}]*grid-template-columns\s*:\s*62px\s+minmax\(\s*0\s*,\s*1fr\s*\)[^}]*grid-template-areas\s*:\s*["']channels main["'][^}]*\}[\s\S]*?\.quick-recommendation-button-main\s*\{[^}]*grid-area\s*:\s*main[^}]*font-size\s*:\s*clamp\(\s*23px\s*,\s*1\.7vw\s*,\s*27px\s*\)[^}]*white-space\s*:\s*nowrap[^}]*\}[\s\S]*?\.quick-recommendation-button-note\s*\{[^}]*grid-area\s*:\s*channels[^}]*color\s*:\s*#252b33[^}]*display\s*:\s*grid/i.test(
+    css,
+  ),
+  cssFile,
+  "PCの冒頭おすすめCTAは左に連絡手段、右に大きな主文を配置してください",
+);
+assert(
+  /:is\(\s*\.quick-recommendation-button-punctuation,\s*\.quick-recommendation-button-channel\s*\)\s*\{[^}]*display\s*:\s*inline[^}]*\}[\s\S]*?@media\s*\(\s*min-width\s*:\s*761px\s*\)[\s\S]*?\.quick-recommendation-button-punctuation\s*\{[^}]*display\s*:\s*none[^}]*\}[\s\S]*?\.quick-recommendation-button-channel\s*\{[^}]*display\s*:\s*block/i.test(
+    css,
+  ),
+  cssFile,
+  "スマホでは連絡手段を横並び、PCでは3段表示にしてください",
 );
 assert(
   /@media\s*\(\s*max-width\s*:\s*760px\s*\)[\s\S]*?\.flow-step\s*\{[^}]*width\s*:\s*56px[^}]*height\s*:\s*56px[^}]*border\s*:\s*6px\s+solid\s+#fff2eb[^}]*grid-template-rows\s*:\s*auto\s+auto/i.test(
