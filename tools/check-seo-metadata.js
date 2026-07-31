@@ -8,6 +8,10 @@ const cnamePath = path.join(root, "CNAME");
 const isStaging = fs.existsSync(cnamePath) && fs.readFileSync(cnamePath, "utf8").trim() === stagingHost;
 const host = isStaging ? stagingHost : productionHost;
 const baseUrl = `https://${host}`;
+const internalPages = new Set([
+  "line.html",
+  "thanks/index.html",
+]);
 const sitemapExcludedPages = new Set(
   isStaging
     ? [
@@ -129,6 +133,22 @@ function checkPage(file) {
   }
 }
 
+function checkInternalPage(file) {
+  const html = read(file);
+  const robots = extractFirst(
+    html,
+    /<meta\s+name="robots"\s+content="([\s\S]*?)"\s*>/,
+  );
+
+  if (isStaging) {
+    if (robots !== "noindex, nofollow") {
+      fail(file, "staging internal page must include noindex, nofollow");
+    }
+  } else if (robots) {
+    fail(file, "production internal page must not include a robots noindex or nofollow meta tag");
+  }
+}
+
 function checkSitemap(pages) {
   const file = "sitemap.xml";
   if (!fs.existsSync(path.join(root, file))) {
@@ -169,11 +189,12 @@ function checkRobots() {
 
 const pages = walk(".")
   .filter((file) => file.endsWith(".html"))
-  .filter((file) => file !== "line.html")
+  .filter((file) => !internalPages.has(file))
   .filter((file) => file === "index.html" || file.includes("/"))
   .sort();
 
 for (const file of pages) checkPage(file);
+for (const file of internalPages) checkInternalPage(file);
 checkSitemap(pages);
 checkRobots();
 
