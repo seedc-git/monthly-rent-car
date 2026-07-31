@@ -26,7 +26,7 @@
 ## main（本番）に絶対に入れてはいけないもの
 
 - `CNAME` の変更（本番は monthly-rent-car.jp のまま。stg.monthly-rent-car.jp は staging 専用）
-- `<meta name="robots" content="noindex, nofollow">`（staging 専用。本番に入ると検索から消える）
+- `<meta name="robots" content="noindex, nofollow">`（staging 専用。送信完了ページの `thanks/index.html` は本番でも `noindex` のみを付ける例外とする）
 - `.github/workflows/` の削除、および依頼されていない変更（デプロイの仕組みが壊れる）
 - 依頼されていないUI変更（staging に残っている未リリースの変更を巻き込まない）
 
@@ -40,6 +40,8 @@
 - ページを追加・コピーする際は、そのページが参照する CSSクラス・JS・画像が「反映先ブランチに」全部存在するかを必ず確認する。共有 `styles.css` への依存が特に危険（過去、staging の styles.css 前提のページを main に入れて本番の固定CTAが機能しなくなる事故が発生した）。
 - 新ページ固有のスタイルは共有 `styles.css` に追加せず、ページ専用CSSファイルに分離する（例: `shop/shop-contact.css` 方式）。
 - 新規HTMLページには GA4 計測タグ（本番ホスト名ガード付き、ID: G-501JL6QG1N）を必ず含める。既存ページの head からスニペットをコピーする。全HTMLページを CI（Check GA tag）が検査し、欠けていると PR がマージできない・デプロイ前に検知される。
+- `thanks/index.html` は検索流入用ページではないため、本番では `<meta name="robots" content="noindex">` と自己参照canonicalを必須とし、`sitemap.xml` には追加しない。stagingではサイト全体の方針を優先して `noindex, nofollow` を維持する。
+- `thanks/index.html` の `generate_lead` は `formrun_complete=1` の場合だけ1回送信する。既存のGA4 `config` や手動 `page_view` を追加せず、イベントをキューした直後かつ外部 `gtag.js` の読込前に対象パラメータだけを `history.replaceState` で削除する。
 - 新規SEOページ（トップページ、`shop/**/index.html` など。`line.html` のような内部/遷移用HTMLは除く）を追加するときは、必ずOGP/Twitter metaを追加し、`sitemap.xml` にURLを追加する。CI（SEO pages must include OGP metadata, sitemap, and robots.txt）が検査する。
 - `robots.txt` は staging と main で内容を分ける。staging は `Disallow: /` と `Sitemap: https://stg.monthly-rent-car.jp/sitemap.xml`、main は `Allow: /` と `Sitemap: https://monthly-rent-car.jp/sitemap.xml` にする。
 - push が拒否されたら他タスクが先行している。force push は禁止。fetch → rebase → 動作確認をやり直してから push する。

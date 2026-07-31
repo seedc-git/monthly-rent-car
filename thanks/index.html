@@ -8,6 +8,8 @@
     <meta
       name="description"
       content="マンスリーレンタカーへのお問い合わせを受け付けました。担当店舗で内容を確認し、空車状況と料金をご案内します。">
+    <meta name="robots" content="noindex">
+    <link rel="canonical" href="https://monthly-rent-car.jp/thanks/">
     <link rel="icon" href="../assets/favicon/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon/favicon-192x192.png">
@@ -15,10 +17,22 @@
     <!-- Google tag (gtag.js) — fires on production hostname only -->
     <script>
       if (location.hostname === "monthly-rent-car.jp") {
+        var completionUrl = new URL(location.href);
+        var isFormrunComplete =
+          completionUrl.searchParams.get("formrun_complete") === "1";
         window.dataLayer = window.dataLayer || [];
         window.gtag = function () { dataLayer.push(arguments); };
         gtag("js", new Date());
         gtag("config", "G-501JL6QG1N");
+        if (isFormrunComplete) {
+          gtag("event", "generate_lead");
+          completionUrl.searchParams.delete("formrun_complete");
+          history.replaceState(
+            history.state,
+            "",
+            completionUrl.pathname + completionUrl.search + completionUrl.hash,
+          );
+        }
         var gaScript = document.createElement("script");
         gaScript.async = true;
         gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-501JL6QG1N";
