@@ -42,6 +42,8 @@ const finalGogoCreative =
   "../../assets/img/area/tachikawa/gogo-monthly-franchise-banner-20260731.webp";
 const finalMaverickCreative =
   "../../assets/img/area/tachikawa/maverick-hachioji-website-20260731.webp";
+const finalTokyoBusinessCreative =
+  "../../assets/img/area/tachikawa/tokyo-business-rentacar-office-20260731.webp";
 const finalNrtokyoCreative =
   "../../assets/img/area/tachikawa/japan-rentlease-commercial-vehicle-banner-20260731.webp";
 const finalNiconicoCreative =
@@ -195,7 +197,7 @@ const expectedImageSlots = new Map([
   ["ranking-photo-monthly-go", [650, 390]],
   ["ranking-photo-gogo", [860, 645]],
   ["ranking-photo-maverick", [2048, 1036]],
-  ["ranking-logo-tokyo-business", [320, 160]],
+  ["ranking-photo-tokyo-business", [445, 340]],
   ["ranking-photo-nrtokyo", [1500, 680]],
   ["ranking-photo-niconico", [1860, 1312]],
   ["ranking-photo-nippon", [1200, 800]],
@@ -1081,6 +1083,22 @@ assert(
   pageFile,
   "Maverickレンタカーには指定された公式サイト画像と説明altが必要です",
 );
+const tokyoBusinessCreative = findElementById(
+  html,
+  "ranking-photo-tokyo-business",
+);
+const tokyoBusinessCreativeImage = findStartTags(
+  tokyoBusinessCreative?.html || "",
+  "img",
+)[0];
+assert(
+  tokyoBusinessCreativeImage?.attributes.src ===
+    finalTokyoBusinessCreative &&
+    tokyoBusinessCreativeImage?.attributes.alt ===
+      "東京ビジネスレンタカーの店舗入口と車両",
+  pageFile,
+  "東京ビジネスレンタカーには指定された店舗写真と説明altが必要です",
+);
 const nrtokyoCreative = findElementById(html, "ranking-photo-nrtokyo");
 const nrtokyoCreativeImage = findStartTags(
   nrtokyoCreative?.html || "",
@@ -1186,7 +1204,7 @@ const introRecommendation = findElementByClass(
 );
 assert(
   normalizeContinuousText(introRecommendation?.html || "").includes(
-    "東京マンスリーレンタカー立川店の空車と1ヶ月料金を確認する",
+    "空車を確認する（電話・LINE・メール）",
   ),
   pageFile,
   "冒頭おすすめCTAの文言が指定内容と一致しません",
@@ -1201,11 +1219,29 @@ const introRecommendationButtonCopy = findElementByClass(
   "quick-recommendation-button-copy",
   "span",
 );
+const introRecommendationButtonMain = findElementByClass(
+  introRecommendationButtonCopy?.html || "",
+  "quick-recommendation-button-main",
+  "span",
+);
+const introRecommendationButtonNote = findElementByClass(
+  introRecommendationButtonCopy?.html || "",
+  "quick-recommendation-button-note",
+  "span",
+);
 assert(
   normalizeContinuousText(introRecommendationButtonCopy?.html || "") ===
-    "東京マンスリーレンタカー立川店の空車と1ヶ月料金を確認する",
+    "空車を確認する（電話・LINE・メール）",
   pageFile,
   "冒頭おすすめCTAの主文は1つのcopy要素にまとめてください",
+);
+assert(
+  normalizeContinuousText(introRecommendationButtonMain?.html || "") ===
+      "空車を確認する" &&
+    normalizeContinuousText(introRecommendationButtonNote?.html || "") ===
+      "（電話・LINE・メール）",
+  pageFile,
+  "冒頭おすすめCTAは主文と連絡手段を2段に分けてください",
 );
 
 const keiWagonTable = findElementByClass(
@@ -1681,7 +1717,7 @@ assert(
   "モバイルのSTEP見出しは縦線と文字の間に余白が必要です",
 );
 assert(
-  /:is\(\.quick-recommendation-button,\s*\.cta-button--primary\)\s*\{[^}]*border-radius\s*:\s*9px[^}]*background\s*:\s*linear-gradient\(\s*100deg,\s*#c45100\s+0%,\s*#b94d00\s+56%,\s*#a94200\s+100%\s*\)[^}]*box-shadow\s*:[^}]*0\s+5px\s+0\s+#782b00/i.test(
+  /:is\(\.quick-recommendation-button,\s*\.cta-button--primary\)\s*\{[^}]*border-radius\s*:\s*9px[^}]*background\s*:\s*linear-gradient\(\s*90deg,\s*#f97127\s+0%,\s*#f96024\s+48%,\s*#f84668\s+100%\s*\)[^}]*box-shadow\s*:[^}]*0\s+5px\s+0\s+#c8c2c0/i.test(
     css,
   ),
   cssFile,
