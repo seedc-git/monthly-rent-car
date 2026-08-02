@@ -129,8 +129,12 @@ function checkTachikawaLocationData(file, html) {
     '"longitude": 139.4174677',
     '"hasMap": "https://maps.app.goo.gl/XD797tzPuGeetZ1m8"',
     'href="https://maps.app.goo.gl/XD797tzPuGeetZ1m8"',
-    'src="https://www.google.com/maps?q=35.6988456%2C139.4174677&amp;z=16&amp;output=embed"',
+    'src="https://www.google.com/maps/embed?pb=',
+    '1s0x60188d4e7f58340d%3A0x4e6890ca72d030a1',
     'title="東京マンスリーレンタカー立川店の地図"',
+    'referrerpolicy="strict-origin-when-cross-origin"',
+    'height: clamp(240px, 48vw, 450px);',
+    'Googleマップで立川店を見る',
   ];
 
   for (const snippet of requiredSnippets) {

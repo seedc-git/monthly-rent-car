@@ -424,7 +424,7 @@
 
             .tachikawa-map-embed {
               width: 100%;
-              aspect-ratio: 16 / 9;
+              height: clamp(240px, 48vw, 450px);
               margin-top: 16px;
               overflow: hidden;
               border: 1px solid rgba(5, 38, 111, 0.12);
@@ -437,6 +437,30 @@
               width: 100%;
               height: 100%;
               border: 0;
+            }
+
+            .tachikawa-map-open-link {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+              width: min(100%, 420px);
+              min-height: 44px;
+              margin: 12px auto 0;
+              padding: 8px 14px;
+              border: 2px solid var(--navy);
+              border-radius: 8px;
+              color: var(--navy);
+              font-size: clamp(13px, 1.8vw, 15px);
+              font-weight: 700;
+              line-height: 1.4;
+              text-align: center;
+            }
+
+            .tachikawa-map-open-link svg {
+              width: 16px;
+              flex: 0 0 auto;
+              fill: currentColor;
             }
 
             .tachikawa-gallery-title {
@@ -596,12 +620,16 @@
 
             <div class="tachikawa-map-embed">
               <iframe
-                src="https://www.google.com/maps?q=35.6988456%2C139.4174677&amp;z=16&amp;output=embed"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d25917.631874318908!2d139.3758162!3d35.7089014!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188d4e7f58340d%3A0x4e6890ca72d030a1!2z5p2x5Lqs44Oe44Oz44K544Oq44O844Os44Oz44K_44Kr44O844CQ56uL5bed5bqX44CR!5e0!3m2!1sja!2sjp!4v1785660922967!5m2!1sja!2sjp"
                 title="東京マンスリーレンタカー立川店の地図"
                 loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
+                referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen></iframe>
             </div>
+            <a class="tachikawa-map-open-link" href="https://maps.app.goo.gl/XD797tzPuGeetZ1m8" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+              Googleマップで立川店を見る
+            </a>
 
             <div class="tachikawa-gallery-title">立川店の様子</div>
             <div class="tachikawa-gallery">
