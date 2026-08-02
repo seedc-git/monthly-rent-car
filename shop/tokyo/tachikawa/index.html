@@ -248,9 +248,8 @@
     </header>
 
     <main>
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero" aria-label="東京マンスリーレンタカー立川店のサービス案内">
         <div class="hero-stage">
-          <h1 id="hero-title" class="visually-hidden">東京マンスリーレンタカー 長期利用特化の格安レンタカー</h1>
           <div class="hero-art">
             <img
               src="../../../assets/img/fv-main.png"
@@ -259,7 +258,7 @@
         </div>
       </section>
 
-      <section class="section service-area" id="area">
+      <section class="section service-area" id="area" aria-labelledby="tachikawa-store-title">
         <div class="inner">
           <style>
             .tachikawa-access-card {
@@ -274,11 +273,26 @@
               margin-bottom: 18px;
             }
 
-            .tachikawa-access-card .section-head h2 {
-              font-size: clamp(20px, 3vw, 24px);
+            .tachikawa-access-card .section-head h1 {
+              margin: 0;
+              color: var(--navy);
+              font-size: clamp(20px, 1.8vw, 22px);
+              line-height: 1.35;
+              font-weight: 950;
+              word-break: normal;
+              overflow-wrap: anywhere;
+              text-wrap: balance;
             }
 
-            .tachikawa-access-card .section-head h2::after {
+            .tachikawa-access-card .section-head h1 .tachikawa-store-title-part {
+              display: block;
+            }
+
+            .tachikawa-access-card .section-head h1 .tachikawa-store-title-separator {
+              display: none;
+            }
+
+            .tachikawa-access-card .section-head h1::after {
               width: 38px;
               height: 3px;
               margin-top: 10px;
@@ -565,7 +579,11 @@
 
           <div class="tachikawa-access-card">
             <div class="section-head">
-              <h2>東京｜立川店</h2>
+              <h1 id="tachikawa-store-title">
+                <span class="tachikawa-store-title-part">立川市のマンスリーレンタカー</span>
+                <span class="tachikawa-store-title-separator" aria-hidden="true">｜</span>
+                <span class="tachikawa-store-title-part">東京マンスリーレンタカー立川店</span>
+              </h1>
             </div>
 
             <img class="tachikawa-access-main-photo" src="../../../assets/img/tachikawa-store-exterior.png" alt="東京マンスリーレンタカー立川店の外観">
