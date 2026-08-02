@@ -118,6 +118,26 @@ function checkTachikawaStorePhotos(file, html) {
   }
 }
 
+function checkTachikawaLocationData(file, html) {
+  if (file !== "shop/tokyo/tachikawa/index.html") return;
+
+  const requiredSnippets = [
+    '"@type": "AutoRental"',
+    `"@id": "${baseUrl}/shop/tokyo/tachikawa/#store"`,
+    '"streetAddress": "曙町2-22-20 立川センタービル"',
+    '"latitude": 35.6988456',
+    '"longitude": 139.4174677',
+    '"hasMap": "https://maps.app.goo.gl/XD797tzPuGeetZ1m8"',
+    'href="https://maps.app.goo.gl/XD797tzPuGeetZ1m8"',
+    'src="https://www.google.com/maps?q=35.6988456%2C139.4174677&amp;z=16&amp;output=embed"',
+    'title="東京マンスリーレンタカー立川店の地図"',
+  ];
+
+  for (const snippet of requiredSnippets) {
+    if (!html.includes(snippet)) fail(file, `missing Tachikawa location data: ${snippet}`);
+  }
+}
+
 function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
@@ -137,6 +157,7 @@ function checkPage(file) {
   if (!title) fail(file, "title missing");
   if (!description) fail(file, "meta description missing");
   checkTachikawaStorePhotos(file, html);
+  checkTachikawaLocationData(file, html);
 
   if (isStaging) {
     if (robots !== "noindex, nofollow") {
