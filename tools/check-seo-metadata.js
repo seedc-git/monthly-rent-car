@@ -486,6 +486,15 @@ function checkTachikawaHeading(file, html) {
   if (!html.includes('aria-labelledby="tachikawa-store-title"')) {
     fail(file, "Tachikawa service-area must be labelled by the visible h1");
   }
+  if (!html.includes('class="section-head tachikawa-store-heading"')) {
+    fail(file, "Tachikawa h1 must be integrated into the store heading panel");
+  }
+  if (!html.includes('class="tachikawa-store-heading-label"')) {
+    fail(file, "Tachikawa store heading must include its visible guide label");
+  }
+  if (!html.includes("立川店 店舗案内")) {
+    fail(file, "Tachikawa store heading guide label is missing");
+  }
 }
 
 function checkPage(file) {
