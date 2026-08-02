@@ -70,6 +70,11 @@
         "streetAddress": "曙町2-22-20 立川センタービル",
         "addressCountry": "JP"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 35.6988456,
+        "longitude": 139.4174677
+      },
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
@@ -79,7 +84,13 @@
         }
       ],
       "hasMap": "https://maps.app.goo.gl/XD797tzPuGeetZ1m8",
-      "image": "https://monthly-rent-car.jp/assets/img/tachikawa-store-exterior.png"
+      "image": [
+        "https://monthly-rent-car.jp/assets/img/tachikawa-store-exterior.png",
+        "https://monthly-rent-car.jp/assets/img/tachikawa-service-vehicle-cleaning-20260802.webp",
+        "https://monthly-rent-car.jp/assets/img/tachikawa-service-plan-consultation-20260802.webp",
+        "https://monthly-rent-car.jp/assets/img/tachikawa-service-staff-guidance-20260802.webp",
+        "https://monthly-rent-car.jp/assets/img/tachikawa-service-key-handover-20260802.webp"
+      ]
     }
     </script>
     <script type="application/ld+json">
@@ -437,6 +448,48 @@
               fill: currentColor;
             }
 
+            .tachikawa-map-embed {
+              width: 100%;
+              aspect-ratio: 16 / 9;
+              min-height: 202px;
+              margin-top: 16px;
+              overflow: hidden;
+              border: 1px solid rgba(5, 38, 111, 0.12);
+              border-radius: 10px;
+              background: #eef8ff;
+            }
+
+            .tachikawa-map-embed iframe {
+              display: block;
+              width: 100%;
+              height: 100%;
+              border: 0;
+            }
+
+            .tachikawa-map-open-link {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+              width: min(100%, 420px);
+              min-height: 44px;
+              margin: 12px auto 0;
+              padding: 8px 14px;
+              border: 2px solid var(--navy);
+              border-radius: 8px;
+              color: var(--navy);
+              font-size: clamp(13px, 1.8vw, 15px);
+              font-weight: 700;
+              line-height: 1.4;
+              text-align: center;
+            }
+
+            .tachikawa-map-open-link svg {
+              width: 16px;
+              flex: 0 0 auto;
+              fill: currentColor;
+            }
+
             .tachikawa-gallery-title {
               display: grid;
               grid-template-columns: 1fr auto 1fr;
@@ -481,7 +534,7 @@
               margin: 0;
               opacity: 0;
               transition: opacity 1.2s ease;
-              animation: tachikawa-gallery-switch 12s infinite;
+              animation: tachikawa-gallery-switch 16s infinite;
             }
 
             .tachikawa-gallery figure:nth-child(2) {
@@ -490,6 +543,10 @@
 
             .tachikawa-gallery figure:nth-child(3) {
               animation-delay: 8s;
+            }
+
+            .tachikawa-gallery figure:nth-child(4) {
+              animation-delay: 12s;
             }
 
             .tachikawa-gallery figcaption {
@@ -501,12 +558,12 @@
                 opacity: 0;
               }
 
-              8%,
-              42% {
+              5%,
+              25% {
                 opacity: 1;
               }
 
-              50%,
+              30%,
               100% {
                 opacity: 0;
               }
@@ -588,17 +645,33 @@
               </div>
             </div>
 
+            <div class="tachikawa-map-embed">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3240.112641817858!2d139.4174677!3d35.6988456!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188d4e7f58340d%3A0x4e6890ca72d030a1!2z5p2x5Lqs44Oe44Oz44K544Oq44O844Os44Oz44K_44Kr44O844CQ56uL5bed5bqX44CR!5e0!3m2!1sja!2sjp!4v1785669230917!5m2!1sja!2sjp"
+                title="東京マンスリーレンタカー立川店の地図"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen></iframe>
+            </div>
+            <a class="tachikawa-map-open-link" href="https://maps.app.goo.gl/XD797tzPuGeetZ1m8" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+              Googleマップで立川店を見る
+            </a>
+
             <div class="tachikawa-gallery-title">立川店の様子</div>
             <div class="tachikawa-gallery">
               <div class="tachikawa-gallery-track">
                 <figure>
-                  <img class="tachikawa-access-photo" src="../../../assets/img/wako-store-gallery-01.png" alt="東京マンスリーレンタカー立川店の様子 1">
+                  <img class="tachikawa-access-photo" src="../../../assets/img/tachikawa-service-vehicle-cleaning-20260802.webp" srcset="../../../assets/img/tachikawa-service-vehicle-cleaning-20260802-640.webp 640w, ../../../assets/img/tachikawa-service-vehicle-cleaning-20260802.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー立川店で車両を清掃するスタッフ" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                  <img class="tachikawa-access-photo" src="../../../assets/img/wako-store-gallery-02.png" alt="東京マンスリーレンタカー立川店の様子 2">
+                  <img class="tachikawa-access-photo" src="../../../assets/img/tachikawa-service-plan-consultation-20260802.webp" srcset="../../../assets/img/tachikawa-service-plan-consultation-20260802-640.webp 640w, ../../../assets/img/tachikawa-service-plan-consultation-20260802.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー立川店で料金プランを案内するスタッフ" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                  <img class="tachikawa-access-photo" src="../../../assets/img/wako-store-gallery-03.png" alt="東京マンスリーレンタカー立川店の様子 3">
+                  <img class="tachikawa-access-photo" src="../../../assets/img/tachikawa-service-staff-guidance-20260802.webp" srcset="../../../assets/img/tachikawa-service-staff-guidance-20260802-640.webp 640w, ../../../assets/img/tachikawa-service-staff-guidance-20260802.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー立川店で利用者を迎えるスタッフ" loading="lazy" decoding="async">
+                </figure>
+                <figure>
+                  <img class="tachikawa-access-photo" src="../../../assets/img/tachikawa-service-key-handover-20260802.webp" srcset="../../../assets/img/tachikawa-service-key-handover-20260802-640.webp 640w, ../../../assets/img/tachikawa-service-key-handover-20260802.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー立川店で鍵を引き渡すスタッフ" loading="lazy" decoding="async">
                 </figure>
               </div>
             </div>
