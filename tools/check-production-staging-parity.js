@@ -71,7 +71,7 @@ function normalizeAddedHtml(html) {
 function normalizeEnvironmentPatch(file, patch, isAdded) {
   let normalized = patch;
 
-  if (file === "sitemap.xml" || (isAdded && file.endsWith(".html"))) {
+  if (file === "sitemap.xml" || file.endsWith(".html")) {
     normalized = normalized.replaceAll(
       `https://${productionHost}`,
       `https://${stagingHost}`,
