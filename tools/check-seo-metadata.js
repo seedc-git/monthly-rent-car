@@ -202,7 +202,13 @@ function checkRobots() {
     fail(file, `robots.txt must reference ${baseUrl}/sitemap.xml`);
   }
   if (isStaging) {
-    if (!/^Disallow:\s*\/\s*$/m.test(text)) fail(file, "staging robots.txt must disallow crawling");
+    // Crawling must stay allowed on staging: robots.txt Disallow would stop
+    // Google from re-reading the pages, so it could never see their noindex
+    // tags and stale staging URLs would keep ranking (observed 2026-08-02:
+    // stg Shinjuku at avg position 5.5 while production sat at 18.1).
+    // Deindexing relies on the per-page noindex enforced above.
+    if (!/^Allow:\s*\/\s*$/m.test(text)) fail(file, "staging robots.txt must allow crawling so noindex tags are discoverable");
+    if (/^Disallow:\s*\/\s*$/m.test(text)) fail(file, "staging robots.txt must not disallow all crawling");
   } else {
     if (!/^Allow:\s*\/\s*$/m.test(text)) fail(file, "production robots.txt must allow crawling");
     if (/^Disallow:\s*\/\s*$/m.test(text)) fail(file, "production robots.txt must not disallow all crawling");
