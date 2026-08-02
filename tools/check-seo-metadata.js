@@ -37,6 +37,25 @@ const requiredOgProperties = [
   "og:image:alt",
 ];
 
+const tachikawaStorePhotos = [
+  {
+    file: "tachikawa-service-vehicle-cleaning-20260802",
+    alt: "東京マンスリーレンタカー立川店で車両を清掃するスタッフ",
+  },
+  {
+    file: "tachikawa-service-plan-consultation-20260802",
+    alt: "東京マンスリーレンタカー立川店で料金プランを案内するスタッフ",
+  },
+  {
+    file: "tachikawa-service-staff-guidance-20260802",
+    alt: "東京マンスリーレンタカー立川店で利用者を迎えるスタッフ",
+  },
+  {
+    file: "tachikawa-service-key-handover-20260802",
+    alt: "東京マンスリーレンタカー立川店で鍵を引き渡すスタッフ",
+  },
+];
+
 let hasError = false;
 
 function fail(file, message) {
@@ -78,6 +97,27 @@ function countMatches(html, pattern) {
   return (html.match(pattern) || []).length;
 }
 
+function checkTachikawaStorePhotos(file, html) {
+  if (file !== "shop/tokyo/tachikawa/index.html") return;
+
+  if (html.includes("wako-store-gallery-")) {
+    fail(file, "Tachikawa store must not use Wako store gallery photos");
+  }
+
+  for (const photo of tachikawaStorePhotos) {
+    const fullAsset = path.join(root, "assets", "img", `${photo.file}.webp`);
+    const mobileAsset = path.join(root, "assets", "img", `${photo.file}-640.webp`);
+    if (!fs.existsSync(fullAsset)) fail(file, `missing store photo: ${photo.file}.webp`);
+    if (!fs.existsSync(mobileAsset)) fail(file, `missing store photo: ${photo.file}-640.webp`);
+    if (!html.includes(`src="../../../assets/img/${photo.file}.webp"`)) {
+      fail(file, `missing store photo markup: ${photo.file}.webp`);
+    }
+    if (!html.includes(`alt="${photo.alt}"`)) {
+      fail(file, `store photo alt must be: ${photo.alt}`);
+    }
+  }
+}
+
 function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
@@ -96,6 +136,7 @@ function checkPage(file) {
 
   if (!title) fail(file, "title missing");
   if (!description) fail(file, "meta description missing");
+  checkTachikawaStorePhotos(file, html);
 
   if (isStaging) {
     if (robots !== "noindex, nofollow") {
