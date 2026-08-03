@@ -612,6 +612,37 @@ function checkTachikawaHeading(file, html) {
   }
 }
 
+function checkTachikawaStoreSummary(file, html) {
+  if (file !== "shop/tokyo/tachikawa/index.html") return;
+
+  const summaryMatches = html.match(/class="tachikawa-store-summary"/g) || [];
+  if (summaryMatches.length !== 1) {
+    fail(file, `Tachikawa store summary must appear exactly once, found ${summaryMatches.length}`);
+  }
+
+  const requiredFacts = [
+    "東京マンスリーレンタカー立川店は、",
+    "立川駅から徒歩6分",
+    "東京都立川市曙町",
+    "1ヶ月以上の長期利用向け",
+    "1ヶ月24,000円（税抜）から",
+    "立川駅周辺での受け渡し",
+    "ご希望住所への配送もご相談ください",
+    "10:00〜19:00",
+    "無休",
+  ];
+  for (const fact of requiredFacts) {
+    if (!html.includes(fact)) fail(file, `Tachikawa store summary is missing: ${fact}`);
+  }
+
+  const summaryIndex = html.indexOf('class="tachikawa-store-summary"');
+  const headingIndex = html.indexOf('id="tachikawa-store-title"');
+  const photoIndex = html.indexOf('class="tachikawa-access-main-photo"');
+  if (!(headingIndex < summaryIndex && summaryIndex < photoIndex)) {
+    fail(file, "Tachikawa store summary must stay directly between the store h1 and exterior photo");
+  }
+}
+
 function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
@@ -648,6 +679,7 @@ function checkPage(file) {
   checkIkebukuroStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
   checkTachikawaHeading(file, html);
+  checkTachikawaStoreSummary(file, html);
   checkShopImages(file, html);
 
   if (isStaging) {

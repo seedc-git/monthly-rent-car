@@ -422,6 +422,37 @@
               display: none;
             }
 
+            .tachikawa-store-summary {
+              margin: 0 0 12px;
+              padding: clamp(12px, 3vw, 18px);
+              border: 1px solid #d5e4f2;
+              border-left: 4px solid var(--orange);
+              border-radius: 8px;
+              background: #f7fbff;
+              color: #273548;
+              font-size: clamp(14px, 1.3vw, 16px);
+              font-weight: 500;
+              line-height: 1.8;
+            }
+
+            .tachikawa-store-summary p {
+              margin: 0;
+            }
+
+            .tachikawa-store-summary p + p {
+              margin-top: 8px;
+            }
+
+            .tachikawa-store-summary strong {
+              color: var(--navy);
+              font-weight: 800;
+              background: linear-gradient(transparent 66%, rgba(255, 194, 71, 0.48) 66%);
+            }
+
+            .tachikawa-store-summary-nowrap {
+              white-space: nowrap;
+            }
+
             .tachikawa-access-main-photo,
             .tachikawa-access-photo {
               display: grid;
@@ -720,6 +751,11 @@
                 <span class="tachikawa-store-title-separator" aria-hidden="true">｜</span>
                 <span class="tachikawa-store-title-part tachikawa-store-title-name">東京マンスリーレンタカー立川店</span>
               </h1>
+            </div>
+
+            <div class="tachikawa-store-summary">
+              <p>東京マンスリーレンタカー立川店は、<strong>立川駅から徒歩6分</strong>、東京都立川市曙町にある1ヶ月以上の長期利用向け<span class="tachikawa-store-summary-nowrap">レンタカー店</span>です。軽自動車は<strong>1ヶ月24,000円（税抜）から</strong>利用できます。</p>
+              <p>立川駅周辺での受け渡しや、ご希望住所への配送もご相談ください。営業時間は10:00〜19:00、無休です。</p>
             </div>
 
             <img class="tachikawa-access-main-photo" src="../../../assets/img/tachikawa-store-exterior.png" alt="東京マンスリーレンタカー立川店の外観">
