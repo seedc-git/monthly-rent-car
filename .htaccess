@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{HTTPS} !on [OR]
+RewriteCond %{HTTP_HOST} ^www\.monthly-rent-car\.jp$ [NC]
+RewriteRule ^(.*)$ https://monthly-rent-car.jp%{REQUEST_URI} [R=301,L]
