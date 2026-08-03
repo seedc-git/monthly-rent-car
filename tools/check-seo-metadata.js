@@ -118,6 +118,43 @@ function pngDimensions(file) {
   return [data.readUInt32BE(16), data.readUInt32BE(20)];
 }
 
+function jpegDimensions(file) {
+  const data = fs.readFileSync(path.join(root, file));
+  if (data.length < 4 || data[0] !== 0xff || data[1] !== 0xd8) return null;
+
+  const startOfFrameMarkers = new Set([
+    0xc0, 0xc1, 0xc2, 0xc3,
+    0xc5, 0xc6, 0xc7,
+    0xc9, 0xca, 0xcb,
+    0xcd, 0xce, 0xcf,
+  ]);
+  let offset = 2;
+
+  while (offset < data.length) {
+    if (data[offset] !== 0xff) {
+      offset += 1;
+      continue;
+    }
+    while (offset < data.length && data[offset] === 0xff) offset += 1;
+    if (offset >= data.length) break;
+
+    const marker = data[offset];
+    offset += 1;
+    if (marker === 0xd9 || marker === 0xda) break;
+    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
+    if (offset + 2 > data.length) return null;
+
+    const segmentLength = data.readUInt16BE(offset);
+    if (segmentLength < 2 || offset + segmentLength > data.length) return null;
+    if (startOfFrameMarkers.has(marker) && segmentLength >= 7) {
+      return [data.readUInt16BE(offset + 5), data.readUInt16BE(offset + 3)];
+    }
+    offset += segmentLength;
+  }
+
+  return null;
+}
+
 function checkPng(file, expectedWidth, expectedHeight, page) {
   if (!fs.existsSync(path.join(root, file))) {
     fail(page, `missing OGP image: ${file}`);
@@ -129,27 +166,51 @@ function checkPng(file, expectedWidth, expectedHeight, page) {
   }
 }
 
+function checkJpeg(file, expectedWidth, expectedHeight, maxBytes, page) {
+  const absolutePath = path.join(root, file);
+  if (!fs.existsSync(absolutePath)) {
+    fail(page, `missing OGP image: ${file}`);
+    return;
+  }
+  const dimensions = jpegDimensions(file);
+  if (!dimensions || dimensions[0] !== expectedWidth || dimensions[1] !== expectedHeight) {
+    fail(page, `${file} must be a ${expectedWidth}x${expectedHeight} JPEG`);
+  }
+  const bytes = fs.statSync(absolutePath).size;
+  if (bytes >= maxBytes) {
+    fail(page, `${file} must be smaller than ${maxBytes} bytes, found ${bytes}`);
+  }
+}
+
 function checkShopImages(file, html) {
   const shop = shopImageByPage[file];
   if (!shop) return;
 
-  const landscapeAsset = `assets/ogp/shops/${shop.slug}-1731x909.png`;
+  const sourceLandscapeAsset = `assets/ogp/shops/${shop.slug}-1731x909.png`;
+  const socialAsset = `assets/ogp/shops/${shop.slug}-1200x630.jpg`;
   const squareAsset = `assets/ogp/shops/${shop.slug}-1200x1200.png`;
-  const landscapeUrl = `${baseUrl}/${landscapeAsset}`;
+  const socialUrl = `${baseUrl}/${socialAsset}`;
   const squareUrl = `${baseUrl}/${squareAsset}`;
   const expectedAlt = `マンスリーレンタカー ${shop.name}店 1日あたり800円〜`;
 
-  checkPng(landscapeAsset, 1731, 909, file);
+  checkPng(sourceLandscapeAsset, 1731, 909, file);
+  checkJpeg(socialAsset, 1200, 630, 600000, file);
   checkPng(squareAsset, 1200, 1200, file);
 
+  if (countMatches(html, /property="og:image:type"/g) !== 1) {
+    fail(file, "og:image:type must appear exactly once");
+  }
+  if (!html.includes('<meta property="og:image:type" content="image/jpeg">')) {
+    fail(file, "og:image:type must be image/jpeg");
+  }
   if (!html.includes(`<meta property="og:image:alt" content="${expectedAlt}">`)) {
     fail(file, `og:image:alt must be: ${expectedAlt}`);
   }
   if (countMatches(html, /name="twitter:image"/g) !== 1) {
     fail(file, "twitter:image must appear exactly once");
   }
-  if (!html.includes(`<meta name="twitter:image" content="${landscapeUrl}">`)) {
-    fail(file, `twitter:image must be ${landscapeUrl}`);
+  if (!html.includes(`<meta name="twitter:image" content="${socialUrl}">`)) {
+    fail(file, `twitter:image must be ${socialUrl}`);
   }
   if (!html.includes(`<meta name="twitter:image:alt" content="${expectedAlt}">`)) {
     fail(file, `twitter:image:alt must be: ${expectedAlt}`);
@@ -289,17 +350,17 @@ function checkPage(file) {
   const expectedUrl = pageUrlFor(file);
   const shopImage = shopImageByPage[file];
   if (file.startsWith("shop/") && !shopImage) {
-    fail(file, "shop page must register its own square and landscape OGP images");
+    fail(file, "shop page must register its own square and social OGP images");
   }
   const expectedOgImage =
     shopImage
-      ? `${baseUrl}/assets/ogp/shops/${shopImage.slug}-1200x1200.png`
+      ? `${baseUrl}/assets/ogp/shops/${shopImage.slug}-1200x630.jpg`
       : file === "area/tachikawa/index.html"
       ? `${baseUrl}/assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp`
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const [expectedOgImageWidth, expectedOgImageHeight] =
     shopImage
-      ? ["1200", "1200"]
+      ? ["1200", "630"]
       : file === "area/tachikawa/index.html"
         ? ["1077", "500"]
         : ["1200", "630"];
