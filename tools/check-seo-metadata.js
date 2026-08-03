@@ -700,6 +700,23 @@ function checkTachikawaStoreSummary(file, html) {
   }
 }
 
+function checkTachikawaSearchMetadata(file, html, title, description) {
+  if (file !== "shop/tokyo/tachikawa/index.html") return;
+
+  const expectedTitle = "立川市のマンスリーレンタカー｜1ヶ月24,000円〜（税抜）｜立川店";
+  const expectedDescription = "東京マンスリーレンタカー立川店は、立川駅から徒歩6分。軽自動車は1ヶ月24,000円（税抜）から利用でき、立川駅周辺での受け渡しや希望住所への配送も相談できます。";
+
+  if (title !== expectedTitle) {
+    fail(file, `Tachikawa title must be: ${expectedTitle}`);
+  }
+  if (description !== expectedDescription) {
+    fail(file, `Tachikawa meta description must be: ${expectedDescription}`);
+  }
+  if (!html.includes(`"name": "${expectedTitle}"`)) {
+    fail(file, "Tachikawa WebPage.name must match the page title");
+  }
+}
+
 function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
@@ -738,6 +755,7 @@ function checkPage(file) {
   checkTachikawaLocationData(file, html);
   checkTachikawaHeading(file, html);
   checkTachikawaStoreSummary(file, html);
+  checkTachikawaSearchMetadata(file, html, title, description);
   checkShopImages(file, html);
 
   if (isStaging) {
