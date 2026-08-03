@@ -56,6 +56,25 @@ const tachikawaStorePhotos = [
   },
 ];
 
+const shinjukuStorePhotos = [
+  {
+    file: "shinjuku-service-controls-guidance-20260803",
+    alt: "東京マンスリーレンタカー新宿店で車内の操作方法を案内するスタッフ",
+  },
+  {
+    file: "shinjuku-service-key-handover-20260803",
+    alt: "東京マンスリーレンタカー新宿店で車の鍵を引き渡すスタッフ",
+  },
+  {
+    file: "shinjuku-service-vehicle-cleaning-20260803",
+    alt: "東京マンスリーレンタカー新宿店で車内を清掃するスタッフ",
+  },
+  {
+    file: "shinjuku-service-staff-and-vehicle-20260803",
+    alt: "東京マンスリーレンタカー新宿店で軽自動車と並ぶスタッフ2名",
+  },
+];
+
 const wakoStorePhotos = [
   {
     file: "wako-service-staff-and-vehicle-20260803",
@@ -164,6 +183,40 @@ function checkWakoStorePhotos(file, html) {
   }
 }
 
+function checkShinjukuStorePhotos(file, html) {
+  if (file !== "shop/tokyo/shinjuku/index.html") return;
+
+  if (html.includes("wako-store-gallery-")) {
+    fail(file, "Shinjuku store must use its dedicated gallery photos");
+  }
+  const requiredStructuredData = [
+    '"@type": "AutoRental"',
+    `"@id": "${baseUrl}/shop/tokyo/shinjuku/#store"`,
+    `"${baseUrl}/assets/img/shinjuku-store-exterior.png"`,
+  ];
+  for (const snippet of requiredStructuredData) {
+    if (!html.includes(snippet)) {
+      fail(file, `missing Shinjuku structured data: ${snippet}`);
+    }
+  }
+
+  for (const photo of shinjukuStorePhotos) {
+    const fullAsset = path.join(root, "assets", "img", `${photo.file}.webp`);
+    const mobileAsset = path.join(root, "assets", "img", `${photo.file}-640.webp`);
+    if (!fs.existsSync(fullAsset)) fail(file, `missing store photo: ${photo.file}.webp`);
+    if (!fs.existsSync(mobileAsset)) fail(file, `missing store photo: ${photo.file}-640.webp`);
+    if (!html.includes(`src="../../../assets/img/${photo.file}.webp"`)) {
+      fail(file, `missing store photo markup: ${photo.file}.webp`);
+    }
+    if (!html.includes(`alt="${photo.alt}"`)) {
+      fail(file, `store photo alt must be: ${photo.alt}`);
+    }
+    if (!html.includes(`"${baseUrl}/assets/img/${photo.file}.webp"`)) {
+      fail(file, `Shinjuku structured data must include: ${photo.file}.webp`);
+    }
+  }
+}
+
 function checkTachikawaLocationData(file, html) {
   if (file !== "shop/tokyo/tachikawa/index.html") return;
 
@@ -209,6 +262,7 @@ function checkPage(file) {
   if (!description) fail(file, "meta description missing");
   checkTachikawaStorePhotos(file, html);
   checkWakoStorePhotos(file, html);
+  checkShinjukuStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
 
   if (isStaging) {
