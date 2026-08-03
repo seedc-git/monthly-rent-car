@@ -56,6 +56,25 @@ const tachikawaStorePhotos = [
   },
 ];
 
+const wakoStorePhotos = [
+  {
+    file: "wako-service-staff-and-vehicle-20260803",
+    alt: "埼玉マンスリーレンタカー和光店で軽自動車と並ぶスタッフ2名",
+  },
+  {
+    file: "wako-service-plan-guidance-20260803",
+    alt: "埼玉マンスリーレンタカー和光店で車種と料金プランを案内するスタッフ",
+  },
+  {
+    file: "wako-service-vehicle-cleaning-20260803",
+    alt: "埼玉マンスリーレンタカー和光店で軽自動車を清掃するスタッフ",
+  },
+  {
+    file: "wako-service-staff-welcome-20260803",
+    alt: "埼玉マンスリーレンタカー和光店の前で軽自動車と並ぶスタッフ2名",
+  },
+];
+
 let hasError = false;
 
 function fail(file, message) {
@@ -118,6 +137,33 @@ function checkTachikawaStorePhotos(file, html) {
   }
 }
 
+function checkWakoStorePhotos(file, html) {
+  if (file !== "shop/saitama/wako/index.html") return;
+
+  if (html.includes("wako-store-gallery-")) {
+    fail(file, "Wako store must use its current dedicated gallery photos");
+  }
+  if (!html.includes(`"${baseUrl}/assets/img/wako-store-exterior.png"`)) {
+    fail(file, "Wako structured data must include the store exterior");
+  }
+
+  for (const photo of wakoStorePhotos) {
+    const fullAsset = path.join(root, "assets", "img", `${photo.file}.webp`);
+    const mobileAsset = path.join(root, "assets", "img", `${photo.file}-640.webp`);
+    if (!fs.existsSync(fullAsset)) fail(file, `missing store photo: ${photo.file}.webp`);
+    if (!fs.existsSync(mobileAsset)) fail(file, `missing store photo: ${photo.file}-640.webp`);
+    if (!html.includes(`src="../../../assets/img/${photo.file}.webp"`)) {
+      fail(file, `missing store photo markup: ${photo.file}.webp`);
+    }
+    if (!html.includes(`alt="${photo.alt}"`)) {
+      fail(file, `store photo alt must be: ${photo.alt}`);
+    }
+    if (!html.includes(`"${baseUrl}/assets/img/${photo.file}.webp"`)) {
+      fail(file, `Wako structured data must include: ${photo.file}.webp`);
+    }
+  }
+}
+
 function checkTachikawaLocationData(file, html) {
   if (file !== "shop/tokyo/tachikawa/index.html") return;
 
@@ -162,6 +208,7 @@ function checkPage(file) {
   if (!title) fail(file, "title missing");
   if (!description) fail(file, "meta description missing");
   checkTachikawaStorePhotos(file, html);
+  checkWakoStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
 
   if (isStaging) {
