@@ -77,6 +77,40 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@type": "AutoRental",
+      "@id": "https://stg.monthly-rent-car.jp/shop/tokyo/shinjuku/#store",
+      "name": "東京マンスリーレンタカー 新宿店",
+      "url": "https://stg.monthly-rent-car.jp/shop/tokyo/shinjuku/",
+      "telephone": "+81-50-1792-0800",
+      "priceRange": "¥¥",
+      "address": {
+        "@type": "PostalAddress",
+        "postalCode": "160-0023",
+        "addressRegion": "東京都",
+        "addressLocality": "新宿区",
+        "streetAddress": "西新宿7-10-17 新宿ダイカンプラザB館807",
+        "addressCountry": "JP"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "10:00",
+          "closes": "19:00"
+        }
+      ],
+      "image": [
+        "https://stg.monthly-rent-car.jp/assets/img/shinjuku-store-exterior.png",
+        "https://stg.monthly-rent-car.jp/assets/img/shinjuku-service-controls-guidance-20260803.webp",
+        "https://stg.monthly-rent-car.jp/assets/img/shinjuku-service-key-handover-20260803.webp",
+        "https://stg.monthly-rent-car.jp/assets/img/shinjuku-service-vehicle-cleaning-20260803.webp",
+        "https://stg.monthly-rent-car.jp/assets/img/shinjuku-service-staff-and-vehicle-20260803.webp"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
         {
@@ -452,7 +486,7 @@
               margin: 0;
               opacity: 0;
               transition: opacity 1.2s ease;
-              animation: shinjuku-gallery-switch 12s infinite;
+              animation: shinjuku-gallery-switch 16s infinite;
             }
 
             .shinjuku-gallery figure:nth-child(2) {
@@ -461,6 +495,10 @@
 
             .shinjuku-gallery figure:nth-child(3) {
               animation-delay: 8s;
+            }
+
+            .shinjuku-gallery figure:nth-child(4) {
+              animation-delay: 12s;
             }
 
             .shinjuku-gallery figcaption {
@@ -472,12 +510,12 @@
                 opacity: 0;
               }
 
-              8%,
-              42% {
+              5%,
+              25% {
                 opacity: 1;
               }
 
-              50%,
+              30%,
               100% {
                 opacity: 0;
               }
@@ -563,13 +601,16 @@
             <div class="shinjuku-gallery">
               <div class="shinjuku-gallery-track">
                 <figure>
-                  <img class="shinjuku-access-photo" src="../../../assets/img/wako-store-gallery-01.png" alt="東京マンスリーレンタカー新宿店の様子 1">
+                  <img class="shinjuku-access-photo" src="../../../assets/img/shinjuku-service-controls-guidance-20260803.webp" srcset="../../../assets/img/shinjuku-service-controls-guidance-20260803-640.webp 640w, ../../../assets/img/shinjuku-service-controls-guidance-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー新宿店で車内の操作方法を案内するスタッフ" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                  <img class="shinjuku-access-photo" src="../../../assets/img/wako-store-gallery-02.png" alt="東京マンスリーレンタカー新宿店の様子 2">
+                  <img class="shinjuku-access-photo" src="../../../assets/img/shinjuku-service-key-handover-20260803.webp" srcset="../../../assets/img/shinjuku-service-key-handover-20260803-640.webp 640w, ../../../assets/img/shinjuku-service-key-handover-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー新宿店で車の鍵を引き渡すスタッフ" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                  <img class="shinjuku-access-photo" src="../../../assets/img/wako-store-gallery-03.png" alt="東京マンスリーレンタカー新宿店の様子 3">
+                  <img class="shinjuku-access-photo" src="../../../assets/img/shinjuku-service-vehicle-cleaning-20260803.webp" srcset="../../../assets/img/shinjuku-service-vehicle-cleaning-20260803-640.webp 640w, ../../../assets/img/shinjuku-service-vehicle-cleaning-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー新宿店で車内を清掃するスタッフ" loading="lazy" decoding="async">
+                </figure>
+                <figure>
+                  <img class="shinjuku-access-photo" src="../../../assets/img/shinjuku-service-staff-and-vehicle-20260803.webp" srcset="../../../assets/img/shinjuku-service-staff-and-vehicle-20260803-640.webp 640w, ../../../assets/img/shinjuku-service-staff-and-vehicle-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー新宿店で軽自動車と並ぶスタッフ2名" loading="lazy" decoding="async">
                 </figure>
               </div>
             </div>
