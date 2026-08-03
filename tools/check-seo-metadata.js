@@ -495,6 +495,15 @@ function checkTachikawaHeading(file, html) {
   if (!html.includes("立川店 店舗案内")) {
     fail(file, "Tachikawa store heading guide label is missing");
   }
+  const frameAsset = "assets/img/tachikawa-store-heading-frame-20260803.webp";
+  if (!html.includes(`../../../${frameAsset}`)) {
+    fail(file, "Tachikawa store heading frame asset is missing from the markup");
+  }
+  if (!fs.existsSync(path.join(root, frameAsset))) {
+    fail(file, `missing Tachikawa store heading frame: ${frameAsset}`);
+  } else if (fs.statSync(path.join(root, frameAsset)).size > 20000) {
+    fail(file, `Tachikawa store heading frame must stay below 20 KB: ${frameAsset}`);
+  }
 }
 
 function checkPage(file) {
