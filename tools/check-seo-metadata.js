@@ -108,6 +108,25 @@ const shinjukuStorePhotos = [
   },
 ];
 
+const omiyaStorePhotos = [
+  {
+    file: "omiya-service-evening-reservation-support-20260803",
+    alt: "埼玉マンスリーレンタカー大宮店で予約問い合わせに対応するスタッフ",
+  },
+  {
+    file: "omiya-service-return-inspection-20260803",
+    alt: "埼玉マンスリーレンタカー大宮店で利用者と返却車両のタイヤを確認するスタッフ",
+  },
+  {
+    file: "omiya-service-air-conditioner-inspection-20260803",
+    alt: "埼玉マンスリーレンタカー大宮店で車内のエアコン温度を確認するスタッフ",
+  },
+  {
+    file: "omiya-service-evening-return-inspection-20260803",
+    alt: "埼玉マンスリーレンタカー大宮店で利用者と夕方の返却車両を確認するスタッフ",
+  },
+];
+
 const wakoStorePhotos = [
   {
     file: "wako-service-staff-and-vehicle-20260803",
@@ -366,6 +385,40 @@ function checkWakoStorePhotos(file, html) {
   }
 }
 
+function checkOmiyaStorePhotos(file, html) {
+  if (file !== "shop/saitama/omiya/index.html") return;
+
+  if (html.includes("wako-store-gallery-")) {
+    fail(file, "Omiya store must use its dedicated gallery photos");
+  }
+  const requiredStructuredData = [
+    '"@type": "AutoRental"',
+    `"@id": "${baseUrl}/shop/saitama/omiya/#store"`,
+    `"${baseUrl}/assets/img/omiya-store-exterior.png"`,
+  ];
+  for (const snippet of requiredStructuredData) {
+    if (!html.includes(snippet)) {
+      fail(file, `missing Omiya structured data: ${snippet}`);
+    }
+  }
+
+  for (const photo of omiyaStorePhotos) {
+    const fullAsset = path.join(root, "assets", "img", `${photo.file}.webp`);
+    const mobileAsset = path.join(root, "assets", "img", `${photo.file}-640.webp`);
+    if (!fs.existsSync(fullAsset)) fail(file, `missing store photo: ${photo.file}.webp`);
+    if (!fs.existsSync(mobileAsset)) fail(file, `missing store photo: ${photo.file}-640.webp`);
+    if (!html.includes(`src="../../../assets/img/${photo.file}.webp"`)) {
+      fail(file, `missing store photo markup: ${photo.file}.webp`);
+    }
+    if (!html.includes(`alt="${photo.alt}"`)) {
+      fail(file, `store photo alt must be: ${photo.alt}`);
+    }
+    if (!html.includes(`"${baseUrl}/assets/img/${photo.file}.webp"`)) {
+      fail(file, `Omiya structured data must include: ${photo.file}.webp`);
+    }
+  }
+}
+
 function checkShinjukuStorePhotos(file, html) {
   if (file !== "shop/tokyo/shinjuku/index.html") return;
 
@@ -536,6 +589,7 @@ function checkPage(file) {
   if (!description) fail(file, "meta description missing");
   checkTachikawaStorePhotos(file, html);
   checkWakoStorePhotos(file, html);
+  checkOmiyaStorePhotos(file, html);
   checkShinjukuStorePhotos(file, html);
   checkIkebukuroStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
