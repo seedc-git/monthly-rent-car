@@ -70,6 +70,25 @@ const tachikawaStorePhotos = [
   },
 ];
 
+const ikebukuroStorePhotos = [
+  {
+    file: "ikebukuro-service-staff-and-vehicle-20260803",
+    alt: "東京マンスリーレンタカー池袋店で車両と並ぶスタッフ3名",
+  },
+  {
+    file: "ikebukuro-service-interior-preparation-20260803",
+    alt: "東京マンスリーレンタカー池袋店で車内マットを準備するスタッフ",
+  },
+  {
+    file: "ikebukuro-service-vehicle-inspection-20260803",
+    alt: "東京マンスリーレンタカー池袋店でタブレットを使って車両を点検するスタッフ",
+  },
+  {
+    file: "ikebukuro-service-engine-inspection-20260803",
+    alt: "東京マンスリーレンタカー池袋店でエンジンルームを点検するスタッフ",
+  },
+];
+
 const shinjukuStorePhotos = [
   {
     file: "shinjuku-service-controls-guidance-20260803",
@@ -381,6 +400,40 @@ function checkShinjukuStorePhotos(file, html) {
   }
 }
 
+function checkIkebukuroStorePhotos(file, html) {
+  if (file !== "shop/tokyo/ikebukuro/index.html") return;
+
+  if (html.includes("wako-store-gallery-")) {
+    fail(file, "Ikebukuro store must use its dedicated gallery photos");
+  }
+  const requiredStructuredData = [
+    '"@type": "AutoRental"',
+    `"@id": "${baseUrl}/shop/tokyo/ikebukuro/#store"`,
+    `"${baseUrl}/assets/img/ikebukuro-store-exterior.png"`,
+  ];
+  for (const snippet of requiredStructuredData) {
+    if (!html.includes(snippet)) {
+      fail(file, `missing Ikebukuro structured data: ${snippet}`);
+    }
+  }
+
+  for (const photo of ikebukuroStorePhotos) {
+    const fullAsset = path.join(root, "assets", "img", `${photo.file}.webp`);
+    const mobileAsset = path.join(root, "assets", "img", `${photo.file}-640.webp`);
+    if (!fs.existsSync(fullAsset)) fail(file, `missing store photo: ${photo.file}.webp`);
+    if (!fs.existsSync(mobileAsset)) fail(file, `missing store photo: ${photo.file}-640.webp`);
+    if (!html.includes(`src="../../../assets/img/${photo.file}.webp"`)) {
+      fail(file, `missing store photo markup: ${photo.file}.webp`);
+    }
+    if (!html.includes(`alt="${photo.alt}"`)) {
+      fail(file, `store photo alt must be: ${photo.alt}`);
+    }
+    if (!html.includes(`"${baseUrl}/assets/img/${photo.file}.webp"`)) {
+      fail(file, `Ikebukuro structured data must include: ${photo.file}.webp`);
+    }
+  }
+}
+
 function checkTachikawaLocationData(file, html) {
   if (file !== "shop/tokyo/tachikawa/index.html") return;
 
@@ -437,6 +490,7 @@ function checkPage(file) {
   checkTachikawaStorePhotos(file, html);
   checkWakoStorePhotos(file, html);
   checkShinjukuStorePhotos(file, html);
+  checkIkebukuroStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
   checkShopImages(file, html);
 
