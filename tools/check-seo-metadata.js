@@ -37,6 +37,20 @@ const requiredOgProperties = [
   "og:image:alt",
 ];
 
+const shopImageByPage = {
+  "shop/tokyo/shinjuku/index.html": { slug: "shinjuku", name: "新宿" },
+  "shop/tokyo/ikebukuro/index.html": { slug: "ikebukuro", name: "池袋" },
+  "shop/tokyo/tachikawa/index.html": { slug: "tachikawa", name: "立川" },
+  "shop/kanagawa/kawasaki/index.html": { slug: "kawasaki", name: "川崎" },
+  "shop/saitama/tokorozawa/index.html": { slug: "tokorozawa", name: "所沢" },
+  "shop/saitama/omiya/index.html": { slug: "omiya", name: "大宮" },
+  "shop/saitama/urawa/index.html": { slug: "urawa", name: "浦和" },
+  "shop/saitama/kawagoe/index.html": { slug: "kawagoe", name: "川越" },
+  "shop/saitama/sakado/index.html": { slug: "sakado", name: "坂戸" },
+  "shop/saitama/wako/index.html": { slug: "wako", name: "和光" },
+  "shop/saitama/asakadai/index.html": { slug: "asakadai", name: "朝霞台" },
+};
+
 const tachikawaStorePhotos = [
   {
     file: "tachikawa-service-vehicle-cleaning-20260802",
@@ -133,6 +147,156 @@ function extractFirst(html, pattern) {
 
 function countMatches(html, pattern) {
   return (html.match(pattern) || []).length;
+}
+
+function pngDimensions(file) {
+  const data = fs.readFileSync(path.join(root, file));
+  const signature = data.subarray(0, 8).toString("hex");
+  if (signature !== "89504e470d0a1a0a" || data.length < 24) return null;
+  return [data.readUInt32BE(16), data.readUInt32BE(20)];
+}
+
+function jpegDimensions(file) {
+  const data = fs.readFileSync(path.join(root, file));
+  if (data.length < 4 || data[0] !== 0xff || data[1] !== 0xd8) return null;
+
+  const startOfFrameMarkers = new Set([
+    0xc0, 0xc1, 0xc2, 0xc3,
+    0xc5, 0xc6, 0xc7,
+    0xc9, 0xca, 0xcb,
+    0xcd, 0xce, 0xcf,
+  ]);
+  let offset = 2;
+
+  while (offset < data.length) {
+    if (data[offset] !== 0xff) {
+      offset += 1;
+      continue;
+    }
+    while (offset < data.length && data[offset] === 0xff) offset += 1;
+    if (offset >= data.length) break;
+
+    const marker = data[offset];
+    offset += 1;
+    if (marker === 0xd9 || marker === 0xda) break;
+    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
+    if (offset + 2 > data.length) return null;
+
+    const segmentLength = data.readUInt16BE(offset);
+    if (segmentLength < 2 || offset + segmentLength > data.length) return null;
+    if (startOfFrameMarkers.has(marker) && segmentLength >= 7) {
+      return [data.readUInt16BE(offset + 5), data.readUInt16BE(offset + 3)];
+    }
+    offset += segmentLength;
+  }
+
+  return null;
+}
+
+function checkPng(file, expectedWidth, expectedHeight, page) {
+  if (!fs.existsSync(path.join(root, file))) {
+    fail(page, `missing OGP image: ${file}`);
+    return;
+  }
+  const dimensions = pngDimensions(file);
+  if (!dimensions || dimensions[0] !== expectedWidth || dimensions[1] !== expectedHeight) {
+    fail(page, `${file} must be ${expectedWidth}x${expectedHeight}`);
+  }
+}
+
+function checkJpeg(file, expectedWidth, expectedHeight, maxBytes, page) {
+  const absolutePath = path.join(root, file);
+  if (!fs.existsSync(absolutePath)) {
+    fail(page, `missing OGP image: ${file}`);
+    return;
+  }
+  const dimensions = jpegDimensions(file);
+  if (!dimensions || dimensions[0] !== expectedWidth || dimensions[1] !== expectedHeight) {
+    fail(page, `${file} must be a ${expectedWidth}x${expectedHeight} JPEG`);
+  }
+  const bytes = fs.statSync(absolutePath).size;
+  if (bytes >= maxBytes) {
+    fail(page, `${file} must be smaller than ${maxBytes} bytes, found ${bytes}`);
+  }
+}
+
+function checkShopImages(file, html) {
+  const shop = shopImageByPage[file];
+  if (!shop) return;
+
+  const sourceLandscapeAsset = `assets/ogp/shops/${shop.slug}-1731x909.png`;
+  const socialAsset = `assets/ogp/shops/${shop.slug}-1200x630.jpg`;
+  const squareAsset = `assets/ogp/shops/${shop.slug}-1200x1200.png`;
+  const socialUrl = `${baseUrl}/${socialAsset}`;
+  const squareUrl = `${baseUrl}/${squareAsset}`;
+  const expectedAlt = `マンスリーレンタカー ${shop.name}店 1日あたり800円〜`;
+
+  checkPng(sourceLandscapeAsset, 1731, 909, file);
+  checkJpeg(socialAsset, 1200, 630, 600000, file);
+  checkPng(squareAsset, 1200, 1200, file);
+
+  if (countMatches(html, /property="og:image:type"/g) !== 1) {
+    fail(file, "og:image:type must appear exactly once");
+  }
+  if (!html.includes('<meta property="og:image:type" content="image/jpeg">')) {
+    fail(file, "og:image:type must be image/jpeg");
+  }
+  if (!html.includes(`<meta property="og:image:alt" content="${expectedAlt}">`)) {
+    fail(file, `og:image:alt must be: ${expectedAlt}`);
+  }
+  if (countMatches(html, /name="twitter:image"/g) !== 1) {
+    fail(file, "twitter:image must appear exactly once");
+  }
+  if (!html.includes(`<meta name="twitter:image" content="${socialUrl}">`)) {
+    fail(file, `twitter:image must be ${socialUrl}`);
+  }
+  if (!html.includes(`<meta name="twitter:image:alt" content="${expectedAlt}">`)) {
+    fail(file, `twitter:image:alt must be: ${expectedAlt}`);
+  }
+
+  const jsonLd = [...html.matchAll(/<script\s+type="application\/ld\+json">\s*([\s\S]*?)<\/script>/g)];
+  const webPages = [];
+  for (const match of jsonLd) {
+    try {
+      const item = JSON.parse(match[1]);
+      if (item["@type"] === "WebPage") webPages.push(item);
+    } catch (error) {
+      fail(file, `invalid JSON-LD: ${error.message}`);
+    }
+  }
+  if (webPages.length !== 1) {
+    fail(file, `shop page must contain one WebPage JSON-LD object, found ${webPages.length}`);
+    return;
+  }
+
+  const webPage = webPages[0];
+  const expectedPageUrl = pageUrlFor(file);
+  const expectedTitle = extractFirst(html, /<title>([\s\S]*?)<\/title>/);
+  if (webPage["@id"] !== `${expectedPageUrl}#webpage`) {
+    fail(file, `WebPage @id must be ${expectedPageUrl}#webpage`);
+  }
+  if (webPage.url !== expectedPageUrl) {
+    fail(file, `WebPage url must be ${expectedPageUrl}`);
+  }
+  if (webPage.name !== expectedTitle) {
+    fail(file, "WebPage name must match title");
+  }
+  if (webPage.inLanguage !== "ja-JP") {
+    fail(file, "WebPage inLanguage must be ja-JP");
+  }
+
+  const primaryImage = webPage.primaryImageOfPage;
+  if (
+    !primaryImage ||
+    primaryImage["@type"] !== "ImageObject" ||
+    primaryImage.url !== squareUrl ||
+    primaryImage.contentUrl !== squareUrl ||
+    primaryImage.width !== 1200 ||
+    primaryImage.height !== 1200 ||
+    primaryImage.caption !== expectedAlt
+  ) {
+    fail(file, `primaryImageOfPage must describe ${squareUrl}`);
+  }
 }
 
 function checkTachikawaStorePhotos(file, html) {
@@ -245,12 +409,22 @@ function checkTachikawaLocationData(file, html) {
 function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
+  const shopImage = shopImageByPage[file];
+  if (file.startsWith("shop/") && !shopImage) {
+    fail(file, "shop page must register its own square and social OGP images");
+  }
   const expectedOgImage =
-    file === "area/tachikawa/index.html"
+    shopImage
+      ? `${baseUrl}/assets/ogp/shops/${shopImage.slug}-1200x630.jpg`
+      : file === "area/tachikawa/index.html"
       ? `${baseUrl}/assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp`
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const [expectedOgImageWidth, expectedOgImageHeight] =
-    file === "area/tachikawa/index.html" ? ["1077", "500"] : ["1200", "630"];
+    shopImage
+      ? ["1200", "630"]
+      : file === "area/tachikawa/index.html"
+        ? ["1077", "500"]
+        : ["1200", "630"];
   const title = extractFirst(html, /<title>([\s\S]*?)<\/title>/);
   const description = extractFirst(html, /<meta\s+name="description"\s+content="([\s\S]*?)"\s*>/);
   const robots = extractFirst(
@@ -264,6 +438,7 @@ function checkPage(file) {
   checkWakoStorePhotos(file, html);
   checkShinjukuStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
+  checkShopImages(file, html);
 
   if (isStaging) {
     if (robots !== "noindex, nofollow") {
