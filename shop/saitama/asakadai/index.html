@@ -77,6 +77,41 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@type": "AutoRental",
+      "@id": "https://stg.monthly-rent-car.jp/shop/saitama/asakadai/#store",
+      "name": "埼玉マンスリーレンタカー 朝霞台店",
+      "url": "https://stg.monthly-rent-car.jp/shop/saitama/asakadai/",
+      "telephone": "+81-50-1792-0800",
+      "priceRange": "¥¥",
+      "address": {
+        "@type": "PostalAddress",
+        "postalCode": "351-0022",
+        "addressRegion": "埼玉県",
+        "addressLocality": "朝霞市",
+        "streetAddress": "東弁財1-3-4 朝霞台駅前ビル",
+        "addressCountry": "JP"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "10:00",
+          "closes": "19:00"
+        }
+      ],
+      "hasMap": "https://maps.app.goo.gl/KcqDdD49U6wcEPKM7",
+      "image": [
+        "https://stg.monthly-rent-car.jp/assets/img/asakadai-store-exterior.png",
+        "https://stg.monthly-rent-car.jp/assets/img/asakadai-service-phone-reservation-support-20260803.webp",
+        "https://stg.monthly-rent-car.jp/assets/img/asakadai-service-family-luggage-loading-20260803.webp",
+        "https://stg.monthly-rent-car.jp/assets/img/asakadai-service-vehicle-key-handover-20260803.webp",
+        "https://stg.monthly-rent-car.jp/assets/img/asakadai-service-child-seat-installation-20260803.webp"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
         {
@@ -452,7 +487,7 @@
               margin: 0;
               opacity: 0;
               transition: opacity 1.2s ease;
-              animation: asakadai-gallery-switch 12s infinite;
+              animation: asakadai-gallery-switch 16s infinite;
             }
 
             .asakadai-gallery figure:nth-child(2) {
@@ -461,6 +496,10 @@
 
             .asakadai-gallery figure:nth-child(3) {
               animation-delay: 8s;
+            }
+
+            .asakadai-gallery figure:nth-child(4) {
+              animation-delay: 12s;
             }
 
             .asakadai-gallery figcaption {
@@ -472,12 +511,12 @@
                 opacity: 0;
               }
 
-              8%,
-              42% {
+              5%,
+              25% {
                 opacity: 1;
               }
 
-              50%,
+              30%,
               100% {
                 opacity: 0;
               }
@@ -563,13 +602,16 @@
             <div class="asakadai-gallery">
               <div class="asakadai-gallery-track">
                 <figure>
-                  <img class="asakadai-access-photo" src="../../../assets/img/wako-store-gallery-01.png" alt="埼玉マンスリーレンタカー朝霞台店の様子 1">
+                  <img class="asakadai-access-photo" src="../../../assets/img/asakadai-service-phone-reservation-support-20260803.webp" srcset="../../../assets/img/asakadai-service-phone-reservation-support-20260803-640.webp 640w, ../../../assets/img/asakadai-service-phone-reservation-support-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="埼玉マンスリーレンタカー朝霞台店で電話予約に対応するスタッフ" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                  <img class="asakadai-access-photo" src="../../../assets/img/wako-store-gallery-02.png" alt="埼玉マンスリーレンタカー朝霞台店の様子 2">
+                  <img class="asakadai-access-photo" src="../../../assets/img/asakadai-service-family-luggage-loading-20260803.webp" srcset="../../../assets/img/asakadai-service-family-luggage-loading-20260803-640.webp 640w, ../../../assets/img/asakadai-service-family-luggage-loading-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="埼玉マンスリーレンタカー朝霞台店で利用者家族の荷物を車両へ積み込むスタッフ" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                  <img class="asakadai-access-photo" src="../../../assets/img/wako-store-gallery-03.png" alt="埼玉マンスリーレンタカー朝霞台店の様子 3">
+                  <img class="asakadai-access-photo" src="../../../assets/img/asakadai-service-vehicle-key-handover-20260803.webp" srcset="../../../assets/img/asakadai-service-vehicle-key-handover-20260803-640.webp 640w, ../../../assets/img/asakadai-service-vehicle-key-handover-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="埼玉マンスリーレンタカー朝霞台店で利用者へ車両の鍵を引き渡すスタッフ" loading="lazy" decoding="async">
+                </figure>
+                <figure>
+                  <img class="asakadai-access-photo" src="../../../assets/img/asakadai-service-child-seat-installation-20260803.webp" srcset="../../../assets/img/asakadai-service-child-seat-installation-20260803-640.webp 640w, ../../../assets/img/asakadai-service-child-seat-installation-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="埼玉マンスリーレンタカー朝霞台店でチャイルドシートを取り付けるスタッフ" loading="lazy" decoding="async">
                 </figure>
               </div>
             </div>
