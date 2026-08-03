@@ -77,6 +77,40 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@type": "AutoRental",
+      "@id": "https://stg.monthly-rent-car.jp/shop/tokyo/ikebukuro/#store",
+      "name": "東京マンスリーレンタカー 池袋店",
+      "url": "https://stg.monthly-rent-car.jp/shop/tokyo/ikebukuro/",
+      "telephone": "+81-50-1792-0800",
+      "priceRange": "¥¥",
+      "address": {
+        "@type": "PostalAddress",
+        "postalCode": "170-0014",
+        "addressRegion": "東京都",
+        "addressLocality": "豊島区",
+        "streetAddress": "池袋1丁目2-6 ベルメゾン池袋",
+        "addressCountry": "JP"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "10:00",
+          "closes": "19:00"
+        }
+      ],
+      "image": [
+        "https://stg.monthly-rent-car.jp/assets/img/ikebukuro-store-exterior.png",
+        "https://stg.monthly-rent-car.jp/assets/img/ikebukuro-service-staff-and-vehicle-20260803.webp",
+        "https://stg.monthly-rent-car.jp/assets/img/ikebukuro-service-interior-preparation-20260803.webp",
+        "https://stg.monthly-rent-car.jp/assets/img/ikebukuro-service-vehicle-inspection-20260803.webp",
+        "https://stg.monthly-rent-car.jp/assets/img/ikebukuro-service-engine-inspection-20260803.webp"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
         {
@@ -457,7 +491,7 @@
               margin: 0;
               opacity: 0;
               transition: opacity 1.2s ease;
-              animation: ikebukuro-gallery-switch 12s infinite;
+              animation: ikebukuro-gallery-switch 16s infinite;
             }
 
             .ikebukuro-gallery figure:nth-child(2) {
@@ -466,6 +500,10 @@
 
             .ikebukuro-gallery figure:nth-child(3) {
               animation-delay: 8s;
+            }
+
+            .ikebukuro-gallery figure:nth-child(4) {
+              animation-delay: 12s;
             }
 
             .ikebukuro-gallery figcaption {
@@ -477,12 +515,12 @@
                 opacity: 0;
               }
 
-              8%,
-              42% {
+              5%,
+              25% {
                 opacity: 1;
               }
 
-              50%,
+              30%,
               100% {
                 opacity: 0;
               }
@@ -568,13 +606,16 @@
             <div class="ikebukuro-gallery">
               <div class="ikebukuro-gallery-track">
                 <figure>
-                  <img class="ikebukuro-access-photo" src="../../../assets/img/wako-store-gallery-01.png" alt="東京マンスリーレンタカー池袋店の様子 1">
+                  <img class="ikebukuro-access-photo" src="../../../assets/img/ikebukuro-service-staff-and-vehicle-20260803.webp" srcset="../../../assets/img/ikebukuro-service-staff-and-vehicle-20260803-640.webp 640w, ../../../assets/img/ikebukuro-service-staff-and-vehicle-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー池袋店で車両と並ぶスタッフ3名" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                  <img class="ikebukuro-access-photo" src="../../../assets/img/wako-store-gallery-02.png" alt="東京マンスリーレンタカー池袋店の様子 2">
+                  <img class="ikebukuro-access-photo" src="../../../assets/img/ikebukuro-service-interior-preparation-20260803.webp" srcset="../../../assets/img/ikebukuro-service-interior-preparation-20260803-640.webp 640w, ../../../assets/img/ikebukuro-service-interior-preparation-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー池袋店で車内マットを準備するスタッフ" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                  <img class="ikebukuro-access-photo" src="../../../assets/img/wako-store-gallery-03.png" alt="東京マンスリーレンタカー池袋店の様子 3">
+                  <img class="ikebukuro-access-photo" src="../../../assets/img/ikebukuro-service-vehicle-inspection-20260803.webp" srcset="../../../assets/img/ikebukuro-service-vehicle-inspection-20260803-640.webp 640w, ../../../assets/img/ikebukuro-service-vehicle-inspection-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー池袋店でタブレットを使って車両を点検するスタッフ" loading="lazy" decoding="async">
+                </figure>
+                <figure>
+                  <img class="ikebukuro-access-photo" src="../../../assets/img/ikebukuro-service-engine-inspection-20260803.webp" srcset="../../../assets/img/ikebukuro-service-engine-inspection-20260803-640.webp 640w, ../../../assets/img/ikebukuro-service-engine-inspection-20260803.webp 1200w" sizes="(max-width: 760px) calc(100vw - 50px), 1074px" width="1200" height="675" alt="東京マンスリーレンタカー池袋店でエンジンルームを点検するスタッフ" loading="lazy" decoding="async">
                 </figure>
               </div>
             </div>
