@@ -293,13 +293,13 @@ function checkPage(file) {
   }
   const expectedOgImage =
     shopImage
-      ? `${baseUrl}/assets/ogp/shops/${shopImage.slug}-1731x909.png`
+      ? `${baseUrl}/assets/ogp/shops/${shopImage.slug}-1200x1200.png`
       : file === "area/tachikawa/index.html"
       ? `${baseUrl}/assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp`
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const [expectedOgImageWidth, expectedOgImageHeight] =
     shopImage
-      ? ["1731", "909"]
+      ? ["1200", "1200"]
       : file === "area/tachikawa/index.html"
         ? ["1077", "500"]
         : ["1200", "630"];
