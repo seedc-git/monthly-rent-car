@@ -295,9 +295,8 @@
     </header>
 
     <main>
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero" aria-label="東京マンスリーレンタカー立川店のサービス案内">
         <div class="hero-stage">
-          <h1 id="hero-title" class="visually-hidden">東京マンスリーレンタカー 長期利用特化の格安レンタカー</h1>
           <div class="hero-art">
             <img
               src="../../../assets/img/fv-main.png"
@@ -306,7 +305,7 @@
         </div>
       </section>
 
-      <section class="section service-area" id="area">
+      <section class="section service-area" id="area" aria-labelledby="tachikawa-store-title">
         <div class="inner">
           <style>
             .tachikawa-access-card {
@@ -317,18 +316,110 @@
               box-shadow: var(--shadow);
             }
 
-            .tachikawa-access-card .section-head {
-              margin-bottom: 18px;
+            .tachikawa-access-card .tachikawa-store-heading {
+              width: 100%;
+              height: auto;
+              min-height: 0;
+              aspect-ratio: 1000 / 453;
+              max-width: none;
+              margin: 0 0 12px;
+              padding: 0;
+              border: 0;
+              border-radius: 0;
+              overflow: hidden;
+              background: var(--white);
+              text-align: left;
+              position: relative;
+              isolation: isolate;
             }
 
-            .tachikawa-access-card .section-head h2 {
-              font-size: clamp(20px, 3vw, 24px);
+            .tachikawa-store-heading-frame {
+              width: 100%;
+              height: 100%;
+              display: block;
+              object-fit: fill;
+              pointer-events: none;
+              user-select: none;
+              position: absolute;
+              inset: 0;
+              z-index: 0;
             }
 
-            .tachikawa-access-card .section-head h2::after {
-              width: 38px;
-              height: 3px;
-              margin-top: 10px;
+            .tachikawa-store-heading > .tachikawa-store-heading-label {
+              width: min(46%, 162px);
+              height: clamp(22px, 7.2vw, 28px);
+              min-height: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 4px;
+              margin: 0;
+              padding: 0;
+              border: 1px solid #a8c9f5;
+              border-radius: 999px;
+              background: var(--white);
+              color: var(--navy);
+              font-size: clamp(11px, 3.1vw, 12px);
+              font-weight: 900;
+              line-height: 1.1;
+              letter-spacing: 0.04em;
+              position: absolute;
+              top: 14.5%;
+              left: 50%;
+              transform: translateX(-50%);
+              z-index: 1;
+            }
+
+            .tachikawa-store-heading-label svg {
+              flex: 0 0 auto;
+              width: clamp(11px, 3.1vw, 12px);
+              height: clamp(11px, 3.1vw, 12px);
+              color: var(--orange);
+              fill: currentColor;
+            }
+
+            .tachikawa-access-card .tachikawa-store-heading h1 {
+              margin: 0;
+              padding-inline: 4%;
+              color: var(--navy);
+              text-align: center;
+              word-break: normal;
+              overflow-wrap: break-word;
+              text-wrap: balance;
+              position: absolute;
+              top: 37%;
+              right: 0;
+              left: 0;
+              z-index: 1;
+            }
+
+            .tachikawa-access-card .tachikawa-store-heading h1 .tachikawa-store-title-part {
+              display: block;
+            }
+
+            .tachikawa-access-card .tachikawa-store-heading h1 .tachikawa-store-title-region {
+              color: #365d91;
+              font-size: clamp(11px, 3.1vw, 12px);
+              font-weight: 800;
+              line-height: 1.35;
+              letter-spacing: 0.04em;
+            }
+
+            .tachikawa-access-card .tachikawa-store-heading h1 .tachikawa-store-title-name {
+              margin-top: clamp(6px, 1.9vw, 8px);
+              font-size: clamp(15px, 4.25vw, 17px);
+              font-weight: 900;
+              line-height: 1.22;
+              letter-spacing: -0.055em;
+              white-space: nowrap;
+            }
+
+            .tachikawa-access-card .tachikawa-store-heading h1 .tachikawa-store-title-separator {
+              display: none;
+            }
+
+            .tachikawa-access-card .tachikawa-store-heading h1::after {
+              display: none;
             }
 
             .tachikawa-access-main-photo,
@@ -611,8 +702,24 @@
           </style>
 
           <div class="tachikawa-access-card">
-            <div class="section-head">
-              <h2>東京｜立川店</h2>
+            <div class="section-head tachikawa-store-heading">
+              <img
+                class="tachikawa-store-heading-frame"
+                src="../../../assets/img/tachikawa-store-heading-frame-20260803.webp"
+                width="1000"
+                height="453"
+                alt=""
+                decoding="async"
+                aria-hidden="true">
+              <p class="tachikawa-store-heading-label">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 10.1A3.1 3.1 0 1 1 12 5.9a3.1 3.1 0 0 1 0 6.2Z"/></svg>
+                <span>立川店 店舗案内</span>
+              </p>
+              <h1 id="tachikawa-store-title">
+                <span class="tachikawa-store-title-part tachikawa-store-title-region">立川市のマンスリーレンタカー</span>
+                <span class="tachikawa-store-title-separator" aria-hidden="true">｜</span>
+                <span class="tachikawa-store-title-part tachikawa-store-title-name">東京マンスリーレンタカー立川店</span>
+              </h1>
             </div>
 
             <img class="tachikawa-access-main-photo" src="../../../assets/img/tachikawa-store-exterior.png" alt="東京マンスリーレンタカー立川店の外観">

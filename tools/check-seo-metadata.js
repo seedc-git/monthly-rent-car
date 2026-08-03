@@ -459,6 +459,53 @@ function checkTachikawaLocationData(file, html) {
   }
 }
 
+function checkTachikawaHeading(file, html) {
+  if (file !== "shop/tokyo/tachikawa/index.html") return;
+
+  const expectedHeading =
+    "立川市のマンスリーレンタカー｜東京マンスリーレンタカー立川店";
+  const headings = [...html.matchAll(/<h1\b([^>]*)>([\s\S]*?)<\/h1>/gi)];
+
+  if (headings.length !== 1) {
+    fail(file, `Tachikawa store page must contain exactly one h1, found ${headings.length}`);
+    return;
+  }
+
+  const [, attributes, contents] = headings[0];
+  const headingText = contents.replace(/<[^>]+>/g, "").replace(/\s+/g, "");
+
+  if (headingText !== expectedHeading) {
+    fail(file, `Tachikawa h1 must be: ${expectedHeading}`);
+  }
+  if (/\bvisually-hidden\b/.test(attributes)) {
+    fail(file, "Tachikawa h1 must be visible, not visually-hidden");
+  }
+  if (!attributes.includes('id="tachikawa-store-title"')) {
+    fail(file, 'Tachikawa h1 must use id="tachikawa-store-title"');
+  }
+  if (!html.includes('aria-labelledby="tachikawa-store-title"')) {
+    fail(file, "Tachikawa service-area must be labelled by the visible h1");
+  }
+  if (!html.includes('class="section-head tachikawa-store-heading"')) {
+    fail(file, "Tachikawa h1 must be integrated into the store heading panel");
+  }
+  if (!html.includes('class="tachikawa-store-heading-label"')) {
+    fail(file, "Tachikawa store heading must include its visible guide label");
+  }
+  if (!html.includes("立川店 店舗案内")) {
+    fail(file, "Tachikawa store heading guide label is missing");
+  }
+  const frameAsset = "assets/img/tachikawa-store-heading-frame-20260803.webp";
+  if (!html.includes(`../../../${frameAsset}`)) {
+    fail(file, "Tachikawa store heading frame asset is missing from the markup");
+  }
+  if (!fs.existsSync(path.join(root, frameAsset))) {
+    fail(file, `missing Tachikawa store heading frame: ${frameAsset}`);
+  } else if (fs.statSync(path.join(root, frameAsset)).size > 20000) {
+    fail(file, `Tachikawa store heading frame must stay below 20 KB: ${frameAsset}`);
+  }
+}
+
 function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
@@ -492,6 +539,7 @@ function checkPage(file) {
   checkShinjukuStorePhotos(file, html);
   checkIkebukuroStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
+  checkTachikawaHeading(file, html);
   checkShopImages(file, html);
 
   if (isStaging) {
