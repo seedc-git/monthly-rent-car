@@ -127,6 +127,25 @@ const omiyaStorePhotos = [
   },
 ];
 
+const asakadaiStorePhotos = [
+  {
+    file: "asakadai-service-phone-reservation-support-20260803",
+    alt: "埼玉マンスリーレンタカー朝霞台店で電話予約に対応するスタッフ",
+  },
+  {
+    file: "asakadai-service-family-luggage-loading-20260803",
+    alt: "埼玉マンスリーレンタカー朝霞台店で利用者家族の荷物を車両へ積み込むスタッフ",
+  },
+  {
+    file: "asakadai-service-vehicle-key-handover-20260803",
+    alt: "埼玉マンスリーレンタカー朝霞台店で利用者へ車両の鍵を引き渡すスタッフ",
+  },
+  {
+    file: "asakadai-service-child-seat-installation-20260803",
+    alt: "埼玉マンスリーレンタカー朝霞台店でチャイルドシートを取り付けるスタッフ",
+  },
+];
+
 const wakoStorePhotos = [
   {
     file: "wako-service-staff-and-vehicle-20260803",
@@ -419,6 +438,40 @@ function checkOmiyaStorePhotos(file, html) {
   }
 }
 
+function checkAsakadaiStorePhotos(file, html) {
+  if (file !== "shop/saitama/asakadai/index.html") return;
+
+  if (html.includes("wako-store-gallery-")) {
+    fail(file, "Asakadai store must use its dedicated gallery photos");
+  }
+  const requiredStructuredData = [
+    '"@type": "AutoRental"',
+    `"@id": "${baseUrl}/shop/saitama/asakadai/#store"`,
+    `"${baseUrl}/assets/img/asakadai-store-exterior.png"`,
+  ];
+  for (const snippet of requiredStructuredData) {
+    if (!html.includes(snippet)) {
+      fail(file, `missing Asakadai structured data: ${snippet}`);
+    }
+  }
+
+  for (const photo of asakadaiStorePhotos) {
+    const fullAsset = path.join(root, "assets", "img", `${photo.file}.webp`);
+    const mobileAsset = path.join(root, "assets", "img", `${photo.file}-640.webp`);
+    if (!fs.existsSync(fullAsset)) fail(file, `missing store photo: ${photo.file}.webp`);
+    if (!fs.existsSync(mobileAsset)) fail(file, `missing store photo: ${photo.file}-640.webp`);
+    if (!html.includes(`src="../../../assets/img/${photo.file}.webp"`)) {
+      fail(file, `missing store photo markup: ${photo.file}.webp`);
+    }
+    if (!html.includes(`alt="${photo.alt}"`)) {
+      fail(file, `store photo alt must be: ${photo.alt}`);
+    }
+    if (!html.includes(`"${baseUrl}/assets/img/${photo.file}.webp"`)) {
+      fail(file, `Asakadai structured data must include: ${photo.file}.webp`);
+    }
+  }
+}
+
 function checkShinjukuStorePhotos(file, html) {
   if (file !== "shop/tokyo/shinjuku/index.html") return;
 
@@ -590,6 +643,7 @@ function checkPage(file) {
   checkTachikawaStorePhotos(file, html);
   checkWakoStorePhotos(file, html);
   checkOmiyaStorePhotos(file, html);
+  checkAsakadaiStorePhotos(file, html);
   checkShinjukuStorePhotos(file, html);
   checkIkebukuroStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
