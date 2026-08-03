@@ -54,3 +54,6 @@ jobs:
 
       - name: SEO pages must include OGP metadata, sitemap, and robots.txt
         run: node tools/check-seo-metadata.js
+
+      - name: Canonical host and redirect rules must stay consistent
+        run: node tools/check-canonical-host.cjs
