@@ -165,6 +165,25 @@ const tokorozawaStorePhotos = [
   },
 ];
 
+const kawagoeStorePhotos = [
+  {
+    file: "kawagoe-service-spacia-key-handover-20260804",
+    alt: "埼玉マンスリーレンタカー川越店で利用者にスペーシアの鍵を両手で渡すスタッフ",
+  },
+  {
+    file: "kawagoe-service-wagonr-luggage-loading-20260804",
+    alt: "埼玉マンスリーレンタカー川越店で利用者の荷物をワゴンRへ積み込むスタッフ",
+  },
+  {
+    file: "kawagoe-service-dayz-condition-check-20260804",
+    alt: "埼玉マンスリーレンタカー川越店で利用者とデイズの車両状態を確認するスタッフ",
+  },
+  {
+    file: "kawagoe-service-tanto-washing-20260804",
+    alt: "埼玉マンスリーレンタカー川越店でタントを洗車するスタッフ",
+  },
+];
+
 const wakoStorePhotos = [
   {
     file: "wako-service-staff-and-vehicle-20260803",
@@ -525,6 +544,40 @@ function checkTokorozawaStorePhotos(file, html) {
   }
 }
 
+function checkKawagoeStorePhotos(file, html) {
+  if (file !== "shop/saitama/kawagoe/index.html") return;
+
+  if (html.includes("wako-store-gallery-")) {
+    fail(file, "Kawagoe store must use its dedicated gallery photos");
+  }
+  const requiredStructuredData = [
+    '"@type": "AutoRental"',
+    `"@id": "${baseUrl}/shop/saitama/kawagoe/#store"`,
+    `"${baseUrl}/assets/img/kawagoe-store-exterior.png"`,
+  ];
+  for (const snippet of requiredStructuredData) {
+    if (!html.includes(snippet)) {
+      fail(file, `missing Kawagoe structured data: ${snippet}`);
+    }
+  }
+
+  for (const photo of kawagoeStorePhotos) {
+    const fullAsset = path.join(root, "assets", "img", `${photo.file}.webp`);
+    const mobileAsset = path.join(root, "assets", "img", `${photo.file}-640.webp`);
+    if (!fs.existsSync(fullAsset)) fail(file, `missing store photo: ${photo.file}.webp`);
+    if (!fs.existsSync(mobileAsset)) fail(file, `missing store photo: ${photo.file}-640.webp`);
+    if (!html.includes(`src="../../../assets/img/${photo.file}.webp"`)) {
+      fail(file, `missing store photo markup: ${photo.file}.webp`);
+    }
+    if (!html.includes(`alt="${photo.alt}"`)) {
+      fail(file, `store photo alt must be: ${photo.alt}`);
+    }
+    if (!html.includes(`"${baseUrl}/assets/img/${photo.file}.webp"`)) {
+      fail(file, `Kawagoe structured data must include: ${photo.file}.webp`);
+    }
+  }
+}
+
 function checkShinjukuStorePhotos(file, html) {
   if (file !== "shop/tokyo/shinjuku/index.html") return;
 
@@ -750,6 +803,7 @@ function checkPage(file) {
   checkOmiyaStorePhotos(file, html);
   checkAsakadaiStorePhotos(file, html);
   checkTokorozawaStorePhotos(file, html);
+  checkKawagoeStorePhotos(file, html);
   checkShinjukuStorePhotos(file, html);
   checkIkebukuroStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
