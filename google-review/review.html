@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>口コミ投稿アンケート</title>
+<!-- Google tag (gtag.js) — fires on production hostname only -->
+<script>
+  if (location.hostname === "monthly-rent-car.jp") {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date());
+    gtag("config", "G-501JL6QG1N");
+    var gaScriptRequested = false;
+    var gaFallbackTimer;
+    var loadGaScript = function () {
+      if (gaScriptRequested) return;
+      gaScriptRequested = true;
+      if (gaFallbackTimer) window.clearTimeout(gaFallbackTimer);
+      window.removeEventListener("load", loadGaScript);
+      var gaScript = document.createElement("script");
+      gaScript.async = true;
+      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-501JL6QG1N";
+      document.head.appendChild(gaScript);
+    };
+    if (document.readyState === "complete") {
+      loadGaScript();
+    } else {
+      window.addEventListener("load", loadGaScript, { once: true });
+      gaFallbackTimer = window.setTimeout(loadGaScript, 2000);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    background: #f5f6f8; color: #222; line-height: 1.6;
+    font-size: 16px; -webkit-text-size-adjust: 100%;
+  }
+  .app { max-width: 520px; margin: 0 auto; padding: 20px 16px 60px; min-height: 100vh; }
+  header { text-align: center; margin-bottom: 24px; }
+  .shop-name { font-size: 20px; font-weight: 700; color: #1a1a1a; margin: 0 0 4px; }
+  .sub { font-size: 13px; color: #777; margin: 0; }
+  .card {
+    background: #fff; border-radius: 14px; padding: 20px 18px;
+    margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .q-title { font-size: 15px; font-weight: 600; margin: 0 0 12px; color: #222; }
+  .q-num {
+    display: inline-block; background: #4a7dff; color: #fff; border-radius: 50%;
+    width: 22px; height: 22px; font-size: 12px; line-height: 22px;
+    text-align: center; margin-right: 8px; font-weight: 700;
+  }
+  .stars { display: flex; justify-content: space-between; gap: 6px; }
+  .star-btn {
+    flex: 1; background: #f2f3f5; border: 2px solid transparent;
+    border-radius: 10px; padding: 14px 0; font-size: 26px;
+    transition: transform 0.1s, background 0.15s, border-color 0.15s, color 0.15s;
+    color: #ccc; cursor: pointer;
+    -webkit-appearance: none; appearance: none;
+  }
+  .star-btn.on { background: #fff8e1; border-color: #ffc107; color: #ffb300; }
+  .star-btn:active { transform: scale(0.96); }
+  textarea, input[type="text"] {
+    width: 100%; border: 1.5px solid #dfe2e6; border-radius: 10px;
+    padding: 12px 14px; font-size: 15px; font-family: inherit;
+    resize: vertical; background: #fff;
+  }
+  textarea:focus, input:focus { outline: none; border-color: #4a7dff; }
+  .btn {
+    display: block; width: 100%;
+    background: #4a7dff; color: #fff; border: none; border-radius: 12px;
+    padding: 16px; font-size: 16px; font-weight: 700;
+    cursor: pointer; margin-top: 8px;
+    text-align: center; text-decoration: none;
+    -webkit-appearance: none; appearance: none;
+  }
+  .btn:active { opacity: 0.85; }
+  .btn:disabled { background: #c9ced6; cursor: not-allowed; }
+  .review-box {
+    background: #f8f9fb; border: 1.5px dashed #c0c5cf;
+    border-radius: 10px; padding: 16px; font-size: 15px; line-height: 1.85;
+    white-space: pre-wrap; margin-bottom: 12px; min-height: 120px;
+  }
+  .hidden { display: none !important; }
+  .thanks {
+    text-align: center; padding: 60px 20px; font-size: 17px; color: #444;
+  }
+  .thanks-shop { font-size: 22px; font-weight: 700; color: #1a1a1a; margin-bottom: 24px; }
+  .regenerate {
+    background: none; border: none; color: #4a7dff;
+    font-size: 13px; cursor: pointer; padding: 8px; margin: 0 auto;
+    display: block; text-decoration: underline;
+  }
+  @keyframes pulse-blue {
+    0%   { box-shadow: 0 0 0 0 rgba(74,125,255,0.75), 0 0 0 0 rgba(74,125,255,0.4); transform: scale(1); }
+    40%  { transform: scale(1.025); }
+    70%  { box-shadow: 0 0 0 14px rgba(74,125,255,0), 0 0 0 26px rgba(74,125,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,125,255,0), 0 0 0 0 rgba(74,125,255,0); transform: scale(1); }
+  }
+  .btn-attention-blue { animation: pulse-blue 1.4s ease-out infinite; }
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200; padding: 20px;
+  }
+  .modal-box {
+    background: #fff; border-radius: 16px; padding: 24px 20px;
+    max-width: 340px; width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  .modal-heading {
+    font-size: 17px; font-weight: 700; color: #d9534f;
+    text-align: center; margin: 0 0 12px;
+  }
+  .modal-text {
+    font-size: 15px; line-height: 1.75; color: #222;
+    text-align: left; margin: 0 0 20px;
+  }
+  .rate-limit-notice {
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+    background: #fff8e1; border: 1.5px solid #ffc107; border-radius: 12px;
+    padding: 12px 20px; font-size: 14px; color: #7a5c00; text-align: center;
+    max-width: 320px; width: 90%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 99;
+  }
+  .loading {
+    text-align: center; padding: 60px 20px; color: #4a7dff;
+  }
+  .spinner {
+    display: inline-block; width: 36px; height: 36px;
+    border: 3px solid #dfe2e6; border-top-color: #4a7dff;
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin-bottom: 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .qr-section {
+    text-align: center;
+    padding: 32px 16px 24px;
+    margin-top: 8px;
+  }
+  .qr-divider {
+    border: none; border-top: 1px solid #e4e6ea; margin: 0 0 28px;
+  }
+  .qr-title {
+    font-size: 14px; font-weight: 600; color: #555; margin: 0 0 4px;
+  }
+  .qr-desc {
+    font-size: 12px; color: #999; margin: 0 0 20px; line-height: 1.55;
+  }
+  #qrcode { display: inline-block; }
+  #qrcode canvas, #qrcode img { border-radius: 6px; }
+  .qr-url {
+    font-size: 11px; color: #bbb; margin: 14px 0 0;
+    word-break: break-all; font-family: ui-monospace, Menlo, monospace;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- アンケート -->
+  <div id="surveyView">
+    <header>
+      <h1 class="shop-name" id="shopName">店舗名</h1>
+      <p class="sub">ご利用ありがとうございます。<br>アンケートにご協力ください（所要約1分）</p>
+    </header>
+
+    <div class="card">
+      <p class="q-title"><span class="q-num">1</span>サービス全体についての満足度</p>
+      <div class="stars" data-q="overall"></div>
+    </div>
+    <div class="card">
+      <p class="q-title"><span class="q-num">2</span>価格についての満足度</p>
+      <div class="stars" data-q="price"></div>
+    </div>
+    <div class="card">
+      <p class="q-title"><span class="q-num">3</span>貸出車両についての満足度</p>
+      <div class="stars" data-q="vehicle"></div>
+    </div>
+    <div class="card">
+      <p class="q-title"><span class="q-num">4</span>スタッフの応対品質についての満足度</p>
+      <div class="stars" data-q="staff"></div>
+    </div>
+    <div class="card">
+      <p class="q-title"><span class="q-num">5</span>お住まいのエリア</p>
+      <input type="text" id="area" placeholder="新宿／中野など">
+    </div>
+    <div class="card">
+      <p class="q-title"><span class="q-num">6</span>ご利用のキッカケや用途を教えてください</p>
+      <textarea id="purpose" rows="2" placeholder="車検／修理／納車待ち／通勤など"></textarea>
+    </div>
+    <div class="card">
+      <p class="q-title"><span class="q-num">7</span>決め手、良かったと思った点</p>
+      <textarea id="freeText" rows="3" placeholder="ご自由にご記入ください"></textarea>
+    </div>
+
+    <button class="btn" id="submitBtn">回答を送信する</button>
+  </div>
+
+  <!-- ローディング -->
+  <div id="loadingView" class="hidden">
+    <div class="loading">
+      <div class="spinner"></div>
+      <div id="loadingText">口コミを生成しています…</div>
+    </div>
+  </div>
+
+  <!-- 結果 -->
+  <div id="resultView" class="hidden">
+    <header>
+      <h1 class="shop-name">ありがとうございました！</h1>
+      <p class="sub">ご利用の感想をもとに口コミを生成しました</p>
+    </header>
+    <div class="card">
+      <div class="review-box" id="reviewText"></div>
+      <button class="btn" id="copyBtn">クチコミをコピーする</button>
+      <button class="regenerate" id="regenBtn">別の文章で作り直す</button>
+    </div>
+  </div>
+
+  <!-- 低評価時サンクス -->
+  <div id="thanksView" class="hidden">
+    <div class="thanks">
+      <div class="thanks-shop" id="thanksShopName">店舗名</div>
+      アンケートのご回答<br>ありがとうございました。
+    </div>
+  </div>
+
+  <!-- 不正アクセス時エラー -->
+  <div id="errorView" class="hidden">
+    <div class="thanks">
+      <div class="thanks-shop">アクセスエラー</div>
+      URLが正しくありません。<br>
+      お手数ですが、店舗から<br>案内されたURLをご確認ください。
+    </div>
+  </div>
+
+  <!-- QRコード（スタッフがお客様に読み込ませる用） -->
+  <div class="qr-section hidden" id="qrSection">
+    <hr class="qr-divider">
+    <p class="qr-desc">スマートフォンでスキャンすると<br>このアンケートを開けます</p>
+    <div id="qrcode"></div>
+    <p class="qr-url" id="qrUrl"></p>
+  </div>
+</div>
+
+<div class="rate-limit-notice hidden" id="rateLimitNotice">
+  アクセスが集中しています。あと <strong id="rateLimitTimer">60</strong> 秒お待ちください。
+</div>
+
+<div class="modal-overlay hidden" id="mapModalOverlay">
+  <div class="modal-box">
+    <p class="modal-heading">⚠️まだ完了していません⚠️</p>
+    <p class="modal-text">クチコミ文がコピーされました。<br>次にGoogleマップが開かれますので、コピーされた文を貼り付けて、クチコミ投稿をお願いします。</p>
+    <button class="btn" id="modalYesBtn">はい</button>
+  </div>
+</div>
+
+<script>
+/* ---------- 店舗識別 (?shop=<slug>) ---------- *
+ * The URL must include a shop slug. If missing or malformed we hard-stop
+ * at the error view — generate.php / meta.php also reject bad slugs server-
+ * side, so the JS check is just for a friendlier UX.
+ */
+const SHOP_SLUG = (new URLSearchParams(window.location.search).get('shop') || '').trim();
+const SHOP_VALID = /^[a-z0-9][a-z0-9_\-]{0,31}$/.test(SHOP_SLUG);
+
+/* ---------- サーバー設定の読み込み ---------- */
+let serverCfg = { shopName: '', mapSearchName: '', mapUrl: '' };
+
+async function loadCfg() {
+  if (!SHOP_VALID) { show('error'); return; }
+  try {
+    const res = await fetch('api/meta.php?shop=' + encodeURIComponent(SHOP_SLUG));
+    if (!res.ok) { show('error'); return; }
+    serverCfg = await res.json();
+  } catch (e) {
+    show('error');
+    return;
+  }
+  document.getElementById('shopName').textContent       = serverCfg.shopName || '店舗名';
+  document.getElementById('thanksShopName').textContent = serverCfg.shopName || '店舗名';
+  if (serverCfg.areaPlaceholder) {
+    document.getElementById('area').placeholder = serverCfg.areaPlaceholder;
+  }
+}
+
+/* ---------- 画面切替 ---------- */
+const views = {
+  survey:  document.getElementById('surveyView'),
+  loading: document.getElementById('loadingView'),
+  result:  document.getElementById('resultView'),
+  thanks:  document.getElementById('thanksView'),
+  error:   document.getElementById('errorView'),
+};
+function show(name) {
+  Object.values(views).forEach(v => v.classList.add('hidden'));
+  views[name].classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+
+/* ---------- 星ボタン（1〜3） ---------- */
+const ratings = { overall: 0, price: 0, vehicle: 0, staff: 0 };
+document.querySelectorAll('.stars').forEach(group => {
+  const key = group.dataset.q;
+  for (let i = 1; i <= 3; i++) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'star-btn';
+    btn.textContent = '★';
+    btn.dataset.val = i;
+    btn.addEventListener('click', () => {
+      ratings[key] = i;
+      [...group.children].forEach(b => {
+        b.classList.toggle('on', Number(b.dataset.val) <= i);
+      });
+    });
+    group.appendChild(btn);
+  }
+});
+
+/* ---------- 送信 ---------- */
+let currentPayload = null;
+let generating = false;
+let cooldownInterval = null;
+
+function startCooldown(seconds) {
+  if (cooldownInterval) clearInterval(cooldownInterval);
+  const notice  = document.getElementById('rateLimitNotice');
+  const timerEl = document.getElementById('rateLimitTimer');
+  let remaining = Math.max(1, seconds);
+  notice.classList.remove('hidden');
+  timerEl.textContent = remaining;
+  setGenerating(true);
+  cooldownInterval = setInterval(() => {
+    remaining--;
+    timerEl.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(cooldownInterval);
+      cooldownInterval = null;
+      notice.classList.add('hidden');
+      setGenerating(false);
+    }
+  }, 1000);
+}
+
+/*
+ * Guarded click: we disable both submit/regen buttons while a generation is
+ * in-flight. Two reasons:
+ *   1. Double-tap on mobile would otherwise fire two fetches, doubling the
+ *      RPM/RPD cost for free-tier Gemini.
+ *   2. Prevents the user from queuing a second request that can't be served
+ *      until the first completes.
+ */
+function setGenerating(on) {
+  generating = on;
+  const sb = document.getElementById('submitBtn');
+  const rb = document.getElementById('regenBtn');
+  if (sb) sb.disabled = on;
+  if (rb) rb.disabled = on;
+}
+
+document.getElementById('submitBtn').addEventListener('click', async () => {
+  if (generating) return;
+  const keys = ['overall','price','vehicle','staff'];
+  for (const k of keys) {
+    if (!ratings[k]) { alert('①〜④すべての項目に星を付けてください。'); return; }
+  }
+  const area     = document.getElementById('area').value.trim();
+  const purpose  = document.getElementById('purpose').value.trim();
+  const freeText = document.getElementById('freeText').value.trim();
+  if (!area)     { alert('⑤「お住まいのエリア」を入力してください。'); return; }
+  if (!purpose)  { alert('⑥「ご利用のキッカケや用途」を入力してください。'); return; }
+  if (!freeText) { alert('⑦「決め手、良かったと思った点」を入力してください。'); return; }
+
+  const avg = keys.reduce((s,k) => s + ratings[k], 0) / keys.length;
+  if (avg <= 2) { show('thanks'); return; }
+
+  const positiveAspects = keys.filter(k => ratings[k] === 3);
+  currentPayload = { area, purpose, freeText, positiveAspects };
+  await generate();
+});
+
+document.getElementById('regenBtn').addEventListener('click', async () => {
+  if (generating || !currentPayload) return;
+  await generate();
+});
+
+async function generate() {
+  setGenerating(true);
+  show('loading');
+  const loadingText = document.getElementById('loadingText');
+  loadingText.textContent = '口コミを生成しています…';
+
+  const slowTimer = setTimeout(() => {
+    loadingText.innerHTML = '口コミを生成しています…<br><span style="font-size:12px;color:#888;">あと少しお待ちください</span>';
+  }, 5000);
+
+  /*
+   * Timeout: backend budget is 12s; a 15s client timeout gives a small
+   * margin for network/proxy overhead while staying well under any
+   * shared-hosting proxy limit. No client-side auto-retry — that would
+   * multiply request count against Gemini's free-tier RPD.
+   */
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+  let errMsg = '';
+  let isRateLimit = false;
+
+  try {
+    const res = await fetch('api/generate.php?shop=' + encodeURIComponent(SHOP_SLUG), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(currentPayload),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch(e) {
+      throw new Error('サーバー応答が不正です:\n' + text.substring(0, 600));
+    }
+    if (!data || typeof data !== 'object') {
+      throw new Error('サーバー応答が不正です');
+    }
+
+    if (res.status === 429 || data.rateLimit) {
+      isRateLimit = data.retryAfter || 60;
+      errMsg = data.error || 'アクセスが集中しています。';
+    } else if (!res.ok || data.error) {
+      const parts = [
+        data.error || 'unknown error',
+        data.httpCode  ? 'HTTP: '   + data.httpCode  : '',
+        data.curlError ? 'cURL: '   + data.curlError : '',
+        data.detail    ? 'Detail: ' + data.detail    : '',
+      ].filter(Boolean);
+      errMsg = parts.join('\n');
+    } else {
+      clearTimeout(slowTimer);
+      document.getElementById('reviewText').textContent = data.review;
+      show('result');
+      document.getElementById('copyBtn').classList.add('btn-attention-blue');
+      setGenerating(false);
+      return;
+    }
+  } catch (e) {
+    clearTimeout(timeoutId);
+    const msg = (e.message || '').toLowerCase();
+    if (msg.includes('abort') || msg.includes('timeout')) {
+      errMsg = 'タイムアウトしました。通信状態をご確認のうえ、もう一度お試しください。';
+    } else if (msg.includes('load failed') || msg.includes('network') || msg.includes('fetch')) {
+      errMsg = 'ネットワークに接続できませんでした。電波状況をご確認ください。';
+    } else {
+      errMsg = e.message || '不明なエラーが発生しました。';
+    }
+  }
+
+  clearTimeout(slowTimer);
+  if (isRateLimit) {
+    show('survey');
+    startCooldown(isRateLimit);
+  } else {
+    alert('口コミ生成に失敗しました\n\n' + errMsg);
+    show('survey');
+    setGenerating(false);
+  }
+}
+
+/* ---------- Googleマップ起動（スマホはアプリ優先） ---------- */
+function openGoogleMap() {
+  const url        = serverCfg.mapUrl;
+  // マップ検索用の名前：Googleマップ上の店舗名を優先、なければ表示店舗名
+  const searchName = serverCfg.mapSearchName || serverCfg.shopName || '';
+  if (!url) { alert('GoogleマップのURLが未設定です'); return; }
+
+  const ua = navigator.userAgent;
+  const isIOS     = /iPhone|iPad|iPod/.test(ua);
+  const isAndroid = /Android/.test(ua);
+
+  if (isIOS) {
+    // iOS：Google Mapsアプリを URL スキームで起動
+    // comgooglemaps:// で店舗名検索 → アプリが起動して該当店舗を表示
+    // アプリ未インストール時は元のURLへフォールバック
+    const appUrl = searchName
+      ? 'comgooglemaps://?q=' + encodeURIComponent(searchName)
+      : 'comgooglemaps://';
+
+    // アプリが開いた場合 visibilitychange でページが hidden になる
+    let switched = false;
+    const onVisibility = () => {
+      if (document.hidden) switched = true;
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    window.location.href = appUrl;
+
+    // 1.2秒後、アプリが開いていなければブラウザ版へフォールバック
+    setTimeout(() => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      if (!switched) {
+        window.location.href = url;
+      }
+    }, 1200);
+  } else if (isAndroid) {
+    // Android：Google Maps アプリを Intent URL で起動
+    // 店舗名で検索するジオインテントを使うと確実にアプリが開く
+    if (searchName) {
+      const geoUrl = 'geo:0,0?q=' + encodeURIComponent(searchName);
+      // パッケージを指定してGoogleマップに限定、ダメならブラウザ版へ
+      const intent = 'intent://' + geoUrl.substring(4)
+        + '#Intent;scheme=geo;package=com.google.android.apps.maps;'
+        + 'S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
+      window.location.href = intent;
+    } else {
+      // 検索名が無ければ元URLをintent化
+      const stripped = url.replace(/^https?:\/\//, '');
+      const intent = 'intent://' + stripped
+        + '#Intent;scheme=https;package=com.google.android.apps.maps;'
+        + 'S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
+      window.location.href = intent;
+    }
+  } else {
+    // PC：新しいタブで投稿ページを開く
+    window.open(url, '_blank', 'noopener');
+  }
+}
+
+/* ---------- コピー → 確認モーダル ---------- */
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  const text = document.getElementById('reviewText').textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch(e) {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+  }
+  document.getElementById('copyBtn').classList.remove('btn-attention-blue');
+  document.getElementById('mapModalOverlay').classList.remove('hidden');
+});
+
+document.getElementById('modalYesBtn').addEventListener('click', () => {
+  document.getElementById('mapModalOverlay').classList.add('hidden');
+  openGoogleMap();
+});
+
+/* ---------- QRコード生成 ---------- */
+function initQR() {
+  if (!SHOP_VALID || typeof QRCode === 'undefined') return;
+  const url = window.location.href;
+  new QRCode(document.getElementById('qrcode'), {
+    text: url,
+    width: 200,
+    height: 200,
+    correctLevel: QRCode.CorrectLevel.M,
+  });
+  document.getElementById('qrUrl').textContent = url;
+  document.getElementById('qrSection').classList.remove('hidden');
+}
+
+/* ---------- 初期化 ---------- */
+loadCfg();
+initQR();
+</script>
+</body>
+</html>

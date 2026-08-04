@@ -10,6 +10,7 @@ const isStaging = fs.existsSync(cnamePath) && fs.readFileSync(cnamePath, "utf8")
 const host = isStaging ? stagingHost : productionHost;
 const baseUrl = `https://${host}`;
 const internalPages = new Set([
+  "google-review/review.html",
   "line.html",
   "thanks/index.html",
 ]);
