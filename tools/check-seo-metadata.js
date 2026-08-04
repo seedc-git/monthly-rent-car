@@ -757,8 +757,8 @@ function checkTachikawaStoreSummary(file, html) {
 function checkTachikawaSearchMetadata(file, html, title, description) {
   if (file !== "shop/tokyo/tachikawa/index.html") return;
 
-  const expectedTitle = "立川市のマンスリーレンタカー｜1ヶ月24,000円〜（税抜）｜立川店";
-  const expectedDescription = "東京マンスリーレンタカー立川店は、立川駅から徒歩6分。軽自動車は1ヶ月24,000円（税抜）から利用でき、立川駅周辺での受け渡しや希望住所への配送も相談できます。";
+  const expectedTitle = "【1日あたり800円〜】立川の格安長期レンタカー｜東京マンスリーレンタカー";
+  const expectedDescription = "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。立川のマンスリーレンタカーなら1日あたり800円〜・保険料込み。立川駅徒歩6分、駅周辺での受け渡しにも対応。";
 
   if (title !== expectedTitle) {
     fail(file, `Tachikawa title must be: ${expectedTitle}`);
