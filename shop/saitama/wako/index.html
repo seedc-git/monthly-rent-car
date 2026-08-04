@@ -74,6 +74,7 @@
     }
     </script>
     <link rel="stylesheet" href="../../shop-contact.css">
+    <link rel="stylesheet" href="../../../media-carousel.css?v=20260804-2">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -1341,6 +1342,52 @@
         </div>
       </section>
 
+      <section class="section media-section" aria-labelledby="media-wako-title">
+        <div class="inner">
+          <div class="media-carousel" data-media-carousel data-media-interval="4800">
+            <header class="media-carousel-header">
+              <div class="section-head media-carousel-heading">
+                <h2 id="media-wako-title">お役立ち記事</h2>
+              </div>
+              <div class="media-carousel-controls" data-media-controls role="group" aria-label="記事スライダーの操作">
+                <button class="media-carousel-button" type="button" data-media-prev aria-label="前の記事を表示">
+                  <span aria-hidden="true">←</span>
+                </button>
+                <span class="visually-hidden" data-media-status>1 / 1</span>
+                <button class="media-carousel-button" type="button" data-media-next aria-label="次の記事を表示">
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </header>
+            <div class="media-carousel-viewport" data-media-viewport>
+              <div class="media-carousel-track" data-media-track>
+                <a class="media-card" href="/area/tachikawa/">
+                  <div class="media-card-image">
+                    <img
+                      src="../../../assets/img/area/tachikawa/tachikawa-station-hero-20260730-620.webp"
+                      srcset="../../../assets/img/area/tachikawa/tachikawa-station-hero-20260730-360.webp 360w,
+                              ../../../assets/img/area/tachikawa/tachikawa-station-hero-20260730-620.webp 620w,
+                              ../../../assets/img/area/tachikawa/tachikawa-station-hero-20260730-740.webp 740w"
+                      sizes="(max-width: 767px) calc(100vw - 40px), (min-width: 1180px) 390px, 320px"
+                      alt="JR立川駅北口の駅舎と駅前デッキ"
+                      loading="lazy"
+                      decoding="async"
+                      width="620"
+                      height="288">
+                  </div>
+                  <div class="media-card-body">
+                    <span class="media-card-category">立川エリア</span>
+                    <h3 class="media-card-title">立川市の格安レンタカーおすすめ10選</h3>
+                    <span class="media-card-description">1ヶ月・長期利用の料金やサービスを比較しました。</span>
+                    <span class="media-card-cta">記事を読む</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
 
     <footer class="site-footer">
@@ -1603,5 +1650,6 @@
       })();
     </script>
     <script src="../../../script.js"></script>
+    <script src="../../../media-carousel.js?v=20260804-2"></script>
   </body>
 </html>
