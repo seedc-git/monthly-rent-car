@@ -66,6 +66,7 @@
     </script>
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="media-carousel.css">
 
     <script type="application/ld+json">
       {
@@ -979,7 +980,7 @@
         <div class="inner">
           <div class="section-head">
             <h2>店舗一覧</h2>
-            <p>東京・神奈川・埼玉の各店舗でご相談いただけます。立川店をご検討中の方は、<a class="area-comparison-link" href="/area/tachikawa/">立川市のレンタカー10社の料金・サービス比較</a>もご覧ください。</p>
+            <p>東京・神奈川・埼玉の各店舗でご相談いただけます。</p>
           </div>
           <div class="store-grid">
             <article>
@@ -1008,6 +1009,49 @@
                 <li><a href="/shop/saitama/asakadai/">朝霞台店<span class="visually-hidden">のマンスリーレンタカー</span></a></li>
               </ul>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section media-section" aria-labelledby="media-home-title">
+        <div class="inner">
+          <div class="media-carousel" data-media-carousel data-media-speed="48">
+            <header class="media-carousel-header">
+              <span class="media-carousel-label">MEDIA</span>
+              <div class="media-carousel-heading">
+                <h2 id="media-home-title">レンタカー選びのお役立ち記事</h2>
+                <p>立川エリアでレンタカーを比較検討している方へ。</p>
+              </div>
+              <button class="media-motion-toggle" type="button" data-media-toggle aria-pressed="false" aria-label="MEDIAの自動スクロールを一時停止する" hidden>
+                <span class="media-motion-toggle-icon" aria-hidden="true">Ⅱ</span>
+                <span class="media-motion-toggle-text">一時停止</span>
+              </button>
+            </header>
+            <div class="media-carousel-viewport" data-media-viewport>
+              <div class="media-carousel-track" data-media-track>
+                <a class="media-card" href="/area/tachikawa/">
+                  <div class="media-card-image">
+                    <img
+                      src="assets/img/area/tachikawa/tachikawa-station-hero-20260730-620.webp"
+                      srcset="assets/img/area/tachikawa/tachikawa-station-hero-20260730-360.webp 360w,
+                              assets/img/area/tachikawa/tachikawa-station-hero-20260730-620.webp 620w,
+                              assets/img/area/tachikawa/tachikawa-station-hero-20260730-740.webp 740w"
+                      sizes="(max-width: 767px) calc(100vw - 58px), 320px"
+                      alt="JR立川駅北口の駅舎と駅前デッキ"
+                      loading="lazy"
+                      decoding="async"
+                      width="620"
+                      height="288">
+                  </div>
+                  <div class="media-card-body">
+                    <span class="media-card-category">立川エリア</span>
+                    <h3 class="media-card-title">立川市の格安レンタカーおすすめ10選</h3>
+                    <span class="media-card-description">1ヶ月・長期利用の料金やサービスを比較しました。</span>
+                    <span class="media-card-cta">記事を読む</span>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1296,5 +1340,6 @@
       })();
     </script>
     <script src="script.js"></script>
+    <script src="media-carousel.js"></script>
   </body>
 </html>
