@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "articles": [
+    {
+      "url": "/area/tachikawa/",
+      "category": "立川エリア",
+      "description": "1ヶ月・長期利用の料金やサービスを比較しました。",
+      "image": {
+        "src": "/assets/img/area/tachikawa/tachikawa-station-hero-20260730-620.webp",
+        "srcset": [
+          {
+            "src": "/assets/img/area/tachikawa/tachikawa-station-hero-20260730-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/assets/img/area/tachikawa/tachikawa-station-hero-20260730-620.webp",
+            "width": 620
+          },
+          {
+            "src": "/assets/img/area/tachikawa/tachikawa-station-hero-20260730-740.webp",
+            "width": 740
+          }
+        ],
+        "alt": "JR立川駅北口の駅舎と駅前デッキ",
+        "width": 620,
+        "height": 288
+      }
+    }
+  ]
+}

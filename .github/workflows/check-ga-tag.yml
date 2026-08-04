@@ -38,6 +38,9 @@ jobs:
           git fetch --no-tags origin main staging
           node tools/check-production-staging-parity.js "$PR_HEAD_SHA"
 
+      - name: MEDIA articles must match the registry
+        run: node tools/sync-media-articles.cjs --check
+
       - name: Every HTML page must include the GA4 tag
         run: |
           missing=0
