@@ -185,6 +185,8 @@
   font-size: clamp(18px, 1.8vw, 20px);
   line-height: 1.5;
   letter-spacing: -0.04em;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 

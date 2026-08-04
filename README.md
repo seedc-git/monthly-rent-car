@@ -48,6 +48,38 @@ The `staging` branch is published by GitHub Pages:
 
 Staging pages should include `noindex, nofollow`.
 
+## Helpful Article Carousel
+
+The cards shown under `お役立ち記事` on the home page and every shop page
+are managed from one registry:
+
+- `data/media-articles.json`
+
+The card title is read automatically from the target page's single `h1`.
+Article URLs can use any internal directory, such as `/area/example/` or
+`/column/example/`; they are not limited to `/area/`.
+
+To add an article:
+
+1. Add the article page and its responsive card images to the repository.
+2. Add one object to `data/media-articles.json` in the desired carousel order.
+3. Synchronize the static HTML:
+
+   ```bash
+   node tools/sync-media-articles.cjs
+   ```
+
+4. Verify that every target page is synchronized:
+
+   ```bash
+   node tools/sync-media-articles.cjs --check
+   ```
+
+The committed output remains static HTML, so article links are present without
+client-side rendering. CI fails when the registry, images, target H1, home page,
+or any shop carousel is missing or out of sync. Do not edit the generated card
+markup between the `media-articles:start` and `media-articles:end` comments.
+
 ## Branch Policy
 
 - Make and verify changes on `staging` first.
