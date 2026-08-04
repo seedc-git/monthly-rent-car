@@ -775,6 +775,15 @@ main {
   font-weight: 700;
 }
 
+.area-comparison-link {
+  color: var(--navy);
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
 .plan-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
