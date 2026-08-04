@@ -700,20 +700,65 @@ function checkTachikawaStoreSummary(file, html) {
   }
 }
 
-function checkTachikawaSearchMetadata(file, html, title, description) {
-  if (file !== "shop/tokyo/tachikawa/index.html") return;
+const shopSearchMetadataByPage = {
+  "shop/kanagawa/kawasaki/index.html": {
+    title: "【1日あたり800円〜】川崎の格安長期レンタカー｜神奈川マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。川崎のマンスリーレンタカーなら1日あたり800円〜・保険料込み。川崎駅・京急川崎駅徒歩3分、駅周辺での受け渡しにも対応。",
+  },
+  "shop/saitama/asakadai/index.html": {
+    title: "【1日あたり800円〜】朝霞台の格安長期レンタカー｜埼玉マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。朝霞台のマンスリーレンタカーなら1日あたり800円〜・保険料込み。朝霞台駅・北朝霞駅徒歩3分、駅周辺での受け渡しにも対応。",
+  },
+  "shop/saitama/kawagoe/index.html": {
+    title: "【1日あたり800円〜】川越の格安長期レンタカー｜埼玉マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。川越のマンスリーレンタカーなら1日あたり800円〜・保険料込み。川越駅徒歩3分、駅周辺での受け渡しにも対応。",
+  },
+  "shop/saitama/omiya/index.html": {
+    title: "【1日あたり800円〜】大宮の格安長期レンタカー｜埼玉マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。大宮のマンスリーレンタカーなら1日あたり800円〜・保険料込み。大宮駅徒歩6分、駅周辺での受け渡しにも対応。",
+  },
+  "shop/saitama/sakado/index.html": {
+    title: "【1日あたり800円〜】坂戸の格安長期レンタカー｜埼玉マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。坂戸のマンスリーレンタカーなら1日あたり800円〜・保険料込み。坂戸駅徒歩3分、駅周辺での受け渡しにも対応。",
+  },
+  "shop/saitama/tokorozawa/index.html": {
+    title: "【1日あたり800円〜】所沢の格安長期レンタカー｜埼玉マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。所沢のマンスリーレンタカーなら1日あたり800円〜・保険料込み。所沢駅徒歩6分、駅周辺での受け渡しにも対応。",
+  },
+  "shop/saitama/urawa/index.html": {
+    title: "【1日あたり800円〜】浦和の格安長期レンタカー｜埼玉マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。浦和のマンスリーレンタカーなら1日あたり800円〜・保険料込み。浦和駅徒歩4分、駅周辺での受け渡しにも対応。",
+  },
+  "shop/saitama/wako/index.html": {
+    title: "【1日あたり800円〜】和光の格安長期レンタカー｜埼玉マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。和光のマンスリーレンタカーなら1日あたり800円〜・保険料込み。和光市駅南口徒歩6分、駅での受け渡しにも対応。",
+  },
+  "shop/tokyo/ikebukuro/index.html": {
+    title: "【1日あたり800円〜】池袋の格安長期レンタカー｜東京マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。池袋のマンスリーレンタカーなら1日あたり800円〜・保険料込み。池袋駅徒歩6分、駅周辺での受け渡しにも対応。",
+  },
+  "shop/tokyo/shinjuku/index.html": {
+    title: "【1日あたり800円〜】新宿の格安長期レンタカー｜東京マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。新宿のマンスリーレンタカーなら1日あたり800円〜・保険料込み。新宿駅徒歩7分、駅周辺での受け渡しにも対応。",
+  },
+  "shop/tokyo/tachikawa/index.html": {
+    title: "【1日あたり800円〜】立川の格安長期レンタカー｜東京マンスリーレンタカー",
+    description: "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。立川のマンスリーレンタカーなら1日あたり800円〜・保険料込み。立川駅徒歩6分、駅周辺での受け渡しにも対応。",
+  },
+};
 
-  const expectedTitle = "【1日あたり800円〜】立川の格安長期レンタカー｜東京マンスリーレンタカー";
-  const expectedDescription = "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。立川のマンスリーレンタカーなら1日あたり800円〜・保険料込み。立川駅徒歩6分、駅周辺での受け渡しにも対応。";
+function checkShopSearchMetadata(file, html, title, description) {
+  const expected = shopSearchMetadataByPage[file];
+  if (!expected) return;
 
-  if (title !== expectedTitle) {
-    fail(file, `Tachikawa title must be: ${expectedTitle}`);
+  if (title !== expected.title) {
+    fail(file, `shop title must be: ${expected.title}`);
   }
-  if (description !== expectedDescription) {
-    fail(file, `Tachikawa meta description must be: ${expectedDescription}`);
+  if (description !== expected.description) {
+    fail(file, `shop meta description must be: ${expected.description}`);
   }
-  if (!html.includes(`"name": "${expectedTitle}"`)) {
-    fail(file, "Tachikawa WebPage.name must match the page title");
+  if (!html.includes(`"name": "${expected.title}"`)) {
+    fail(file, "shop WebPage.name must match the page title");
   }
 }
 
@@ -755,7 +800,7 @@ function checkPage(file) {
   checkTachikawaLocationData(file, html);
   checkTachikawaHeading(file, html);
   checkTachikawaStoreSummary(file, html);
-  checkTachikawaSearchMetadata(file, html, title, description);
+  checkShopSearchMetadata(file, html, title, description);
   checkShopImages(file, html);
 
   if (isStaging) {
