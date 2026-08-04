@@ -700,6 +700,23 @@ function checkTachikawaStoreSummary(file, html) {
   }
 }
 
+function checkTachikawaSearchMetadata(file, html, title, description) {
+  if (file !== "shop/tokyo/tachikawa/index.html") return;
+
+  const expectedTitle = "【1日あたり800円〜】立川の格安長期レンタカー｜東京マンスリーレンタカー";
+  const expectedDescription = "マイカーの事故・修理中の代車、納車待ちのつなぎ、法人の社用車、通勤・送迎など、車が必要な1ヶ月に。立川のマンスリーレンタカーなら1日あたり800円〜・保険料込み。立川駅徒歩6分、駅周辺での受け渡しにも対応。";
+
+  if (title !== expectedTitle) {
+    fail(file, `Tachikawa title must be: ${expectedTitle}`);
+  }
+  if (description !== expectedDescription) {
+    fail(file, `Tachikawa meta description must be: ${expectedDescription}`);
+  }
+  if (!html.includes(`"name": "${expectedTitle}"`)) {
+    fail(file, "Tachikawa WebPage.name must match the page title");
+  }
+}
+
 function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
@@ -738,6 +755,7 @@ function checkPage(file) {
   checkTachikawaLocationData(file, html);
   checkTachikawaHeading(file, html);
   checkTachikawaStoreSummary(file, html);
+  checkTachikawaSearchMetadata(file, html, title, description);
   checkShopImages(file, html);
 
   if (isStaging) {
