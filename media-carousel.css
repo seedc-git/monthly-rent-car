@@ -36,6 +36,7 @@
   padding: 9px 16px;
   border-radius: 999px;
   display: inline-flex;
+  justify-self: start;
   justify-content: center;
   background: var(--navy);
   color: var(--white);
@@ -44,61 +45,61 @@
   letter-spacing: 0.16em;
 }
 
+.media-carousel-heading {
+  min-width: 0;
+}
+
 .media-carousel-heading h2 {
   color: var(--navy);
   font-size: clamp(24px, 3vw, 36px);
   line-height: 1.35;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
 }
 
-.media-carousel-heading p {
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.75;
-}
-
-.media-motion-toggle {
-  min-height: 42px;
-  padding: 9px 14px;
-  border: 1px solid rgba(5, 38, 111, 0.2);
-  border-radius: 999px;
-  display: inline-flex;
-  gap: 7px;
+.media-carousel-controls {
+  margin-top: 0;
+  display: flex;
+  gap: 10px;
   align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--navy);
-  font: inherit;
-  font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
+  justify-content: flex-end;
 }
 
-.media-motion-toggle:hover {
-  border-color: var(--orange);
-}
-
-.media-motion-toggle[hidden] {
+.media-carousel-controls[hidden] {
   display: none;
 }
 
-.media-motion-toggle:focus-visible,
-.media-card:focus-visible {
-  outline: 3px solid rgba(255, 106, 0, 0.45);
-  outline-offset: 4px;
+.media-carousel-button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(5, 38, 111, 0.22);
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
+  font: inherit;
+  font-size: 19px;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 8px 20px rgba(5, 38, 111, 0.09);
+  cursor: pointer;
 }
 
-.media-motion-toggle-icon {
-  min-width: 14px;
+.media-carousel-button:hover {
+  border-color: var(--orange);
   color: var(--orange);
-  font-size: 12px;
-  line-height: 1;
-  text-align: center;
+}
+
+.media-carousel-button:focus-visible,
+.media-card:focus-visible {
+  outline: 3px solid rgba(255, 106, 0, 0.45);
+  outline-offset: 3px;
 }
 
 .media-carousel-viewport {
-  margin-top: 26px;
+  margin-top: 12px;
   margin-inline: -5px;
   padding: 10px 5px 24px;
   overflow-x: auto;
@@ -109,9 +110,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.media-carousel.is-auto-scrolling .media-carousel-viewport {
+.media-carousel.is-slider-ready .media-carousel-viewport {
   overflow: hidden;
   scroll-snap-type: none;
+  scrollbar-width: none;
 }
 
 .media-carousel-track {
@@ -119,11 +121,12 @@
   display: flex;
   gap: 20px;
   align-items: stretch;
+  position: relative;
   transform: translate3d(0, 0, 0);
   will-change: auto;
 }
 
-.media-carousel.is-auto-scrolling .media-carousel-track {
+.media-carousel.is-animating .media-carousel-track {
   will-change: transform;
 }
 
@@ -135,10 +138,11 @@
   border-radius: 22px;
   display: grid;
   grid-template-columns: minmax(280px, 42%) minmax(0, 1fr);
+  flex: 0 0 auto;
   background: var(--white);
   color: var(--navy);
   box-shadow: 0 18px 42px rgba(5, 38, 111, 0.13);
-  scroll-snap-align: start;
+  scroll-snap-align: center;
   text-decoration: none;
 }
 
@@ -186,8 +190,10 @@
 .media-card-title {
   margin-top: 13px;
   color: var(--navy);
-  font-size: clamp(20px, 2.2vw, 28px);
-  line-height: 1.45;
+  font-size: clamp(18px, 1.8vw, 20px);
+  line-height: 1.5;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
 }
 
 .media-card-description {
@@ -215,15 +221,10 @@
   line-height: 1;
 }
 
-.media-carousel.is-paused .media-motion-toggle {
-  background: #fff7f1;
-}
-
 @media (max-width: 767px) {
   .media-carousel-header {
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 12px;
-    align-items: start;
   }
 
   .media-carousel-label {
@@ -233,23 +234,28 @@
   }
 
   .media-carousel-heading h2 {
-    font-size: clamp(21px, 6vw, 27px);
+    font-size: clamp(17px, 5.3vw, 23px);
   }
 
-  .media-carousel-heading p {
-    font-size: 13px;
+  .media-carousel-heading {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 
-  .media-motion-toggle {
+  .media-carousel-controls {
     grid-column: 2;
-    justify-self: start;
-    min-height: 38px;
-    padding: 7px 12px;
-    font-size: 12px;
+    grid-row: 1;
+    gap: 8px;
+  }
+
+  .media-carousel-button {
+    width: 44px;
+    height: 44px;
+    font-size: 17px;
   }
 
   .media-carousel-viewport {
-    margin-top: 18px;
+    margin-top: 8px;
     padding-bottom: 18px;
   }
 
@@ -258,7 +264,7 @@
   }
 
   .media-card {
-    width: min(332px, calc(100vw - 58px));
+    width: min(390px, calc(100vw - 40px));
     min-height: 0;
     border-radius: 18px;
     display: block;
@@ -270,12 +276,12 @@
   }
 
   .media-card-body {
-    padding: 19px 19px 21px;
+    padding: 19px 16px 21px;
   }
 
   .media-card-title {
     margin-top: 10px;
-    font-size: 19px;
+    font-size: clamp(12.2px, 4.45vw, 18px);
   }
 
   .media-card-description {
@@ -288,12 +294,28 @@
   }
 }
 
+@media (max-width: 360px) {
+  .media-carousel-header {
+    gap: 8px;
+  }
+
+  .media-carousel-label {
+    min-width: 66px;
+    padding-inline: 9px;
+    font-size: 10px;
+  }
+
+  .media-carousel-heading h2 {
+    font-size: 17px;
+    letter-spacing: -0.05em;
+  }
+}
+
 /* The desktop layout intentionally presents the site in a 430px phone shell. */
 @media (min-width: 1180px) {
   .media-carousel-header {
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 12px;
-    align-items: start;
   }
 
   .media-carousel-label {
@@ -306,20 +328,25 @@
     font-size: 23px;
   }
 
-  .media-carousel-heading p {
-    font-size: 13px;
+  .media-carousel-heading {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 
-  .media-motion-toggle {
+  .media-carousel-controls {
     grid-column: 2;
-    justify-self: start;
-    min-height: 38px;
-    padding: 7px 12px;
-    font-size: 12px;
+    grid-row: 1;
+    gap: 8px;
+  }
+
+  .media-carousel-button {
+    width: 44px;
+    height: 44px;
+    font-size: 17px;
   }
 
   .media-carousel-viewport {
-    margin-top: 18px;
+    margin-top: 8px;
     padding-bottom: 18px;
   }
 
@@ -328,7 +355,7 @@
   }
 
   .media-card {
-    width: calc(var(--pc-phone-width) - 70px);
+    width: calc(var(--pc-phone-width) - 40px);
     min-height: 0;
     border-radius: 18px;
     display: block;
@@ -340,12 +367,12 @@
   }
 
   .media-card-body {
-    padding: 19px 19px 21px;
+    padding: 19px 16px 21px;
   }
 
   .media-card-title {
     margin-top: 10px;
-    font-size: 19px;
+    font-size: 18px;
   }
 
   .media-card-description {
@@ -359,15 +386,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .media-carousel-track {
-    transform: none !important;
-    will-change: auto;
-  }
-
-  .media-motion-toggle {
-    display: none;
-  }
-
   .media-card-image img {
     transition: none;
   }

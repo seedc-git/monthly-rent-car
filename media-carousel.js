@@ -5,171 +5,222 @@
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   const hoverPauseQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-  carousels.forEach((carousel) => {
+  carousels.forEach((carousel, carouselIndex) => {
     const viewport = carousel.querySelector("[data-media-viewport]");
     const track = carousel.querySelector("[data-media-track]");
-    const toggle = carousel.querySelector("[data-media-toggle]");
-    const toggleIcon = toggle?.querySelector(".media-motion-toggle-icon");
-    const toggleText = toggle?.querySelector(".media-motion-toggle-text");
-    if (!viewport || !track || !toggle) return;
+    const controls = carousel.querySelector("[data-media-controls]");
+    const previousButton = carousel.querySelector("[data-media-prev]");
+    const nextButton = carousel.querySelector("[data-media-next]");
+    const status = carousel.querySelector("[data-media-status]");
+    const cards = Array.from(carousel.querySelectorAll(".media-card"));
 
-    let animation = null;
-    let userPaused = false;
-    let pointerInside = false;
+    if (!viewport || !track || !controls || !previousButton || !nextButton || !cards.length) {
+      return;
+    }
+
+    const interval = Math.max(3000, Number(carousel.dataset.mediaInterval) || 4800);
+    const duration = 480;
+    const viewportId = viewport.id || `media-carousel-viewport-${carouselIndex + 1}`;
+
+    let activeIndex = 0;
+    let timer = null;
+    let activeAnimation = null;
+    let animationToken = 0;
+    let isAnimating = false;
     let isIntersecting = true;
-    let focusMode = false;
+    let pointerInside = false;
+    let focusInside = false;
     let resizeTimer = null;
 
-    const updateToggle = () => {
-      toggle.setAttribute("aria-pressed", String(userPaused));
-      toggle.setAttribute(
-        "aria-label",
-        userPaused ? "MEDIAの自動スクロールを再開する" : "MEDIAの自動スクロールを一時停止する"
-      );
-      if (toggleIcon) toggleIcon.textContent = userPaused ? "▶" : "Ⅱ";
-      if (toggleText) toggleText.textContent = userPaused ? "再生" : "一時停止";
+    viewport.id = viewportId;
+    previousButton.setAttribute("aria-controls", viewportId);
+    nextButton.setAttribute("aria-controls", viewportId);
+
+    const clearTimer = () => {
+      window.clearTimeout(timer);
+      timer = null;
     };
 
-    const syncPlayback = () => {
-      if (!animation) return;
-      const cardHasFocus = track.contains(document.activeElement);
-      const shouldPause =
-        userPaused || pointerInside || cardHasFocus || document.hidden || !isIntersecting;
-      if (shouldPause) {
-        animation.pause();
-      } else {
-        animation.play();
+    const setActiveState = () => {
+      cards.forEach((card, index) => {
+        const isActive = index === activeIndex;
+        card.setAttribute("aria-hidden", String(!isActive));
+        card.inert = !isActive;
+      });
+
+      if (status) {
+        status.textContent = `${activeIndex + 1} / ${cards.length}`;
       }
-      carousel.classList.toggle("is-paused", shouldPause);
     };
 
-    const showFocusedCard = (target) => {
-      const card = target?.closest?.(".media-card");
-      if (!card || !carousel.classList.contains("is-auto-scrolling")) return;
-
-      focusMode = true;
-      animation?.cancel();
-      animation = null;
-      track.style.transform = "translate3d(0, 0, 0)";
-
-      const cardLeft = card.getBoundingClientRect().left - track.getBoundingClientRect().left;
-      const centeredInset = Math.max(0, (viewport.clientWidth - card.offsetWidth) / 2);
-      track.style.transform = `translate3d(${centeredInset - cardLeft}px, 0, 0)`;
-      carousel.classList.add("is-paused");
+    const getTrackPosition = (index) => {
+      const card = cards[index];
+      const viewportStyle = window.getComputedStyle(viewport);
+      const horizontalPadding =
+        Number.parseFloat(viewportStyle.paddingLeft) +
+        Number.parseFloat(viewportStyle.paddingRight);
+      const contentWidth = viewport.clientWidth - horizontalPadding;
+      const centeredInset = Math.max(0, (contentWidth - card.offsetWidth) / 2);
+      return centeredInset - card.offsetLeft;
     };
 
-    const enterManualPause = () => {
-      const viewportLeft = viewport.getBoundingClientRect().left;
-      const trackLeft = track.getBoundingClientRect().left;
-      const currentOffset = viewportLeft - trackLeft;
-
-      animation?.cancel();
-      animation = null;
-      focusMode = false;
-      track.style.transform = "translate3d(0, 0, 0)";
-      carousel.classList.remove("is-auto-scrolling");
-      carousel.classList.add("is-paused");
-
-      const maxScroll = Math.max(0, track.scrollWidth - viewport.clientWidth);
-      viewport.scrollLeft = Math.min(maxScroll, Math.max(0, currentOffset));
+    const setTrackPosition = (index) => {
+      track.style.transform = `translate3d(${getTrackPosition(index)}px, 0, 0)`;
     };
 
-    const buildAnimation = () => {
-      animation?.cancel();
-      animation = null;
-      focusMode = false;
-      track.style.transform = "translate3d(0, 0, 0)";
-      carousel.classList.remove("is-auto-scrolling", "is-paused");
-      updateToggle();
+    const scheduleNext = () => {
+      clearTimer();
+      if (
+        reducedMotionQuery.matches ||
+        document.hidden ||
+        !isIntersecting ||
+        pointerInside ||
+        focusInside ||
+        isAnimating
+      ) {
+        return;
+      }
+
+      timer = window.setTimeout(() => move(1), interval);
+    };
+
+    const settleCurrentCard = () => {
+      animationToken += 1;
+      activeAnimation?.cancel();
+      activeAnimation = null;
+      isAnimating = false;
+      carousel.classList.remove("is-animating");
+      setTrackPosition(activeIndex);
+      scheduleNext();
+    };
+
+    const move = async (direction) => {
+      if (isAnimating) return;
+
+      clearTimer();
+      const currentIndex = activeIndex;
+      const nextIndex = (activeIndex + direction + cards.length) % cards.length;
+      const currentPosition = getTrackPosition(currentIndex);
+      const nextPosition = getTrackPosition(nextIndex);
 
       if (reducedMotionQuery.matches || typeof track.animate !== "function") {
-        toggle.hidden = true;
+        activeIndex = nextIndex;
+        setActiveState();
+        setTrackPosition(activeIndex);
+        scheduleNext();
         return;
       }
 
-      toggle.hidden = false;
-      if (userPaused) {
-        carousel.classList.add("is-paused");
+      const wrapsForward = direction > 0 && nextIndex <= currentIndex;
+      const wrapsBackward = direction < 0 && nextIndex >= currentIndex;
+      const usesLoopTransition = cards.length === 1 || wrapsForward || wrapsBackward;
+      const viewportStyle = window.getComputedStyle(viewport);
+      const horizontalPadding =
+        Number.parseFloat(viewportStyle.paddingLeft) +
+        Number.parseFloat(viewportStyle.paddingRight);
+      const trackStyle = window.getComputedStyle(track);
+      const trackGap = Number.parseFloat(trackStyle.columnGap || trackStyle.gap) || 0;
+      const slideDistance =
+        Math.max(
+          viewport.clientWidth - horizontalPadding,
+          cards[currentIndex].offsetWidth,
+          cards[nextIndex].offsetWidth
+        ) + trackGap;
+      const token = ++animationToken;
+
+      const keyframes = usesLoopTransition
+        ? [
+            { transform: `translate3d(${currentPosition}px, 0, 0)`, offset: 0 },
+            {
+              transform: `translate3d(${
+                currentPosition + (direction > 0 ? -slideDistance : slideDistance)
+              }px, 0, 0)`,
+              offset: 0.5
+            },
+            {
+              transform: `translate3d(${
+                nextPosition + (direction > 0 ? slideDistance : -slideDistance)
+              }px, 0, 0)`,
+              offset: 0.5
+            },
+            { transform: `translate3d(${nextPosition}px, 0, 0)`, offset: 1 }
+          ]
+        : [
+            { transform: `translate3d(${currentPosition}px, 0, 0)` },
+            { transform: `translate3d(${nextPosition}px, 0, 0)` }
+          ];
+
+      isAnimating = true;
+      carousel.classList.add("is-animating");
+      activeAnimation = track.animate(keyframes, {
+        duration,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)"
+      });
+
+      const finishedAnimation = activeAnimation;
+      try {
+        await finishedAnimation.finished;
+      } catch {
         return;
       }
 
-      viewport.scrollLeft = 0;
-      const trackWidth = track.scrollWidth;
-      const viewportWidth = viewport.clientWidth;
-      if (!trackWidth || !viewportWidth) return;
+      if (token !== animationToken) return;
 
-      const leftEnd = -trackWidth;
-      const rightStart = viewportWidth;
-      const firstDistance = Math.abs(leftEnd);
-      const totalDistance = firstDistance + rightStart;
-      const resetOffset = firstDistance / totalDistance;
-      const speed = Math.max(24, Number(carousel.dataset.mediaSpeed) || 48);
-      const duration = Math.max(14000, (totalDistance / speed) * 1000);
-
-      animation = track.animate(
-        [
-          { transform: "translate3d(0, 0, 0)", offset: 0 },
-          { transform: `translate3d(${leftEnd}px, 0, 0)`, offset: resetOffset },
-          { transform: `translate3d(${rightStart}px, 0, 0)`, offset: resetOffset },
-          { transform: "translate3d(0, 0, 0)", offset: 1 }
-        ],
-        {
-          duration,
-          iterations: Infinity,
-          easing: "linear"
-        }
-      );
-
-      carousel.classList.add("is-auto-scrolling");
-      const focusedCard = track.contains(document.activeElement)
-        ? document.activeElement.closest?.(".media-card")
-        : null;
-      if (focusedCard) {
-        showFocusedCard(focusedCard);
-      } else {
-        syncPlayback();
+      activeIndex = nextIndex;
+      setActiveState();
+      track.style.transform = `translate3d(${nextPosition}px, 0, 0)`;
+      finishedAnimation.cancel();
+      if (activeAnimation === finishedAnimation) {
+        activeAnimation = null;
       }
+      isAnimating = false;
+      carousel.classList.remove("is-animating");
+      scheduleNext();
     };
 
-    toggle.addEventListener("click", () => {
-      userPaused = !userPaused;
-      updateToggle();
-      if (userPaused) {
-        enterManualPause();
-      } else {
-        buildAnimation();
-      }
-    });
+    previousButton.addEventListener("click", () => move(-1));
+    nextButton.addEventListener("click", () => move(1));
 
-    viewport.addEventListener("mouseenter", () => {
+    carousel.addEventListener("mouseenter", () => {
       if (hoverPauseQuery.matches) {
         pointerInside = true;
-        syncPlayback();
+        clearTimer();
       }
     });
 
-    viewport.addEventListener("mouseleave", () => {
+    carousel.addEventListener("mouseleave", () => {
       pointerInside = false;
-      syncPlayback();
+      scheduleNext();
     });
 
-    track.addEventListener("focusin", (event) => showFocusedCard(event.target));
-    track.addEventListener("focusout", () => {
+    carousel.addEventListener("focusin", () => {
+      focusInside = true;
+      clearTimer();
+      if (isAnimating) {
+        settleCurrentCard();
+      }
+    });
+
+    carousel.addEventListener("focusout", () => {
       window.requestAnimationFrame(() => {
-        if (track.contains(document.activeElement)) {
-          showFocusedCard(document.activeElement);
-        } else if (focusMode) {
-          buildAnimation();
-        }
+        focusInside = carousel.contains(document.activeElement);
+        scheduleNext();
       });
     });
-    document.addEventListener("visibilitychange", syncPlayback);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        clearTimer();
+      } else {
+        scheduleNext();
+      }
+    });
 
     if (typeof IntersectionObserver === "function") {
       const observer = new IntersectionObserver(
         ([entry]) => {
           isIntersecting = entry.isIntersecting;
-          syncPlayback();
+          scheduleNext();
         },
         { threshold: 0.01 }
       );
@@ -178,13 +229,17 @@
 
     window.addEventListener("resize", () => {
       window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(buildAnimation, 180);
+      resizeTimer = window.setTimeout(settleCurrentCard, 180);
     });
 
     if (typeof reducedMotionQuery.addEventListener === "function") {
-      reducedMotionQuery.addEventListener("change", buildAnimation);
+      reducedMotionQuery.addEventListener("change", settleCurrentCard);
     }
 
-    window.requestAnimationFrame(buildAnimation);
+    controls.hidden = false;
+    carousel.classList.add("is-slider-ready");
+    setActiveState();
+    setTrackPosition(activeIndex);
+    scheduleNext();
   });
 })();
