@@ -185,6 +185,25 @@ const kawagoeStorePhotos = [
   },
 ];
 
+const kawasakiStorePhotos = [
+  {
+    file: "kawasaki-service-nbox-key-handover-20260805",
+    alt: "神奈川マンスリーレンタカー川崎店で利用者にN-BOXの鍵を引き渡すスタッフ",
+  },
+  {
+    file: "kawasaki-service-spacia-business-handover-20260805",
+    alt: "神奈川マンスリーレンタカー川崎店でスペーシアの車両受け渡しについて利用者へ説明するスタッフ",
+  },
+  {
+    file: "kawasaki-service-rainy-nwgn-key-handover-20260805",
+    alt: "神奈川マンスリーレンタカー川崎店で雨天時に利用者へN-WGNの鍵を引き渡すスタッフ",
+  },
+  {
+    file: "kawasaki-service-alto-couple-key-handover-20260805",
+    alt: "神奈川マンスリーレンタカー川崎店で利用者2名へアルトの鍵を引き渡すスタッフ",
+  },
+];
+
 const wakoStorePhotos = [
   {
     file: "wako-service-staff-and-vehicle-20260803",
@@ -579,6 +598,40 @@ function checkKawagoeStorePhotos(file, html) {
   }
 }
 
+function checkKawasakiStorePhotos(file, html) {
+  if (file !== "shop/kanagawa/kawasaki/index.html") return;
+
+  if (html.includes("wako-store-gallery-")) {
+    fail(file, "Kawasaki store must use its dedicated gallery photos");
+  }
+  const requiredStructuredData = [
+    '"@type": "AutoRental"',
+    `"@id": "${baseUrl}/shop/kanagawa/kawasaki/#store"`,
+    `"${baseUrl}/assets/img/kawasaki-store-exterior.webp"`,
+  ];
+  for (const snippet of requiredStructuredData) {
+    if (!html.includes(snippet)) {
+      fail(file, `missing Kawasaki structured data: ${snippet}`);
+    }
+  }
+
+  for (const photo of kawasakiStorePhotos) {
+    const fullAsset = path.join(root, "assets", "img", `${photo.file}.webp`);
+    const mobileAsset = path.join(root, "assets", "img", `${photo.file}-640.webp`);
+    if (!fs.existsSync(fullAsset)) fail(file, `missing store photo: ${photo.file}.webp`);
+    if (!fs.existsSync(mobileAsset)) fail(file, `missing store photo: ${photo.file}-640.webp`);
+    if (!html.includes(`src="../../../assets/img/${photo.file}.webp"`)) {
+      fail(file, `missing store photo markup: ${photo.file}.webp`);
+    }
+    if (!html.includes(`alt="${photo.alt}"`)) {
+      fail(file, `store photo alt must be: ${photo.alt}`);
+    }
+    if (!html.includes(`"${baseUrl}/assets/img/${photo.file}.webp"`)) {
+      fail(file, `Kawasaki structured data must include: ${photo.file}.webp`);
+    }
+  }
+}
+
 function checkShinjukuStorePhotos(file, html) {
   if (file !== "shop/tokyo/shinjuku/index.html") return;
 
@@ -850,6 +903,7 @@ function checkPage(file) {
   checkAsakadaiStorePhotos(file, html);
   checkTokorozawaStorePhotos(file, html);
   checkKawagoeStorePhotos(file, html);
+  checkKawasakiStorePhotos(file, html);
   checkShinjukuStorePhotos(file, html);
   checkIkebukuroStorePhotos(file, html);
   checkTachikawaLocationData(file, html);
