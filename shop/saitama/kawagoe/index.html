@@ -55,6 +55,7 @@
     </script>
 
     <link rel="stylesheet" href="../../../styles.css?v=20260807-footer-company">
+    <link rel="stylesheet" href="../../store-local-intro.css?v=20260807">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -92,6 +93,7 @@
         "streetAddress": "脇田町23-5 ライフシティ",
         "addressCountry": "JP"
       },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B7%E3%83%86%E3%82%A3%20%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%B7%9D%E8%B6%8A%E5%B8%82%E8%84%87%E7%94%B0%E7%94%BA23-5",
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
@@ -290,9 +292,8 @@
     </header>
 
     <main>
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero" aria-label="埼玉マンスリーレンタカー川越店のサービス案内">
         <div class="hero-stage">
-          <h1 id="hero-title" class="visually-hidden">埼玉マンスリーレンタカー 川越店 長期利用特化の格安レンタカー</h1>
           <div class="hero-art">
             <img
               src="../../../assets/img/fv-main.png"
@@ -301,7 +302,7 @@
         </div>
       </section>
 
-      <section class="section service-area" id="area">
+      <section class="section service-area" id="area" aria-labelledby="kawagoe-store-title">
         <div class="inner">
           <style>
             .kawagoe-access-card {
@@ -564,8 +565,29 @@
           </style>
 
           <div class="kawagoe-access-card">
-            <div class="section-head">
-              <h2>埼玉｜川越店</h2>
+            <div class="section-head store-local-heading">
+              <img
+                class="store-local-heading-frame"
+                src="../../../assets/img/tachikawa-store-heading-frame-20260803.webp"
+                width="1000"
+                height="453"
+                alt=""
+                decoding="async"
+                aria-hidden="true">
+              <p class="store-local-heading-label">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+                <span>川越店 店舗案内</span>
+              </p>
+              <h1 id="kawagoe-store-title">
+                <span class="store-local-title-part store-local-title-region">川越市のマンスリーレンタカー</span>
+                <span class="store-local-title-separator" aria-hidden="true">｜</span>
+                <span class="store-local-title-part store-local-title-name">埼玉マンスリーレンタカー川越店</span>
+              </h1>
+            </div>
+
+            <div class="store-local-summary">
+              <p>埼玉マンスリーレンタカー川越店は、<strong>川越駅から徒歩3分</strong>、埼玉県川越市脇田町にある1ヶ月以上の長期利用向け<span class="store-local-summary-nowrap">レンタカー店</span>です。軽自動車は<strong>1ヶ月24,000円（税抜）から</strong>利用できます。</p>
+              <p>川越駅周辺での受け渡しや、ご希望住所への配送もご相談ください。営業時間は10:00〜19:00、無休です。</p>
             </div>
 
             <img class="kawagoe-access-main-photo" src="../../../assets/img/kawagoe-store-exterior.png" alt="埼玉マンスリーレンタカー川越店の外観">
@@ -578,10 +600,10 @@
                 <div class="kawagoe-address-content">
                   <div class="kawagoe-address-head">
                     <span class="kawagoe-access-label">住所</span>
-                    <span class="kawagoe-map-button" aria-disabled="true">
+                    <a class="kawagoe-map-button" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B7%E3%83%86%E3%82%A3%20%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%B7%9D%E8%B6%8A%E5%B8%82%E8%84%87%E7%94%B0%E7%94%BA23-5" target="_blank" rel="noopener">
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
                       MAP
-                    </span>
+                    </a>
                   </div>
                   <p class="kawagoe-access-text">〒350-1122<br>埼玉県川越市脇田町23-5 ライフシティ</p>
                 </div>
@@ -618,6 +640,19 @@
                 </div>
               </div>
             </div>
+
+            <div class="store-local-map-embed">
+              <iframe
+                src="https://www.google.com/maps?q=%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B7%E3%83%86%E3%82%A3%20%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%B7%9D%E8%B6%8A%E5%B8%82%E8%84%87%E7%94%B0%E7%94%BA23-5&amp;z=17&amp;hl=ja&amp;output=embed"
+                title="埼玉マンスリーレンタカー川越店の地図"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen></iframe>
+            </div>
+            <a class="store-local-map-open-link" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B7%E3%83%86%E3%82%A3%20%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%B7%9D%E8%B6%8A%E5%B8%82%E8%84%87%E7%94%B0%E7%94%BA23-5" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+              Googleマップで川越店を見る
+            </a>
 
             <div class="kawagoe-gallery-title">川越店の様子</div>
             <div class="kawagoe-gallery">

@@ -1,0 +1,227 @@
+.shop-page .service-area .store-local-heading {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 1000 / 453;
+  max-width: none;
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+  background: var(--white);
+  text-align: left;
+  position: relative;
+  isolation: isolate;
+}
+
+.shop-page .service-area .store-local-heading-frame {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.shop-page .service-area .store-local-heading > .store-local-heading-label {
+  width: min(46%, 162px);
+  height: clamp(22px, 7.2vw, 28px);
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #a8c9f5;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--navy);
+  font-size: clamp(11px, 3.1vw, 12px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  position: absolute;
+  top: 14.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.shop-page .service-area .store-local-heading-label svg {
+  flex: 0 0 auto;
+  width: clamp(11px, 3.1vw, 12px);
+  height: clamp(11px, 3.1vw, 12px);
+  color: var(--orange);
+  fill: currentColor;
+}
+
+.shop-page .service-area .store-local-heading h1 {
+  margin: 0;
+  padding-inline: 4%;
+  color: var(--navy);
+  text-align: center;
+  word-break: normal;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  position: absolute;
+  top: 37%;
+  right: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.shop-page .service-area .store-local-heading h1 .store-local-title-part {
+  display: block;
+}
+
+.shop-page .service-area .store-local-heading h1 .store-local-title-region {
+  color: #365d91;
+  font-size: clamp(11px, 3.1vw, 12px);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+}
+
+.shop-page .service-area .store-local-heading h1 .store-local-title-name {
+  margin-top: clamp(6px, 1.9vw, 8px);
+  font-size: clamp(15px, 4.25vw, 17px);
+  font-weight: 900;
+  line-height: 1.22;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+}
+
+.shop-page .service-area .store-local-heading h1 .store-local-title-separator,
+.shop-page .service-area .store-local-heading h1::after {
+  display: none;
+}
+
+.shop-page .service-area .store-local-summary {
+  margin: 0 0 12px;
+  padding: clamp(12px, 3vw, 18px);
+  border: 1px solid #d5e4f2;
+  border-left: 4px solid var(--orange);
+  border-radius: 8px;
+  background: #f7fbff;
+  color: #273548;
+  font-size: clamp(14px, 1.3vw, 16px);
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.shop-page .service-area .store-local-summary p {
+  margin: 0;
+}
+
+.shop-page .service-area .store-local-summary p + p {
+  margin-top: 8px;
+}
+
+.shop-page .service-area .store-local-summary strong {
+  color: var(--navy);
+  font-weight: 800;
+  background: linear-gradient(transparent 66%, rgba(255, 194, 71, 0.48) 66%);
+}
+
+.shop-page .service-area .store-local-summary-nowrap {
+  white-space: nowrap;
+}
+
+.shop-page .service-area .store-local-map-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 202px;
+  margin-top: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(5, 38, 111, 0.12);
+  border-radius: 10px;
+  background: #eef8ff;
+}
+
+.shop-page .service-area .store-local-map-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.shop-page .service-area .store-local-map-open-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: min(100%, 420px);
+  min-height: 44px;
+  margin: 12px auto 0;
+  padding: 8px 14px;
+  border: 2px solid var(--navy);
+  border-radius: 8px;
+  color: var(--navy);
+  font-size: clamp(13px, 1.8vw, 15px);
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.shop-page .service-area .store-local-map-open-link svg {
+  width: 16px;
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+
+/*
+ * Between the single-column mobile layout and the fixed-width desktop canvas,
+ * the heading artwork grows with the viewport. Scale its overlaid copy with
+ * the frame so the approved composition does not become visually undersized.
+ */
+@media (min-width: 520px) and (max-width: 1179px) {
+  .shop-page .service-area .store-local-heading > .store-local-heading-label,
+  .shop-page .service-area .tachikawa-store-heading > .tachikawa-store-heading-label {
+    width: 34.4%;
+    max-width: none;
+    height: 12.2%;
+    gap: clamp(5px, 0.7vw, 9px);
+    border: 0;
+    background: transparent;
+    font-size: clamp(12px, 2.35vw, 27px);
+    top: 10.2%;
+  }
+
+  .shop-page .service-area .store-local-heading-label svg,
+  .shop-page .service-area .tachikawa-store-heading-label svg {
+    width: clamp(12px, 2.35vw, 27px);
+    height: clamp(12px, 2.35vw, 27px);
+  }
+
+  .shop-page .service-area .store-local-heading h1 .store-local-title-region,
+  .shop-page .service-area .tachikawa-store-heading h1 .tachikawa-store-title-region {
+    font-size: clamp(12px, 2.45vw, 28px);
+  }
+
+  .shop-page .service-area .store-local-heading h1 .store-local-title-name,
+  .shop-page .service-area .tachikawa-store-heading h1 .tachikawa-store-title-name {
+    margin-top: clamp(8px, 1.6vw, 18px);
+    font-size: clamp(18px, 4.25vw, 48px);
+    letter-spacing: -0.03em;
+  }
+}
+
+@media (max-width: 340px) {
+  .shop-page .service-area .store-local-heading h1 .store-local-title-region,
+  .shop-page .service-area .tachikawa-store-heading h1 .tachikawa-store-title-region {
+    font-size: 11px;
+  }
+
+  .shop-page .service-area .store-local-heading h1 .store-local-title-name,
+  .shop-page .service-area .tachikawa-store-heading h1 .tachikawa-store-title-name {
+    font-size: 14px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    white-space: normal;
+  }
+}
