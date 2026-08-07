@@ -74,6 +74,11 @@ const articleImageByPage = {
     width: "1200",
     height: "675",
   },
+  "guide/substitute-car-delivery-wait-rental/index.html": {
+    path: "/assets/img/guide/substitute-car-delivery-wait-rental/official-asakadai-key-handover-1200.webp",
+    width: "1200",
+    height: "675",
+  },
 };
 
 const shopLocalGuideByPage = {
