@@ -163,6 +163,9 @@ if (
 if (!pageText.includes("税抜")) {
   fail("comparison prices must be identified as tax-exclusive");
 }
+if (html.includes("税込")) {
+  fail("page must not contain tax-inclusive labels in body, notes, FAQ or JSON-LD");
+}
 
 const taxExclusiveValues = [
   ["24,000", "Tokyo Monthly Rental / Gyomu Rent-a-Car / Karunori base price"],
@@ -171,18 +174,40 @@ const taxExclusiveValues = [
   ["26,400", "Monthly Go base price"],
   ["88,000", "NicoNico Rent-a-Car base price"],
   ["54,364", "100-yen Rent-a-Car approximate base price"],
-  ["18,000", "JOMO reference base price"],
   ["30,000", "Gyomu Rent-a-Car CDW-added price"],
   ["30,800", "Guts Rent-a-Car CDW-added price"],
   ["34,000", "Tokyo Monthly Rental / Karunori CDW-added price"],
   ["38,400", "Monthly Go CDW-added price"],
   ["118,000", "NicoNico Rent-a-Car CDW-added price"],
   ["69,364", "100-yen Rent-a-Car approximate CDW-added price"],
-  ["26,000", "JOMO reference CDW-added price"],
 ];
 for (const [value, meaning] of taxExclusiveValues) {
   if (!pageText.includes(value)) {
     fail(`tax-exclusive value ${value} is missing (${meaning})`);
+  }
+}
+if (!pageText.includes("税抜額を確認できず")) {
+  fail("JOMO must be excluded from numeric price comparison when tax status is unverified");
+}
+if (!pageText.includes("NOC負担額") || !pageText.includes("税抜換算")) {
+  fail("NOC values must be separated from base prices and identified as tax-exclusive conversions");
+}
+if (/33,000円|55,000円/.test(pageText)) {
+  fail("tax-included NOC values must not be rendered on the tax-exclusive page");
+}
+for (const unsupportedCopy of ["一律保証なし", "代替保証なし", "固定保証なし"]) {
+  if (pageText.includes(unsupportedCopy)) {
+    fail(`unpublished replacement-car terms must not be inferred: ${unsupportedCopy}`);
+  }
+}
+for (const factualCopy of [
+  "コスパ軽（15年以内）",
+  "公式内の税区分表記に差",
+  "仮に日額CDWを30日加算すると参考118,000円",
+  "経年故障のみ",
+]) {
+  if (!pageText.includes(factualCopy)) {
+    fail(`comparison qualification is missing: ${factualCopy}`);
   }
 }
 
@@ -210,14 +235,14 @@ if (!/(?:調査日|確認日|情報確認日|最終確認)[^。]{0,30}2026年8�
 
 const requiredComparisonColumns = [
   "サービス",
-  "主な対応",
+  "主な対応エリア",
   "最安クラス・車両",
-  "税抜基本料",
-  "CDW追加後目安",
-  "免責補償・NOC",
+  "税抜基本料金",
+  "CDW追加後の契約時小計",
+  "NOC負担額",
   "配車・受取",
-  "距離",
-  "故障時の代替車",
+  "走行距離",
+  "故障時の交換車",
   "向いている人",
 ];
 for (const column of requiredComparisonColumns) {
@@ -253,9 +278,8 @@ for (const diagramClass of ["cost-diagram", "coverage-layers", "decision-flow"])
     fail(`original diagram is missing: ${diagramClass}`);
   }
 }
-const captureCount = [...html.matchAll(/<figure\b[^>]*class=["'][^"']*source-capture/gi)].length;
-if (captureCount !== 4) {
-  fail(`exactly 4 official source captures are required, found ${captureCount}`);
+if (/official-(?:gogo-k-price|guts-a1-price|monthlygo-(?:cdw|kei-mini-price))/.test(html)) {
+  fail("price captures containing tax-inclusive source values must not be rendered");
 }
 
 function getAttribute(tag, name) {
@@ -264,6 +288,7 @@ function getAttribute(tag, name) {
 }
 
 const imageTags = [...html.matchAll(/<img\b[^>]*>/gi)].map((match) => match[0]);
+const officialVehicleSources = new Set();
 for (const tag of imageTags) {
   const src = getAttribute(tag, "src");
   if (!src) fail("img is missing src");
@@ -274,6 +299,14 @@ for (const tag of imageTags) {
   if (!getAttribute(tag, "decoding")) fail(`img is missing decoding: ${src || "(unknown)"}`);
   if (/official-/.test(src) && getAttribute(tag, "loading") !== "lazy") {
     fail(`official capture must lazy-load: ${src}`);
+  }
+  if (
+    /(?:guts-a1|gyomu-a1|gogo-kei|niconico-k)-class-20260808\.webp/.test(src)
+  ) {
+    officialVehicleSources.add(src);
+    if (getAttribute(tag, "loading") !== "lazy") {
+      fail(`official vehicle image must lazy-load: ${src}`);
+    }
   }
   if (/monthly-rentacar-cheap-comparison-hero-740\.webp/.test(src)) {
     if (getAttribute(tag, "loading") === "lazy") fail("hero image must not lazy-load");
@@ -289,6 +322,89 @@ for (const tag of imageTags) {
     const localPath = path.resolve(path.dirname(pagePath), candidate.split(/[?#]/)[0]);
     if (!fs.existsSync(localPath)) fail(`srcset image file is missing: ${candidate}`);
   }
+}
+if (officialVehicleSources.size !== 4) {
+  fail(
+    `four unique official vehicle examples are required, found ${officialVehicleSources.size}`,
+  );
+}
+
+const articleJsPath = path.join(
+  root,
+  "guide/monthly-rentacar-cheap-comparison/article.js",
+);
+if (!fs.existsSync(articleJsPath)) {
+  fail("article.js is missing");
+} else {
+  const articleJs = fs.readFileSync(articleJsPath, "utf8");
+  for (const marker of [
+    "table-scroll-viewport",
+    "table-scroll-hint",
+    'setAttribute("aria-expanded"',
+  ]) {
+    if (!articleJs.includes(marker)) {
+      fail(`article.js interaction is missing: ${marker}`);
+    }
+  }
+}
+
+const articleCssPath = path.join(
+  root,
+  "guide/monthly-rentacar-cheap-comparison/article.css",
+);
+if (!fs.existsSync(articleCssPath)) {
+  fail("article.css is missing");
+} else {
+  const articleCss = fs.readFileSync(articleCssPath, "utf8");
+  if (
+    !articleCss.includes("> span:not(.contact-icon)") ||
+    !/>\s*span:not\(\.contact-icon\)[\s\S]{0,120}font-size:\s*18px/.test(articleCss)
+  ) {
+    fail("CTA text span must override the legacy 26px rule with the homepage 18px size");
+  }
+  if (
+    !/@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*table-scroll-hint__gesture[\s\S]{0,80}animation:\s*none\s*!important/.test(
+      articleCss,
+    )
+  ) {
+    fail("table gesture animation must stop when reduced motion is requested");
+  }
+}
+
+for (const cta of html.matchAll(
+  /<a\b[^>]*class=["'][^"']*(?:area-cta__main|fixed-contact-store)[^"']*["'][^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi,
+)) {
+  if (cta[1] !== "/#stores") {
+    fail(`CTA must link to /#stores, found ${cta[1]}`);
+  }
+  if (!plainText(cta[2]).includes("近くの店舗を探す")) {
+    fail("CTA button text must be 近くの店舗を探す");
+  }
+}
+
+const compactPageText = pageText.replace(/\s+/g, "");
+for (const exactCopy of [
+  "希望の車種クラスと期間を送るだけ",
+  "利用エリアを選んで1ヶ月の総額を確認する",
+  "車種・受取場所・補償を含む見積もりを店舗ごとに確認できます。",
+  "店舗選択後、各店舗ページから電話・LINE・メールで相談できます。",
+]) {
+  if (!compactPageText.includes(exactCopy.replace(/\s+/g, ""))) {
+    fail(`article-end CTA copy is missing: ${exactCopy}`);
+  }
+}
+if (
+  !/利用エリアを選んで<br\s+class=["']mobile-only-break["']>1ヶ月の総額を確認する/.test(
+    html,
+  ) ||
+  !/車種・受取場所・補償を含む見積もりを<br\s+class=["']mobile-only-break["']>店舗ごとに確認できます。/.test(
+    html,
+  ) ||
+  !/店舗選択後、各店舗ページから<br\s+class=["']mobile-only-break["']>電話・LINE・メールで相談できます。/.test(
+    html,
+  )
+) {
+  fail("mobile-only CTA line breaks are missing or in the wrong positions");
 }
 
 const htmlWithoutScripts = html
@@ -383,15 +499,31 @@ if (faqStart >= 0) {
 
 const visibleFaq = [];
 for (const match of faqHtml.matchAll(
-  /<details\b[^>]*>([\s\S]*?)<summary\b[^>]*>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/gi,
+  /<article\b[^>]*class=["'][^"']*home-faq-item[^"']*["'][^>]*>[\s\S]*?<span\b[^>]*class=["'][^"']*home-faq-question-text[^"']*["'][^>]*>([\s\S]*?)<\/span>[\s\S]*?<div\b[^>]*class=["'][^"']*home-faq-answer-body[^"']*["'][^>]*>[\s\S]*?<p>([\s\S]*?)<\/p>[\s\S]*?<\/article>/gi,
 )) {
   visibleFaq.push({
-    question: faqQuestion(match[2]),
-    answer: faqAnswer(match[3]),
+    question: faqQuestion(match[1]),
+    answer: faqAnswer(match[2]),
   });
 }
 if (visibleFaq.length < 10) {
-  fail(`at least 10 visible FAQ details are required, found ${visibleFaq.length}`);
+  fail(`at least 10 visible FAQ items are required, found ${visibleFaq.length}`);
+}
+
+const faqButtons = [...faqHtml.matchAll(
+  /<button\b[^>]*class=["'][^"']*home-faq-question[^"']*["'][^>]*>/gi,
+)].map((match) => match[0]);
+for (const button of faqButtons) {
+  const id = getAttribute(button, "id");
+  const expanded = getAttribute(button, "aria-expanded");
+  const controls = getAttribute(button, "aria-controls");
+  if (!id || !controls || !["true", "false"].includes(expanded)) {
+    fail("FAQ button must include id, aria-expanded and aria-controls");
+    continue;
+  }
+  if (!new RegExp(`\\sid=["']${escapeRegExp(controls)}["']`).test(faqHtml)) {
+    fail(`FAQ aria-controls target is missing: ${controls}`);
+  }
 }
 
 if (faqPages.length === 1) {
@@ -428,5 +560,5 @@ if (errors.length) {
 }
 
 console.log(
-  `PASS: ${pageFile} metadata, 9 services, 10 condition choices, disclosure, sources, tax-exclusive prices, internal links, headings, images, 3 diagrams, 4 captures and ${visibleFaq.length} FAQ items are consistent.`,
+  `PASS: ${pageFile} metadata, 9 services, 10 condition choices, disclosure, sources, tax-exclusive prices, internal links, headings, 4 official vehicle examples, 3 diagrams, CTA checks and ${visibleFaq.length} accessible FAQ items are consistent.`,
 );
