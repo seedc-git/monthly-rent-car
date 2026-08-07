@@ -829,6 +829,10 @@
   font-weight: 800;
 }
 
+.one-month-guide .area-cta__mobile-break {
+  display: none;
+}
+
 .one-month-guide .area-cta h3 {
   margin-top: 6px;
   color: #fff;
@@ -1607,6 +1611,10 @@
 
   .one-month-guide .area-cta h3 {
     font-size: 20px;
+  }
+
+  .one-month-guide .area-cta__mobile-break {
+    display: inline;
   }
 
   .one-month-guide .source-section {
