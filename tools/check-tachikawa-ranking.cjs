@@ -1185,7 +1185,11 @@ assert(
 
 // Article CTAs and competitor-link confinement.
 const anchors = findStartTags(html, "a");
-const bodyAnchors = findStartTags(bodyHtml, "a");
+const mainStartTag = findStartTags(bodyHtml, "main")[0];
+const mainElement = mainStartTag ? findMatchingElement(bodyHtml, mainStartTag) : null;
+assert(Boolean(mainElement), pageFile, "main要素が必要です");
+const mainHtml = mainElement?.html || "";
+const mainAnchors = findStartTags(mainHtml, "a");
 const articleCtas = anchors.filter(
   (entry) => entry.attributes["data-cta-page"] !== undefined,
 );
@@ -1414,20 +1418,21 @@ assert(
 );
 
 const sourceHeadingIndex = bodyHtml.indexOf("調査方法・出典");
+const mainSourceHeadingIndex = mainHtml.indexOf("調査方法・出典");
 const allowedExternalHosts = new Set([
   "monthly-rent-car.jp",
   "stg.monthly-rent-car.jp",
   "form.run",
   "lin.ee",
 ]);
-const externalContentLinks = bodyAnchors.filter((entry) => {
+const externalContentLinks = mainAnchors.filter((entry) => {
   const href = entry.attributes.href || "";
   return isExternalUrl(href) && !allowedExternalHosts.has(hostWithoutWww(href));
 });
 for (const link of externalContentLinks) {
   const classes = String(link.attributes.class || "");
   assert(
-    sourceHeadingIndex >= 0 && link.index > sourceHeadingIndex,
+    mainSourceHeadingIndex >= 0 && link.index > mainSourceHeadingIndex,
     pageFile,
     `競合・外部リンクは出典欄だけに配置してください: ${link.attributes.href}`,
   );
