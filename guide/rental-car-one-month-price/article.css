@@ -1,0 +1,1274 @@
+.one-month-guide {
+  --guide-navy: #05266f;
+  --guide-navy-light: #0b3f92;
+  --guide-teal: #08798a;
+  --guide-teal-soft: #eef8fa;
+  --guide-orange: #b94d00;
+  --guide-orange-soft: #fff3e9;
+  --guide-yellow: #ffdc78;
+  --guide-ink: #262b33;
+  --guide-muted: #526473;
+  --guide-line: #cfdddf;
+  --guide-paper: #f7fafb;
+  max-width: 100%;
+  overflow-x: clip;
+  color: var(--guide-ink);
+  background: #fff;
+}
+
+.one-month-guide main {
+  min-width: 0;
+  padding-top: 0;
+  background: #fff;
+}
+
+.one-month-guide .site-header {
+  position: relative;
+  inset: auto;
+  border-bottom-color: #dce7ea;
+  background: #fff;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.one-month-guide .header-nav.is-open {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+}
+
+.one-month-guide .guide-skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--guide-navy);
+  font-size: 14px;
+  font-weight: 900;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.one-month-guide .guide-skip-link:focus {
+  transform: translateY(0);
+}
+
+.one-month-guide :is(a, button, summary, [tabindex="0"]):focus-visible {
+  outline: 3px solid var(--guide-orange);
+  outline-offset: 3px;
+}
+
+.one-month-guide .guide-article {
+  color: var(--guide-ink);
+  background: #fff;
+  font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Meiryo, "メイリオ", sans-serif;
+}
+
+.one-month-guide .article-shell {
+  width: min(780px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.one-month-guide .article-header {
+  max-width: 740px;
+  margin-inline: auto;
+  padding: 50px 0 24px;
+}
+
+.one-month-guide .article-kicker {
+  width: fit-content;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #3c7387;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.one-month-guide .article-kicker svg {
+  width: 26px;
+  height: 24px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+.one-month-guide .article-header h1 {
+  margin: 0;
+  color: var(--guide-navy);
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic StdN", "Noto Sans JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  font-size: clamp(32px, 5.3vw, 44px);
+  font-weight: 900;
+  line-height: 1.36;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.one-month-guide .article-header h1::after {
+  content: "";
+  width: 128px;
+  height: 4px;
+  margin-top: 20px;
+  display: block;
+  background: var(--guide-teal);
+}
+
+.one-month-guide .article-subtitle {
+  margin: 17px 0 0;
+  color: #4d626b;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.65;
+}
+
+.one-month-guide .article-meta {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: #26394e;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.one-month-guide .article-meta > span {
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 1px solid #d2dee7;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  white-space: nowrap;
+}
+
+.one-month-guide .article-meta > .article-meta--tax {
+  border-color: #efb684;
+  color: #8e3a00;
+  background: var(--guide-orange-soft);
+}
+
+.one-month-guide .article-figure {
+  max-width: 740px;
+  margin: 0 auto;
+}
+
+.one-month-guide .article-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  background: #eef3f5;
+}
+
+.one-month-guide .article-figure figcaption {
+  margin-top: 8px;
+  color: var(--guide-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.one-month-guide .article-body {
+  max-width: 740px;
+  margin-inline: auto;
+  padding: 36px 0 90px;
+}
+
+.one-month-guide .article-body p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+}
+
+.one-month-guide .article-body p + p {
+  margin-top: 1.15em;
+}
+
+.one-month-guide .article-body strong {
+  color: var(--guide-navy);
+  font-weight: 900;
+  background: linear-gradient(transparent 70%, rgba(255, 220, 120, 0.68) 70%);
+}
+
+.one-month-guide .answer-box {
+  padding: 26px;
+  border: 1px solid #cfdcdf;
+  border-top: 5px solid var(--guide-teal);
+  background: #f8fbfb;
+}
+
+.one-month-guide .answer-box .answer-label {
+  width: fit-content;
+  margin: -43px 0 18px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--guide-navy);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.one-month-guide .answer-box .answer-lead {
+  font-size: 18px;
+  line-height: 1.85;
+}
+
+.one-month-guide .total-formula {
+  margin: 24px 0 0;
+  padding: 18px;
+  border: 2px solid var(--guide-navy);
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--guide-navy);
+  background: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.one-month-guide .total-formula__title {
+  width: 100%;
+  color: var(--guide-orange);
+  font-size: 20px;
+}
+
+.one-month-guide .total-formula__equals {
+  width: 100%;
+  margin-block: -7px;
+  font-size: 22px;
+}
+
+.one-month-guide .total-formula > span:not(.total-formula__title, .total-formula__equals) {
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: var(--guide-teal-soft);
+}
+
+.one-month-guide .total-formula b {
+  color: var(--guide-orange);
+}
+
+.one-month-guide .article-figure--concept {
+  margin-top: 20px;
+}
+
+.one-month-guide .answer-box > p:last-child {
+  margin-top: 24px;
+}
+
+.one-month-guide .tax-notice,
+.one-month-guide .point-box,
+.one-month-guide .condition-note {
+  margin-top: 28px;
+  padding: 18px 20px;
+  border-left: 5px solid var(--guide-teal);
+  background: #f2f7f8;
+}
+
+.one-month-guide .tax-notice strong,
+.one-month-guide .point-box strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--guide-navy);
+  background: none;
+}
+
+.one-month-guide .tax-notice p,
+.one-month-guide .point-box p,
+.one-month-guide p.condition-note {
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.one-month-guide .article-toc {
+  margin-top: 34px;
+  padding: 22px 24px;
+  border: 1px solid var(--guide-line);
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(5, 38, 111, 0.08);
+}
+
+.one-month-guide .article-toc .article-toc__title {
+  margin: 0 0 14px;
+  color: var(--guide-navy);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.one-month-guide .article-toc ol {
+  margin: 0;
+  padding-left: 1.6em;
+  columns: 2;
+  column-gap: 30px;
+}
+
+.one-month-guide .article-toc li {
+  margin: 0 0 9px;
+  break-inside: avoid;
+  color: var(--guide-teal);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.one-month-guide .article-toc a {
+  color: var(--guide-navy);
+  text-decoration: underline;
+  text-decoration-color: #a7d1d6;
+  text-underline-offset: 3px;
+}
+
+.one-month-guide .content-section,
+.one-month-guide .source-section {
+  scroll-margin-top: 20px;
+  margin-top: 64px;
+}
+
+.one-month-guide .content-section > h2,
+.one-month-guide .source-section > h2 {
+  margin: 0 0 24px;
+  padding: 17px 18px 17px 24px;
+  border-top: 4px solid var(--guide-teal);
+  color: var(--guide-navy);
+  background: #f1f7f8;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+}
+
+.one-month-guide .content-section > h2 > span {
+  margin-right: 10px;
+  color: var(--guide-orange);
+  font-size: 0.78em;
+  letter-spacing: 0.02em;
+}
+
+.one-month-guide .content-section h3 {
+  margin: 0;
+  color: var(--guide-navy);
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.55;
+}
+
+.one-month-guide .table-wrap {
+  max-width: 100%;
+  margin-top: 24px;
+  overflow-x: auto;
+  border: 1px solid var(--guide-line);
+  background: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+
+.one-month-guide .table-wrap table {
+  width: 100%;
+  min-width: 660px;
+  border-collapse: collapse;
+  color: var(--guide-ink);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.one-month-guide .table-wrap--wide table {
+  min-width: 1050px;
+}
+
+.one-month-guide .table-wrap caption {
+  padding: 12px 14px;
+  color: #fff;
+  background: var(--guide-navy);
+  font-weight: 900;
+  text-align: left;
+}
+
+.one-month-guide .table-wrap :is(th, td) {
+  min-width: 118px;
+  padding: 13px 14px;
+  border-right: 1px solid var(--guide-line);
+  border-bottom: 1px solid var(--guide-line);
+  vertical-align: top;
+  text-align: left;
+}
+
+.one-month-guide .table-wrap thead th {
+  color: var(--guide-navy);
+  background: #eaf4f5;
+}
+
+.one-month-guide .table-wrap tbody th {
+  min-width: 150px;
+  color: var(--guide-navy);
+  background: #f8fbfb;
+}
+
+.one-month-guide .table-wrap td strong {
+  color: var(--guide-orange);
+  background: none;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.one-month-guide .table-wrap small {
+  color: var(--guide-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.one-month-guide .table-hint {
+  display: none;
+  margin-top: 8px;
+  color: var(--guide-muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.one-month-guide .included-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.one-month-guide .included-grid > div {
+  padding: 18px;
+  border: 1px solid var(--guide-line);
+  border-left: 4px solid var(--guide-teal);
+  background: #fff;
+}
+
+.one-month-guide .included-grid strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--guide-navy);
+  background: none;
+}
+
+.one-month-guide .included-grid p {
+  color: var(--guide-muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.one-month-guide .warning-box {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid #efba86;
+  border-left: 6px solid var(--guide-orange);
+  background: var(--guide-orange-soft);
+}
+
+.one-month-guide .warning-box > strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #8e3a00;
+  background: none;
+  font-size: 17px;
+}
+
+.one-month-guide .fee-list {
+  margin: 24px 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.one-month-guide .fee-list > article {
+  padding: 16px 17px;
+  border: 1px solid var(--guide-line);
+  background: #fff;
+}
+
+.one-month-guide .fee-list h3 {
+  margin-bottom: 5px;
+  color: var(--guide-navy);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.one-month-guide .fee-list p {
+  margin: 0;
+  color: var(--guide-muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.one-month-guide .condition-note {
+  border-left-color: var(--guide-orange);
+  background: var(--guide-orange-soft);
+}
+
+.one-month-guide .article-figure--section {
+  margin-bottom: 24px;
+}
+
+.one-month-guide .simulation-list {
+  margin-top: 26px;
+  display: grid;
+  gap: 18px;
+}
+
+.one-month-guide .simulation-card {
+  padding: 24px;
+  border: 1px solid var(--guide-line);
+  border-top: 5px solid var(--guide-teal);
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(5, 38, 111, 0.07);
+}
+
+.one-month-guide .simulation-card__number {
+  margin: 0 0 5px;
+  color: var(--guide-orange);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.one-month-guide .simulation-card dl {
+  margin: 18px 0 0;
+  border-top: 1px solid var(--guide-line);
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  column-gap: 16px;
+}
+
+.one-month-guide .simulation-card dt {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--guide-line);
+  color: var(--guide-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.one-month-guide .simulation-card dd {
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--guide-line);
+  color: var(--guide-navy);
+  font-size: 14px;
+  font-weight: 900;
+  text-align: right;
+}
+
+.one-month-guide .simulation-card .simulation-total {
+  margin-top: 15px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--guide-teal-soft);
+  line-height: 1.55;
+}
+
+.one-month-guide .simulation-total span {
+  color: var(--guide-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.one-month-guide .simulation-total strong {
+  color: var(--guide-orange);
+  background: none;
+  font-size: 18px;
+  text-align: right;
+}
+
+.one-month-guide .simulation-card > p:last-child {
+  margin-top: 14px;
+  color: var(--guide-muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.one-month-guide .comparison-notes {
+  margin: 16px 0 0;
+  padding-left: 1.4em;
+  color: var(--guide-muted);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.one-month-guide .period-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.one-month-guide .period-grid article {
+  min-width: 0;
+  padding: 16px 13px;
+  border: 1px solid var(--guide-line);
+  background: #fff;
+}
+
+.one-month-guide .period-grid article.is-emphasis {
+  border: 2px solid var(--guide-orange);
+  background: var(--guide-orange-soft);
+}
+
+.one-month-guide .period-grid article > p {
+  margin: 0 0 5px;
+  color: var(--guide-teal);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.one-month-guide .period-grid h3 {
+  font-size: 15px;
+}
+
+.one-month-guide .period-grid span {
+  margin-top: 7px;
+  display: block;
+  color: var(--guide-muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.one-month-guide .period-grid + p {
+  margin-top: 22px;
+}
+
+.one-month-guide .saving-list {
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  list-style: none;
+}
+
+.one-month-guide .saving-list > li {
+  padding: 18px;
+  border: 1px solid var(--guide-line);
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  background: #fff;
+}
+
+.one-month-guide .saving-list > li > span {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--guide-teal);
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.one-month-guide .saving-list p {
+  margin-top: 5px;
+  color: var(--guide-muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.one-month-guide .our-price-table tbody tr:first-child {
+  background: #fff8ef;
+}
+
+.one-month-guide .our-price-table tbody tr:first-child th {
+  color: #8e3a00;
+  background: #fff0df;
+}
+
+.one-month-guide .area-cta {
+  margin-top: 30px;
+  padding: 28px;
+  border: 2px solid var(--guide-orange);
+  border-radius: 10px;
+  color: #fff;
+  background: var(--guide-navy);
+  text-align: center;
+  box-shadow: 0 16px 36px rgba(5, 38, 111, 0.18);
+}
+
+.one-month-guide .area-cta__eyebrow {
+  color: #fff2dc;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.one-month-guide .area-cta h3 {
+  margin-top: 6px;
+  color: #fff;
+  font-size: 23px;
+}
+
+.one-month-guide .area-cta > p:not(.area-cta__eyebrow) {
+  margin-top: 8px;
+  color: #e6f2ff;
+  font-size: 14px;
+}
+
+.one-month-guide .area-cta__main {
+  min-height: 58px;
+  margin-top: 20px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff;
+  background: var(--guide-orange);
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.45;
+  text-decoration: none;
+  box-shadow: 0 7px 0 #9c3f05;
+}
+
+.one-month-guide .area-cta__main:hover {
+  transform: translateY(2px);
+  box-shadow: 0 5px 0 #9c3f05;
+}
+
+.one-month-guide .area-cta__main span {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.one-month-guide .area-cta__channels {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.one-month-guide .area-cta__channels > span {
+  min-height: 44px;
+  padding: 9px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.one-month-guide .area-cta > p.area-cta__channel-note {
+  margin-top: 8px;
+  color: #dceaff;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.one-month-guide .guide-fixed-contact .fixed-contact-store {
+  min-height: 66px;
+  padding: 9px 14px;
+  justify-content: flex-start;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #08798a, #05266f);
+}
+
+.one-month-guide .guide-fixed-contact__copy {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+  text-align: left;
+}
+
+.one-month-guide .guide-fixed-contact__copy small {
+  color: #dff8fa;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.one-month-guide .guide-fixed-contact__copy strong {
+  color: #fff;
+  background: none;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.one-month-guide .guide-fixed-contact__arrow {
+  margin-left: auto;
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.one-month-guide .faq-list {
+  display: grid;
+  gap: 10px;
+}
+
+.one-month-guide .faq-list details {
+  border: 1px solid var(--guide-line);
+  background: #fff;
+}
+
+.one-month-guide .faq-list summary {
+  min-height: 58px;
+  padding: 14px 52px 14px 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--guide-navy);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.65;
+  cursor: pointer;
+  list-style: none;
+}
+
+.one-month-guide .faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.one-month-guide .faq-list summary::after {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  color: var(--guide-teal);
+  font-size: 26px;
+  font-weight: 500;
+  transform: translateY(-50%);
+}
+
+.one-month-guide .faq-list details[open] summary::after {
+  content: "−";
+}
+
+.one-month-guide .faq-list summary span,
+.one-month-guide .faq-list details > div > span {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--guide-teal);
+  font-weight: 900;
+}
+
+.one-month-guide .faq-list details > div {
+  padding: 16px;
+  border-top: 1px solid var(--guide-line);
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  background: #f8fbfb;
+}
+
+.one-month-guide .faq-list details > div > span {
+  background: var(--guide-orange);
+}
+
+.one-month-guide .faq-list details > div p {
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.one-month-guide .source-section {
+  padding: 24px;
+  border: 1px solid var(--guide-line);
+  background: var(--guide-paper);
+}
+
+.one-month-guide .source-section > h2 {
+  margin: 0 0 16px;
+  padding: 0 0 10px;
+  border-top: 0;
+  border-bottom: 3px solid var(--guide-teal);
+  background: transparent;
+  font-size: 21px;
+}
+
+.one-month-guide .source-section > p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.one-month-guide .source-section ul {
+  margin: 16px 0 0;
+  padding-left: 1.4em;
+  columns: 2;
+  column-gap: 24px;
+}
+
+.one-month-guide .source-section li {
+  margin-bottom: 7px;
+  break-inside: avoid;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.one-month-guide .source-section a {
+  color: var(--guide-navy);
+  font-weight: 700;
+}
+
+.one-month-guide .article-dates {
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--guide-line);
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 5px 12px;
+  color: var(--guide-muted);
+  font-size: 12px;
+}
+
+.one-month-guide .article-dates dd {
+  margin: 0;
+}
+
+@media (min-width: 1180px) {
+  .one-month-guide {
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 0;
+  }
+
+  .one-month-guide main,
+  .one-month-guide .site-footer {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .one-month-guide .site-header {
+    width: 100%;
+    right: 0;
+    left: 0;
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .one-month-guide .header-inner {
+    width: min(1180px, calc(100% - 32px));
+    min-height: 82px;
+    gap: 28px;
+  }
+
+  .one-month-guide .brand img {
+    width: 252px;
+    height: 64px;
+  }
+
+  .one-month-guide .header-nav {
+    margin-left: auto;
+    display: flex;
+  }
+
+  .one-month-guide .menu-toggle {
+    display: none;
+  }
+
+  .one-month-guide main {
+    padding-top: 0;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .one-month-guide .article-shell {
+    width: min(100% - 30px, 740px);
+  }
+
+  .one-month-guide .article-header {
+    padding: 32px 0 18px;
+  }
+
+  .one-month-guide .article-kicker {
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+
+  .one-month-guide .article-header h1 {
+    font-size: clamp(27px, 8.3vw, 37px);
+    line-height: 1.42;
+  }
+
+  .one-month-guide .article-header h1 br {
+    display: none;
+  }
+
+  .one-month-guide .article-header h1::after {
+    width: 96px;
+    height: 3px;
+    margin-top: 15px;
+  }
+
+  .one-month-guide .article-subtitle {
+    margin-top: 13px;
+    font-size: 15px;
+  }
+
+  .one-month-guide .article-meta {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    font-size: 10px;
+  }
+
+  .one-month-guide .article-meta > span {
+    min-height: 30px;
+    padding: 5px 6px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .one-month-guide .article-meta > .article-meta--tax {
+    grid-column: 1 / -1;
+  }
+
+  .one-month-guide .article-figure img {
+    border-radius: 6px;
+  }
+
+  .one-month-guide .article-body {
+    padding-top: 31px;
+    padding-bottom: 65px;
+  }
+
+  .one-month-guide .article-body p {
+    font-size: 15px;
+    line-height: 1.86;
+  }
+
+  .one-month-guide .answer-box {
+    margin-inline: -4px;
+    padding: 22px 17px 19px;
+  }
+
+  .one-month-guide .answer-box .answer-label {
+    margin-top: -38px;
+    margin-bottom: 15px;
+    padding: 7px 15px;
+    font-size: 12px;
+  }
+
+  .one-month-guide .answer-box .answer-lead {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  .one-month-guide .total-formula {
+    margin-top: 19px;
+    padding: 14px 10px;
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .one-month-guide .total-formula__title {
+    font-size: 18px;
+  }
+
+  .one-month-guide .article-figure figcaption {
+    font-size: 10px;
+  }
+
+  .one-month-guide .article-toc {
+    padding: 18px;
+  }
+
+  .one-month-guide .article-toc ol,
+  .one-month-guide .source-section ul {
+    columns: 1;
+  }
+
+  .one-month-guide .content-section,
+  .one-month-guide .source-section {
+    margin-top: 48px;
+  }
+
+  .one-month-guide .content-section > h2,
+  .one-month-guide .source-section > h2 {
+    margin-inline: -5px;
+    padding: 14px 14px 14px 16px;
+    font-size: 21px;
+    line-height: 1.5;
+  }
+
+  .one-month-guide .content-section > h2 > span {
+    margin-right: 6px;
+  }
+
+  .one-month-guide .table-wrap {
+    margin-right: -15px;
+    margin-left: -15px;
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .one-month-guide .table-wrap table {
+    min-width: 680px;
+    font-size: 13px;
+  }
+
+  .one-month-guide .table-wrap--wide table {
+    min-width: 1040px;
+  }
+
+  .one-month-guide .table-wrap tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    box-shadow: 4px 0 8px rgba(5, 38, 111, 0.08);
+  }
+
+  .one-month-guide .table-hint {
+    display: block;
+  }
+
+  .one-month-guide .included-grid,
+  .one-month-guide .fee-list,
+  .one-month-guide .period-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .one-month-guide .fee-list {
+    gap: 8px;
+  }
+
+  .one-month-guide .simulation-card {
+    padding: 19px 16px;
+  }
+
+  .one-month-guide .simulation-card dl {
+    grid-template-columns: 95px minmax(0, 1fr);
+    column-gap: 10px;
+  }
+
+  .one-month-guide .simulation-card .simulation-total {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .one-month-guide .simulation-total strong {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .one-month-guide .period-grid article {
+    padding: 15px 16px;
+  }
+
+  .one-month-guide .saving-list > li {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 12px;
+    padding: 15px;
+  }
+
+  .one-month-guide .saving-list > li > span {
+    width: 36px;
+    height: 36px;
+  }
+
+  .one-month-guide .area-cta {
+    margin-inline: -4px;
+    padding: 23px 15px;
+  }
+
+  .one-month-guide .area-cta h3 {
+    font-size: 20px;
+  }
+
+  .one-month-guide .area-cta__main {
+    min-height: 60px;
+    padding-inline: 16px;
+    font-size: 15px;
+  }
+
+  .one-month-guide .source-section {
+    padding: 19px 16px;
+  }
+
+  .one-month-guide .source-section > h2 {
+    margin-inline: 0;
+    padding: 0 0 9px;
+    font-size: 19px;
+  }
+
+  .one-month-guide .article-dates {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .one-month-guide .article-dates dd + dt {
+    margin-top: 7px;
+  }
+}
+
+@media (max-width: 374px) {
+  .one-month-guide .article-shell {
+    width: min(100% - 24px, 740px);
+  }
+
+  .one-month-guide .article-header h1 {
+    font-size: 26px;
+  }
+
+  .one-month-guide .article-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .one-month-guide .article-meta > .article-meta--tax {
+    grid-column: auto;
+  }
+
+  .one-month-guide .area-cta__channels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .one-month-guide *,
+  .one-month-guide *::before,
+  .one-month-guide *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .one-month-guide .site-header,
+  .one-month-guide .site-footer,
+  .one-month-guide .fixed-contact,
+  .one-month-guide .area-cta__channels {
+    display: none !important;
+  }
+
+  .one-month-guide .article-shell {
+    width: 100%;
+  }
+
+  .one-month-guide .table-wrap {
+    overflow: visible;
+  }
+}

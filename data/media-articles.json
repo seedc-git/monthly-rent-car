@@ -25,6 +25,31 @@
         "width": 620,
         "height": 288
       }
+    },
+    {
+      "url": "/guide/rental-car-one-month-price/",
+      "category": "料金ガイド",
+      "description": "1ヶ月の料金相場と追加費用を、車種・利用条件別に整理しました。",
+      "image": {
+        "src": "/assets/img/guide/rental-car-one-month-price/rental-car-one-month-hero-740.webp",
+        "srcset": [
+          {
+            "src": "/assets/img/guide/rental-car-one-month-price/rental-car-one-month-hero-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/assets/img/guide/rental-car-one-month-price/rental-car-one-month-hero-740.webp",
+            "width": 740
+          },
+          {
+            "src": "/assets/img/guide/rental-car-one-month-price/rental-car-one-month-hero-1200.webp",
+            "width": 1200
+          }
+        ],
+        "alt": "1ヶ月の長期レンタカーをイメージした軽自動車",
+        "width": 740,
+        "height": 416
+      }
     }
   ]
 }

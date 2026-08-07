@@ -18,6 +18,7 @@
       return;
     }
 
+    const autoplayEnabled = carousel.dataset.mediaAutoplay === "true";
     const interval = Math.max(3000, Number(carousel.dataset.mediaInterval) || 4800);
     const duration = 480;
     const viewportId = viewport.id || `media-carousel-viewport-${carouselIndex + 1}`;
@@ -35,6 +36,10 @@
     viewport.id = viewportId;
     previousButton.setAttribute("aria-controls", viewportId);
     nextButton.setAttribute("aria-controls", viewportId);
+    if (status) {
+      status.setAttribute("aria-live", "polite");
+      status.setAttribute("aria-atomic", "true");
+    }
 
     const clearTimer = () => {
       window.clearTimeout(timer);
@@ -71,6 +76,7 @@
     const scheduleNext = () => {
       clearTimer();
       if (
+        !autoplayEnabled ||
         reducedMotionQuery.matches ||
         document.hidden ||
         !isIntersecting ||
