@@ -4,6 +4,170 @@
   const page = document.querySelector(".substitute-car-guide");
   if (!page) return;
 
+  const faqList = page.querySelector(".faq-list");
+  if (faqList) {
+    const nativeItems = Array.from(faqList.querySelectorAll("details"));
+
+    nativeItems.forEach((details, index) => {
+      const summary = details.querySelector("summary");
+      const answerParagraph = details.querySelector("div p");
+      if (!summary || !answerParagraph) return;
+
+      const itemNumber = index + 1;
+      const questionId = `guide-faq-question-${itemNumber}`;
+      const answerId = `guide-faq-answer-${itemNumber}`;
+      const questionText = summary.textContent.replace(/^\s*Q\s*/, "").trim();
+      const item = document.createElement("article");
+      const heading = document.createElement("h3");
+      const button = document.createElement("button");
+      const number = document.createElement("span");
+      const text = document.createElement("span");
+      const toggle = document.createElement("span");
+      const answer = document.createElement("div");
+      const answerBody = document.createElement("div");
+      const answerLabel = document.createElement("span");
+
+      item.className = "home-faq-item";
+      button.className = "home-faq-question";
+      button.type = "button";
+      button.id = questionId;
+      button.setAttribute("aria-expanded", "false");
+      button.setAttribute("aria-controls", answerId);
+      number.className = "home-faq-number";
+      number.setAttribute("aria-hidden", "true");
+      number.textContent = `Q${itemNumber}`;
+      text.className = "home-faq-question-text";
+      text.textContent = questionText;
+      toggle.className = "home-faq-toggle";
+      toggle.setAttribute("aria-hidden", "true");
+      toggle.textContent = "＋";
+      answer.className = "home-faq-answer";
+      answer.id = answerId;
+      answer.setAttribute("role", "region");
+      answer.setAttribute("aria-labelledby", questionId);
+      answerBody.className = "home-faq-answer-body";
+      answerLabel.className = "home-faq-answer-label";
+      answerLabel.setAttribute("aria-hidden", "true");
+      answerLabel.textContent = "A";
+
+      button.append(number, text, toggle);
+      heading.appendChild(button);
+      answerBody.append(answerLabel, answerParagraph);
+      answer.appendChild(answerBody);
+      item.append(heading, answer);
+      details.replaceWith(item);
+    });
+
+    faqList.classList.add("is-faq-enhanced");
+    const faqItems = Array.from(faqList.querySelectorAll(".home-faq-item"));
+    let faqActionId = 0;
+
+    const clearAnswerTransition = (answer) => {
+      if (!answer.faqTransitionEnd) return;
+      answer.removeEventListener("transitionend", answer.faqTransitionEnd);
+      answer.faqTransitionEnd = null;
+    };
+
+    const setFaqItemState = (item, isOpen, isClosing = false) => {
+      const button = item.querySelector(".home-faq-question");
+      const icon = item.querySelector(".home-faq-toggle");
+      item.classList.toggle("is-open", isOpen);
+      item.classList.toggle("is-closing", isClosing);
+      if (button) button.setAttribute("aria-expanded", String(isOpen));
+      if (icon) icon.textContent = isOpen ? "−" : "＋";
+    };
+
+    const setFaqItemOpen = (item, isOpen, animate = true) => {
+      const answer = item.querySelector(".home-faq-answer");
+      if (!answer) return Promise.resolve();
+
+      clearAnswerTransition(answer);
+
+      if (!animate) {
+        setFaqItemState(item, isOpen);
+        answer.hidden = !isOpen;
+        answer.style.height = isOpen ? `${answer.scrollHeight}px` : "0px";
+        return Promise.resolve();
+      }
+
+      if (isOpen) {
+        const currentHeight = answer.hidden
+          ? 0
+          : answer.getBoundingClientRect().height;
+        setFaqItemState(item, true);
+        answer.hidden = false;
+        answer.style.height = `${currentHeight}px`;
+        answer.offsetHeight;
+        answer.style.height = `${answer.scrollHeight}px`;
+        return Promise.resolve();
+      }
+
+      if (answer.hidden) {
+        setFaqItemState(item, false);
+        return Promise.resolve();
+      }
+
+      return new Promise((resolve) => {
+        let isResolved = false;
+        const finishClose = () => {
+          if (isResolved) return;
+          isResolved = true;
+          clearAnswerTransition(answer);
+          if (!item.classList.contains("is-open")) {
+            setFaqItemState(item, false);
+            answer.hidden = true;
+            answer.style.height = "0px";
+          }
+          resolve();
+        };
+
+        setFaqItemState(item, false, true);
+        answer.style.height = `${answer.getBoundingClientRect().height}px`;
+        answer.offsetHeight;
+        answer.style.height = "0px";
+        answer.faqTransitionEnd = (event) => {
+          if (event.target !== answer || event.propertyName !== "height") return;
+          finishClose();
+        };
+        answer.addEventListener("transitionend", answer.faqTransitionEnd);
+        window.setTimeout(finishClose, 360);
+      });
+    };
+
+    faqItems.forEach((item, index) => {
+      setFaqItemOpen(item, index === 0, false);
+    });
+
+    const syncOpenAnswerHeights = () => {
+      faqItems.forEach((item) => {
+        if (!item.classList.contains("is-open")) return;
+        const answer = item.querySelector(".home-faq-answer");
+        if (!answer || answer.hidden) return;
+        answer.style.height = `${answer.scrollHeight}px`;
+      });
+    };
+
+    window.addEventListener("resize", syncOpenAnswerHeights);
+
+    faqItems.forEach((item) => {
+      const button = item.querySelector(".home-faq-question");
+      if (!button) return;
+
+      button.addEventListener("click", async () => {
+        const actionId = ++faqActionId;
+        const shouldOpen = button.getAttribute("aria-expanded") !== "true";
+        const closeTargets = shouldOpen
+          ? faqItems.filter((currentItem) => currentItem !== item)
+          : [item];
+        await Promise.all(
+          closeTargets.map((currentItem) => setFaqItemOpen(currentItem, false))
+        );
+        if (actionId !== faqActionId) return;
+        if (shouldOpen) setFaqItemOpen(item, true);
+      });
+    });
+  }
+
   const tableWrappers = Array.from(page.querySelectorAll(".table-scroll"));
   const tableHintUpdaters = [];
   const TABLE_HINT_PANEL_HEIGHT = 80;
