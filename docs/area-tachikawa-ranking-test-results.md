@@ -22,7 +22,7 @@
 | GitHub Actions `Check GA tag` | 合格。run `30246776312` |
 | GitHub Pages `pages-build-deployment` | 合格。run `30246775130` |
 
-専用チェックでは、titleとH1の文言一致、モバイルH1の3行以内表示と安全な折り返し、指定見出し、meta description、canonical、noindex、構造化データ、5列・10社のランキング、12問FAQ、17画像、10本の記事CTA、出典リンク属性、日付、表のcaption/scope、CSSスコープ、4項目で折り畳む目次、全18表の固定caption・固定列・overflow判定・初回スクロール案内、背景透過ロゴのalpha channel、FAQのプログレッシブ拡張、CTAイベント、相対アセットの存在を検証した。
+専用チェックでは、titleとH1の文言一致、モバイルH1の3行以内表示と安全な折り返し、指定見出し、meta description、canonical、noindex、構造化データ、5列・10社のランキング、12問FAQ、18画像、10本の記事CTA、出典リンク属性、日付、表のcaption/scope、CSSスコープ、4項目で折り畳む目次、全18表の固定caption・固定列・overflow判定・初回スクロール案内、背景透過ロゴのalpha channel、FAQのプログレッシブ拡張、CTAイベント、相対アセットの存在を検証した。
 
 ## staging実URL
 
