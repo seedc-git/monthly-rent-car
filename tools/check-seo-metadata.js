@@ -51,6 +51,12 @@ const shopImageByPage = {
   "shop/saitama/asakadai/index.html": { slug: "asakadai", name: "朝霞台" },
 };
 
+const rentalPriceGuideImage = {
+  path: "/assets/img/guide/rental-car-one-month-price/rental-car-one-month-hero-1200.webp",
+  width: "1200",
+  height: "675",
+};
+
 const shopLocalGuideByPage = {
   "shop/kanagawa/kawasaki/index.html": {
     slug: "kawasaki",
@@ -1059,18 +1065,24 @@ function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
   const shopImage = shopImageByPage[file];
+  const isRentalPriceGuide =
+    file === "guide/rental-car-one-month-price/index.html";
   if (file.startsWith("shop/") && !shopImage) {
     fail(file, "shop page must register its own square and social OGP images");
   }
   const expectedOgImage =
     shopImage
       ? `${baseUrl}/assets/ogp/shops/${shopImage.slug}-1200x630.jpg`
+      : isRentalPriceGuide
+      ? `${baseUrl}${rentalPriceGuideImage.path}`
       : file === "area/tachikawa/index.html"
       ? `${baseUrl}/assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp`
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const [expectedOgImageWidth, expectedOgImageHeight] =
     shopImage
       ? ["1200", "630"]
+      : isRentalPriceGuide
+      ? [rentalPriceGuideImage.width, rentalPriceGuideImage.height]
       : file === "area/tachikawa/index.html"
         ? ["1077", "500"]
         : ["1200", "630"];
