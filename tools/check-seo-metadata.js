@@ -719,7 +719,7 @@ function checkTachikawaHeading(file, html) {
 function checkTachikawaStoreSummary(file, html) {
   if (file !== "shop/tokyo/tachikawa/index.html") return;
 
-  if (!html.includes('<link rel="stylesheet" href="../../../styles.css?v=20260803-pc-logo">')) {
+  if (!html.includes('<link rel="stylesheet" href="../../../styles.css?v=20260807-footer-company-pc-logo">')) {
     fail(file, "Tachikawa page must cache-bust the PC logo layout stylesheet");
   }
 
