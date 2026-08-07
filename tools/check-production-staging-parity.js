@@ -8,6 +8,7 @@ const productionHost = "monthly-rent-car.jp";
 const stagingHost = "stg.monthly-rent-car.jp";
 const stagingSitemapExcludedPages = new Set([
   "area/tachikawa/index.html",
+  "guide/monthly-rentacar-cheap-comparison/index.html",
 ]);
 
 if (!headSha) {
