@@ -52,6 +52,12 @@ const shopImageByPage = {
   "shop/saitama/asakadai/index.html": { slug: "asakadai", name: "朝霞台" },
 };
 
+const rentalPriceGuideImage = {
+  path: "/assets/img/guide/rental-car-one-month-price/rental-car-one-month-hero-1200.webp",
+  width: "1200",
+  height: "675",
+};
+
 const articleImageByPage = {
   "area/tachikawa/index.html": {
     path: "/assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp",
@@ -1133,6 +1139,8 @@ function checkPage(file) {
   const html = read(file);
   const expectedUrl = pageUrlFor(file);
   const shopImage = shopImageByPage[file];
+  const isRentalPriceGuide =
+    file === "guide/rental-car-one-month-price/index.html";
   const articleImage = articleImageByPage[file];
   if (file.startsWith("shop/") && !shopImage) {
     fail(file, "shop page must register its own square and social OGP images");
@@ -1140,12 +1148,16 @@ function checkPage(file) {
   const expectedOgImage =
     shopImage
       ? `${baseUrl}/assets/ogp/shops/${shopImage.slug}-1200x630.jpg`
+      : isRentalPriceGuide
+      ? `${baseUrl}${rentalPriceGuideImage.path}`
       : articleImage
       ? `${baseUrl}${articleImage.path}`
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const [expectedOgImageWidth, expectedOgImageHeight] =
     shopImage
       ? ["1200", "630"]
+      : isRentalPriceGuide
+      ? [rentalPriceGuideImage.width, rentalPriceGuideImage.height]
       : articleImage
         ? [articleImage.width, articleImage.height]
         : ["1200", "630"];
