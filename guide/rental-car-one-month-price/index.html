@@ -82,7 +82,7 @@
       }
     </script>
     <link rel="stylesheet" href="../../styles.css?v=20260807-footer-company">
-    <link rel="stylesheet" href="article.css?v=20260808-existing-ui-1">
+    <link rel="stylesheet" href="article.css?v=20260808-table-faq-fix-1">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -133,12 +133,12 @@
             {
               "@type": "Question",
               "name": "1ヶ月より短く返した場合は日割りになりますか？",
-              "acceptedAnswer": {"@type": "Answer", "text": "途中返却時の返金や日割り精算は会社・店舗・契約条件により異なります。当社についても一律の固定条件は案内していないため、契約前に確認してください。"}
+              "acceptedAnswer": {"@type": "Answer", "text": "途中返却時の返金や日割り精算は、会社・店舗・契約条件により異なります。当社についても一律の固定条件は案内していないため、契約前に確認してください。"}
             },
             {
               "@type": "Question",
               "name": "1ヶ月の契約を延長できますか？",
-              "acceptedAnswer": {"@type": "Answer", "text": "当社は1ヶ月単位での延長に対応しています。空車状況や次の予約により希望どおりにならない場合があるため、延長の可能性が分かった時点で店舗へ相談してください。"}
+              "acceptedAnswer": {"@type": "Answer", "text": "当社は1ヶ月単位での延長に対応しています。空車状況や次の予約により希望どおりにならない場合があるため、延長の可能性が分かった時点で店舗へ相談してください。延長日割りの有無は店舗や条件により異なります。"}
             },
             {
               "@type": "Question",
@@ -148,12 +148,17 @@
             {
               "@type": "Question",
               "name": "免責補償を付ければ事故時の支払いはゼロですか？",
-              "acceptedAnswer": {"@type": "Answer", "text": "必ずゼロになるとは限りません。免責補償の対象外事項やNOC、タイヤ損傷などが別扱いになる場合があります。免責額とNOCの両方を確認してください。"}
+              "acceptedAnswer": {"@type": "Answer", "text": "必ずゼロになるとは限りません。免責補償の対象外事項やNOC、タイヤ損傷などが別扱いになる場合があります。免責補償の対象、免責額、NOCの3点を確認してください。"}
             },
             {
               "@type": "Question",
               "name": "走行距離に制限はありますか？",
               "acceptedAnswer": {"@type": "Answer", "text": "当社の目安は1ヶ月3,000kmです。超過時は1kmにつき税抜10円の料金がかかります。会社ごとに上限と超過単価が異なるため、予定走行距離から比較してください。"}
+            },
+            {
+              "@type": "Question",
+              "name": "キャンセルや途中返却の料金はどうなりますか？",
+              "acceptedAnswer": {"@type": "Answer", "text": "キャンセル料の発生日、途中返却時の返金、清掃関連の請求額は店舗や契約条件で異なります。一律の固定値は断定できないため、見積もりと貸渡約款で確認してください。"}
             }
           ]
         }
@@ -284,7 +289,7 @@
             <section class="content-section" id="market-price">
               <h2><span>01</span>レンタカーを1ヶ月借りるといくら？料金相場を先に解説</h2>
               <p>同じ「30日」でも、長期利用を前提に車両を運用する専門店と、日額料金を積み上げる短期レンタカーでは料金設計が違います。最初に確認したいのは、月額の安さではなく<strong>利用期間に合うサービス形態か</strong>です。</p>
-              <div class="table-scroll table-scroll--price" role="region" tabindex="0" aria-label="サービス形態別の1ヶ月料金相場">
+              <div class="table-scroll table-scroll--guide-range" role="region" tabindex="0" aria-label="サービス形態別の1ヶ月料金相場">
                 <table>
                   <caption>サービス形態別の1ヶ月料金相場（税抜）</caption>
                   <thead>
@@ -303,7 +308,7 @@
             <section class="content-section" id="vehicle-price">
               <h2><span>02</span>車種別の1ヶ月料金相場</h2>
               <p>車両が大きくなるほど基本料金は上がります。以下は公開価格帯を税抜にそろえた目安です。年式、装備、地域、繁忙期、補償内容により実際の見積額は変わります。</p>
-              <div class="table-scroll table-scroll--price" role="region" tabindex="0" aria-label="車種別の1ヶ月料金相場">
+              <div class="table-scroll table-scroll--guide-range" role="region" tabindex="0" aria-label="車種別の1ヶ月料金相場">
                 <table class="vehicle-table">
                   <caption>車種別の1ヶ月料金相場（税抜・概算）</caption>
                   <thead>
@@ -482,35 +487,91 @@
 
             <section class="content-section faq-section" id="faq">
               <h2><span>10</span>よくある質問</h2>
-              <div class="faq-list">
-                <details open>
-                  <summary><span>Q</span>1ヶ月料金に保険は含まれていますか？</summary>
-                  <div><span>A</span><p>当社料金には対人・対物保険、車両補償が含まれます。ただし、保険が付いていることと、事故時の免責額やNOCの自己負担がなくなることは別です。補償条件は見積もり時に確認してください。</p></div>
-                </details>
-                <details>
-                  <summary><span>Q</span>1ヶ月より短く返した場合は日割りになりますか？</summary>
-                  <div><span>A</span><p>途中返却時の返金や日割り精算は、会社・店舗・契約条件により異なります。当社についても一律の固定条件は案内していないため、契約前に確認してください。</p></div>
-                </details>
-                <details>
-                  <summary><span>Q</span>1ヶ月の契約を延長できますか？</summary>
-                  <div><span>A</span><p>当社は1ヶ月単位での延長に対応しています。空車状況や次の予約により希望どおりにならない場合があるため、延長の可能性が分かった時点で店舗へ相談してください。延長日割りの有無は店舗や条件により異なります。</p></div>
-                </details>
-                <details>
-                  <summary><span>Q</span>自宅や会社まで配車してもらえますか？</summary>
-                  <div><span>A</span><p>店舗受取のほか、地域や条件によりデリバリー・引取に対応できる場合があります。対応範囲、無料条件、料金は店舗や条件により異なるため、見積もり時に確認してください。</p></div>
-                </details>
-                <details>
-                  <summary><span>Q</span>免責補償を付ければ事故時の支払いはゼロですか？</summary>
-                  <div><span>A</span><p>必ずゼロになるとは限りません。免責補償の対象外事項やNOC、タイヤ損傷などが別扱いになる場合があります。免責補償の対象、免責額、NOCの3点を確認してください。</p></div>
-                </details>
-                <details>
-                  <summary><span>Q</span>走行距離に制限はありますか？</summary>
-                  <div><span>A</span><p>当社の目安は1ヶ月3,000kmです。超過時は1kmにつき税抜10円の料金がかかります。会社ごとに上限と超過単価が異なるため、予定走行距離から比較してください。</p></div>
-                </details>
-                <details>
-                  <summary><span>Q</span>キャンセルや途中返却の料金はどうなりますか？</summary>
-                  <div><span>A</span><p>キャンセル料の発生日、途中返却時の返金、清掃関連の請求額は店舗や契約条件で異なります。一律の固定値は断定できないため、見積もりと貸渡約款で確認してください。</p></div>
-                </details>
+              <div class="home-faq-list">
+                <article class="home-faq-item is-open">
+                  <h3>
+                    <button class="home-faq-question" id="guide-faq-question-1" type="button" aria-expanded="true" aria-controls="guide-faq-answer-1">
+                      <span class="home-faq-number" aria-hidden="true">Q1</span>
+                      <span class="home-faq-question-text">1ヶ月料金に保険は含まれていますか？</span>
+                      <span class="home-faq-toggle" aria-hidden="true">−</span>
+                    </button>
+                  </h3>
+                  <div class="home-faq-answer" id="guide-faq-answer-1" role="region" aria-labelledby="guide-faq-question-1">
+                    <div class="home-faq-answer-body"><span class="home-faq-answer-label" aria-hidden="true">A</span><p>当社料金には対人・対物保険、車両補償が含まれます。ただし、保険が付いていることと、事故時の免責額やNOCの自己負担がなくなることは別です。補償条件は見積もり時に確認してください。</p></div>
+                  </div>
+                </article>
+                <article class="home-faq-item">
+                  <h3>
+                    <button class="home-faq-question" id="guide-faq-question-2" type="button" aria-expanded="false" aria-controls="guide-faq-answer-2">
+                      <span class="home-faq-number" aria-hidden="true">Q2</span>
+                      <span class="home-faq-question-text">1ヶ月より短く返した場合は日割りになりますか？</span>
+                      <span class="home-faq-toggle" aria-hidden="true">＋</span>
+                    </button>
+                  </h3>
+                  <div class="home-faq-answer" id="guide-faq-answer-2" role="region" aria-labelledby="guide-faq-question-2" hidden>
+                    <div class="home-faq-answer-body"><span class="home-faq-answer-label" aria-hidden="true">A</span><p>途中返却時の返金や日割り精算は、会社・店舗・契約条件により異なります。当社についても一律の固定条件は案内していないため、契約前に確認してください。</p></div>
+                  </div>
+                </article>
+                <article class="home-faq-item">
+                  <h3>
+                    <button class="home-faq-question" id="guide-faq-question-3" type="button" aria-expanded="false" aria-controls="guide-faq-answer-3">
+                      <span class="home-faq-number" aria-hidden="true">Q3</span>
+                      <span class="home-faq-question-text">1ヶ月の契約を延長できますか？</span>
+                      <span class="home-faq-toggle" aria-hidden="true">＋</span>
+                    </button>
+                  </h3>
+                  <div class="home-faq-answer" id="guide-faq-answer-3" role="region" aria-labelledby="guide-faq-question-3" hidden>
+                    <div class="home-faq-answer-body"><span class="home-faq-answer-label" aria-hidden="true">A</span><p>当社は1ヶ月単位での延長に対応しています。空車状況や次の予約により希望どおりにならない場合があるため、延長の可能性が分かった時点で店舗へ相談してください。延長日割りの有無は店舗や条件により異なります。</p></div>
+                  </div>
+                </article>
+                <article class="home-faq-item">
+                  <h3>
+                    <button class="home-faq-question" id="guide-faq-question-4" type="button" aria-expanded="false" aria-controls="guide-faq-answer-4">
+                      <span class="home-faq-number" aria-hidden="true">Q4</span>
+                      <span class="home-faq-question-text">自宅や会社まで配車してもらえますか？</span>
+                      <span class="home-faq-toggle" aria-hidden="true">＋</span>
+                    </button>
+                  </h3>
+                  <div class="home-faq-answer" id="guide-faq-answer-4" role="region" aria-labelledby="guide-faq-question-4" hidden>
+                    <div class="home-faq-answer-body"><span class="home-faq-answer-label" aria-hidden="true">A</span><p>店舗受取のほか、地域や条件によりデリバリー・引取に対応できる場合があります。対応範囲、無料条件、料金は店舗や条件により異なるため、見積もり時に確認してください。</p></div>
+                  </div>
+                </article>
+                <article class="home-faq-item">
+                  <h3>
+                    <button class="home-faq-question" id="guide-faq-question-5" type="button" aria-expanded="false" aria-controls="guide-faq-answer-5">
+                      <span class="home-faq-number" aria-hidden="true">Q5</span>
+                      <span class="home-faq-question-text">免責補償を付ければ事故時の支払いはゼロですか？</span>
+                      <span class="home-faq-toggle" aria-hidden="true">＋</span>
+                    </button>
+                  </h3>
+                  <div class="home-faq-answer" id="guide-faq-answer-5" role="region" aria-labelledby="guide-faq-question-5" hidden>
+                    <div class="home-faq-answer-body"><span class="home-faq-answer-label" aria-hidden="true">A</span><p>必ずゼロになるとは限りません。免責補償の対象外事項やNOC、タイヤ損傷などが別扱いになる場合があります。免責補償の対象、免責額、NOCの3点を確認してください。</p></div>
+                  </div>
+                </article>
+                <article class="home-faq-item">
+                  <h3>
+                    <button class="home-faq-question" id="guide-faq-question-6" type="button" aria-expanded="false" aria-controls="guide-faq-answer-6">
+                      <span class="home-faq-number" aria-hidden="true">Q6</span>
+                      <span class="home-faq-question-text">走行距離に制限はありますか？</span>
+                      <span class="home-faq-toggle" aria-hidden="true">＋</span>
+                    </button>
+                  </h3>
+                  <div class="home-faq-answer" id="guide-faq-answer-6" role="region" aria-labelledby="guide-faq-question-6" hidden>
+                    <div class="home-faq-answer-body"><span class="home-faq-answer-label" aria-hidden="true">A</span><p>当社の目安は1ヶ月3,000kmです。超過時は1kmにつき税抜10円の料金がかかります。会社ごとに上限と超過単価が異なるため、予定走行距離から比較してください。</p></div>
+                  </div>
+                </article>
+                <article class="home-faq-item">
+                  <h3>
+                    <button class="home-faq-question" id="guide-faq-question-7" type="button" aria-expanded="false" aria-controls="guide-faq-answer-7">
+                      <span class="home-faq-number" aria-hidden="true">Q7</span>
+                      <span class="home-faq-question-text">キャンセルや途中返却の料金はどうなりますか？</span>
+                      <span class="home-faq-toggle" aria-hidden="true">＋</span>
+                    </button>
+                  </h3>
+                  <div class="home-faq-answer" id="guide-faq-answer-7" role="region" aria-labelledby="guide-faq-question-7" hidden>
+                    <div class="home-faq-answer-body"><span class="home-faq-answer-label" aria-hidden="true">A</span><p>キャンセル料の発生日、途中返却時の返金、清掃関連の請求額は店舗や契約条件で異なります。一律の固定値は断定できないため、見積もりと貸渡約款で確認してください。</p></div>
+                  </div>
+                </article>
               </div>
             </section>
 
@@ -573,6 +634,6 @@
     </div>
 
     <script src="../../script.js"></script>
-    <script src="article.js?v=20260808-existing-table-scroll-1"></script>
+    <script src="article.js?v=20260808-table-faq-fix-1"></script>
   </body>
 </html>

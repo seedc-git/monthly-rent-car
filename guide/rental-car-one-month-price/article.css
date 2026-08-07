@@ -862,79 +862,164 @@
   text-decoration: none;
 }
 
-.one-month-guide .faq-list {
+.one-month-guide .home-faq-list {
   display: grid;
   gap: 10px;
 }
 
-.one-month-guide .faq-list details {
-  border: 1px solid var(--guide-line);
-  background: #fff;
+.one-month-guide .home-faq-item {
+  overflow: hidden;
+  border: 1px solid rgba(5, 38, 111, 0.16);
+  border-radius: 7px;
+  background: var(--white);
+  box-shadow: 0 8px 22px rgba(5, 38, 111, 0.06);
 }
 
-.one-month-guide .faq-list summary {
+.one-month-guide .home-faq-item.is-open {
+  border-color: rgba(5, 38, 111, 0.22);
+}
+
+.one-month-guide .home-faq-question {
+  width: 100%;
   min-height: 58px;
-  padding: 14px 52px 14px 16px;
-  position: relative;
-  display: flex;
-  align-items: center;
+  padding: 13px 12px;
+  border: 0;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 28px;
   gap: 10px;
-  color: var(--guide-navy);
-  font-size: 15px;
-  font-weight: 900;
-  line-height: 1.65;
+  align-items: center;
+  background: var(--white);
+  color: var(--navy);
+  font: inherit;
+  text-align: left;
   cursor: pointer;
-  list-style: none;
 }
 
-.one-month-guide .faq-list summary::-webkit-details-marker {
-  display: none;
+.one-month-guide .home-faq-item.is-open .home-faq-question {
+  background: var(--navy);
+  color: var(--white);
 }
 
-.one-month-guide .faq-list summary::after {
-  content: "+";
-  position: absolute;
-  top: 50%;
-  right: 18px;
-  color: var(--guide-teal);
-  font-size: 26px;
-  font-weight: 500;
-  transform: translateY(-50%);
-}
-
-.one-month-guide .faq-list details[open] summary::after {
-  content: "−";
-}
-
-.one-month-guide .faq-list summary span,
-.one-month-guide .faq-list details > div > span {
-  width: 30px;
-  height: 30px;
-  flex: 0 0 auto;
+.one-month-guide .home-faq-number {
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  color: #fff;
-  background: var(--guide-teal);
-  font-weight: 900;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
 }
 
-.one-month-guide .faq-list details > div {
-  padding: 16px;
-  border-top: 1px solid var(--guide-line);
+.one-month-guide .home-faq-item.is-open .home-faq-number {
+  background: var(--white);
+  color: var(--navy);
+}
+
+.one-month-guide .home-faq-question-text {
+  min-width: 0;
+  font-size: clamp(14px, 3.45vw, 17px);
+  font-weight: 800;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+
+.one-month-guide .home-faq-toggle {
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  color: var(--navy);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.one-month-guide .home-faq-item.is-open .home-faq-toggle {
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--navy);
+}
+
+.one-month-guide .home-faq-answer {
+  overflow: hidden;
+  border-top: 1px solid rgba(5, 38, 111, 0.08);
+  background: #fffaf0;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: height;
+}
+
+.one-month-guide .home-faq-answer[hidden] {
+  display: none;
+}
+
+.one-month-guide .home-faq-answer-body {
   display: grid;
   grid-template-columns: 30px minmax(0, 1fr);
-  gap: 10px;
-  background: #f8fbfb;
+  gap: 12px;
+  padding: 18px 14px 19px;
+  color: #151515;
 }
 
-.one-month-guide .faq-list details > div > span {
-  background: var(--guide-orange);
+.one-month-guide .home-faq-answer-label {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--orange);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
 }
 
-.one-month-guide .faq-list details > div p {
-  font-size: 14px;
-  line-height: 1.8;
+.one-month-guide .article-body .home-faq-answer p {
+  color: #151515;
+  font-size: clamp(13px, 3.3vw, 15px);
+  font-weight: 500;
+  line-height: 1.85;
+}
+
+@media (min-width: 768px) {
+  .one-month-guide .home-faq-list {
+    gap: 12px;
+  }
+
+  .one-month-guide .home-faq-question {
+    min-height: 64px;
+    padding: 15px 18px;
+    grid-template-columns: 42px minmax(0, 1fr) 32px;
+    gap: 14px;
+  }
+
+  .one-month-guide .home-faq-number {
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
+  }
+
+  .one-month-guide .home-faq-toggle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .one-month-guide .home-faq-answer-body {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 14px;
+    padding: 20px 22px 22px;
+  }
+
+  .one-month-guide .home-faq-answer-label {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
 }
 
 .one-month-guide .source-section {
@@ -1197,13 +1282,13 @@
     border-radius: 3px;
   }
 
-  .one-month-guide .table-scroll--price {
+  .one-month-guide .table-scroll--guide-range {
     --table-key-column-width: clamp(96px, 28vw, 116px);
-    --price-class-column-width: clamp(112px, 32vw, 136px);
-    --price-amount-column-width: clamp(100px, 25vw, 108px);
-    --price-final-column-width:
+    --guide-range-amount-column-width: clamp(176px, 50vw, 204px);
+    --guide-range-detail-column-width: clamp(140px, 38vw, 160px);
+    --guide-range-final-column-width:
       calc(100vw - 34px - var(--table-key-column-width));
-    --table-data-column-width: var(--price-final-column-width);
+    --table-data-column-width: var(--guide-range-final-column-width);
   }
 
   .one-month-guide .table-scroll--company {
@@ -1222,23 +1307,23 @@
     --compact-price-column-width: 96px;
   }
 
-  .one-month-guide .table-scroll--price table,
+  .one-month-guide .table-scroll--guide-range table,
   .one-month-guide .table-scroll--company table {
     table-layout: fixed;
   }
 
-  .one-month-guide .table-scroll--price table {
+  .one-month-guide .table-scroll--guide-range table {
     width: calc(
       var(--table-key-column-width) +
-      var(--price-class-column-width) +
-      var(--price-amount-column-width) +
-      var(--price-final-column-width)
+      var(--guide-range-amount-column-width) +
+      var(--guide-range-detail-column-width) +
+      var(--guide-range-final-column-width)
     );
     min-width: calc(
       var(--table-key-column-width) +
-      var(--price-class-column-width) +
-      var(--price-amount-column-width) +
-      var(--price-final-column-width)
+      var(--guide-range-amount-column-width) +
+      var(--guide-range-detail-column-width) +
+      var(--guide-range-final-column-width)
     );
   }
 
@@ -1268,7 +1353,7 @@
   }
 
   .one-month-guide
-    :is(.table-scroll--price, .table-scroll--company, .table-scroll--compact)
+    :is(.table-scroll--guide-range, .table-scroll--company, .table-scroll--compact)
     tr
     > :first-child {
     width: var(--table-key-column-width);
@@ -1276,29 +1361,34 @@
     max-width: var(--table-key-column-width);
   }
 
-  .one-month-guide .table-scroll--price tr > :nth-child(n + 2),
+  .one-month-guide .table-scroll--guide-range tr > :nth-child(n + 2),
   .one-month-guide .table-scroll--company tr > :nth-child(n + 2) {
     width: var(--table-data-column-width);
     min-width: var(--table-data-column-width);
     max-width: var(--table-data-column-width);
   }
 
-  .one-month-guide .table-scroll--price tr > :nth-child(2) {
-    width: var(--price-class-column-width);
-    min-width: var(--price-class-column-width);
-    max-width: var(--price-class-column-width);
+  .one-month-guide .table-scroll--guide-range tr > :nth-child(2) {
+    width: var(--guide-range-amount-column-width);
+    min-width: var(--guide-range-amount-column-width);
+    max-width: var(--guide-range-amount-column-width);
   }
 
-  .one-month-guide .table-scroll--price tr > :nth-child(3) {
-    width: var(--price-amount-column-width);
-    min-width: var(--price-amount-column-width);
-    max-width: var(--price-amount-column-width);
+  .one-month-guide .table-scroll--guide-range tr > :nth-child(3) {
+    width: var(--guide-range-detail-column-width);
+    min-width: var(--guide-range-detail-column-width);
+    max-width: var(--guide-range-detail-column-width);
   }
 
-  .one-month-guide .table-scroll--price tr > :nth-child(4) {
-    width: var(--price-final-column-width);
-    min-width: var(--price-final-column-width);
-    max-width: var(--price-final-column-width);
+  .one-month-guide .table-scroll--guide-range tr > :nth-child(4) {
+    width: var(--guide-range-final-column-width);
+    min-width: var(--guide-range-final-column-width);
+    max-width: var(--guide-range-final-column-width);
+  }
+
+  .one-month-guide .table-scroll--guide-range td strong {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .one-month-guide .table-scroll--company tr > :nth-child(2) {

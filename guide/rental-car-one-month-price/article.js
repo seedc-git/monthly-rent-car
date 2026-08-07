@@ -175,4 +175,116 @@
     window.addEventListener("resize", updateTableHints);
     updateTableHints();
   }
+
+  const faq = page.querySelector(".faq-section");
+  if (!faq) return;
+
+  const faqItems = Array.from(faq.querySelectorAll(".home-faq-item"));
+  let faqActionId = 0;
+
+  const clearAnswerTransition = (answer) => {
+    if (answer.faqTransitionEnd) {
+      answer.removeEventListener("transitionend", answer.faqTransitionEnd);
+      answer.faqTransitionEnd = null;
+    }
+  };
+
+  const setFaqItemState = (item, isOpen, isClosing = false) => {
+    const button = item.querySelector(".home-faq-question");
+    const icon = item.querySelector(".home-faq-toggle");
+    item.classList.toggle("is-open", isOpen);
+    item.classList.toggle("is-closing", isClosing);
+    if (button) button.setAttribute("aria-expanded", String(isOpen));
+    if (icon) icon.textContent = isOpen ? "−" : "＋";
+  };
+
+  const setFaqItemOpen = (item, isOpen, animate = true) => {
+    const answer = item.querySelector(".home-faq-answer");
+    if (!answer) return Promise.resolve();
+
+    clearAnswerTransition(answer);
+
+    if (!animate) {
+      setFaqItemState(item, isOpen);
+      answer.hidden = !isOpen;
+      answer.style.height = isOpen ? `${answer.scrollHeight}px` : "0px";
+      return Promise.resolve();
+    }
+
+    if (isOpen) {
+      const currentHeight = answer.hidden
+        ? 0
+        : answer.getBoundingClientRect().height;
+      setFaqItemState(item, true);
+      answer.hidden = false;
+      answer.style.height = `${currentHeight}px`;
+      answer.offsetHeight;
+      answer.style.height = `${answer.scrollHeight}px`;
+      return Promise.resolve();
+    }
+
+    if (answer.hidden) {
+      setFaqItemState(item, false);
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+      let isResolved = false;
+      const finishClose = () => {
+        if (isResolved) return;
+        isResolved = true;
+        clearAnswerTransition(answer);
+        if (!item.classList.contains("is-open")) {
+          setFaqItemState(item, false);
+          answer.hidden = true;
+          answer.style.height = "0px";
+        }
+        resolve();
+      };
+
+      setFaqItemState(item, false, true);
+      answer.style.height = `${answer.getBoundingClientRect().height}px`;
+      answer.offsetHeight;
+      answer.style.height = "0px";
+      answer.faqTransitionEnd = (event) => {
+        if (event.target !== answer || event.propertyName !== "height") return;
+        finishClose();
+      };
+      answer.addEventListener("transitionend", answer.faqTransitionEnd);
+      window.setTimeout(finishClose, 360);
+    });
+  };
+
+  faqItems.forEach((item) => {
+    setFaqItemOpen(item, item.classList.contains("is-open"), false);
+  });
+
+  const syncOpenAnswerHeights = () => {
+    faqItems.forEach((item) => {
+      if (!item.classList.contains("is-open")) return;
+      const answer = item.querySelector(".home-faq-answer");
+      if (!answer || answer.hidden) return;
+      answer.style.height = `${answer.scrollHeight}px`;
+    });
+  };
+
+  window.addEventListener("resize", syncOpenAnswerHeights);
+
+  faqItems.forEach((item) => {
+    const button = item.querySelector(".home-faq-question");
+    if (!button) return;
+
+    button.addEventListener("click", async () => {
+      const actionId = ++faqActionId;
+      const shouldOpen = button.getAttribute("aria-expanded") !== "true";
+      const closeTargets = shouldOpen
+        ? faqItems.filter((currentItem) => currentItem !== item)
+        : [item];
+      await Promise.all(
+        closeTargets.map((currentItem) => setFaqItemOpen(currentItem, false))
+      );
+      if (actionId !== faqActionId) return;
+      if (shouldOpen) setFaqItemOpen(item, true);
+    });
+  });
 })();
