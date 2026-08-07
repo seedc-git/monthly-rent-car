@@ -51,6 +51,113 @@ const shopImageByPage = {
   "shop/saitama/asakadai/index.html": { slug: "asakadai", name: "朝霞台" },
 };
 
+const shopLocalGuideByPage = {
+  "shop/kanagawa/kawasaki/index.html": {
+    slug: "kawasaki",
+    brand: "神奈川マンスリーレンタカー",
+    store: "川崎店",
+    regionHeading: "川崎市のマンスリーレンタカー",
+    stationFact: "川崎駅・京急川崎駅から徒歩3分",
+    neighborhood: "神奈川県川崎市川崎区砂子",
+    stationArea: "川崎駅・京急川崎駅周辺",
+    mapLink: "https://www.google.com/maps/search/?api=1&query=%E3%82%B1%E3%82%A4%E3%83%BB%E3%82%B8%E3%82%A7%E3%82%A4%E7%A0%82%E5%AD%90%E3%83%93%E3%83%AB%20%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E5%B7%9D%E5%B4%8E%E5%B8%82%E5%B7%9D%E5%B4%8E%E5%8C%BA%E7%A0%82%E5%AD%901%E4%B8%81%E7%9B%AE5-1",
+    mapTarget: "ケイ・ジェイ砂子ビル",
+  },
+  "shop/saitama/asakadai/index.html": {
+    slug: "asakadai",
+    brand: "埼玉マンスリーレンタカー",
+    store: "朝霞台店",
+    regionHeading: "朝霞市のマンスリーレンタカー",
+    stationFact: "朝霞台駅・北朝霞駅から徒歩3分",
+    neighborhood: "埼玉県朝霞市東弁財",
+    stationArea: "朝霞台駅・北朝霞駅周辺",
+    mapLink: "https://maps.app.goo.gl/KcqDdD49U6wcEPKM7",
+  },
+  "shop/saitama/kawagoe/index.html": {
+    slug: "kawagoe",
+    brand: "埼玉マンスリーレンタカー",
+    store: "川越店",
+    regionHeading: "川越市のマンスリーレンタカー",
+    stationFact: "川越駅から徒歩3分",
+    neighborhood: "埼玉県川越市脇田町",
+    stationArea: "川越駅周辺",
+    mapLink: "https://www.google.com/maps/search/?api=1&query=%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B7%E3%83%86%E3%82%A3%20%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%B7%9D%E8%B6%8A%E5%B8%82%E8%84%87%E7%94%B0%E7%94%BA23-5",
+    mapTarget: "ライフシティ",
+  },
+  "shop/saitama/omiya/index.html": {
+    slug: "omiya",
+    brand: "埼玉マンスリーレンタカー",
+    store: "大宮店",
+    regionHeading: "さいたま市大宮区のマンスリーレンタカー",
+    stationFact: "大宮駅から徒歩6分",
+    neighborhood: "埼玉県さいたま市大宮区桜木町",
+    stationArea: "大宮駅周辺",
+    mapLink: "https://maps.app.goo.gl/5sY7SC9XVLdPpFbH7",
+  },
+  "shop/saitama/sakado/index.html": {
+    slug: "sakado",
+    brand: "埼玉マンスリーレンタカー",
+    store: "坂戸店",
+    regionHeading: "坂戸市のマンスリーレンタカー",
+    stationFact: "坂戸駅から徒歩3分",
+    neighborhood: "埼玉県坂戸市日の出町",
+    stationArea: "坂戸駅周辺",
+    mapLink: "https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%83%B3%E3%83%A9%E3%82%A4%E3%82%BA%E3%83%97%E3%83%A9%E3%82%B6A%20%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%9D%82%E6%88%B8%E5%B8%82%E6%97%A5%E3%81%AE%E5%87%BA%E7%94%BA16-7",
+    mapTarget: "サンライズプラザA",
+  },
+  "shop/saitama/tokorozawa/index.html": {
+    slug: "tokorozawa",
+    brand: "埼玉マンスリーレンタカー",
+    store: "所沢店",
+    regionHeading: "所沢市のマンスリーレンタカー",
+    stationFact: "所沢駅から徒歩6分",
+    neighborhood: "埼玉県所沢市くすのき台",
+    stationArea: "所沢駅周辺",
+    mapLink: "https://maps.app.goo.gl/TGJyoykc9mBt9Pj49",
+  },
+  "shop/saitama/urawa/index.html": {
+    slug: "urawa",
+    brand: "埼玉マンスリーレンタカー",
+    store: "浦和店",
+    regionHeading: "さいたま市浦和区のマンスリーレンタカー",
+    stationFact: "浦和駅から徒歩4分",
+    neighborhood: "埼玉県さいたま市浦和区高砂",
+    stationArea: "浦和駅周辺",
+    mapLink: "https://www.google.com/maps/search/?api=1&query=%E3%83%95%E3%82%A1%E3%83%BC%E3%82%B9%E3%83%88%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%93%E3%83%AB%20%E5%9F%BC%E7%8E%89%E7%9C%8C%E3%81%95%E3%81%84%E3%81%9F%E3%81%BE%E5%B8%82%E6%B5%A6%E5%92%8C%E5%8C%BA%E9%AB%98%E7%A0%822-6-3",
+    mapTarget: "ファーストセンタービル",
+  },
+  "shop/saitama/wako/index.html": {
+    slug: "wako",
+    brand: "埼玉マンスリーレンタカー",
+    store: "和光店",
+    regionHeading: "和光市のマンスリーレンタカー",
+    stationFact: "和光市駅南口から徒歩6分",
+    neighborhood: "埼玉県和光市本町",
+    stationArea: "和光市駅周辺",
+    mapLink: "https://maps.app.goo.gl/R78ztKb9FisrKST7A",
+  },
+  "shop/tokyo/ikebukuro/index.html": {
+    slug: "ikebukuro",
+    brand: "東京マンスリーレンタカー",
+    store: "池袋店",
+    regionHeading: "池袋のマンスリーレンタカー",
+    stationFact: "池袋駅から徒歩6分",
+    neighborhood: "東京都豊島区池袋",
+    stationArea: "池袋駅周辺",
+    mapLink: "https://maps.app.goo.gl/rrfbmsYPDW6Y6JM48",
+  },
+  "shop/tokyo/shinjuku/index.html": {
+    slug: "shinjuku",
+    brand: "東京マンスリーレンタカー",
+    store: "新宿店",
+    regionHeading: "新宿のマンスリーレンタカー",
+    stationFact: "新宿駅から徒歩7分",
+    neighborhood: "東京都新宿区西新宿",
+    stationArea: "新宿駅周辺",
+    mapLink: "https://maps.app.goo.gl/BqTq1qFQVadQsBfW7",
+  },
+};
+
 const tachikawaStorePhotos = [
   {
     file: "tachikawa-service-vehicle-cleaning-20260802",
@@ -669,6 +776,138 @@ function checkTachikawaLocationData(file, html) {
   }
 }
 
+function escapeHtmlAttribute(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function checkShopLocalGuide(file, html) {
+  const guide = shopLocalGuideByPage[file];
+  if (!guide) return;
+
+  if (!fs.existsSync(path.join(root, "shop", "store-local-intro.css"))) {
+    fail(file, "missing shared local-intro stylesheet: shop/store-local-intro.css");
+  }
+
+  const expectedHeading = `${guide.regionHeading}｜${guide.brand}${guide.store}`;
+  const headings = [...html.matchAll(/<h1\b([^>]*)>([\s\S]*?)<\/h1>/gi)];
+  if (headings.length !== 1) {
+    fail(file, `shop page must contain exactly one h1, found ${headings.length}`);
+    return;
+  }
+
+  const [, attributes, contents] = headings[0];
+  const headingText = contents.replace(/<[^>]+>/g, "").replace(/\s+/g, "");
+  const headingId = `${guide.slug}-store-title`;
+  if (headingText !== expectedHeading) {
+    fail(file, `shop h1 must be: ${expectedHeading}`);
+  }
+  if (/\bvisually-hidden\b/.test(attributes)) {
+    fail(file, "shop h1 must be visible, not visually-hidden");
+  }
+  if (!attributes.includes(`id="${headingId}"`)) {
+    fail(file, `shop h1 must use id="${headingId}"`);
+  }
+  if (!html.includes(`aria-labelledby="${headingId}"`)) {
+    fail(file, "service-area must be labelled by the visible shop h1");
+  }
+  if (countMatches(html, /class="section-head store-local-heading"/g) !== 1) {
+    fail(file, "shop h1 must be integrated into one store-local-heading panel");
+  }
+  if (!html.includes('class="store-local-heading-label"')) {
+    fail(file, "shop heading must include the visible guide label");
+  }
+  if (!html.includes(`${guide.store} 店舗案内`)) {
+    fail(file, `shop heading guide label must be: ${guide.store} 店舗案内`);
+  }
+  if (!html.includes('../../../assets/img/tachikawa-store-heading-frame-20260803.webp')) {
+    fail(file, "shop heading must use the approved decorative frame");
+  }
+  if (!html.includes('<link rel="stylesheet" href="../../store-local-intro.css?v=20260807">')) {
+    fail(file, "shop page must load the shared local-intro stylesheet");
+  }
+
+  const summaryMatches = html.match(/class="store-local-summary"/g) || [];
+  if (summaryMatches.length !== 1) {
+    fail(file, `store-local-summary must appear exactly once, found ${summaryMatches.length}`);
+  }
+  const requiredFacts = [
+    `${guide.brand}${guide.store}は、`,
+    guide.stationFact,
+    guide.neighborhood,
+    "1ヶ月以上の長期利用向け",
+    "1ヶ月24,000円（税抜）から",
+    `${guide.stationArea}での受け渡し`,
+    "ご希望住所への配送もご相談ください",
+    "10:00〜19:00",
+    "無休",
+  ];
+  for (const fact of requiredFacts) {
+    if (!html.includes(fact)) fail(file, `shop summary is missing: ${fact}`);
+  }
+
+  const headingIndex = html.indexOf(`id="${headingId}"`);
+  const summaryIndex = html.indexOf('class="store-local-summary"');
+  const photoIndex = html.indexOf(`class="${guide.slug}-access-main-photo"`);
+  if (!(headingIndex < summaryIndex && summaryIndex < photoIndex)) {
+    fail(file, "shop summary must stay directly between the visible h1 and exterior photo");
+  }
+
+  if (countMatches(html, /class="store-local-map-embed"/g) !== 1) {
+    fail(file, "shop page must contain exactly one embedded Google map");
+  }
+  if (countMatches(html, /class="store-local-map-open-link"/g) !== 1) {
+    fail(file, "shop page must contain exactly one external Google map link");
+  }
+  if (!html.includes('src="https://www.google.com/maps?q=')) {
+    fail(file, "embedded map must use a Google Maps query URL");
+  }
+  if (!html.includes("&amp;z=17&amp;hl=ja&amp;output=embed")) {
+    fail(file, "embedded map must use the approved initial zoom and Japanese locale");
+  }
+  if (!html.includes(`title="${guide.brand}${guide.store}の地図"`)) {
+    fail(file, "embedded map title must identify the shop");
+  }
+  for (const attribute of [
+    'loading="lazy"',
+    'referrerpolicy="strict-origin-when-cross-origin"',
+    "allowfullscreen",
+  ]) {
+    if (!html.includes(attribute)) fail(file, `embedded map is missing: ${attribute}`);
+  }
+  if (!html.includes(`Googleマップで${guide.store}を見る`)) {
+    fail(file, `external map link must identify ${guide.store}`);
+  }
+
+  const escapedMapLink = escapeHtmlAttribute(guide.mapLink);
+  if (countMatches(html, new RegExp(`href="${escapedMapLink.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`, "g")) !== 2) {
+    fail(file, "address MAP button and external map link must use the same location URL");
+  }
+  if (!html.includes(`"hasMap": "${guide.mapLink}"`)) {
+    fail(file, "AutoRental.hasMap must match the visible Google Maps links");
+  }
+  if (
+    guide.mapTarget &&
+    !html.includes(guide.mapTarget) &&
+    !html.includes(encodeURIComponent(guide.mapTarget))
+  ) {
+    fail(file, `building-based map must target: ${guide.mapTarget}`);
+  }
+
+  const accessInfoIndex = html.indexOf(`class="${guide.slug}-access-info"`);
+  const mapIndex = html.indexOf('class="store-local-map-embed"');
+  const mapOpenIndex = html.indexOf('class="store-local-map-open-link"');
+  if (!(accessInfoIndex < mapIndex && mapIndex < mapOpenIndex)) {
+    fail(file, "map must follow the shop address and opening-hours information");
+  }
+  if (file === "shop/saitama/wako/index.html" && html.includes("wako-access-repeat")) {
+    fail(file, "Wako shop information and map must not be duplicated later in the page");
+  }
+}
+
 function checkTachikawaHeading(file, html) {
   if (file !== "shop/tokyo/tachikawa/index.html") return;
 
@@ -704,6 +943,9 @@ function checkTachikawaHeading(file, html) {
   }
   if (!html.includes("立川店 店舗案内")) {
     fail(file, "Tachikawa store heading guide label is missing");
+  }
+  if (!html.includes('<link rel="stylesheet" href="../../store-local-intro.css?v=20260807">')) {
+    fail(file, "Tachikawa page must load the shared responsive local-intro stylesheet");
   }
   const frameAsset = "assets/img/tachikawa-store-heading-frame-20260803.webp";
   if (!html.includes(`../../../${frameAsset}`)) {
@@ -849,6 +1091,7 @@ function checkPage(file) {
   checkKawasakiStorePhotos(file, html);
   checkShinjukuStorePhotos(file, html);
   checkIkebukuroStorePhotos(file, html);
+  checkShopLocalGuide(file, html);
   checkTachikawaLocationData(file, html);
   checkTachikawaHeading(file, html);
   checkTachikawaStoreSummary(file, html);
