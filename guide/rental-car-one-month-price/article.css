@@ -373,76 +373,190 @@
   line-height: 1.55;
 }
 
-.one-month-guide .table-wrap {
-  max-width: 100%;
-  margin-top: 24px;
+.one-month-guide .table-scroll {
+  --table-key-column-width: 156px;
+  width: 100%;
+  margin: 30px auto;
   overflow-x: auto;
-  border: 1px solid var(--guide-line);
+  overscroll-behavior-inline: contain;
+  border: 1px solid #cbdade;
+  border-radius: 3px;
+  color: var(--guide-ink);
   background: #fff;
+  box-shadow: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP",
+    "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  scrollbar-color: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.one-month-guide .table-wrap table {
+.one-month-guide .table-scroll.is-table-enhanced {
+  position: relative;
+  overflow: hidden;
+  overscroll-behavior-inline: auto;
+}
+
+.one-month-guide .table-scroll-viewport {
+  position: relative;
   width: 100%;
-  min-width: 660px;
-  border-collapse: collapse;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: none;
+  overscroll-behavior-inline: none;
+  scrollbar-color: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.one-month-guide .table-scroll-viewport:focus-visible {
+  outline-offset: 4px;
+}
+
+.one-month-guide .table-scroll-hint {
+  display: none;
+}
+
+.one-month-guide .table-scroll table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: separate;
+  border-spacing: 0;
   color: var(--guide-ink);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.65;
 }
 
-.one-month-guide .table-wrap--wide table {
-  min-width: 1050px;
+.one-month-guide .table-scroll--company {
+  --table-key-column-width: 180px;
 }
 
-.one-month-guide .table-wrap caption {
-  padding: 12px 14px;
-  color: #fff;
-  background: var(--guide-navy);
+.one-month-guide .table-scroll--company table {
+  min-width: 1040px;
+}
+
+.one-month-guide .table-scroll--compact {
+  --table-key-column-width: 128px;
+}
+
+.one-month-guide .table-scroll--compact table {
+  min-width: 520px;
+}
+
+.one-month-guide .table-scroll caption,
+.one-month-guide .table-caption-bar {
+  padding: 15px 18px;
+  border-bottom: 1px solid #cbdade;
+  color: var(--guide-navy);
+  background: #eef6f7;
+  font-size: 14px;
   font-weight: 900;
   text-align: left;
 }
 
-.one-month-guide .table-wrap :is(th, td) {
+.one-month-guide .table-caption-bar {
+  position: relative;
+  z-index: 6;
+}
+
+.one-month-guide .is-table-enhanced .table-native-caption {
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+
+.one-month-guide .table-scroll :is(th, td) {
   min-width: 118px;
-  padding: 13px 14px;
-  border-right: 1px solid var(--guide-line);
-  border-bottom: 1px solid var(--guide-line);
-  vertical-align: top;
+  padding: 15px 16px;
+  border-right: 1px solid #d6e1e4;
+  border-bottom: 1px solid #d6e1e4;
+  overflow-wrap: anywhere;
+  vertical-align: middle;
   text-align: left;
 }
 
-.one-month-guide .table-wrap thead th {
-  color: var(--guide-navy);
-  background: #eaf4f5;
+.one-month-guide .table-scroll tr > :last-child {
+  border-right: 0;
 }
 
-.one-month-guide .table-wrap tbody th {
-  min-width: 150px;
-  color: var(--guide-navy);
-  background: #f8fbfb;
+.one-month-guide .table-scroll tbody tr:last-child > * {
+  border-bottom: 0;
 }
 
-.one-month-guide .table-wrap td strong {
+.one-month-guide .table-scroll thead th {
+  border-color: #bfc3c5;
+  color: #333;
+  background: #eee;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.one-month-guide .table-scroll tbody th {
+  color: var(--guide-navy);
+  background: #f2f7f8;
+  font-weight: 900;
+}
+
+.one-month-guide .table-scroll tbody tr:nth-child(even) td {
+  background: #fbfdff;
+}
+
+.one-month-guide .table-scroll.is-scrollable thead tr > :first-child,
+.one-month-guide .table-scroll.is-scrollable tbody tr > :first-child {
+  width: var(--table-key-column-width);
+  min-width: var(--table-key-column-width);
+  max-width: var(--table-key-column-width);
+  position: sticky;
+  left: 0;
+}
+
+.one-month-guide .table-scroll.is-scrollable thead tr > :first-child {
+  z-index: 5;
+  color: #333;
+  background: #eee;
+}
+
+.one-month-guide .table-scroll.is-scrollable tbody tr > :first-child {
+  z-index: 3;
+  background: #fff;
+}
+
+.one-month-guide .table-scroll.is-scrollable tbody tr > th:first-child {
+  color: var(--guide-navy);
+  background: #f2f7f8;
+}
+
+.one-month-guide .table-scroll.is-scrollable tbody tr:nth-child(even) > :first-child {
+  background: #f5f9fc;
+}
+
+.one-month-guide .table-scroll.is-scrollable thead tr > :first-child::after,
+.one-month-guide .table-scroll.is-scrollable tbody tr > :first-child::after {
+  content: "";
+  width: 1px;
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  background: var(--guide-line);
+}
+
+.one-month-guide .table-scroll td strong {
   color: var(--guide-orange);
   background: none;
   font-size: 16px;
   white-space: nowrap;
 }
 
-.one-month-guide .table-wrap small {
+.one-month-guide .table-scroll small {
   color: var(--guide-muted);
   font-size: 11px;
   font-weight: 700;
-}
-
-.one-month-guide .table-hint {
-  display: none;
-  margin-top: 8px;
-  color: var(--guide-muted);
-  font-size: 12px;
-  font-weight: 700;
-  text-align: right;
 }
 
 .one-month-guide .included-grid {
@@ -728,93 +842,24 @@
 }
 
 .one-month-guide .area-cta__main {
-  min-height: 58px;
-  margin-top: 20px;
-  padding: 12px 22px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  color: #fff;
-  background: var(--guide-orange);
-  font-size: 17px;
-  font-weight: 900;
-  line-height: 1.45;
+  margin: 20px auto 0;
   text-decoration: none;
-  box-shadow: 0 7px 0 #9c3f05;
 }
 
 .one-month-guide .area-cta__main:hover {
-  transform: translateY(2px);
-  box-shadow: 0 5px 0 #9c3f05;
-}
-
-.one-month-guide .area-cta__main span {
-  font-size: 26px;
-  line-height: 1;
-}
-
-.one-month-guide .area-cta__channels {
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.one-month-guide .area-cta__channels > span {
-  min-height: 44px;
-  padding: 9px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 6px;
-  display: grid;
-  place-items: center;
   color: #fff;
-  background: rgba(255, 255, 255, 0.1);
-  font-size: 14px;
-  font-weight: 900;
 }
 
 .one-month-guide .area-cta > p.area-cta__channel-note {
-  margin-top: 8px;
+  margin-top: 12px;
   color: #dceaff;
   font-size: 11px;
   line-height: 1.6;
 }
 
 .one-month-guide .guide-fixed-contact .fixed-contact-store {
-  min-height: 66px;
-  padding: 9px 14px;
-  justify-content: flex-start;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #08798a, #05266f);
-}
-
-.one-month-guide .guide-fixed-contact__copy {
-  min-width: 0;
-  display: grid;
-  gap: 1px;
-  text-align: left;
-}
-
-.one-month-guide .guide-fixed-contact__copy small {
-  color: #dff8fa;
-  font-size: 10px;
-  font-weight: 800;
-}
-
-.one-month-guide .guide-fixed-contact__copy strong {
   color: #fff;
-  background: none;
-  font-size: 14px;
-  line-height: 1.35;
-}
-
-.one-month-guide .guide-fixed-contact__arrow {
-  margin-left: auto;
-  color: #fff;
-  font-size: 26px;
-  line-height: 1;
+  text-decoration: none;
 }
 
 .one-month-guide .faq-list {
@@ -991,11 +1036,40 @@
     padding-top: 0;
     box-shadow: none;
   }
+
+  .one-month-guide .area-cta__main {
+    width: min(360px, 100%);
+    min-height: 62px;
+    padding: 14px 22px;
+    gap: 12px;
+    box-shadow: 0 16px 34px rgba(5, 38, 111, 0.16);
+  }
+}
+
+/*
+ * The icon geometry and timing match ScrollHint 1.1.10 (MIT).
+ * License: assets/vendor/scroll-hint/LICENSE
+ */
+@keyframes one-month-table-scroll-hint {
+  0% {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    transform: translateX(-40px);
+    opacity: 0;
+  }
 }
 
 @media (max-width: 760px) {
   .one-month-guide .article-shell {
-    width: min(100% - 30px, 740px);
+    width: min(100% - 32px, 740px);
   }
 
   .one-month-guide .article-header {
@@ -1118,31 +1192,277 @@
     margin-right: 6px;
   }
 
-  .one-month-guide .table-wrap {
-    margin-right: -15px;
-    margin-left: -15px;
-    border-right: 0;
-    border-left: 0;
+  .one-month-guide .table-scroll {
+    margin: 24px 0;
+    border-radius: 3px;
   }
 
-  .one-month-guide .table-wrap table {
-    min-width: 680px;
-    font-size: 13px;
+  .one-month-guide .table-scroll--price {
+    --table-key-column-width: clamp(96px, 28vw, 116px);
+    --price-class-column-width: clamp(112px, 32vw, 136px);
+    --price-amount-column-width: clamp(100px, 25vw, 108px);
+    --price-final-column-width:
+      calc(100vw - 34px - var(--table-key-column-width));
+    --table-data-column-width: var(--price-final-column-width);
   }
 
-  .one-month-guide .table-wrap--wide table {
-    min-width: 1040px;
+  .one-month-guide .table-scroll--company {
+    --table-key-column-width: clamp(112px, 30vw, 120px);
+    --company-price-column-width: clamp(112px, 30vw, 128px);
+    --company-included-column-width: clamp(144px, 40vw, 172px);
+    --company-extra-column-width: clamp(176px, 48vw, 208px);
+    --company-distance-column-width: 96px;
+    --company-final-column-width:
+      calc(100vw - 34px - var(--table-key-column-width));
+    --table-data-column-width: var(--company-final-column-width);
   }
 
-  .one-month-guide .table-wrap tbody th {
-    position: sticky;
-    left: 0;
-    z-index: 1;
-    box-shadow: 4px 0 8px rgba(5, 38, 111, 0.08);
+  .one-month-guide .table-scroll--compact {
+    --table-key-column-width: clamp(92px, 26vw, 108px);
+    --compact-price-column-width: 96px;
   }
 
-  .one-month-guide .table-hint {
+  .one-month-guide .table-scroll--price table,
+  .one-month-guide .table-scroll--company table {
+    table-layout: fixed;
+  }
+
+  .one-month-guide .table-scroll--price table {
+    width: calc(
+      var(--table-key-column-width) +
+      var(--price-class-column-width) +
+      var(--price-amount-column-width) +
+      var(--price-final-column-width)
+    );
+    min-width: calc(
+      var(--table-key-column-width) +
+      var(--price-class-column-width) +
+      var(--price-amount-column-width) +
+      var(--price-final-column-width)
+    );
+  }
+
+  .one-month-guide .table-scroll--company table {
+    width: calc(
+      var(--table-key-column-width) +
+      var(--company-price-column-width) +
+      var(--company-included-column-width) +
+      var(--company-extra-column-width) +
+      var(--company-distance-column-width) +
+      var(--company-final-column-width)
+    );
+    min-width: calc(
+      var(--table-key-column-width) +
+      var(--company-price-column-width) +
+      var(--company-included-column-width) +
+      var(--company-extra-column-width) +
+      var(--company-distance-column-width) +
+      var(--company-final-column-width)
+    );
+  }
+
+  .one-month-guide .table-scroll--compact table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .one-month-guide
+    :is(.table-scroll--price, .table-scroll--company, .table-scroll--compact)
+    tr
+    > :first-child {
+    width: var(--table-key-column-width);
+    min-width: var(--table-key-column-width);
+    max-width: var(--table-key-column-width);
+  }
+
+  .one-month-guide .table-scroll--price tr > :nth-child(n + 2),
+  .one-month-guide .table-scroll--company tr > :nth-child(n + 2) {
+    width: var(--table-data-column-width);
+    min-width: var(--table-data-column-width);
+    max-width: var(--table-data-column-width);
+  }
+
+  .one-month-guide .table-scroll--price tr > :nth-child(2) {
+    width: var(--price-class-column-width);
+    min-width: var(--price-class-column-width);
+    max-width: var(--price-class-column-width);
+  }
+
+  .one-month-guide .table-scroll--price tr > :nth-child(3) {
+    width: var(--price-amount-column-width);
+    min-width: var(--price-amount-column-width);
+    max-width: var(--price-amount-column-width);
+  }
+
+  .one-month-guide .table-scroll--price tr > :nth-child(4) {
+    width: var(--price-final-column-width);
+    min-width: var(--price-final-column-width);
+    max-width: var(--price-final-column-width);
+  }
+
+  .one-month-guide .table-scroll--company tr > :nth-child(2) {
+    width: var(--company-price-column-width);
+    min-width: var(--company-price-column-width);
+    max-width: var(--company-price-column-width);
+  }
+
+  .one-month-guide .table-scroll--company tr > :nth-child(3) {
+    width: var(--company-included-column-width);
+    min-width: var(--company-included-column-width);
+    max-width: var(--company-included-column-width);
+  }
+
+  .one-month-guide .table-scroll--company tr > :nth-child(4) {
+    width: var(--company-extra-column-width);
+    min-width: var(--company-extra-column-width);
+    max-width: var(--company-extra-column-width);
+  }
+
+  .one-month-guide .table-scroll--company tr > :nth-child(5) {
+    width: var(--company-distance-column-width);
+    min-width: var(--company-distance-column-width);
+    max-width: var(--company-distance-column-width);
+  }
+
+  .one-month-guide .table-scroll--company tr > :nth-child(6) {
+    width: var(--company-final-column-width);
+    min-width: var(--company-final-column-width);
+    max-width: var(--company-final-column-width);
+  }
+
+  .one-month-guide .table-scroll--compact tr > :last-child {
+    width: var(--compact-price-column-width);
+    min-width: var(--compact-price-column-width);
+    max-width: var(--compact-price-column-width);
+  }
+
+  .one-month-guide .table-scroll-hint {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
     display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 7;
+    pointer-events: none;
+  }
+
+  .one-month-guide .table-scroll.is-scrollable:not(.is-at-end)::after {
+    content: "";
+    width: 24px;
+    position: absolute;
+    top: var(--table-caption-height, 44px);
+    right: 0;
+    bottom: 0;
+    z-index: 6;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      rgba(8, 60, 137, 0),
+      rgba(8, 60, 137, 0.18)
+    );
+  }
+
+  .one-month-guide .table-scroll.is-scrollable:not(.is-at-end)::before {
+    content: "›";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: calc(var(--table-caption-height, 44px) + 10px);
+    right: 3px;
+    z-index: 8;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(8, 60, 137, 0.88);
+    box-shadow: 0 1px 4px rgba(0, 37, 89, 0.22);
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .one-month-guide .table-scroll-hint__panel {
+    box-sizing: border-box;
+    width: 150px;
+    height: 80px;
+    padding: 20px 10px 10px;
+    position: absolute;
+    top: min(160px, calc(50% - 40px));
+    left: calc(50% - 75px);
+    border-radius: 5px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    text-align: center;
+    transition: opacity 0.3s;
+  }
+
+  .one-month-guide .table-scroll-hint.is-active .table-scroll-hint__panel {
+    opacity: 0.8;
+  }
+
+  .one-month-guide .table-scroll-hint__gesture {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    background: url("../../assets/img/vendor/scroll-hint/hand.svg") center / contain no-repeat;
+    vertical-align: middle;
+  }
+
+  .one-month-guide .table-scroll-hint__panel::after {
+    content: "";
+    width: 34px;
+    height: 14px;
+    margin-left: -20px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    display: block;
+    background: url("../../assets/img/vendor/scroll-hint/arrows.svg") center / contain no-repeat;
+    opacity: 0;
+    transition: opacity 0.01s 2.4s;
+  }
+
+  .one-month-guide .table-scroll-hint.is-active .table-scroll-hint__gesture {
+    animation: one-month-table-scroll-hint 1.2s linear 2;
+  }
+
+  .one-month-guide .table-scroll-hint.is-active .table-scroll-hint__panel::after {
+    opacity: 1;
+  }
+
+  .one-month-guide .table-scroll-hint__text {
+    margin-top: 5px;
+    display: block;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .one-month-guide .table-scroll table {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .one-month-guide .table-scroll :is(th, td) {
+    padding: 10px 8px;
+  }
+
+  .one-month-guide .table-scroll thead th {
+    white-space: normal;
+  }
+
+  .one-month-guide .table-scroll caption,
+  .one-month-guide .table-caption-bar {
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.5;
   }
 
   .one-month-guide .included-grid,
@@ -1199,12 +1519,6 @@
     font-size: 20px;
   }
 
-  .one-month-guide .area-cta__main {
-    min-height: 60px;
-    padding-inline: 16px;
-    font-size: 15px;
-  }
-
   .one-month-guide .source-section {
     padding: 19px 16px;
   }
@@ -1227,7 +1541,7 @@
 
 @media (max-width: 374px) {
   .one-month-guide .article-shell {
-    width: min(100% - 24px, 740px);
+    width: min(100% - 32px, 740px);
   }
 
   .one-month-guide .article-header h1 {
@@ -1242,9 +1556,6 @@
     grid-column: auto;
   }
 
-  .one-month-guide .area-cta__channels {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1254,13 +1565,23 @@
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+
+  .one-month-guide .table-scroll-hint__gesture {
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  .one-month-guide .table-scroll-hint__panel::after {
+    opacity: 1;
+    transition-delay: 0s !important;
+  }
 }
 
 @media print {
   .one-month-guide .site-header,
   .one-month-guide .site-footer,
-  .one-month-guide .fixed-contact,
-  .one-month-guide .area-cta__channels {
+  .one-month-guide .fixed-contact {
     display: none !important;
   }
 
@@ -1268,7 +1589,8 @@
     width: 100%;
   }
 
-  .one-month-guide .table-wrap {
+  .one-month-guide .table-scroll,
+  .one-month-guide .table-scroll-viewport {
     overflow: visible;
   }
 }
