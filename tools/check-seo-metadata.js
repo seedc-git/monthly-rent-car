@@ -63,6 +63,11 @@ const articleImageByPage = {
     width: "1200",
     height: "675",
   },
+  "guide/monthly-rentacar-cheap-comparison/index.html": {
+    path: "/assets/img/guide/monthly-rentacar-cheap-comparison/monthly-rentacar-cheap-comparison-hero-1200.webp",
+    width: "1200",
+    height: "675",
+  },
 };
 
 const shopLocalGuideByPage = {
