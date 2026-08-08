@@ -21,11 +21,14 @@
 |---|---|---|
 | 住所 | 〒350-0225 埼玉県坂戸市日の出町16-7 サンライズプラザ | 郵便番号・建物名まで |
 | 建物名 | サンライズプラザ | 外観写真の説明文に**単独で**出るため別に必要 |
-| 最寄り駅・徒歩分数 | 坂戸駅 徒歩3分 | |
+| 最寄り駅・徒歩分数 | 坂戸駅 徒歩3分 | **駅名だけ**書く。既存店は路線名も出口も書いていない（池袋駅／新宿駅／大宮駅）。複数駅なら「川崎駅・京急川崎駅」のように中黒で並べる |
+| 町名 | 日の出町 | 紹介文に**単独で**出る（「〜県○○市日の出町にある」）。丁目・番地は含めない |
+| Googleマップのリンク | https://maps.app.goo.gl/… | JSON-LD にも入るので **`&` を含めない**。短縮リンクが無ければ `https://www.google.com/maps/search/<URLエンコードした住所>` |
+| Googleマップの埋め込みURL | `https://www.google.com/maps?q=…&z=16&output=embed` | 店舗のGoogleビジネス登録があるなら、マップの「共有 > 地図を埋め込む」で出る `pb=` 付きURLの方がピンが出る |
 | LINE問い合わせURL | https://lin.ee/7iaNIAb | **店舗ごとに違う。使い回さない** |
 | 店舗外観写真 | webp または png | |
 | OGP画像3点 | 1731×909 png / 1200×630 jpg / 1200×1200 png | **`tools/make-shop-ogp.py` で作れる**（下記）。制作会社が作る場合はページ公開の後追いになる |
-| サービス写真8点 | `<slug>-service-*.webp` 4種×2サイズ | `omiya` 雛形を使うときだけ |
+| サービス写真8点 | `<slug>-service-*.webp` 4種×2サイズ | 用意できるときだけ。無ければ `"servicePhotos": false` でギャラリーごと落ちる |
 
 電話番号 050-1792-0800・料金・車種・FAQ本文は全店共通なので確認不要。
 
@@ -45,7 +48,7 @@ git fetch origin && git checkout staging && git reset --hard origin/staging
 
 ```json
 {
-  "template": "sakado",
+  "template": "tachikawa",
   "slug": "kumagaya",
   "prefSlug": "saitama",
   "pref": "埼玉",
@@ -56,30 +59,40 @@ git fetch origin && git checkout staging && git reset --hard origin/staging
   "postal": "360-0037",
   "street": "筑波2-1-1 熊谷ビル",
   "building": "熊谷ビル",
+  "town": "筑波",
   "station": "熊谷駅",
   "walk": "徒歩5分",
+  "mapUrl": "https://maps.app.goo.gl/XXXXXXX",
+  "mapEmbed": "https://www.google.com/maps?q=...&z=16&output=embed",
   "lineUrl": "https://lin.ee/XXXXXXX",
   "exteriorExt": "webp",
+  "servicePhotos": false,
   "insertAfter": "sakado"
 }
 ```
 
-雛形は2種類。
-
-- `sakado` — サービス写真カルーセルなし
-- `omiya` — サービス写真4枚あり（`<slug>-service-*.webp` 8点が必要）
-
-`template` の店舗を丸ごとコピーして文字列を置き換えるので、**新店舗と構成が近い方**を選ぶ。
-
 `pref` はブランド名に出る短い形（`東京マンスリーレンタカー`）、`prefFull` は住所に出る形（`東京都`）。
 東京は `県` ではないので必ず両方書く。
 
-雛形と違う都県の店を作るとき（例: 埼玉の坂戸店から東京の店）、次の3つは**元のまま残る**のが正しい。
+雛形は3種類。**特に理由がなければ `tachikawa` を使う。**
+
+| | 中身 |
+|---|---|
+| `tachikawa` | **現行の形。これが正解。** 枠付き見出し（h1）・店舗紹介文・地図の埋め込み・MAPボタンがある。サービス写真ギャラリーは `"servicePhotos": false` にすれば丸ごと落ちる |
+| `sakado` | 旧い形。見出しは `<h2>埼玉｜坂戸店</h2>` だけで、紹介文も地図も無い |
+| `omiya` | 旧い形＋サービス写真4枚 |
+
+`tachikawa` を使うときは `town` / `mapUrl` / `mapEmbed` も必要（無いと `--check` が止める）。
+
+`template` の店舗を丸ごとコピーして文字列を置き換える。
+
+雛形と違う都県の店を作るとき（例: 東京の立川店から神奈川の店）、次の4つは**元のまま残る**のが正しい。
 生成後に消えていたら置換が広がりすぎているので直す。
 
 - `<cite>埼玉県／個人事業主</cite>` — お客様の声。全店共通で3都県ぶん並んでいる
 - `東京・神奈川・埼玉の各店舗でご相談いただけます`
-- 店舗一覧の `<h3>埼玉県</h3>` と、そこに並ぶ既存店へのリンク（`/shop/saitama/...`）
+- 店舗一覧の `<h3>東京都</h3>` などの見出しと、そこに並ぶ既存店へのリンク
+- MEDIA記事カルーセル（`立川市の格安レンタカーおすすめ10選` など。記事の話であって店の話ではない）
 
 ### 3. 画像を置く
 
