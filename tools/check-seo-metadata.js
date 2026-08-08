@@ -22,6 +22,7 @@ const sitemapExcludedPages = new Set(
     ? [
         // Staging-only page. Add it to the production sitemap when publication is approved.
         "area/tachikawa/index.html",
+        "guide/substitute-car-delivery-wait-rental/index.html",
       ]
     : [],
 );
