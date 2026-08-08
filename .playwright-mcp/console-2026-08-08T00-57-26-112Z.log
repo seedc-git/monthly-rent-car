@@ -1,3 +1,0 @@
-[     494ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://manager.line.biz/api/bots/@551psbwy/reservation/url:0
-[     532ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://manager.line.biz/api/bots/@551psbwy/fanspace/memberships:0
-[     569ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://manager.line.biz/api/bots/@551psbwy/fanspace/bot:0
