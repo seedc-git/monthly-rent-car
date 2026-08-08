@@ -52,6 +52,31 @@
       }
     },
     {
+      "url": "/guide/monthly-rentacar-cheap-comparison/",
+      "category": "比較ガイド",
+      "description": "格安マンスリーレンタカーを、1ヶ月の総額・補償・配車・故障対応まで同じ条件で比較しました。",
+      "image": {
+        "src": "/assets/img/guide/monthly-rentacar-cheap-comparison/monthly-rentacar-cheap-comparison-hero-740.webp",
+        "srcset": [
+          {
+            "src": "/assets/img/guide/monthly-rentacar-cheap-comparison/monthly-rentacar-cheap-comparison-hero-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/assets/img/guide/monthly-rentacar-cheap-comparison/monthly-rentacar-cheap-comparison-hero-740.webp",
+            "width": 740
+          },
+          {
+            "src": "/assets/img/guide/monthly-rentacar-cheap-comparison/monthly-rentacar-cheap-comparison-hero-1200.webp",
+            "width": 1200
+          }
+        ],
+        "alt": "格安マンスリーレンタカーを比較する利用者と軽自動車",
+        "width": 740,
+        "height": 416
+      }
+    },
+    {
       "url": "/guide/substitute-car-delivery-wait-rental/",
       "category": "利用シーンガイド",
       "description": "代車・納車待ちで車が必要なときの借り方、料金、延長・返却の注意点を整理しました。",
