@@ -1,0 +1,22 @@
+{
+  "template": "tachikawa",
+  "slug": "hashimoto",
+  "prefSlug": "kanagawa",
+  "pref": "神奈川",
+  "prefFull": "神奈川県",
+  "shop": "橋本店",
+  "place": "橋本",
+  "city": "相模原市緑区",
+  "postal": "252-0143",
+  "street": "橋本2丁目10-19 岡崎ビル",
+  "building": "岡崎ビル",
+  "town": "橋本",
+  "station": "橋本駅",
+  "walk": "徒歩4分",
+  "mapUrl": "https://www.google.com/maps/search/%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E7%9B%B8%E6%A8%A1%E5%8E%9F%E5%B8%82%E7%B7%91%E5%8C%BA%E6%A9%8B%E6%9C%AC2%E4%B8%81%E7%9B%AE10-19%20%E5%B2%A1%E5%B4%8E%E3%83%93%E3%83%AB",
+  "mapEmbed": "https://www.google.com/maps?q=%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E7%9B%B8%E6%A8%A1%E5%8E%9F%E5%B8%82%E7%B7%91%E5%8C%BA%E6%A9%8B%E6%9C%AC2%E4%B8%81%E7%9B%AE10-19%20%E5%B2%A1%E5%B4%8E%E3%83%93%E3%83%AB&z=16&output=embed",
+  "lineUrl": "https://lin.ee/PENDING-hashimoto",
+  "exteriorExt": "webp",
+  "servicePhotos": false,
+  "insertAfter": "hon-atsugi"
+}

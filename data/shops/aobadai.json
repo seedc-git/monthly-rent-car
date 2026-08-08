@@ -1,0 +1,22 @@
+{
+  "template": "tachikawa",
+  "slug": "aobadai",
+  "prefSlug": "kanagawa",
+  "pref": "神奈川",
+  "prefFull": "神奈川県",
+  "shop": "青葉台店",
+  "place": "青葉台",
+  "city": "横浜市青葉区",
+  "postal": "227-0055",
+  "street": "つつじが丘23-7 ニック青葉台ビル",
+  "building": "ニック青葉台ビル",
+  "town": "つつじが丘",
+  "station": "青葉台駅",
+  "walk": "徒歩5分",
+  "mapUrl": "https://www.google.com/maps/search/%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E6%A8%AA%E6%B5%9C%E5%B8%82%E9%9D%92%E8%91%89%E5%8C%BA%E3%81%A4%E3%81%A4%E3%81%98%E3%81%8C%E4%B8%9823-7%20%E3%83%8B%E3%83%83%E3%82%AF%E9%9D%92%E8%91%89%E5%8F%B0%E3%83%93%E3%83%AB",
+  "mapEmbed": "https://www.google.com/maps?q=%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E6%A8%AA%E6%B5%9C%E5%B8%82%E9%9D%92%E8%91%89%E5%8C%BA%E3%81%A4%E3%81%A4%E3%81%98%E3%81%8C%E4%B8%9823-7%20%E3%83%8B%E3%83%83%E3%82%AF%E9%9D%92%E8%91%89%E5%8F%B0%E3%83%93%E3%83%AB&z=16&output=embed",
+  "lineUrl": "https://lin.ee/PENDING-aobadai",
+  "exteriorExt": "webp",
+  "servicePhotos": false,
+  "insertAfter": "kamiooka"
+}

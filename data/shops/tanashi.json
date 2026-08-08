@@ -1,0 +1,22 @@
+{
+  "template": "tachikawa",
+  "slug": "tanashi",
+  "prefSlug": "tokyo",
+  "pref": "東京",
+  "prefFull": "東京都",
+  "shop": "田無店",
+  "place": "田無",
+  "city": "西東京市",
+  "postal": "188-0011",
+  "street": "田無町4丁目29-10 第二SAビル",
+  "building": "第二SAビル",
+  "town": "田無町",
+  "station": "田無駅",
+  "walk": "徒歩4分",
+  "mapUrl": "https://www.google.com/maps/search/%E6%9D%B1%E4%BA%AC%E9%83%BD%E8%A5%BF%E6%9D%B1%E4%BA%AC%E5%B8%82%E7%94%B0%E7%84%A1%E7%94%BA4%E4%B8%81%E7%9B%AE29-10%20%E7%AC%AC%E4%BA%8CSA%E3%83%93%E3%83%AB",
+  "mapEmbed": "https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E8%A5%BF%E6%9D%B1%E4%BA%AC%E5%B8%82%E7%94%B0%E7%84%A1%E7%94%BA4%E4%B8%81%E7%9B%AE29-10%20%E7%AC%AC%E4%BA%8CSA%E3%83%93%E3%83%AB&z=16&output=embed",
+  "lineUrl": "https://lin.ee/PENDING-tanashi",
+  "exteriorExt": "webp",
+  "servicePhotos": false,
+  "insertAfter": "shibuya"
+}

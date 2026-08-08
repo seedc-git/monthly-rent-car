@@ -1,0 +1,22 @@
+{
+  "template": "tachikawa",
+  "slug": "ueno",
+  "prefSlug": "tokyo",
+  "pref": "東京",
+  "prefFull": "東京都",
+  "shop": "上野店",
+  "place": "上野",
+  "city": "台東区",
+  "postal": "110-0015",
+  "street": "東上野3丁目9-5 育伸社第2ビル",
+  "building": "育伸社第2ビル",
+  "town": "東上野",
+  "station": "上野駅",
+  "walk": "徒歩5分",
+  "mapUrl": "https://www.google.com/maps/search/%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%8F%B0%E6%9D%B1%E5%8C%BA%E6%9D%B1%E4%B8%8A%E9%87%8E3%E4%B8%81%E7%9B%AE9-5%20%E8%82%B2%E4%BC%B8%E7%A4%BE%E7%AC%AC2%E3%83%93%E3%83%AB",
+  "mapEmbed": "https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%8F%B0%E6%9D%B1%E5%8C%BA%E6%9D%B1%E4%B8%8A%E9%87%8E3%E4%B8%81%E7%9B%AE9-5%20%E8%82%B2%E4%BC%B8%E7%A4%BE%E7%AC%AC2%E3%83%93%E3%83%AB&z=16&output=embed",
+  "lineUrl": "https://lin.ee/PENDING-ueno",
+  "exteriorExt": "webp",
+  "servicePhotos": false,
+  "insertAfter": "kamata"
+}
