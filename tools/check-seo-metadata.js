@@ -57,6 +57,29 @@ const rentalPriceGuideImage = {
   height: "675",
 };
 
+const articleImageByPage = {
+  "area/tachikawa/index.html": {
+    path: "/assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp",
+    width: "1077",
+    height: "500",
+  },
+  "guide/rental-car-one-month-price/index.html": {
+    path: "/assets/img/guide/rental-car-one-month-price/rental-car-one-month-hero-1200.webp",
+    width: "1200",
+    height: "675",
+  },
+  "guide/monthly-rentacar-cheap-comparison/index.html": {
+    path: "/assets/img/guide/monthly-rentacar-cheap-comparison/monthly-rentacar-cheap-comparison-hero-1200.webp",
+    width: "1200",
+    height: "675",
+  },
+  "guide/substitute-car-delivery-wait-rental/index.html": {
+    path: "/assets/img/guide/substitute-car-delivery-wait-rental/official-asakadai-key-handover-1200.webp",
+    width: "1200",
+    height: "675",
+  },
+};
+
 const shopLocalGuideByPage = {
   "shop/kanagawa/kawasaki/index.html": {
     slug: "kawasaki",
@@ -1067,6 +1090,7 @@ function checkPage(file) {
   const shopImage = shopImageByPage[file];
   const isRentalPriceGuide =
     file === "guide/rental-car-one-month-price/index.html";
+  const articleImage = articleImageByPage[file];
   if (file.startsWith("shop/") && !shopImage) {
     fail(file, "shop page must register its own square and social OGP images");
   }
@@ -1075,16 +1099,16 @@ function checkPage(file) {
       ? `${baseUrl}/assets/ogp/shops/${shopImage.slug}-1200x630.jpg`
       : isRentalPriceGuide
       ? `${baseUrl}${rentalPriceGuideImage.path}`
-      : file === "area/tachikawa/index.html"
-      ? `${baseUrl}/assets/img/area/tachikawa/tachikawa-station-hero-20260730.webp`
+      : articleImage
+      ? `${baseUrl}${articleImage.path}`
       : `${baseUrl}/assets/ogp/monthly-rentacar.png`;
   const [expectedOgImageWidth, expectedOgImageHeight] =
     shopImage
       ? ["1200", "630"]
       : isRentalPriceGuide
       ? [rentalPriceGuideImage.width, rentalPriceGuideImage.height]
-      : file === "area/tachikawa/index.html"
-        ? ["1077", "500"]
+      : articleImage
+        ? [articleImage.width, articleImage.height]
         : ["1200", "630"];
   const title = extractFirst(html, /<title>([\s\S]*?)<\/title>/);
   const description = extractFirst(html, /<meta\s+name="description"\s+content="([\s\S]*?)"\s*>/);
