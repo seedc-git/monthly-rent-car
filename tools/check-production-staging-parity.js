@@ -6,6 +6,7 @@ const { execFileSync } = require("child_process");
 const headSha = process.argv[2];
 const productionHost = "monthly-rent-car.jp";
 const stagingHost = "stg.monthly-rent-car.jp";
+const mediaRegistryFile = "data/media-articles.json";
 const stagingSitemapExcludedPages = new Set([
   "area/tachikawa/index.html",
   "guide/monthly-rentacar-cheap-comparison/index.html",
@@ -28,6 +29,133 @@ function listChangedFiles(args) {
   return git(args)
     .split("\0")
     .filter(Boolean);
+}
+
+function parseMediaRegistry(contents, label) {
+  let registry;
+  try {
+    registry = JSON.parse(contents);
+  } catch (error) {
+    throw new Error(`${label} MEDIA registry is invalid JSON: ${error.message}`);
+  }
+
+  if (!registry || !Array.isArray(registry.articles)) {
+    throw new Error(`${label} MEDIA registry must contain an articles array`);
+  }
+
+  return registry;
+}
+
+function canonicalize(value) {
+  if (Array.isArray(value)) {
+    return value.map(canonicalize);
+  }
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.keys(value)
+        .sort()
+        .map((key) => [key, canonicalize(value[key])]),
+    );
+  }
+  return value;
+}
+
+function sameJsonValue(left, right) {
+  return (
+    JSON.stringify(canonicalize(left)) === JSON.stringify(canonicalize(right))
+  );
+}
+
+function articlesByUrl(articles, label) {
+  const byUrl = new Map();
+  for (const article of articles) {
+    if (!article || typeof article.url !== "string" || !article.url) {
+      throw new Error(`${label} MEDIA registry contains an article without a URL`);
+    }
+    if (byUrl.has(article.url)) {
+      throw new Error(`${label} MEDIA registry contains duplicate URL ${article.url}`);
+    }
+    byUrl.set(article.url, article);
+  }
+  return byUrl;
+}
+
+function normalizeMediaArticles(worktreeDir) {
+  const productionText = git(["show", `${headSha}:${mediaRegistryFile}`]);
+  const mainText = git(["show", `origin/main:${mediaRegistryFile}`]);
+  const stagingPath = path.join(worktreeDir, mediaRegistryFile);
+  const stagingText = fs.readFileSync(stagingPath, "utf8");
+  const productionRegistry = parseMediaRegistry(productionText, "Production");
+  const mainRegistry = parseMediaRegistry(mainText, "Main");
+  const stagingRegistry = parseMediaRegistry(stagingText, "Staging");
+  const productionArticles = articlesByUrl(
+    productionRegistry.articles,
+    "Production",
+  );
+  const mainArticles = articlesByUrl(mainRegistry.articles, "Main");
+  const stagingArticles = articlesByUrl(stagingRegistry.articles, "Staging");
+  let valid = true;
+
+  const productionMetadata = { ...productionRegistry };
+  const stagingMetadata = { ...stagingRegistry };
+  delete productionMetadata.articles;
+  delete stagingMetadata.articles;
+  if (!sameJsonValue(productionMetadata, stagingMetadata)) {
+    valid = false;
+    console.error(
+      `::error file=${mediaRegistryFile}::Production MEDIA registry metadata does not match staging`,
+    );
+  }
+
+  for (const [url, productionArticle] of productionArticles) {
+    const stagingArticle = stagingArticles.get(url);
+    if (!stagingArticle) {
+      valid = false;
+      console.error(
+        `::error file=${mediaRegistryFile}::Production MEDIA article ${url} is not registered in staging`,
+      );
+      continue;
+    }
+    if (!sameJsonValue(productionArticle, stagingArticle)) {
+      valid = false;
+      console.error(
+        `::error file=${mediaRegistryFile}::Production MEDIA article ${url} does not match its staging registry entry`,
+      );
+    }
+  }
+
+  for (const url of mainArticles.keys()) {
+    if (!productionArticles.has(url) && stagingArticles.has(url)) {
+      valid = false;
+      console.error(
+        `::error file=${mediaRegistryFile}::Production removes MEDIA article ${url}, but that removal is not registered in staging`,
+      );
+    }
+  }
+
+  const productionOrder = Array.from(productionArticles.keys());
+  const productionUrls = new Set(productionOrder);
+  const stagingProductionOrder = stagingRegistry.articles
+    .map((article) => article.url)
+    .filter((url) => productionUrls.has(url));
+  if (!sameJsonValue(productionOrder, stagingProductionOrder)) {
+    valid = false;
+    console.error(
+      `::error file=${mediaRegistryFile}::Production MEDIA article order does not match the relative order in staging`,
+    );
+  }
+
+  if (!valid) return false;
+
+  fs.writeFileSync(stagingPath, productionText);
+  execFileSync(process.execPath, ["tools/sync-media-articles.cjs"], {
+    cwd: worktreeDir,
+    stdio: "inherit",
+  });
+  console.log(
+    `Normalized staging MEDIA cards to ${productionArticles.size} production article(s)`,
+  );
+  return true;
 }
 
 function pageUrlFor(file, host) {
@@ -133,7 +261,11 @@ try {
     stdio: "inherit",
   });
 
-  for (const [index, file] of changedFiles.entries()) {
+  if (!normalizeMediaArticles(worktreeDir)) {
+    failed = true;
+  }
+
+  for (const [index, file] of failed ? [] : changedFiles.entries()) {
     if (file === "sitemap.xml") {
       const productionSitemap = git(["show", `${headSha}:${file}`]);
       const stagingSitemap = fs.readFileSync(
@@ -206,9 +338,12 @@ try {
       );
     }
   }
+} catch (error) {
+  failed = true;
+  console.error(`::error::Production/staging parity setup failed: ${error.message}`);
 } finally {
   try {
-    git(["worktree", "remove", worktreeDir], { stdio: "inherit" });
+    git(["worktree", "remove", "--force", worktreeDir], { stdio: "inherit" });
   } catch {
     console.error(`::warning::Could not remove temporary worktree ${worktreeDir}`);
   }
