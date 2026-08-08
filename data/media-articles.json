@@ -50,6 +50,31 @@
         "width": 740,
         "height": 416
       }
+    },
+    {
+      "url": "/guide/substitute-car-delivery-wait-rental/",
+      "category": "利用シーンガイド",
+      "description": "代車・納車待ちで車が必要なときの借り方、料金、延長・返却の注意点を整理しました。",
+      "image": {
+        "src": "/assets/img/guide/substitute-car-delivery-wait-rental/official-asakadai-key-handover-740.webp",
+        "srcset": [
+          {
+            "src": "/assets/img/guide/substitute-car-delivery-wait-rental/official-asakadai-key-handover-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/assets/img/guide/substitute-car-delivery-wait-rental/official-asakadai-key-handover-740.webp",
+            "width": 740
+          },
+          {
+            "src": "/assets/img/guide/substitute-car-delivery-wait-rental/official-asakadai-key-handover-1200.webp",
+            "width": 1200
+          }
+        ],
+        "alt": "埼玉マンスリーレンタカー朝霞台店で利用者へ車両の鍵を引き渡すスタッフ",
+        "width": 740,
+        "height": 416
+      }
     }
   ]
 }
